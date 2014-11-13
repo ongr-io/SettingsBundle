@@ -44,6 +44,5 @@
         "psr-4": {
             "psr-4": { "ONGR\\AdminBundle\\": "" }
         }
-    },
-    "target-dir": "ONGR/AdminBundle"
+    }
 }
