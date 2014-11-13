@@ -2,11 +2,12 @@
     "name": "ongr/admin-bundle",
     "description": "Admin interface and settings API for ONGR platform projects",
     "type": "symfony-bundle",
-    "license": "proprietary",
+    "homepage": "http://ongr.io",
+    "license": "MIT",
     "authors": [
         {
-            "name": "ONGR",
-            "homepage": "http://www.ongr.io"
+            "name": "ONGR team",
+            "homepage": "http://www.nfq.com"
         }
     ],
     "repositories": [
@@ -40,8 +41,8 @@
         "ongr/oxid-bundle": "Allows to transfer shop data from OXID to ONGR"
     },
     "autoload": {
-        "psr-0": {
-            "ONGR\\AdminBundle": ""
+        "psr-4": {
+            "psr-4": { "ONGR\\AdminBundle\\": "" }
         }
     },
     "target-dir": "ONGR/AdminBundle"
