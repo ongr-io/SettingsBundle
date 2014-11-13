@@ -13,6 +13,10 @@
         {
             "type": "composer",
             "url": "http://packagist.fox.nfq.lt"
+        },
+        {
+            "type": "composer",
+            "url": "http://packagist.fox.nfq.lt"
         }
     ],
     "require": {
