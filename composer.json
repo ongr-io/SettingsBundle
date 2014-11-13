@@ -13,6 +13,10 @@
         {
             "type": "composer",
             "url": "http://packagist.fox.nfq.lt"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:nfq-extremes/fox-utils.git"
         }
     ],
     "require": {
