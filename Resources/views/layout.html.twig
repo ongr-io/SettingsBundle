@@ -1,0 +1,32 @@
+<!doctype html>
+<html class="no-js" lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title -%}{{ "FOXX Admin"|trans }}{%- endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block stylesheets %}
+            <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+            <link href="{{ asset('bundles/foxadmin/css/fox-admin.css') }}" type="text/css" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body {% block body_attributes %}ng-app="fox"{% endblock %}>
+        {% block content %}
+            <div class="wrapper" {% block wrapper_attributes %}{% endblock %}>
+                {% block navigation %}{% include 'FoxAdminBundle:Settings:inc/navigation.html.twig' %}{% endblock %}
+                {% block main %}{% endblock %}
+            </div>
+        {% endblock %}
+        {% block javascripts %}
+            <script src="//cdnjs.cloudflare.com/ajax/libs/js-yaml/3.0.2/js-yaml.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+            <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+            {% block admin_javascripts %}
+                <script src="{{ asset('bundles/foxadmin/js/directive/YamlDirective.js') }}"></script>
+                <script src="{{ asset('bundles/foxadmin/js/service/SettingService.js') }}"></script>
+            {% endblock %}
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,119 @@
+parameters:
+    #Filtered list
+    fox_admin.browser.filteredList.class: Fox\ProductBundle\Service\FilteredList
+    fox_admin.browser.filteredList.routeParams:
+        - config
+
+    #Filters manager
+    fox_admin.browser.filtersManager.class: Fox\ProductBundle\Service\FiltersManager
+
+    #Pager filter
+    fox_admin.browser.pager.class: Fox\ProductBundle\Service\Filter\PagerFilter
+    fox_admin.browser.pager.count_per_page: 15
+    fox_admin.browser.pager.name: pager
+    fox_admin.browser.pager.requestField: page
+
+    #Fields filter
+    fox_admin.browser.fields.class: Fox\ProductBundle\Service\Filter\FieldsFilter
+    fox_admin.browser.fields.fields:
+        - name
+        - description
+        - domain
+        - type
+        - data
+    fox_admin.browser.fields.name: fields
+
+    #Sort filter
+    fox_admin.browser.sort.class: Fox\ProductBundle\Service\Filter\SortFilter
+    fox_admin.browser.sort.name: sort
+    fox_admin.browser.sort.caption: Sort
+    fox_admin.browser.sort.requestField: sort
+    fox_admin.browser.sort.options:
+        nameAsc:
+            title: "Name Asc"
+            reverse: false
+            field: name
+            default: true
+        nameDesc:
+            title: "Name Desc"
+            reverse: true
+            field: name
+            default: false
+
+    #Search filter
+    fox_admin.browser.search.class: Fox\ProductBundle\Service\Filter\TermSearch
+    fox_admin.browser.search.name: search
+    fox_admin.browser.search.requestField: q
+    fox_admin.browser.search.caption: Suche
+    fox_admin.browser.search.fieldName: name,description
+    fox_admin.browser.search.exactFields: []
+
+    #Domain filter
+    fox_admin.browser.domain.class: Fox\AdminBundle\Service\Filter\DomainFilter
+    fox_admin.browser.domain.name: domain
+    fox_admin.browser.domain.caption: Domain
+    fox_admin.browser.domain.fieldName: domain
+    fox_admin.browser.domain.requestField: domain
+
+services:
+    #Filtered list
+    fox_admin.browser.filteredList:
+        class: %fox_admin.browser.filteredList.class%
+        calls:
+            - [setFilterManager, [@fox_admin.browser.filtersManager]]
+            - [setSessionModel, [@fox_ddal.session.admin.settingModel]]
+            - [setRouteParams, [%fox_admin.browser.filteredList.routeParams%]]
+
+    #Filters manager
+    fox_admin.browser.filtersManager:
+        class: %fox_admin.browser.filtersManager.class%
+        calls:
+            - [addFilter, [@fox_admin.browser.pager]]
+            - [addFilter, [@fox_admin.browser.fields]]
+            - [addFilter, [@fox_admin.browser.sort]]
+            - [addFilter, [@fox_admin.browser.search]]
+            - [addFilter, [@fox_admin.browser.domain]]
+
+    #Pager filter
+    fox_admin.browser.pager:
+        class: %fox_admin.browser.pager.class%
+        calls:
+            - [setCountPerPage, [%fox_admin.browser.pager.count_per_page%]]
+            - [setName, [%fox_admin.browser.pager.name%]]
+            - [setRequestField, [%fox_admin.browser.pager.requestField%]]
+
+    #Fields filter
+    fox_admin.browser.fields:
+        class: %fox_admin.browser.fields.class%
+        arguments:
+            - %fox_admin.browser.fields.fields%
+        calls:
+            - [setName, [%fox_admin.browser.fields.name%]]
+
+    #Sort filter
+    fox_admin.browser.sort:
+        class: %fox_admin.browser.sort.class%
+        arguments:
+            - %fox_admin.browser.sort.options%
+        calls:
+            - [setName, [%fox_admin.browser.sort.name%]]
+            - [setCaption, [%fox_admin.browser.sort.caption%]]
+            - [setRequestField, [%fox_admin.browser.sort.requestField%]]
+
+    #Search filter
+    fox_admin.browser.search:
+        class: %fox_admin.browser.search.class%
+        calls:
+            - [setName, [%fox_admin.browser.search.name%]]
+            - [setRequestField, [%fox_admin.browser.search.requestField%]]
+            - [setCaption, [%fox_admin.browser.search.caption%]]
+            - [setFieldName, [%fox_admin.browser.search.fieldName%]]
+            - [setExactFields, [%fox_admin.browser.search.exactFields%]]
+
+    fox_admin.browser.domain:
+        class: %fox_admin.browser.domain.class%
+        calls:
+            - [setName, [%fox_admin.browser.domain.name%]]
+            - [setCaption, [%fox_admin.browser.domain.caption%]]
+            - [setFieldName, [%fox_admin.browser.domain.fieldName%]]
+            - [setRequestField, [%fox_admin.browser.domain.requestField%]]

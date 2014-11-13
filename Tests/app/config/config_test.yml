@@ -1,0 +1,44 @@
+imports:
+    - { resource: parameters_test.yml }
+
+# Framework Configuration
+framework:
+    esi:             ~
+    fragments:       { path: /_proxy }
+    translator:      { fallback: "%locale%" }
+    secret:          %secret%
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: %kernel.debug%
+    form:            true
+    csrf_protection: true
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: 201204261
+        assets_base_urls:
+            http: [%cdn_url%]
+            ssl: [%cdn_url_ssl%]
+    default_locale:  "%locale%"
+    trusted_proxies: ~
+    session:
+        storage_id: session.storage.mock_file
+    test: ~
+
+stash: ~
+
+services:
+    fox_admin.dummy_service:
+        class: Fox\AdminBundle\Tests\Integration\DependencyInjection\DummyService
+        tags:
+            - { name: 'fox_admin.setting_aware', setting: 'setting_1' }
+
+    fox_admin.dummy_domain_provider:
+        class: %fox_admin.settings_provider.class%
+        arguments: [domain_foo]
+        calls:
+            - [setSessionModel, [@fox_ddal.session.admin.settingModel]]
+
+fox_admin:
+    connection:
+        index_name: %settings_test_index_name%

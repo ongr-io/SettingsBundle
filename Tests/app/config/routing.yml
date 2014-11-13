@@ -1,0 +1,14 @@
+main_routing:
+    resource: "@FoxAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fox_utils_routing_settings:
+    resource: "@FoxUtilsBundle/Resources/config/routing_settings.yml"
+    prefix: power-user/
+
+fox_utils_routing_auth:
+    resource: "@FoxUtilsBundle/Resources/config/routing_authentication.yml"
+    prefix: power-user/
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

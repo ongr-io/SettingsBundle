@@ -1,0 +1,29 @@
+language: php
+php:
+  - 5.4
+  - 5.5
+env:
+  - SYMFONY="2.3.*"
+  - SYMFONY="2.5.*"
+matrix:
+  exclude:
+    - php: 5.5
+      env: SYMFONY="2.3.*"
+services:
+  - elasticsearch
+install:
+  - composer require --no-update symfony/symfony:${SYMFONY}
+before_install:
+  - secret=`openssl rsautl -decrypt -inkey ~/.ssh/id_rsa -in Tests/app/travis/secret`
+  - openssl aes-256-cbc -k $secret -in Tests/app/travis/id_travis.enc -d -a -out id_travis
+  - ssh-add -D
+  - chmod 600 id_travis
+  - ssh-add ./id_travis
+before_script:
+  - composer update --prefer-dist
+script:
+  - vendor/bin/phpunit --coverage-text
+  - vendor/bin/phpcs -p --standard=PSR2 --ignore=vendor/,Tests/app/,Resources/public/ ./
+cache:
+  directories:
+    - vendor/

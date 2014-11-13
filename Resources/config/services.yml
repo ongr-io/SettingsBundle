@@ -1,0 +1,69 @@
+parameters:
+    fox_admin.settings_manager.class: Fox\AdminBundle\Service\SettingsManager
+    fox_admin.settings_provider.class: Fox\AdminBundle\Settings\Provider\SessionModelAwareProvider
+    fox_admin.settings_container.class: Fox\AdminBundle\Settings\SettingsContainer
+    fox_admin.setting_aware_service_factory.class: Fox\AdminBundle\Service\SettingAwareServiceFactory
+    fox_admin.twig.admin_extension.class: Fox\AdminBundle\Twig\AdminExtension
+    fox_admin.listener.cookie_domain.class: Fox\AdminBundle\EventListener\ProfileRequestListener
+    fox_admin.domains_manager.class: Fox\AdminBundle\Service\DomainsManager
+    fox_admin.power_user_domains_provider.class: Fox\AdminBundle\Settings\PowerUserDomainsProvider
+
+services:
+
+    fox_admin.twig.admin_extension:
+        class: %fox_admin.twig.admin_extension.class%
+        arguments:
+            - @fox_utils.settings.user_settings_manager
+        calls:
+            - [setSettingsContainer, [@fox_admin.settings_container]]
+            - [setLogger, [@?logger]]
+        tags:
+            - { name: twig.extension }
+            - { name: monolog.logger, channel: admin }
+
+    fox_admin.settings_manager:
+        class: %fox_admin.settings_manager.class%
+        arguments:
+            - @translator
+            - @event_dispatcher
+        calls:
+            - [setSessionModel, [@fox_ddal.session.admin.SettingModel]]
+
+    fox_admin.settings_container:
+        class: %fox_admin.settings_container.class%
+        arguments:
+            - @stash
+            - %fox_admin.settings_container.domains%
+        tags:
+            - { name: kernel.event_listener, event: fox_admin.setting_change, method: onSettingChange }
+
+    fox_admin.setting_aware_service_factory:
+        class: %fox_admin.setting_aware_service_factory.class%
+        arguments:
+            - @fox_admin.settings_container
+        calls:
+            - [setLogger, [@?logger]]
+        tags:
+            - { name: monolog.logger, channel: admin }
+
+    fox_admin.listener.cookie_domain:
+        class: %fox_admin.listener.cookie_domain.class%
+        calls:
+            - [setSettingsContainer, [@fox_admin.settings_container]]
+            - [setUserSettingsManager, [@fox_utils.settings.user_settings_manager]]
+            - [setSettingModel, [@fox_ddal.session.admin.settingModel]]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    fox_admin.domains_manager:
+        class: %fox_admin.domains_manager.class%
+        calls:
+            - [setSessionModel, [@fox_ddal.session.admin.SettingModel]]
+
+    fox_admin.power_user_domains_provider:
+        class: %fox_admin.power_user_domains_provider.class%
+        calls:
+            - [setDomainManager, [@fox_admin.domains_manager]]
+            - [setSettingsStructure, [@fox_utils.settings.settings_structure]]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

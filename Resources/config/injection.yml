@@ -1,0 +1,3 @@
+parameters:
+    fox_admin.fox_ddal.model_map:
+        SettingModel.class: Fox\AdminBundle\Model\SettingModel
