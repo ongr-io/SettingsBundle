@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace ONGRAdminBundle\Controller;
+namespace ONGR\AdminBundle\Controller;
 
 use ONGRAdminBundle\Service\SettingsManager;
 use Fox\DDALBundle\Exception\DocumentNotFoundException;

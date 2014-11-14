@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace ONGRAdminBundle\EventListener;
+namespace ONGR\AdminBundle\EventListener;
 
 use ONGR\AdminBundle\Service\UnderscoreEscaper;
 use ONGR\AdminBundle\Settings\Provider\SessionModelAwareProvider;

@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace ONGRAdminBundle\Controller;
+namespace ONGR\AdminBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
