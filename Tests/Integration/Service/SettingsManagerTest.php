@@ -13,11 +13,11 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Integration\Service;
+namespace ONGR\AdminBundle\Tests\Integration\Service;
 
-use Fox\AdminBundle\Model\SettingModel;
-use Fox\AdminBundle\Service\SettingsManager;
-use Fox\AdminBundle\Tests\Integration\BaseTest;
+use ONGR\AdminBundle\Model\SettingModel;
+use ONGR\AdminBundle\Service\SettingsManager;
+use ONGR\AdminBundle\Tests\Integration\BaseTest;
 use Fox\DDALBundle\Core\Query;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -42,7 +42,7 @@ class SettingsManagerTest extends BaseTest
         $model->setDocumentId($domain . '_' . $name);
         $model->assign([
             'name' => $name,
-            'description' => 'fox_admin.' . $name,
+            'description' => 'ongr_admin.' . $name,
             'data' => ['value' => $value],
             'type' => $type,
             'domain' => $domain
@@ -157,7 +157,7 @@ class SettingsManagerTest extends BaseTest
         $manager->setSessionModel($this->sessionModel);
         $setting = $manager->get('name0', 'default');
 
-        $this->assertInstanceOf('Fox\AdminBundle\Model\SettingModel', $setting);
+        $this->assertInstanceOf('ONGR\AdminBundle\Model\SettingModel', $setting);
 
         $manager->remove($setting);
 

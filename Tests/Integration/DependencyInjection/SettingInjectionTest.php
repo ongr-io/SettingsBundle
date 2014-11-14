@@ -13,10 +13,10 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Integration\DependencyInjection;
+namespace ONGR\AdminBundle\Tests\Integration\DependencyInjection;
 
-use Fox\AdminBundle\Model\SettingModel;
-use Fox\AdminBundle\Tests\Integration\BaseTest;
+use ONGR\AdminBundle\Model\SettingModel;
+use ONGR\AdminBundle\Tests\Integration\BaseTest;
 
 class SettingInjectionTest extends BaseTest
 {
@@ -43,7 +43,7 @@ class SettingInjectionTest extends BaseTest
     public function testSettingInjection()
     {
         /** @var DummyService $dummyService */
-        $dummyService = $this->container->get('fox_admin.dummy_service');
+        $dummyService = $this->container->get('ongr_admin.dummy_service');
 
         $expectedValue = $this->getDocumentsData()[0]['data']['value'];
         $this->assertEquals($expectedValue, $dummyService->getSetting1());

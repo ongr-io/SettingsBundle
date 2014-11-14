@@ -13,10 +13,10 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Settings;
+namespace ONGR\AdminBundle\Settings;
 
-use Fox\AdminBundle\Event\SettingChangeEvent;
-use Fox\AdminBundle\Exception\SettingNotFoundException;
+use ONGR\AdminBundle\Event\SettingChangeEvent;
+use ONGR\AdminBundle\Exception\SettingNotFoundException;
 use Stash\Interfaces\ItemInterface;
 use Stash\Interfaces\PoolInterface;
 
@@ -107,7 +107,7 @@ class SettingsContainer implements SettingsContainerInterface
      */
     protected function getCache()
     {
-        return $this->pool->getItem('fox_admin.settings_cache', join($this->domains, ','));
+        return $this->pool->getItem('ongr_admin.settings_cache', join($this->domains, ','));
     }
 
     /**
@@ -138,7 +138,7 @@ class SettingsContainer implements SettingsContainerInterface
         /** @noinspection PhpUnusedParameterInspection */
         SettingChangeEvent $event
     ) {
-        $this->pool->getItem('fox_admin.settings_cache')->clear();
+        $this->pool->getItem('ongr_admin.settings_cache')->clear();
     }
 
     /**

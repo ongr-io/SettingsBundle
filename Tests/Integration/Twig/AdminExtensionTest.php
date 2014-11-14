@@ -13,12 +13,12 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Integration\Twig;
+namespace ONGR\AdminBundle\Tests\Integration\Twig;
 
-use Fox\AdminBundle\Exception\SettingNotFoundException;
-use Fox\AdminBundle\Tests\Integration\BaseTest;
-use Fox\AdminBundle\Twig\AdminExtension;
-use Fox\UtilsBundle\Settings\UserSettingsManager;
+use ONGR\AdminBundle\Exception\SettingNotFoundException;
+use ONGR\AdminBundle\Tests\Integration\BaseTest;
+use ONGR\AdminBundle\Twig\AdminExtension;
+use ONGR\UtilsBundle\Settings\UserSettingsManager;
 
 /**
  * Class used to test AdminExtension
@@ -32,9 +32,9 @@ class AdminExtensionTest extends BaseTest
     {
         $container = self::createClient()->getContainer();
         /** @var AdminExtension $extension */
-        $extension = $container->get('fox_admin.twig.admin_extension');
+        $extension = $container->get('ongr_admin.twig.admin_extension');
         $this->assertInstanceOf(
-            'Fox\AdminBundle\Twig\AdminExtension',
+            'ONGR\AdminBundle\Twig\AdminExtension',
             $extension,
             'extension has wrong instance.'
         );
@@ -50,7 +50,7 @@ class AdminExtensionTest extends BaseTest
      */
     protected function getSettingsManagerMock($authenticated)
     {
-        $settingsManager = $this->getMockBuilder('Fox\UtilsBundle\Settings\UserSettingsManager')
+        $settingsManager = $this->getMockBuilder('ONGR\UtilsBundle\Settings\UserSettingsManager')
             ->disableOriginalConstructor()
             ->setMethods(['isAuthenticated'])
             ->getMock();
@@ -115,10 +115,10 @@ HEREDOC;
     public function testShowSetting($expectedOutput, $settingName, $isAuthenticated, $type = null)
     {
         $container = self::createClient()->getContainer();
-        $securityContext = $container->get('fox_utils.authentication.sessionless_security_context');
+        $securityContext = $container->get('ongr_utils.authentication.sessionless_security_context');
         $securityContext->setToken($this->getTokenMock());
-        $settingsManager = $container->get('fox_utils.settings.user_settings_manager');
-        $settingsManager->setSettingsFromForm(['fox_admin_live_settings' => true]);
+        $settingsManager = $container->get('ongr_utils.settings.user_settings_manager');
+        $settingsManager->setSettingsFromForm(['ongr_admin_live_settings' => true]);
 
         /** @var \Twig_Environment $twig */
         $twig = $container->get('twig');
@@ -140,7 +140,7 @@ HEREDOC;
     {
         $expectedValue = 'foo-bar';
 
-        $settingContainer = $this->getMock('Fox\AdminBundle\Settings\SettingsContainerInterface');
+        $settingContainer = $this->getMock('ONGR\AdminBundle\Settings\SettingsContainerInterface');
         $settingContainer->expects($this->once())->method('get')->with('test')->willReturn($expectedValue);
 
         $extension = new AdminExtension(null);
@@ -154,7 +154,7 @@ HEREDOC;
      */
     public function testGetAdminSettingException()
     {
-        $settingContainer = $this->getMock('Fox\AdminBundle\Settings\SettingsContainerInterface');
+        $settingContainer = $this->getMock('ONGR\AdminBundle\Settings\SettingsContainerInterface');
         $settingContainer
             ->expects($this->once())
             ->method('get')

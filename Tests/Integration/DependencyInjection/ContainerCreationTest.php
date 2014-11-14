@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Integration\DependencyInjection;
+namespace ONGR\AdminBundle\Tests\Integration\DependencyInjection;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -36,8 +36,8 @@ class ContainerCreationTest extends WebTestCase
     public function testPowerUserCategory()
     {
         $container = self::createClient()->getContainer();
-        $this->assertArrayHasKey('fox_admin_settings', $container->getParameter('fox_utils.settings.categories'));
-        $this->assertArrayHasKey('fox_admin_domains', $container->getParameter('fox_utils.settings.categories'));
+        $this->assertArrayHasKey('ongr_admin_settings', $container->getParameter('ongr_utils.settings.categories'));
+        $this->assertArrayHasKey('ongr_admin_domains', $container->getParameter('ongr_utils.settings.categories'));
     }
 
     /**
@@ -46,6 +46,6 @@ class ContainerCreationTest extends WebTestCase
     public function testPowerUserSettings()
     {
         $container = self::createClient()->getContainer();
-        $this->assertArrayHasKey('fox_admin_live_settings', $container->getParameter('fox_utils.settings.settings'));
+        $this->assertArrayHasKey('ongr_admin_live_settings', $container->getParameter('ongr_utils.settings.settings'));
     }
 }

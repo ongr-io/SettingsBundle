@@ -13,10 +13,10 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Service;
+namespace ONGR\AdminBundle\Service;
 
-use Fox\AdminBundle\Exception\SettingNotFoundException;
-use Fox\AdminBundle\Settings\SettingsContainerInterface;
+use ONGR\AdminBundle\Exception\SettingNotFoundException;
+use ONGR\AdminBundle\Settings\SettingsContainerInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Process\Exception\LogicException;

@@ -13,9 +13,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional\Service;
+namespace ONGR\AdminBundle\Tests\Functional\Service;
 
-use Fox\AdminBundle\Service\UnderscoreEscaper;
+use ONGR\AdminBundle\Service\UnderscoreEscaper;
 
 class UnderscoreEscaperTest extends \PHPUnit_Framework_TestCase
 {

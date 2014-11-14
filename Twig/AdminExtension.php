@@ -13,11 +13,11 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Twig;
+namespace ONGR\AdminBundle\Twig;
 
-use Fox\AdminBundle\Exception\SettingNotFoundException;
-use Fox\AdminBundle\Settings\SettingsContainerInterface;
-use Fox\UtilsBundle\Settings\UserSettingsManager;
+use ONGR\AdminBundle\Exception\SettingNotFoundException;
+use ONGR\AdminBundle\Settings\SettingsContainerInterface;
+use ONGR\UtilsBundle\Settings\UserSettingsManager;
 use Psr\Log\LoggerAwareTrait;
 
 /**
@@ -84,7 +84,7 @@ class AdminExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction(
-                'fox_show_setting',
+                'ongr_show_setting',
                 [$this, 'showSetting'],
                 [
                     'needs_environment' => true,

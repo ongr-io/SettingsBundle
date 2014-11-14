@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\DependencyInjection\Compiler;
+namespace ONGR\AdminBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -26,11 +26,11 @@ use Symfony\Component\DependencyInjection\Reference;
 class SettingAwareFactoryPass implements CompilerPassInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
-        $definitions = $container->findTaggedServiceIds('fox_admin.setting_aware');
+        $definitions = $container->findTaggedServiceIds('ongr_admin.setting_aware');
 
         foreach ($definitions as $serviceId => $tags) {
 
@@ -49,10 +49,10 @@ class SettingAwareFactoryPass implements CompilerPassInterface
                 $definition->getClass(),
                 [$callMap, new Reference("{$serviceId}_base")]
             );
-            $proxy->setFactoryService('fox_admin.setting_aware_service_factory');
+            $proxy->setFactoryService('ongr_admin.setting_aware_service_factory');
             $proxy->setFactoryMethod('get');
 
-            unset($initialTags['fox_admin.setting_aware']);
+            unset($initialTags['ongr_admin.setting_aware']);
             $proxy->setTags($initialTags);
 
             $container->setDefinition($serviceId, $proxy);

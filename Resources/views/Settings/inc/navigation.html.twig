@@ -1,13 +1,13 @@
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ path('fox_admin_homepage') }}">FOXX Admin</a>
+            <a class="navbar-brand" href="{{ path('ongr_admin_homepage') }}">FOXX Admin</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             {% block search %}
                 {% if filters.term_search is defined %}
                     {% set search = filters.term_search.search %}
-                    <form class="navbar-form navbar-right" role="search" method="get" action="{{ path('fox_admin_settings_list', routeParams) }}">
+                    <form class="navbar-form navbar-right" role="search" method="get" action="{{ path('ongr_admin_settings_list', routeParams) }}">
                         <div class="form-group">
                             <input type="text" class="form-control" name="q" value="{% if search is defined %}{{ search.value }}{% endif %}" placeholder="{% if search is defined %}{{ search.caption | trans }}{% else %}Search{% endif %}" autocomplete="off">
                         </div>
@@ -32,7 +32,7 @@
                                     {% if option.default and sort.active == false %}
                                         {# Nothing to display #}
                                     {% elseif option.active == false %}
-                                        <li><a href="{{ path('fox_admin_settings_list', option.link) }}">{{ option.title }}</a></li>
+                                        <li><a href="{{ path('ongr_admin_settings_list', option.link) }}">{{ option.title }}</a></li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>
@@ -52,7 +52,7 @@
                                 <ul class="dropdown-menu">
                                     {% for value in domain.values %}
                                         {% if not value.active %}
-                                            <li><a href="{{ path('fox_admin_settings_list', value.link) }}">{{ value.value }}</a></li>
+                                            <li><a href="{{ path('ongr_admin_settings_list', value.link) }}">{{ value.value }}</a></li>
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
@@ -61,7 +61,7 @@
                 {% endif %}
             {% endblock %}
             {% block buttons %}
-                {% if app.request.attributes.get('_route') != "fox_admin_setting_edit" %}
+                {% if app.request.attributes.get('_route') != "ongr_admin_setting_edit" %}
                     <div class="nav navbar-nav">
                         <button class="btn btn-default navbar-btn" ng-click="addSetting()" href="#">Add setting</button>
                     </div>
@@ -69,7 +69,7 @@
             {% endblock %}
             {% if not filters is defined %}
                 <div class="nav navbar-nav navbar-right">
-                    <a class="btn btn-default navbar-btn" href="{{ path('fox_admin_settings_list') }}">{{ 'Settings List'|trans }}</a>
+                    <a class="btn btn-default navbar-btn" href="{{ path('ongr_admin_settings_list') }}">{{ 'Settings List'|trans }}</a>
                 </div>
             {% endif %}
         </div>

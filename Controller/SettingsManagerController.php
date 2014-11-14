@@ -13,9 +13,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Controller;
+namespace ONGRAdminBundle\Controller;
 
-use Fox\AdminBundle\Service\SettingsManager;
+use ONGRAdminBundle\Service\SettingsManager;
 use Fox\DDALBundle\Exception\DocumentNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +36,7 @@ class SettingsManagerController extends Controller
     {
         if (is_null($this->settingsManager)) {
             /** @var SettingsManager settingsManager */
-            $this->settingsManager = $this->get('fox_admin.settings_manager');
+            $this->settingsManager = $this->get('ongr_admin.settings_manager');
         }
         return $this->settingsManager;
     }

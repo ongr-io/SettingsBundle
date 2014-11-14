@@ -13,9 +13,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional\DependencyInjection\Compiler;
+namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection\Compiler;
 
-use Fox\AdminBundle\DependencyInjection\Compiler\ProviderPass;
+use ONGR\AdminBundle\DependencyInjection\Compiler\ProviderPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -31,8 +31,8 @@ class ProviderPassTest extends \PHPUnit_Framework_TestCase
             $domains,
             [],
             [
-                ['addProvider' => 'fox_admin.dynamic_provider.default'],
-                ['addProvider' => 'fox_admin.dynamic_provider.domain_2'],
+                ['addProvider' => 'ongr_admin.dynamic_provider.default'],
+                ['addProvider' => 'ongr_admin.dynamic_provider.domain_2'],
             ],
         ];
 
@@ -43,7 +43,7 @@ class ProviderPassTest extends \PHPUnit_Framework_TestCase
                 'test_provider_1' => ['domain' => 'domain_2'],
             ],
             [
-                ['addProvider' => 'fox_admin.dynamic_provider.default'],
+                ['addProvider' => 'ongr_admin.dynamic_provider.default'],
                 ['addProvider' => 'test_provider_1'],
             ],
         ];
@@ -56,7 +56,7 @@ class ProviderPassTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 ['addProvider' => 'test_provider_1'],
-                ['addProvider' => 'fox_admin.dynamic_provider.default'],
+                ['addProvider' => 'ongr_admin.dynamic_provider.default'],
             ],
         ];
 
@@ -67,8 +67,8 @@ class ProviderPassTest extends \PHPUnit_Framework_TestCase
                 'test_provider_1' => [],
             ],
             [
-                ['addProvider' => 'fox_admin.dynamic_provider.default'],
-                ['addProvider' => 'fox_admin.dynamic_provider.domain_2'],
+                ['addProvider' => 'ongr_admin.dynamic_provider.default'],
+                ['addProvider' => 'ongr_admin.dynamic_provider.domain_2'],
                 ['addProvider' => 'test_provider_1'],
             ],
         ];
@@ -82,8 +82,8 @@ class ProviderPassTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 ['addProvider' => 'test_provider_2'],
-                ['addProvider' => 'fox_admin.dynamic_provider.default'],
-                ['addProvider' => 'fox_admin.dynamic_provider.domain_2'],
+                ['addProvider' => 'ongr_admin.dynamic_provider.default'],
+                ['addProvider' => 'ongr_admin.dynamic_provider.domain_2'],
                 ['addProvider' => 'test_provider_1'],
             ],
         ];
@@ -103,15 +103,15 @@ class ProviderPassTest extends \PHPUnit_Framework_TestCase
     public function testProcess($domains, $definitions, $expectedResult)
     {
         $container = new ContainerBuilder();
-        $container->setParameter('fox_admin.settings_container.domains', $domains);
-        $container->setParameter('fox_admin.settings_provider.class', 'test_class');
+        $container->setParameter('ongr_admin.settings_container.domains', $domains);
+        $container->setParameter('ongr_admin.settings_provider.class', 'test_class');
 
         $containerDefinition = new Definition();
-        $container->setDefinition('fox_admin.settings_container', $containerDefinition);
+        $container->setDefinition('ongr_admin.settings_container', $containerDefinition);
 
         foreach ($definitions as $name => $options) {
             $definition = new Definition();
-            $definition->addTag('fox_admin.settings_provider', $options);
+            $definition->addTag('ongr_admin.settings_provider', $options);
             $container->setDefinition($name, $definition);
         }
 

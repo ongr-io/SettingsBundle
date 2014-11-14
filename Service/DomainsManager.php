@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Service;
+namespace ONGR\AdminBundle\Service;
 
 use Fox\DDALBundle\Core\Facet;
 use Fox\DDALBundle\Core\Query;

@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Model;
+namespace ONGR\AdminBundle\Model;
 
 use Fox\DDALBundle\Core\BaseModel;
 

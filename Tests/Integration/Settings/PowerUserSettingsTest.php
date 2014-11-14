@@ -13,11 +13,11 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Integration\Settings;
+namespace ONGR\AdminBundle\Tests\Integration\Settings;
 
-use Fox\AdminBundle\Model\SettingModel;
-use Fox\AdminBundle\Tests\Integration\BaseTest;
-use Fox\UtilsBundle\Tests\Integration\CookieTestHelper;
+use ONGR\AdminBundle\Model\SettingModel;
+use ONGR\AdminBundle\Tests\Integration\BaseTest;
+use ONGR\UtilsBundle\Tests\Integration\CookieTestHelper;
 
 /**
  * Test integration with power-user feature in fox-utils
@@ -68,13 +68,13 @@ class PowerUserSettingsTest extends BaseTest
         // var_dump($client->getResponse()->getContent()); // Helps debugging output
 
         // Asserts
-        $settingsDescription = $crawler->filter('#settings_fox_admin_live_settings');
+        $settingsDescription = $crawler->filter('#settings_ongr_admin_live_settings');
         $this->assertCount(1, $settingsDescription, 'Live settings setting must exist');
 
-        $domain = $crawler->filter('#settings_fox_admin_domain_default');
+        $domain = $crawler->filter('#settings_ongr_admin_domain_default');
         $this->assertCount(1, $domain, 'Domain default checkbox must exist');
 
-        $domain = $crawler->filter('#settings_fox_admin_domain_domain_foo-2e-com');
+        $domain = $crawler->filter('#settings_ongr_admin_domain_domain_foo-2e-com');
         $this->assertCount(1, $domain, 'Domain foo checkbox must exist');
 
         $categories = $crawler->filter('.category');
@@ -97,12 +97,12 @@ class PowerUserSettingsTest extends BaseTest
         $buttonNode = $crawler->selectButton('settings_submit');
         $form = $buttonNode->form();
         /** @noinspection PhpUndefinedMethodInspection */
-        $form['settings[fox_admin_domain_domain_foo-2e-com]']->tick();
+        $form['settings[ongr_admin_domain_domain_foo-2e-com]']->tick();
         $client->submit($form);
 
         // Load any url and check that user selected domains are loaded
         $client->request('GET', '/setting/name0/edit');
-        $settingsContainer = $client->getContainer()->get('fox_admin.settings_container');
+        $settingsContainer = $client->getContainer()->get('ongr_admin.settings_container');
         $selectedDomains = $settingsContainer->getDomains();
         $this->assertEquals(['default', 'domain_foo.com'], $selectedDomains);
     }

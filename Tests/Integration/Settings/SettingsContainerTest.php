@@ -13,12 +13,12 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Integration\Settings;
+namespace ONGR\AdminBundle\Tests\Integration\Settings;
 
-use Fox\AdminBundle\Model\SettingModel;
-use Fox\AdminBundle\Settings\Provider\SessionModelAwareProvider;
-use Fox\AdminBundle\Settings\SettingsContainer;
-use Fox\AdminBundle\Tests\Integration\BaseTest;
+use ONGR\AdminBundle\Model\SettingModel;
+use ONGR\AdminBundle\Settings\Provider\SessionModelAwareProvider;
+use ONGR\AdminBundle\Settings\SettingsContainer;
+use ONGR\AdminBundle\Tests\Integration\BaseTest;
 use Stash\Pool;
 
 class SettingsContainerTest extends BaseTest

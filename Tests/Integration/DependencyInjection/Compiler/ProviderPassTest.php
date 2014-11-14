@@ -13,9 +13,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Integration\DependencyInjection\Compiler;
+namespace ONGR\AdminBundle\Tests\Integration\DependencyInjection\Compiler;
 
-use Fox\AdminBundle\DependencyInjection\Compiler\ProviderPass;
+use ONGR\AdminBundle\DependencyInjection\Compiler\ProviderPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -27,26 +27,26 @@ class ProviderPassTest extends \PHPUnit_Framework_TestCase
     public function testProcess()
     {
         $container = new ContainerBuilder();
-        $container->setDefinition('fox_admin.settings_container', new Definition());
-        $container->setParameter('fox_admin.settings_container.domains', ['default', 'custom']);
+        $container->setDefinition('ongr_admin.settings_container', new Definition());
+        $container->setParameter('ongr_admin.settings_container.domains', ['default', 'custom']);
         $container->setParameter(
-            'fox_admin.settings_provider.class',
+            'ongr_admin.settings_provider.class',
             'Fox\\AdminBundle\\Settings\\Provider\\SessionModelAwareProvider'
         );
 
         $definition = new Definition();
-        $definition->addTag('fox_admin.settings_provider', ['domain' => 'custom']);
-        $container->setDefinition('fox_admin.custom_settings_provider', $definition);
+        $definition->addTag('ongr_admin.settings_provider', ['domain' => 'custom']);
+        $container->setDefinition('ongr_admin.custom_settings_provider', $definition);
 
 
         $definition = new Definition();
-        $definition->addTag('fox_admin.settings_provider');
-        $container->setDefinition('fox_admin.unregistered_settings_provider', $definition);
+        $definition->addTag('ongr_admin.settings_provider');
+        $container->setDefinition('ongr_admin.unregistered_settings_provider', $definition);
 
         $pass = new ProviderPass();
         $pass->process($container);
 
-        $methodCalls = $container->getDefinition('fox_admin.settings_container')->getMethodCalls();
+        $methodCalls = $container->getDefinition('ongr_admin.settings_container')->getMethodCalls();
         $this->assertCount(3, $methodCalls);
     }
 }

@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Integration\DependencyInjection;
+namespace ONGR\AdminBundle\Tests\Integration\DependencyInjection;
 
 /**
  * Dummy service for integration test

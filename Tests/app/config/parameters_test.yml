@@ -2,7 +2,7 @@ parameters:
     database_driver: pdo_mysql
     database_host: localhost
     database_port: null
-    database_name: fox_admin_test
+    database_name: ongr_admin_test
     database_user: root
     database_password: root
     database.elastic_search.host: localhost
@@ -16,6 +16,6 @@ parameters:
 
     settings_test_index_name: fox-settings-test
 
-    fox_utils.authentication.users:
+    ongr_utils.authentication.users:
         foo_user:
             password: 'foo_password'

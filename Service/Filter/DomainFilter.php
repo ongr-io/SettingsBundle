@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Service\Filter;
+namespace ONGR\AdminBundle\Service\Filter;
 
 use Fox\ProductBundle\Service\Filter\TermFilter;
 

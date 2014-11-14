@@ -13,10 +13,10 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Service;
+namespace ONGR\AdminBundle\Service;
 
-use Fox\AdminBundle\Event\SettingChangeEvent;
-use Fox\AdminBundle\Model\SettingModel;
+use ONGR\AdminBundle\Event\SettingChangeEvent;
+use ONGR\AdminBundle\Model\SettingModel;
 use Fox\DDALBundle\Exception\DocumentNotFoundException;
 use Fox\DDALBundle\Session\SessionModelAwareInterface;
 use Fox\DDALBundle\Session\SessionModelInterface;
@@ -94,7 +94,7 @@ class SettingsManager implements SessionModelAwareInterface
 
         $settings = [
             'name' => $name,
-            'description' => 'fox_admin.' . $this->translator->trans($name),
+            'description' => 'ongr_admin.' . $this->translator->trans($name),
             'data' => (object)['value' => $value],
             'type' => $type,
             'domain' => $domain
@@ -107,7 +107,7 @@ class SettingsManager implements SessionModelAwareInterface
         $this->getSessionModel()->saveDocument($model);
         $this->getSessionModel()->flush();
 
-        $this->eventDispatcher->dispatch('fox_admin.setting_change', new SettingChangeEvent('save'));
+        $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('save'));
     }
 
     /**
@@ -120,7 +120,7 @@ class SettingsManager implements SessionModelAwareInterface
         $this->getSessionModel()->saveDocument($model);
         $this->getSessionModel()->flush();
 
-        $this->eventDispatcher->dispatch('fox_admin.setting_change', new SettingChangeEvent('save'));
+        $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('save'));
     }
 
     /**
@@ -133,7 +133,7 @@ class SettingsManager implements SessionModelAwareInterface
         $this->getSessionModel()->deleteDocumentById($model->getDocumentId());
         $this->getSessionModel()->flush();
 
-        $this->eventDispatcher->dispatch('fox_admin.setting_change', new SettingChangeEvent('delete'));
+        $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('delete'));
     }
 
     /**

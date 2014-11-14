@@ -13,10 +13,10 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Integration\Model;
+namespace ONGR\AdminBundle\Tests\Integration\Model;
 
-use Fox\AdminBundle\Model\SettingModel;
-use Fox\AdminBundle\Tests\Integration\BaseTest;
+use ONGR\AdminBundle\Model\SettingModel;
+use ONGR\AdminBundle\Tests\Integration\BaseTest;
 use Fox\DDALBundle\Core\Query;
 
 /**

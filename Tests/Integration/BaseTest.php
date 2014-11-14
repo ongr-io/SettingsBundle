@@ -13,9 +13,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Integration;
+namespace ONGR\AdminBundle\Tests\Integration;
 
-use Fox\AdminBundle\Model\SettingModel;
+use ONGR\AdminBundle\Model\SettingModel;
 use Fox\DDALBundle\Core\Session;
 use Fox\DDALBundle\Session\SessionModelInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -44,8 +44,8 @@ abstract class BaseTest extends WebTestCase
     protected function setUp()
     {
         $this->container = self::createClient()->getContainer();
-        $this->sessionModel = $this->container->get('fox_ddal.session.admin.SettingModel');
-        $this->session = $this->container->get('fox_ddal.session.admin');
+        $this->sessionModel = $this->container->get('ongr_ddal.session.admin.SettingModel');
+        $this->session = $this->container->get('ongr_ddal.session.admin');
         $this->session->createRepository();
 
         $this->createDocuments();

@@ -12,9 +12,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional\Controller;
+namespace ONGR\AdminBundle\Tests\Functional\Controller;
 
-use Fox\AdminBundle\Controller\SettingsListController;
+use ONGR\AdminBundle\Controller\SettingsListController;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,7 +62,7 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getRouteParamsValues')
             ->will($this->returnValue(['route', 'params']));
-        $container->set('fox_admin.browser.filteredList', $list);
+        $container->set('ongr_admin.browser.filteredList', $list);
 
         $container->set('templating', $this->getTemplateEngine());
         $container->set('router', $this->getMock('Symfony\\Component\\Routing\\RouterInterface'));

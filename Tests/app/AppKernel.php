@@ -28,8 +28,8 @@ class AppKernel extends Kernel
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Tedivm\StashBundle\TedivmStashBundle(),
             new Fox\DDALBundle\FoxDDALBundle(),
-            new Fox\UtilsBundle\FoxUtilsBundle(),
-            new Fox\AdminBundle\FoxAdminBundle(),
+            new ONGR\UtilsBundle\FoxUtilsBundle(),
+            new ONGR\AdminBundle\FoxAdminBundle(),
             new \FOS\JsRoutingBundle\FOSJsRoutingBundle()
         ];
     }

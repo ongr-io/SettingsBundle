@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Event;
+namespace ONGR\AdminBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 

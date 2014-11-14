@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Integration\Settings;
+namespace ONGR\AdminBundle\Tests\Integration\Settings;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -24,7 +24,7 @@ class AuthenticationTest extends WebTestCase
      *
      * No index has been created in this test, so there will be an uncaught exception, if any queries were executed.
      *
-     * @see \Fox\AdminBundle\Settings\PowerUserDomainsProvider::getSettings
+     * @see \ONGR\AdminBundle\Settings\PowerUserDomainsProvider::getSettings
      */
     public function testRequest()
     {

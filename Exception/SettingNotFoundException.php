@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Exception;
+namespace ONGR\AdminBundle\Exception;
 
 /**
  * Exception thrown when setting is not found in SettingsContainer

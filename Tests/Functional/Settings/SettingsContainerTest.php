@@ -13,10 +13,10 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional\Settings;
+namespace ONGR\AdminBundle\Tests\Functional\Settings;
 
-use Fox\AdminBundle\Settings\SettingsContainer;
-use Fox\AdminBundle\Settings\SettingsProviderInterface;
+use ONGR\AdminBundle\Settings\SettingsContainer;
+use ONGR\AdminBundle\Settings\SettingsProviderInterface;
 use Stash\Interfaces\PoolInterface;
 
 class SettingsContainerTest extends \PHPUnit_Framework_TestCase
@@ -57,7 +57,7 @@ class SettingsContainerTest extends \PHPUnit_Framework_TestCase
      */
     private function getProvider($domain, $settings)
     {
-        $providerMock = $this->getMock('Fox\AdminBundle\Settings\SettingsProviderInterface');
+        $providerMock = $this->getMock('ONGR\AdminBundle\Settings\SettingsProviderInterface');
         $providerMock
             ->expects($this->once())
             ->method('getDomain')

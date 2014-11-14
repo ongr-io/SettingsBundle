@@ -1,5 +1,5 @@
 parameters:
-    fox_admin.connection.mapping:
+    ongr_admin.connection.mapping:
         setting:
             mapping:
                 properties:
@@ -19,27 +19,27 @@ parameters:
                         enabled: false
                         type: object
 
-    fox_admin.settings_model_connection.settings:
+    ongr_admin.settings_model_connection.settings:
         index:
             number_of_replicas: 1
             number_of_shards: 1
             refresh_interval: -1
 
 services:
-    fox_admin.elastic_search_driver:
+    ongr_admin.elastic_search_driver:
         class: Fox\DDALBundle\ElasticSearch\ElasticSearchDriver
         arguments:
             - { host: %database.elastic_search.host%, port: %database.elastic_search.port%, throwCustomExceptions: 1}
             -
-              index: %fox_admin.connection.index_name%
-              host: %fox_admin.connection.host%
-              port: %fox_admin.connection.port%
-              map: %fox_admin.connection.mapping%
-              settings: %fox_admin.settings_model_connection.settings%
+              index: %ongr_admin.connection.index_name%
+              host: %ongr_admin.connection.host%
+              port: %ongr_admin.connection.port%
+              map: %ongr_admin.connection.mapping%
+              settings: %ongr_admin.settings_model_connection.settings%
               dynamicSettings: %database.elastic_search.dynamic_settings%
               scroll_settings: %database.elastic_search.scroll_settings%
         tags:
-            - { name: fox_ddal.driver, driver: admin }
+            - { name: ongr_ddal.driver, driver: admin }
         calls:
             - [setDisableFlushCall, [1]]
             - [setRefreshOnFlush, [1]]

@@ -176,7 +176,7 @@ angular
              */
             this.addSetting = function() {
 
-                var requestUrl = Routing.generate('fox_admin_setting_ng_edit', {
+                var requestUrl = Routing.generate('ongr_admin_setting_ng_edit', {
                     name: this.setting.name,
                     domain: this.setting.domain
                 });

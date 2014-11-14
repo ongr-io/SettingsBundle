@@ -1,5 +1,5 @@
-{% if fox_setting_enabled('fox_admin_live_settings') %}
-<a href="{{ url('fox_admin_setting_edit', {'name': setting, 'type': type}) }}" class="btn btn-default pull-right" title="Edit {{ setting }}">
+{% if ongr_setting_enabled('ongr_admin_live_settings') %}
+<a href="{{ url('ongr_admin_setting_edit', {'name': setting, 'type': type}) }}" class="btn btn-default pull-right" title="Edit {{ setting }}">
     <span class="glyphicon glyphicon-wrench"></span>
 </a>
 {% endif %}

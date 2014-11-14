@@ -13,12 +13,12 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Integration\Service;
+namespace ONGR\AdminBundle\Tests\Integration\Service;
 
-use Fox\AdminBundle\Model\SettingModel;
-use Fox\AdminBundle\Settings\Provider\SessionModelAwareProvider;
-use Fox\AdminBundle\Settings\SettingsContainer;
-use Fox\AdminBundle\Tests\Integration\BaseTest;
+use ONGR\AdminBundle\Model\SettingModel;
+use ONGR\AdminBundle\Settings\Provider\SessionModelAwareProvider;
+use ONGR\AdminBundle\Settings\SettingsContainer;
+use ONGR\AdminBundle\Tests\Integration\BaseTest;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
@@ -157,7 +157,7 @@ class SettingsManagerControllerTest extends BaseTest
      */
     protected function assertSettingValue(Client $client, $expectedValue)
     {
-        $settingsContainer = $client->getContainer()->get('fox_admin.settings_container');
+        $settingsContainer = $client->getContainer()->get('ongr_admin.settings_container');
         $value = $settingsContainer->get('setting_foo');
         $this->assertSame($expectedValue, $value);
     }
@@ -172,11 +172,11 @@ class SettingsManagerControllerTest extends BaseTest
     {
         $container = $client->getContainer();
         /** @var SettingsContainer $settingsContainer */
-        $settingsContainer = $container->get('fox_admin.settings_container');
+        $settingsContainer = $container->get('ongr_admin.settings_container');
         $settingsContainer->setDomains(['domain_foo']);
 
         /** @var SessionModelAwareProvider $provider */
-        $provider = $container->get('fox_admin.dummy_domain_provider');
+        $provider = $container->get('ongr_admin.dummy_domain_provider');
         $settingsContainer->addProvider($provider);
     }
 }

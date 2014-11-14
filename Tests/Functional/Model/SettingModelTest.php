@@ -13,9 +13,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional\Model;
+namespace ONGR\AdminBundle\Tests\Functional\Model;
 
-use Fox\AdminBundle\Model\SettingModel;
+use ONGR\AdminBundle\Model\SettingModel;
 
 class SettingModelTest extends \PHPUnit_Framework_TestCase
 {

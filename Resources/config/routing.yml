@@ -1,25 +1,25 @@
-fox_admin_homepage:
+ongr_admin_homepage:
     pattern:  /
     methods: [GET]
     defaults:
         _controller: FoxAdminBundle:SettingsList:list
         domain: 'default'
 
-fox_admin_settings_list:
+ongr_admin_settings_list:
     pattern:  /list/{domain}
     methods: [GET]
     defaults:
         _controller: FoxAdminBundle:SettingsList:list
         domain: 'default'
 
-fox_admin_setting_set:
+ongr_admin_setting_set:
     pattern:  /setting/set/{name}/{domain}
     methods: [POST]
     defaults:
         _controller: FoxAdminBundle:SettingsManager:setSetting
         domain: 'default'
 
-fox_admin_setting_edit:
+ongr_admin_setting_edit:
     pattern:  /setting/{name}/edit/{domain}
     methods: [GET, POST]
     defaults:
@@ -28,7 +28,7 @@ fox_admin_setting_edit:
     options:
         expose: true
 
-fox_admin_setting_ng_edit:
+ongr_admin_setting_ng_edit:
     pattern:  /setting/ng/{name}/edit/{domain}
     methods: [POST]
     defaults:
@@ -37,7 +37,7 @@ fox_admin_setting_ng_edit:
     options:
         expose: true
 
-fox_admin_setting_remove:
+ongr_admin_setting_remove:
     pattern:  /setting/{name}/remove/{domain}
     methods: [DELETE]
     defaults:
@@ -46,7 +46,7 @@ fox_admin_setting_remove:
     options:
         expose: true
 
-fox_admin_setting_copy:
+ongr_admin_setting_copy:
     pattern:  /setting/{name}/copy/{from}/{to}
     methods: [GET]
     defaults:

@@ -28,17 +28,17 @@ framework:
 stash: ~
 
 services:
-    fox_admin.dummy_service:
-        class: Fox\AdminBundle\Tests\Integration\DependencyInjection\DummyService
+    ongr_admin.dummy_service:
+        class: ONGR\AdminBundle\Tests\Integration\DependencyInjection\DummyService
         tags:
-            - { name: 'fox_admin.setting_aware', setting: 'setting_1' }
+            - { name: 'ongr_admin.setting_aware', setting: 'setting_1' }
 
-    fox_admin.dummy_domain_provider:
-        class: %fox_admin.settings_provider.class%
+    ongr_admin.dummy_domain_provider:
+        class: %ongr_admin.settings_provider.class%
         arguments: [domain_foo]
         calls:
-            - [setSessionModel, [@fox_ddal.session.admin.settingModel]]
+            - [setSessionModel, [@ongr_ddal.session.admin.settingModel]]
 
-fox_admin:
+ongr_admin:
     connection:
         index_name: %settings_test_index_name%

@@ -13,9 +13,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Controller;
+namespace ONGRAdminBundle\Controller;
 
-use Fox\ProductBundle\Service\FilteredList;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +29,7 @@ class SettingsListController extends Controller
     protected function getListData(Request $request)
     {
         /** @var FilteredList $list */
-        $list = $this->get('fox_admin.browser.filteredList');
+        $list = $this->get('ongr_admin.browser.filteredList');
         $list->setRequest($request);
 
         return [

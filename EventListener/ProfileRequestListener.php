@@ -13,13 +13,13 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\EventListener;
+namespace ONGRAdminBundle\EventListener;
 
-use Fox\AdminBundle\Service\UnderscoreEscaper;
-use Fox\AdminBundle\Settings\Provider\SessionModelAwareProvider;
-use Fox\AdminBundle\Settings\SettingsContainer;
+use ONGR\AdminBundle\Service\UnderscoreEscaper;
+use ONGR\AdminBundle\Settings\Provider\SessionModelAwareProvider;
+use ONGR\AdminBundle\Settings\SettingsContainer;
 use Fox\DDALBundle\Session\SessionModelInterface;
-use Fox\UtilsBundle\Settings\UserSettingsManager;
+use ONGR\UtilsBundle\Settings\UserSettingsManager;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
@@ -50,7 +50,7 @@ class ProfileRequestListener
         $settings = $this->userSettingsManager->getSettings();
 
         foreach ($settings as $id => $value) {
-            $prefix = 'fox_admin_domain_';
+            $prefix = 'ongr_admin_domain_';
             if (strpos($id, $prefix) === 0 && $value === true) {
                 $escapedDomain = mb_substr($id, strlen($prefix), null, 'UTF-8');
                 $domain = UnderscoreEscaper::unescape($escapedDomain);
@@ -61,7 +61,7 @@ class ProfileRequestListener
     }
 
     /**
-     * @param \Fox\UtilsBundle\Settings\UserSettingsManager $userSettingsManager
+     * @param \ONGR\UtilsBundle\Settings\UserSettingsManager $userSettingsManager
      */
     public function setUserSettingsManager($userSettingsManager)
     {
@@ -69,7 +69,7 @@ class ProfileRequestListener
     }
 
     /**
-     * @param \Fox\AdminBundle\Settings\SettingsContainer $settingsContainer
+     * @param \ONGR\AdminBundle\Settings\SettingsContainer $settingsContainer
      */
     public function setSettingsContainer($settingsContainer)
     {

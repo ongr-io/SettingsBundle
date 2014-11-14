@@ -90,7 +90,7 @@ angular
                 $http({
                     method: "DELETE",
                     url: Routing.generate(
-                        'fox_admin_setting_remove',
+                        'ongr_admin_setting_remove',
                         {
                             name: setting.name,
                             domain: setting.domain,
@@ -111,7 +111,7 @@ angular
             $scope.saveStatus = function($event, setting) {
                 var status = $event.target.innerHTML;
                 var link = Routing.generate(
-                    'fox_admin_setting_ng_edit',
+                    'ongr_admin_setting_ng_edit',
                     {
                         name: setting.name,
                         domain: setting.domain,
@@ -135,7 +135,7 @@ angular
              */
             $scope.editLink = function(setting) {
                 return Routing.generate(
-                    'fox_admin_setting_edit',
+                    'ongr_admin_setting_edit',
                     {
                         name: setting.name,
                         domain: setting.domain

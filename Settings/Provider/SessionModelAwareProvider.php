@@ -13,10 +13,10 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Settings\Provider;
+namespace ONGR\AdminBundle\Settings\Provider;
 
-use Fox\AdminBundle\Model\SettingModel;
-use Fox\AdminBundle\Settings\SettingsProviderInterface;
+use ONGR\AdminBundle\Model\SettingModel;
+use ONGR\AdminBundle\Settings\SettingsProviderInterface;
 use Fox\DDALBundle\Core\Query;
 use Fox\DDALBundle\Exception\ResponseException;
 use Fox\DDALBundle\Session\SessionModelAwareInterface;

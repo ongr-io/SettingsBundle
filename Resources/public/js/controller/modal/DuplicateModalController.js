@@ -37,7 +37,7 @@ angular
              * @param newDomain string
              */
             $scope.copy = function(newDomain) {
-                requestUrl = Routing.generate('fox_admin_setting_copy', {
+                requestUrl = Routing.generate('ongr_admin_setting_copy', {
                     name: $scope.setting.name,
                     from: $scope.setting.domain,
                     to: newDomain

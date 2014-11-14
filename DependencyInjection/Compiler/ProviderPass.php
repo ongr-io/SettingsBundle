@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\DependencyInjection\Compiler;
+namespace ONGR\AdminBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -35,10 +35,10 @@ class ProviderPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $orderedDomains = $container->getParameter('fox_admin.settings_container.domains');
+        $orderedDomains = $container->getParameter('ongr_admin.settings_container.domains');
         $providers = array_flip($orderedDomains);
 
-        $providerDefinitions = $container->findTaggedServiceIds('fox_admin.settings_provider');
+        $providerDefinitions = $container->findTaggedServiceIds('ongr_admin.settings_provider');
 
         foreach ($providerDefinitions as $serviceId => $tags) {
             foreach ($tags as $tag) {
@@ -71,7 +71,7 @@ class ProviderPass implements CompilerPassInterface
         });
         $providers = array_reverse($providers);
 
-        $settingsContainer = $container->getDefinition('fox_admin.settings_container');
+        $settingsContainer = $container->getDefinition('ongr_admin.settings_container');
 
         foreach ($providers as $provider) {
             $settingsContainer->addMethodCall('addProvider', [new Reference($provider['id'])]);
@@ -88,10 +88,10 @@ class ProviderPass implements CompilerPassInterface
      */
     protected function generateProvider(ContainerBuilder $container, $domain)
     {
-        $id = "fox_admin.dynamic_provider.{$domain}";
-        $provider = new Definition($container->getParameter('fox_admin.settings_provider.class'), [$domain]);
-        $provider->addMethodCall('setSessionModel', [new Reference('fox_ddal.session.admin.settingModel')]);
-        $provider->addTag('fox_admin.settings_provider', ['domain' => $domain]);
+        $id = "ongr_admin.dynamic_provider.{$domain}";
+        $provider = new Definition($container->getParameter('ongr_admin.settings_provider.class'), [$domain]);
+        $provider->addMethodCall('setSessionModel', [new Reference('ongr_ddal.session.admin.settingModel')]);
+        $provider->addTag('ongr_admin.settings_provider', ['domain' => $domain]);
         $container->setDefinition($id, $provider);
 
         return $id;

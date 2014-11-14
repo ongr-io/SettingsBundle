@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Settings;
+namespace ONGR\AdminBundle\Settings;
 
 /**
  * This interface provides all app settings

@@ -13,9 +13,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional\EventListener;
+namespace ONGR\AdminBundle\Tests\Functional\EventListener;
 
-use Fox\AdminBundle\EventListener\ProfileRequestListener;
+use ONGR\AdminBundle\EventListener\ProfileRequestListener;
 
 class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -31,10 +31,10 @@ class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
         // Case #0. No profiles selected
         $cases[] = [[], []];
         // Case #1. One profile selected
-        $cases[] = [['fox_admin_domain_foo-2e-com' => true], ['foo.com']];
+        $cases[] = [['ongr_admin_domain_foo-2e-com' => true], ['foo.com']];
         // Case #3. One profile unselected
         $cases[] = [
-            ['fox_admin_domain_foo-2e-com' => false, 'fox_admin_domain_bar-2e-com' => true],
+            ['ongr_admin_domain_foo-2e-com' => false, 'ongr_admin_domain_bar-2e-com' => true],
             ['bar.com']
         ];
 
@@ -54,7 +54,7 @@ class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
 
         $settingsContainer = $this
-            ->getMockBuilder('\Fox\AdminBundle\Settings\SettingsContainer')
+            ->getMockBuilder('\ONGR\AdminBundle\Settings\SettingsContainer')
             ->disableOriginalConstructor()
             ->getMock();
         $i = 0;
@@ -67,7 +67,7 @@ class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
         // Mock users manager
 
         $userSettingsManager = $this
-            ->getMockBuilder('\Fox\UtilsBundle\Settings\UserSettingsManager')
+            ->getMockBuilder('\ONGR\UtilsBundle\Settings\UserSettingsManager')
             ->disableOriginalConstructor()
             ->getMock();
         $userSettingsManager->expects($this->once())->method('getSettings')->willReturn($userSettings);

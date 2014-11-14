@@ -13,10 +13,10 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional\Controller;
+namespace ONGR\AdminBundle\Tests\Functional\Controller;
 
-use Fox\AdminBundle\Controller\SettingsManagerController;
-use Fox\AdminBundle\Model\SettingModel;
+use ONGR\AdminBundle\Controller\SettingsManagerController;
+use ONGR\AdminBundle\Model\SettingModel;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -58,7 +58,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
     public function testSetSettingAction($name, $value, $status = self::HTTP_OK)
     {
         $manager = $this
-            ->getMockBuilder('Fox\AdminBundle\Service\SettingsManager')
+            ->getMockBuilder('ONGR\AdminBundle\Service\SettingsManager')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -70,7 +70,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
         }
 
         $container = new ContainerBuilder();
-        $container->set('fox_admin.settings_manager', $manager);
+        $container->set('ongr_admin.settings_manager', $manager);
 
         $controller = new SettingsManagerController();
         $controller->setContainer($container);
@@ -95,7 +95,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(json_encode(['setting' => ['data' => ['value' => 'foobaz']]])));
 
         $manager = $this
-            ->getMockBuilder('Fox\AdminBundle\Service\SettingsManager')
+            ->getMockBuilder('ONGR\AdminBundle\Service\SettingsManager')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -114,7 +114,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
             ->with($model);
 
         $container = new ContainerBuilder();
-        $container->set('fox_admin.settings_manager', $manager);
+        $container->set('ongr_admin.settings_manager', $manager);
 
         $controller = new SettingsManagerController();
         $controller->setContainer($container);

@@ -13,10 +13,10 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional\Service;
+namespace ONGR\AdminBundle\Tests\Functional\Service;
 
-use Fox\AdminBundle\Model\SettingModel;
-use Fox\AdminBundle\Service\SettingsManager;
+use ONGR\AdminBundle\Model\SettingModel;
+use ONGR\AdminBundle\Service\SettingsManager;
 use Fox\DDALBundle\Exception\DocumentNotFoundException;
 use Fox\DDALBundle\Session\SessionModelInterface;
 use Symfony\Component\Translation\Translator;
@@ -39,7 +39,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $model->setDocumentId($domain . '_' . $name);
         $model->assign([
             'name' => $name,
-            'description' => 'fox_admin.' . $name,
+            'description' => 'ongr_admin.' . $name,
             'data' => (object)['value' => $value],
             'type' => $type,
             'domain' => $domain
@@ -176,7 +176,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $manager->setSessionModel($sessionModel);
 
         $model = $manager->get('bar_name', 'foo_domain', false, $type);
-        $this->assertInstanceOf('\Fox\AdminBundle\Model\SettingModel', $model);
+        $this->assertInstanceOf('\ONGR\AdminBundle\Model\SettingModel', $model);
         $this->assertEquals($type, $model->type);
         $this->assertEquals($defaultValue, $model->data['value']);
     }

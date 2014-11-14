@@ -13,11 +13,11 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Settings;
+namespace ONGR\AdminBundle\Settings;
 
-use Fox\AdminBundle\Service\DomainsManager;
-use Fox\AdminBundle\Service\UnderscoreEscaper;
-use Fox\UtilsBundle\Settings\SettingsStructure;
+use ONGR\AdminBundle\Service\DomainsManager;
+use ONGR\AdminBundle\Service\UnderscoreEscaper;
+use ONGR\UtilsBundle\Settings\SettingsStructure;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
@@ -41,7 +41,7 @@ class PowerUserDomainsProvider
     public function onKernelRequest(GetResponseEvent $event)
     {
         $routeName = $event->getRequest()->get('_route');
-        if ($routeName != 'fox_utils_settings_settings') {
+        if ($routeName != 'ongr_utils_settings_settings') {
             return;
         }
 
@@ -59,10 +59,10 @@ class PowerUserDomainsProvider
 
         $settings = [];
         foreach ($domains as $domain) {
-            $domainId = 'fox_admin_domain_' . UnderscoreEscaper::escape($domain);
+            $domainId = 'ongr_admin_domain_' . UnderscoreEscaper::escape($domain);
             $settings[$domainId] = [
                 'name' => $domain,
-                'category' => 'fox_admin_domains',
+                'category' => 'ongr_admin_domains',
             ];
         }
 
@@ -70,7 +70,7 @@ class PowerUserDomainsProvider
     }
 
     /**
-     * @param \Fox\AdminBundle\Settings\PowerUserDomainsProvider $domainSettingsProvider
+     * @param \ONGR\AdminBundle\Settings\PowerUserDomainsProvider $domainSettingsProvider
      */
     public function setDomainManager($domainSettingsProvider)
     {
@@ -78,7 +78,7 @@ class PowerUserDomainsProvider
     }
 
     /**
-     * @param \Fox\UtilsBundle\Settings\SettingsStructure $settingsStructure
+     * @param \ONGR\UtilsBundle\Settings\SettingsStructure $settingsStructure
      */
     public function setSettingsStructure($settingsStructure)
     {

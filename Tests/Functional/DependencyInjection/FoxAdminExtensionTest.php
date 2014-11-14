@@ -13,9 +13,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional\DependencyInjection;
+namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection;
 
-use Fox\AdminBundle\DependencyInjection\FoxAdminExtension;
+use ONGR\AdminBundle\DependencyInjection\FoxAdminExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class FoxAdminExtensionTest extends \PHPUnit_Framework_TestCase
@@ -29,11 +29,11 @@ class FoxAdminExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
 
-        $container->setParameter('fox_ddal.model_map', []);
-        $container->setParameter('fox_utils.settings.categories', []);
-        $container->setParameter('fox_utils.settings.settings', []);
+        $container->setParameter('ongr_ddal.model_map', []);
+        $container->setParameter('ongr_utils.settings.categories', []);
+        $container->setParameter('ongr_utils.settings.settings', []);
         $container->setParameter(
-            'fox_ddal.driver_map.elastic_search',
+            'ongr_ddal.driver_map.elastic_search',
             [
                 'map' => []
             ]
@@ -54,14 +54,14 @@ class FoxAdminExtensionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             [
-                'SettingModel.class' => 'Fox\AdminBundle\Model\SettingModel',
+                'SettingModel.class' => 'ONGR\AdminBundle\Model\SettingModel',
             ],
-            $container->getParameter('fox_ddal.model_map')
+            $container->getParameter('ongr_ddal.model_map')
         );
-        $this->assertTrue($container->hasDefinition('fox_admin.elastic_search_driver'));
-        $definition = $container->getDefinition('fox_admin.elastic_search_driver');
+        $this->assertTrue($container->hasDefinition('ongr_admin.elastic_search_driver'));
+        $definition = $container->getDefinition('ongr_admin.elastic_search_driver');
         $this->assertEquals('Fox\DDALBundle\ElasticSearch\ElasticSearchDriver', $definition->getClass());
-        $this->assertArrayHasKey('setting', $container->getParameter('fox_admin.connection.mapping'));
+        $this->assertArrayHasKey('setting', $container->getParameter('ongr_admin.connection.mapping'));
     }
 
     /**
@@ -72,10 +72,10 @@ class FoxAdminExtensionTest extends \PHPUnit_Framework_TestCase
         $container = $this->getContainer();
         $extension = new FoxAdminExtension();
 
-        $extension->load(['fox_admin' => ['domains' => ['one', 'two']]], $container);
+        $extension->load(['ongr_admin' => ['domains' => ['one', 'two']]], $container);
 
-        $this->assertTrue($container->hasParameter('fox_admin.settings_container.domains'));
-        $this->assertEquals(['one', 'two'], $container->getParameter('fox_admin.settings_container.domains'));
+        $this->assertTrue($container->hasParameter('ongr_admin.settings_container.domains'));
+        $this->assertEquals(['one', 'two'], $container->getParameter('ongr_admin.settings_container.domains'));
     }
 
     /**
@@ -164,25 +164,25 @@ class FoxAdminExtensionTest extends \PHPUnit_Framework_TestCase
 
         $extension = new FoxAdminExtension();
 
-        $extension->load(['fox_admin' => $config], $container);
+        $extension->load(['ongr_admin' => $config], $container);
 
         // index
-        $this->assertTrue($container->hasParameter('fox_admin.connection.index_name'));
-        $this->assertEquals($expectedIndex, $container->getParameter('fox_admin.connection.index_name'));
+        $this->assertTrue($container->hasParameter('ongr_admin.connection.index_name'));
+        $this->assertEquals($expectedIndex, $container->getParameter('ongr_admin.connection.index_name'));
 
         // host
-        $this->assertTrue($container->hasParameter('fox_admin.connection.host'));
-        $this->assertEquals($expectedHost, $container->getParameter('fox_admin.connection.host'));
+        $this->assertTrue($container->hasParameter('ongr_admin.connection.host'));
+        $this->assertEquals($expectedHost, $container->getParameter('ongr_admin.connection.host'));
 
         // port
-        $this->assertTrue($container->hasParameter('fox_admin.connection.port'));
-        $this->assertEquals($expectedPort, $container->getParameter('fox_admin.connection.port'));
+        $this->assertTrue($container->hasParameter('ongr_admin.connection.port'));
+        $this->assertEquals($expectedPort, $container->getParameter('ongr_admin.connection.port'));
 
         // index settings
-        $this->assertTrue($container->hasParameter('fox_admin.settings_model_connection.settings'));
+        $this->assertTrue($container->hasParameter('ongr_admin.settings_model_connection.settings'));
         $this->assertEquals(
             $expectedSettings,
-            $container->getParameter('fox_admin.settings_model_connection.settings')
+            $container->getParameter('ongr_admin.settings_model_connection.settings')
         );
     }
 }

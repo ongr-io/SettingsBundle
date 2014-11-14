@@ -15,15 +15,15 @@
 
 namespace ONGR\AdminBundle;
 
-use Fox\AdminBundle\DependencyInjection\Compiler\ProviderPass;
-use Fox\AdminBundle\DependencyInjection\Compiler\SettingAwareFactoryPass;
+use ONGR\AdminBundle\DependencyInjection\Compiler\ProviderPass;
+use ONGR\AdminBundle\DependencyInjection\Compiler\SettingAwareFactoryPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * This class is used to register component into Symfony app kernel.
  */
-class FoxAdminBundle extends Bundle
+class ONGRAdminBundle extends Bundle
 {
     /**
      * {@inheritdoc}

@@ -13,9 +13,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional\DependencyInjection;
+namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection;
 
-use Fox\AdminBundle\DependencyInjection\Configuration;
+use ONGR\AdminBundle\DependencyInjection\Configuration;
 use Symfony\Component\Config\Definition\Processor;
 
 class ConfigurationTest extends \PHPUnit_Framework_TestCase

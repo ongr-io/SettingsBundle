@@ -13,11 +13,11 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Integration\Settings\Provider;
+namespace ONGR\AdminBundle\Tests\Integration\Settings\Provider;
 
-use Fox\AdminBundle\Model\SettingModel;
-use Fox\AdminBundle\Settings\Provider\SessionModelAwareProvider;
-use Fox\AdminBundle\Tests\Integration\BaseTest;
+use ONGR\AdminBundle\Model\SettingModel;
+use ONGR\AdminBundle\Settings\Provider\SessionModelAwareProvider;
+use ONGR\AdminBundle\Tests\Integration\BaseTest;
 
 /**
  * Tests for SessionModelAwareProvider

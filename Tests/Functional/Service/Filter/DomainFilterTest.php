@@ -13,9 +13,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional\Service\Filter;
+namespace ONGR\AdminBundle\Tests\Functional\Service\Filter;
 
-use Fox\AdminBundle\Service\Filter\DomainFilter;
+use ONGR\AdminBundle\Service\Filter\DomainFilter;
 
 class DomainFilterTest extends \PHPUnit_Framework_TestCase
 {

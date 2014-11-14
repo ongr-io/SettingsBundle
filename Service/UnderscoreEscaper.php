@@ -13,7 +13,7 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Service;
+namespace ONGR\AdminBundle\Service;
 
 /**
  * Handles string escaping and unescaping

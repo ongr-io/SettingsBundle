@@ -13,11 +13,11 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional\Service;
+namespace ONGR\AdminBundle\Tests\Functional\Service;
 
-use Fox\AdminBundle\Exception\SettingNotFoundException;
-use Fox\AdminBundle\Service\SettingAwareServiceFactory;
-use Fox\AdminBundle\Settings\SettingsContainerInterface;
+use ONGR\AdminBundle\Exception\SettingNotFoundException;
+use ONGR\AdminBundle\Service\SettingAwareServiceFactory;
+use ONGR\AdminBundle\Settings\SettingsContainerInterface;
 
 /**
  * Test class for SettingAwareServiceFactory
@@ -36,7 +36,7 @@ class SettingAwareServiceFactoryTest extends \PHPUnit_Framework_TestCase
             'test_variable_4' => 'testValue4',
         ];
         /** @var \PHPUnit_Framework_MockObject_MockObject|SettingsContainerInterface $settingsContainer */
-        $settingsContainer = $this->getMockBuilder('Fox\AdminBundle\Settings\SettingsContainerInterface')
+        $settingsContainer = $this->getMockBuilder('ONGR\AdminBundle\Settings\SettingsContainerInterface')
             ->setMethods(['addProvider', 'get'])
             ->getMock();
 
@@ -78,7 +78,7 @@ class SettingAwareServiceFactoryTest extends \PHPUnit_Framework_TestCase
     public function testGetException()
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject|SettingsContainerInterface $settingsContainer */
-        $settingsContainer = $this->getMockBuilder('Fox\AdminBundle\Settings\SettingsContainerInterface')
+        $settingsContainer = $this->getMockBuilder('ONGR\AdminBundle\Settings\SettingsContainerInterface')
             ->setMethods(['addProvider', 'get'])
             ->getMock();
 

@@ -49,7 +49,7 @@ angular
                 scope.save = function() {
                     element.removeClass('active');
 
-                    requestUrl = Routing.generate('fox_admin_setting_ng_edit',
+                    requestUrl = Routing.generate('ongr_admin_setting_ng_edit',
                         {
                             name: scope.setting.name,
                             domain: scope.setting.domain

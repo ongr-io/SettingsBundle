@@ -13,9 +13,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional\Settings\Provider;
+namespace ONGR\AdminBundle\Tests\Functional\Settings\Provider;
 
-use Fox\AdminBundle\Settings\Provider\SessionModelAwareProvider;
+use ONGR\AdminBundle\Settings\Provider\SessionModelAwareProvider;
 
 /**
  * Tests for SessionModelAwareProvider

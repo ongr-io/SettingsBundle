@@ -13,9 +13,9 @@
  *************************************************************************
  */
 
-namespace Fox\AdminBundle\Tests\Functional;
+namespace ONGR\AdminBundle\Tests\Functional;
 
-use Fox\AdminBundle\FoxAdminBundle;
+use ONGR\AdminBundle\FoxAdminBundle;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
