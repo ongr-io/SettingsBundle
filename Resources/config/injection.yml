@@ -1,3 +1,0 @@
-parameters:
-    ongr_admin.ongr_ddal.model_map:
-        SettingModel.class: ONGR\AdminBundle\Model\SettingModel

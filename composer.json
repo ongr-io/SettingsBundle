@@ -10,16 +10,6 @@
             "homepage": "http://www.nfq.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:nfq-extremes/fox-utils.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:nfq-extremes/fox-qa.git"
-        }
-    ],
     "require": {
         "php": ">=5.4",
         "symfony/symfony": "~2.3",
@@ -32,8 +22,6 @@
         "friendsofsymfony/jsrouting-bundle": "~1.5"
     },
     "require-dev": {
-        "nfq-extremes/fox-utils" : "~1.3",
-        "nfq-extremes/fox-qa": "1.*",
         "phpunit/phpunit": "~4.2",
         "squizlabs/php_codesniffer": "~1.5"
     },
