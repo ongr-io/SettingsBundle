@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 class EnvironmentVariablesPass implements CompilerPassInterface
 {
     /**
-     * Finds environment variables prefixed with FOXX__ and changes default ones.
+     * Finds environment variables prefixed with ongr__ and changes default ones.
      *
      * @param ContainerBuilder $container
      */

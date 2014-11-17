@@ -31,8 +31,8 @@ class EnvironmentVariablesPassTest extends \PHPUnit_Framework_TestCase
         $expectedParameter = ['ongr_utils.environment_variables_pass_test_param' => 'test'];
         $out[] = [$variables, $expectedParameter];
 
-        // Case #1 FOXX shouldn't be matched.
-        $variables = ['FOXX__ongr_utils__environment_variables_pass_test_param' => 'test'];
+        // Case #1 TEST shouldn't be matched.
+        $variables = ['TEST__ongr_utils__environment_variables_pass_test_param' => 'test'];
         $expectedParameter = [];
         $out[] = [$variables, $expectedParameter];
 
