@@ -26,6 +26,5 @@ class ONGRAdminExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-
     }
 }

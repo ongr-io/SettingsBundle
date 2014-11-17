@@ -16,7 +16,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
- * This is the class that loads and manages bundle configuration
+ * This is the class that loads and manages bundle configuration.
  */
 class Configuration implements ConfigurationInterface
 {
