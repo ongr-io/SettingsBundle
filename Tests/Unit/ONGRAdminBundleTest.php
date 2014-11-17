@@ -18,7 +18,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-class ONGRUtilsBundleTest extends \PHPUnit_Framework_TestCase
+class ONGRAdminBundleTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * List of passes, which should not be added to compiler.

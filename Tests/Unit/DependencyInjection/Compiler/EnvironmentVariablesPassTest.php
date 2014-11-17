@@ -27,17 +27,17 @@ class EnvironmentVariablesPassTest extends \PHPUnit_Framework_TestCase
     public function dataProcess()
     {
         // Case #0 simple common test case.
-        $variables = ['ongr__ongr_utils__environment_variables_pass_test_param' => 'test'];
-        $expectedParameter = ['ongr_utils.environment_variables_pass_test_param' => 'test'];
+        $variables = ['ongr__ongr_admin__environment_variables_pass_test_param' => 'test'];
+        $expectedParameter = ['ongr_admin.environment_variables_pass_test_param' => 'test'];
         $out[] = [$variables, $expectedParameter];
 
         // Case #1 TEST shouldn't be matched.
-        $variables = ['TEST__ongr_utils__environment_variables_pass_test_param' => 'test'];
+        $variables = ['TEST__ongr_admin__environment_variables_pass_test_param' => 'test'];
         $expectedParameter = [];
         $out[] = [$variables, $expectedParameter];
 
         // Case #2 One underscore shouldn't be sufficient.
-        $variables = ['ongr_ongr_utils__environment_variables_pass_test_param' => 'test'];
+        $variables = ['ongr_ongr_admin__environment_variables_pass_test_param' => 'test'];
         $expectedParameter = [];
         $out[] = [$variables, $expectedParameter];
 

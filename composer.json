@@ -10,6 +10,12 @@
             "homepage": "http://www.nfq.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:ongr-io/CookiesBundle.git"
+        }
+    ],
     "require": {
         "php": ">=5.4",
         "symfony/symfony": "~2.3",
@@ -18,6 +24,7 @@
         "symfony/monolog-bundle": "~2.0",
         "ongr/elasticsearch-bundle": ">=0.1,<2",
         "ongr/content-bundle": "~0.1",
+        "ongr/cookies-bundle": "dev-master",
         "tedivm/stash-bundle": "0.4.*",
         "friendsofsymfony/jsrouting-bundle": "~1.5"
     },
