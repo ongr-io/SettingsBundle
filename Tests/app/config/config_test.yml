@@ -34,25 +34,6 @@ monolog:
             type:   console
             bubble: false
 
-stash:
-    caches:
-        files:
-            handlers: [ FileSystem ]
-            FileSystem:
-                dirSplit:               2
-                path:                   %kernel.cache_dir%/stash
-                filePermissions:        0660
-                dirPermissions:         0770
-                memKeyLimit:            20
-
-ongr_admin:
-    currency:
-        default: EUR
-        exchange:
-            cache: stash.files_cache
-            driver:
-                custom: custom_exchange_driver_service
-
 services:
     ongr_admin.environment_variables_pass_test_service:
         class: ONGR\AdminBundle\Service\FileLockService
@@ -60,21 +41,13 @@ services:
             - ''
             - %ongr_admin.environment_variables_pass_test_param%
 
-    custom_exchange_driver_service:
-        class: ONGR\AdminBundle\Tests\Fixtures\Currency\CurrencyGetterService
-
-    foo_settings_provider:
-        class: ONGR\AdminBundle\Tests\FooSettingsProvider
-        tags:
-            - { name: ongr_admin.settings_provider, method: getFooSets } # method attribute is optional
-
     project.cookie_foo:
-        class: %ongr_admin.cookie.json.class%
+        class: %ongr_cookie.json.class%
         arguments: [ cookie_foo ]
         calls:
             - [setDefaults, [{http_only: false}]]
         tags:
-            - { name: ongr_admin.cookie }
+            - { name: ongr_cookie.cookie }
 
     project.controller.cookie:
         class: ONGR\AdminBundle\Tests\Fixtures\Cookie\CookieController
@@ -87,7 +60,7 @@ services:
             - [setContainer, [@service_container]]
 
     project.cookie.ab_settings:
-        class: %ongr_admin.cookie.json.class%
+        class: %ongr_cookie.json.class%
         arguments: [ ongr_ab_settings ]
         tags:
-            - { name: ongr_admin.cookie }
+            - { name: ongr_cookie.cookie }

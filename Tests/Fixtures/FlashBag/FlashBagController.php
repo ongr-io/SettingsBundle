@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Controller for testing flash bag
+ * Controller for testing flash bag.
  */
 class FlashBagController
 {

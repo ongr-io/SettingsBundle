@@ -1,0 +1,9 @@
+parameters:
+    # File locker
+    ongr_admin.file_locker_service.class: ONGR\AdminBundle\Service\FileLockService
+
+services:
+    ongr_admin.file_locker_service:
+        class: %ongr_admin.file_locker_service.class%
+        arguments:
+          - %kernel.cache_dir%

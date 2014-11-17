@@ -27,6 +27,8 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
 
+        $root = $treeBuilder->root('ongr_admin');
+
         return $treeBuilder;
     }
 }

@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Tedivm\StashBundle\TedivmStashBundle(),
+            new ONGR\CookiesBundle\ONGRCookiesBundle(),
             new ONGR\AdminBundle\ONGRAdminBundle(),
         ];
     }

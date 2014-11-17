@@ -1,11 +1,3 @@
-ongr_utils_auth:
-    resource: @ONGRAdminBundle/Resources/config/routing_authentication.yml
-    prefix: auth_prefix
-
-ongr_utils_settings:
-    resource: @ONGRAdminBundle/Resources/config/routing_settings.yml
-    prefix: settings_prefix
-
 project_cookie_read:
     pattern: cookie/read
     defaults:

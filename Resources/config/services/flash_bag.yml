@@ -8,10 +8,10 @@ services:
         class: %ongr_admin.flash_bag.flash_bag.class%
 
     ongr_admin.flash_bag.cookie:
-        class: %ongr_admin.cookie.json.class%
+        class: %ongr_cookie.json.class%
         arguments: [ %ongr_admin.flash_bag.cookie.name% ]
         tags:
-            - { name: ongr_admin.cookie }
+            - { name: ongr_cookie.cookie }
 
     ongr_admin.flash_bag.cookie.injector:
         class: %ongr_admin.flash_bag.cookie.injector.class%
