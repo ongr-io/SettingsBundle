@@ -1,0 +1,14 @@
+parameters:
+    ongr_admin.twig.admin_extension.class: ONGR\AdminBundle\Twig\AdminExtension
+
+services:
+    ongr_admin.twig.admin_extension:
+        class: %ongr_admin.twig.admin_extension.class%
+        arguments:
+            - @ongr_utils.settings.user_settings_manager
+        calls:
+            - [setSettingsContainer, [@ongr_admin.settings_container]]
+            - [setLogger, [@?logger]]
+        tags:
+            - { name: twig.extension }
+            - { name: monolog.logger, channel: admin }
