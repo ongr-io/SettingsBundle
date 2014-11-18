@@ -1,7 +1,7 @@
 parameters:
     # Authentication cookie service
     ongr_admin.authentication.authentication_cookie_service.class: ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService
-    ongr_admin.authentication.authentication_cookie.name: fox_power_user_auth
+    ongr_admin.authentication.authentication_cookie.name: ongr_power_user_auth
     ongr_admin.authentication.authentication_cookie.expiration: P1D # 1 day
     ongr_admin.authentication.authentication_cookie.defaults:
         expires_interval: %ongr_admin.authentication.authentication_cookie.expiration%
@@ -16,7 +16,7 @@ parameters:
 
     # Other services
     ongr_admin.authentication.sessionless_security_context.class: ONGR\AdminBundle\Security\Core\SessionlessSecurityContext
-    ongr_admin.authentication.sessionless_cookie_listener.class: ONGR\AdminBundle\EventListener\SessionlessCookieListener
+    ongr_admin.authentication.sessionless_cookie_listener.class: ONGR\AdminBundle\EventListener\Security\SessionlessCookieListener
 
 services:
     ongr_admin.authentication.sessionless_security_context:
@@ -56,9 +56,9 @@ services:
           - %ongr_admin.authentication.authentication_cookie.expiration%
 
     ongr_admin.authentication.authentication_cookie:
-        class: %ongr_admin.cookie.json.class%
+        class: %ongr_cookie.json.class%
         arguments: [ %ongr_admin.authentication.authentication_cookie.name% ]
         calls:
             - [setDefaults, [%ongr_admin.authentication.authentication_cookie.defaults%]]
         tags:
-            - { name: ongr_admin.cookie }
+            - { name: ongr_cookie.cookie }
