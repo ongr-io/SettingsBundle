@@ -54,7 +54,7 @@ class FileLockServiceTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('../../cache/FileLocks/' . $filename, $lock->getFilename());
 
-        if (!is_null($format)) {
+        if ($format !== null) {
             $this->assertEquals($format, $lock->getDateFormat());
         }
     }
