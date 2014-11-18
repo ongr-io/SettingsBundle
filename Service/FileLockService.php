@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\UtilsBundle\Service;
+namespace ONGR\AdminBundle\Service;
 
 use DateTime;
 use Exception;

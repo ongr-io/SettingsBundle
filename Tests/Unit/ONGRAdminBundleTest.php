@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional;
+namespace ONGR\AdminBundle\Tests\Unit;
 
 use ONGR\AdminBundle\ONGRAdminBundle;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;

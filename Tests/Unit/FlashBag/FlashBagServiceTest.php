@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\FlashBag;
+namespace ONGR\AdminBundle\Tests\Unit\FlashBag;
 
 use ONGR\AdminBundle\FlashBag\DirtyFlashBag;
 
