@@ -35,12 +35,6 @@ monolog:
             bubble: false
 
 services:
-    ongr_admin.environment_variables_pass_test_service:
-        class: ONGR\AdminBundle\Service\FileLockService
-        arguments:
-            - ''
-            - %ongr_admin.environment_variables_pass_test_param%
-
     project.cookie_foo:
         class: %ongr_cookie.json.class%
         arguments: [ cookie_foo ]

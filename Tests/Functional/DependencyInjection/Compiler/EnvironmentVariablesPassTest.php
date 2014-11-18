@@ -11,7 +11,6 @@
 
 namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection\Compiler;
 
-use ONGR\AdminBundle\Service\FileLockService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -28,16 +27,19 @@ class EnvironmentVariablesPassTest extends WebTestCase
         $kernel = self::createClient()->getKernel();
         $container = $kernel->getContainer();
 
-        /** @var FileLockService $fileLockService */
-        $fileLockService = $container->get('ongr_admin.environment_variables_pass_test_service');
-        $this->assertEquals('unchanged_param', $fileLockService->getMode());
+        $this->assertEquals(
+            'unchanged_param',
+            $container->getParameter('ongr_admin.environment_variables_pass_test_param')
+        );
 
         // Now set an env variable and check if it has changed the default one.
         $_SERVER['ongr__ongr_admin__environment_variables_pass_test_param'] = 'successful_change';
         $kernel = self::createClient(['environment' => 'test_alternative'])->getKernel();
         $container = $kernel->getContainer();
 
-        $fileLockService = $container->get('ongr_admin.environment_variables_pass_test_service');
-        $this->assertEquals('successful_change', $fileLockService->getMode());
+        $this->assertEquals(
+            'successful_change',
+            $container->getParameter('ongr_admin.environment_variables_pass_test_param')
+        );
     }
 }
