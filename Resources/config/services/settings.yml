@@ -16,6 +16,9 @@ parameters:
     # Cookie listener
     ongr_admin.settings.settings_cookie_listener.class: ONGR\AdminBundle\EventListener\SettingsCookieListener
 
+    # Settings manager
+    ongr_admin.settings_manager.class: ONGR\AdminBundle\Service\SettingsManager
+
 services:
     ongr_admin.settings.settings_cookie_service:
         class: %ongr_admin.settings.settings_cookie_service.class%
@@ -53,3 +56,9 @@ services:
             - [setDefaults, [%ongr_admin.settings.settings_cookie.defaults%]]
         tags:
             - { name: ongr_cookie.cookie }
+
+    ongr_admin.settings_manager:
+        class: %fox_admin.settings_manager.class%
+        arguments:
+            - @translator
+            - @event_dispatcher
