@@ -8,3 +8,60 @@ ongr_admin_settings_change:
     defaults:
         _controller: ONGRAdminBundle:Settings:changeSetting
         methods: [GET]
+
+ongr_admin_homepage:
+    pattern:  /
+    methods: [GET]
+    defaults:
+        _controller: ONGRAdminBundle:SettingsList:list
+        domain: 'default'
+
+ongr_admin_settings_list:
+    pattern:  /list/{domain}
+    methods: [GET]
+    defaults:
+        _controller: ONGRAdminBundle:SettingsList:list
+        domain: 'default'
+
+ongr_admin_setting_set:
+    pattern:  /setting/set/{name}/{domain}
+    methods: [POST]
+    defaults:
+        _controller: ONGRAdminBundle:SettingsManager:setSetting
+        domain: 'default'
+
+ongr_admin_setting_edit:
+    pattern:  /setting/{name}/edit/{domain}
+    methods: [GET, POST]
+    defaults:
+        _controller: ONGRAdminBundle:SettingsManager:edit
+        domain: 'default'
+    options:
+        expose: true
+
+ongr_admin_setting_ng_edit:
+    pattern:  /setting/ng/{name}/edit/{domain}
+    methods: [POST]
+    defaults:
+        _controller: ONGRAdminBundle:SettingsManager:ngEdit
+        domain: 'default'
+    options:
+        expose: true
+
+ongr_admin_setting_remove:
+    pattern:  /setting/{name}/remove/{domain}
+    methods: [DELETE]
+    defaults:
+        _controller: ONGRAdminBundle:SettingsManager:remove
+        domain: 'default'
+    options:
+        expose: true
+
+ongr_admin_setting_copy:
+    pattern:  /setting/{name}/copy/{from}/{to}
+    methods: [GET]
+    defaults:
+        _controller: ONGRAdminBundle:SettingsManager:copy
+        from: 'default'
+    options:
+        expose: true
