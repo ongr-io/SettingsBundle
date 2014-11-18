@@ -12,7 +12,6 @@
 namespace ONGR\AdminBundle\Controller;
 
 use ONGR\AdminBundle\Service\SettingsManager;
-use ONGR\DDALBundle\Exception\DocumentNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +34,7 @@ class SettingsManagerController extends Controller
      */
     protected function getSettingsManager()
     {
-        if (is_null($this->settingsManager)) {
+        if ($this->settingsManager == null) {
             /** @var SettingsManager settingsManager */
             $this->settingsManager = $this->get('ongr_admin.settings_manager');
         }
@@ -54,10 +53,11 @@ class SettingsManagerController extends Controller
      */
     public function setSettingAction(Request $request, $name, $domain = 'default')
     {
-        $value = json_decode($request->request->get("value"), true);
+        $value = json_decode($request->request->get('value'), true);
 
         if (json_last_error() != JSON_ERROR_NONE) {
-            return new Response(Response::$statusTexts[406], 406); //Not Acceptable
+            // Not Acceptable.
+            return new Response(Response::$statusTexts[406], 406);
         }
 
         $manager = $this->getSettingsManager();
@@ -132,11 +132,7 @@ class SettingsManagerController extends Controller
      */
     public function removeAction($name, $domain)
     {
-        try {
-            $setting = $this->getSettingsManager()->get($name, $domain);
-        } catch (DocumentNotFoundException $exception) {
-            throw $this->createNotFoundException('Setting was not found.');
-        }
+        $setting = $this->getSettingsManager()->get($name, $domain);
 
         $this->getSettingsManager()->remove($setting);
 
@@ -156,11 +152,8 @@ class SettingsManagerController extends Controller
     public function copyAction($name, $from, $to)
     {
         $settingsManager = $this->getSettingsManager();
-        try {
-            $setting = $settingsManager->get($name, $from);
-        } catch (DocumentNotFoundException $exception) {
-            throw $this->createNotFoundException('Setting was not found.');
-        }
+
+        $setting = $settingsManager->get($name, $from);
 
         $this->getSettingsManager()->duplicate($setting, $to);
 

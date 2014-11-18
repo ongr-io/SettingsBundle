@@ -11,99 +11,43 @@
 
 namespace ONGR\AdminBundle\Service;
 
-use ONGR\AdminBundle\Event\SettingChangeEvent;
-use ONGR\AdminBundle\Model\SettingModel;
-use ONGR\DDALBundle\Exception\DocumentNotFoundException;
-use ONGR\DDALBundle\Session\SessionModelAwareInterface;
-use ONGR\DDALBundle\Session\SessionModelInterface;
+//use ONGR\AdminBundle\Event\SettingChangeEvent;
+//use ONGR\AdminBundle\Model\SettingModel;
+//use ONGR\DDALBundle\Exception\DocumentNotFoundException;
+//use ONGR\DDALBundle\Session\SessionModelAwareInterface;
+//use ONGR\DDALBundle\Session\SessionModelInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class SettingsManager implements SessionModelAwareInterface
+class SettingsManager
 {
-    /**
-     * @var SessionModelInterface
-     */
-    protected $sessionModel;
-
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
     /**
      * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param TranslatorInterface      $translator
      * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(TranslatorInterface $translator, EventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher)
     {
-        $this->translator = $translator;
         $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
-     * Returns DDAL session model or throws exception if it is not set
+     * Overwrites setting with given name.
      *
-     * @return SessionModelInterface
-     * @throws \LogicException
-     */
-    protected function getSessionModel()
-    {
-        if ($this->sessionModel === null) {
-            throw new \LogicException('setSessionModel must be called before getSettings.');
-        }
-
-        return $this->sessionModel;
-    }
-
-    /**
-     * overwrites setting with given name
-     *
-     * @param string $name
-     * @param string|array $value
-     * @param string $domain
+     * @param string        $name
+     * @param string|array  $value
+     * @param string        $domain
      *
      * @throws \LogicException
      */
     public function set($name, $value, $domain = 'default')
     {
-        switch (gettype($value)) {
-            case 'boolean':
-                $type = SettingModel::TYPE_BOOLEAN;
-                break;
-            case 'array':
-                $type = SettingModel::TYPE_ARRAY;
-                break;
-            case 'object':
-                $type = SettingModel::TYPE_OBJECT;
-                break;
-            default:
-                $type = SettingModel::TYPE_STRING;
-        }
-
-        $settings = [
-            'name' => $name,
-            'description' => 'ongr_admin.' . $this->translator->trans($name),
-            'data' => (object)['value' => $value],
-            'type' => $type,
-            'domain' => $domain,
-        ];
-
-        $model = new SettingModel();
-        $model->setDocumentId($domain . '_' . $name);
-        $model->assign($settings);
-
-        $this->getSessionModel()->saveDocument($model);
-        $this->getSessionModel()->flush();
-
-        $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('save'));
+        //TODO: implement setting settings
     }
 
     /**
@@ -113,10 +57,7 @@ class SettingsManager implements SessionModelAwareInterface
      */
     public function save(SettingModel $model)
     {
-        $this->getSessionModel()->saveDocument($model);
-        $this->getSessionModel()->flush();
-
-        $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('save'));
+        //TODO: implement saving settings
     }
 
     /**
@@ -126,10 +67,7 @@ class SettingsManager implements SessionModelAwareInterface
      */
     public function remove(SettingModel $model)
     {
-        $this->getSessionModel()->deleteDocumentById($model->getDocumentId());
-        $this->getSessionModel()->flush();
-
-        $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('delete'));
+        //TODO: implement removing settings
     }
 
     /**
@@ -140,21 +78,7 @@ class SettingsManager implements SessionModelAwareInterface
      */
     public function duplicate(SettingModel $setting, $newDomain)
     {
-        $newSetting = clone $setting;
-
-        $newSetting->setDocumentId("{$newDomain}_{$setting->name}");
-        $newSetting->domain = $newDomain;
-
-        $this->save($newSetting);
-    }
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setSessionModel(SessionModelInterface $sessionModel)
-    {
-        $this->sessionModel = $sessionModel;
+        //TODO: implement dublicating settings
     }
 
     /**
@@ -166,22 +90,12 @@ class SettingsManager implements SessionModelAwareInterface
      * @param string $type
      *
      * @return SettingModel
-     * @throws DocumentNotFoundException
      */
     public function get($name, $domain = 'default', $mustExist = true, $type = 'string')
     {
-        try {
-            $setting = $this->getSessionModel()->getDocumentById("{$domain}_{$name}");
-        } catch (DocumentNotFoundException $exception) {
+        //TODO: implement getting settings
 
-            if ($mustExist) {
-                throw $exception;
-            }
-
-            $setting = $this->createSetting($name, $domain, $type);
-        }
-
-        return $setting;
+        return [];
     }
 
     /**
@@ -195,18 +109,6 @@ class SettingsManager implements SessionModelAwareInterface
      */
     protected function createSetting($name, $domain, $type)
     {
-        $setting = new SettingModel();
-        $setting->setDocumentId("{$domain}_{$name}");
-        $setting->name = $name;
-        $setting->domain = $domain;
-        $setting->type = $type;
-
-        switch ($type) {
-            case 'array':
-                $setting->data['value'] = [];
-                break;
-        }
-
-        return $setting;
+        //TODO: implement creating setting
     }
 }
