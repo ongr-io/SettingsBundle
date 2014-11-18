@@ -1,0 +1,3 @@
+# Deprecated. Will be removed in 2.0. Use ./routing/settings.yml instead.
+routing_settings:
+    resource: "@ONGRAdminBundle/Resources/config/routing/settings.yml"

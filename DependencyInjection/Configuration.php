@@ -29,6 +29,44 @@ class Configuration implements ConfigurationInterface
 
         $root = $treeBuilder->root('ongr_admin');
 
+        $root->children()
+                ->arrayNode('power_user')
+                    ->children()
+                        ->arrayNode('categories')
+                            ->isRequired()
+                            ->prototype('array')
+                                ->children()
+                                    ->scalarNode('name')
+                                        ->isRequired()
+                                        ->info('setting category name')
+                                    ->end()
+                                    ->scalarNode('description')
+                                        ->info('setting category description')
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('settings')
+                            ->isRequired()
+                            ->prototype('array')
+                                ->children()
+                                    ->scalarNode('name')
+                                        ->isRequired()
+                                        ->info('setting name')
+                                    ->end()
+                                    ->scalarNode('description')
+                                        ->info('setting description')
+                                    ->end()
+                                    ->scalarNode('category')
+                                        ->isRequired()
+                                        ->info('setting category')
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end();
+
         return $treeBuilder;
     }
 }

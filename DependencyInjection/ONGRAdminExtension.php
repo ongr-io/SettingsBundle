@@ -31,6 +31,24 @@ class ONGRAdminExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
+        $loader->load('services/auth.yml');
         $loader->load('services/flash_bag.yml');
+        $loader->load('services/settings.yml');
+
+        if (isset($config['power_user'])) {
+            $this->loadPowerUserSettings($config['power_user'], $container);
+        }
+    }
+
+    /**
+     * Sets parameters for power user.
+     *
+     * @param array             $config
+     * @param ContainerBuilder  $containerBuilder
+     */
+    protected function loadPowerUserSettings($config, ContainerBuilder $containerBuilder)
+    {
+        $containerBuilder->setParameter('ongr_admin.settings.categories', $config['categories']);
+        $containerBuilder->setParameter('ongr_admin.settings.settings', $config['settings']);
     }
 }
