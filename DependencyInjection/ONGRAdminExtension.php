@@ -29,11 +29,14 @@ class ONGRAdminExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        // Set domains.
+        //$container->setParameter('ongr_admin.settings_container.domains', $config['domains']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yml');
         $loader->load('services/auth.yml');
-        $loader->load('services/flash_bag.yml');
         $loader->load('services/settings.yml');
+        $loader->load('services/flash_bag.yml');
+        $loader->load('services/power_user_settings.yml');
         $loader->load('services/twig_extension.yml');
 
         if (isset($config['power_user'])) {

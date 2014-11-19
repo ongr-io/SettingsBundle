@@ -95,6 +95,9 @@ class SettingsManager
     {
         //TODO: implement getting settings
 
+        /** @var ContentService $service */
+        $contentService = $this->get('ongr_content.content_service');
+
         return [];
     }
 
