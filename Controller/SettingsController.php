@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Controller for managing user settings.
+ * Controller for managing user(Power User) settings.
  */
 class SettingsController extends Controller
 {

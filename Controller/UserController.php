@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Controller for logging in and out a user.
+ * Controller for logging in and out a user (Power User or Admin).
  */
 class UserController extends Controller
 {
