@@ -19,7 +19,7 @@ namespace ONGR\AdminBundle\Service;
 //use Fox\DDALBundle\Session\SessionModelInterface;
 
 /**
- * Fetches all used domains from settings type
+ * Fetches all used domains from settings type.
  */
 class DomainsManager implements SessionModelAwareInterface
 {

@@ -2,28 +2,16 @@ language: php
 php:
   - 5.4
   - 5.5
+  - 5.6
 env:
   - SYMFONY="2.3.*"
-  - SYMFONY="2.5.*"
-matrix:
-  exclude:
-    - php: 5.5
-      env: SYMFONY="2.3.*"
 services:
   - elasticsearch
 install:
-  - composer require --no-update symfony/symfony:${SYMFONY}
-before_install:
-  - secret=`openssl rsautl -decrypt -inkey ~/.ssh/id_rsa -in Tests/app/travis/secret`
-  - openssl aes-256-cbc -k $secret -in Tests/app/travis/id_travis.enc -d -a -out id_travis
-  - ssh-add -D
-  - chmod 600 id_travis
-  - ssh-add ./id_travis
+  - "echo 'script.disable_dynamic: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml"
+  - sudo service elasticsearch restart
 before_script:
-  - composer update --prefer-dist
+  - composer install
 script:
-  - vendor/bin/phpunit --coverage-text
-  - vendor/bin/phpcs -p --standard=$TRAVIS_BUILD_DIR/vendor/ongr/ongr-strict-standard/ONGR --ignore=vendor/,Tests/app/,Resources/public/ ./
-cache:
-  directories:
-    - vendor/
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+  - vendor/bin/phpcs -p --standard=PSR2 --ignore=vendor/,Tests/app/ ./
