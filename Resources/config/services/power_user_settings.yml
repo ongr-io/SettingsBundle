@@ -1,4 +1,3 @@
-#todo: Should we merge with power_user_settings????
 parameters:
     # Cookie service
     ongr_admin.settings.settings_cookie.name: ongr_power_user_settings
@@ -19,14 +18,6 @@ parameters:
 
     # Settings manager
     ongr_admin.settings_manager.class: ONGR\AdminBundle\Service\SettingsManager
-
-    ongr_admin.settings_provider.class: ONGR\AdminBundle\Settings\Provider\SessionModelAwareProvider
-    ongr_admin.settings_container.class: ONGR\AdminBundle\Settings\SettingsContainer
-    ongr_admin.setting_aware_service_factory.class: ONGR\AdminBundle\Service\SettingAwareServiceFactory
-    ongr_admin.twig.admin_extension.class: ONGR\AdminBundle\Twig\AdminExtension
-    ongr_admin.listener.cookie_domain.class: ONGR\AdminBundle\EventListener\ProfileRequestListener
-    ongr_admin.domains_manager.class: ONGR\AdminBundle\Service\DomainsManager
-    ongr_admin.power_user_domains_provider.class: ONGR\AdminBundle\Settings\PowerUserDomainsProvider
 
 services:
     ongr_admin.settings.settings_cookie_service:
@@ -66,42 +57,7 @@ services:
         tags:
             - { name: ongr_cookie.cookie }
 
-
-    ongr_admin.settings_container:
-        class: %ongr_admin.settings_container.class%
+    ongr_admin.settings_manager:
+        class: %ongr_admin.settings_manager.class%
         arguments:
-            - @stash
-            #- %ongr_admin.settings_container.domains%
-        tags:
-            - { name: kernel.event_listener, event: ongr_admin.setting_change, method: onSettingChange }
-
-    ongr_admin.setting_aware_service_factory:
-        class: %ongr_admin.setting_aware_service_factory.class%
-        arguments:
-            - @ongr_admin.settings_container
-        calls:
-            - [setLogger, [@?logger]]
-        tags:
-            - { name: monolog.logger, channel: admin }
-
-    ongr_admin.listener.cookie_domain:
-        class: %ongr_admin.listener.cookie_domain.class%
-        calls:
-            - [setSettingsContainer, [@ongr_admin.settings_container]]
-            - [setUserSettingsManager, [@ongr_admin.settings.user_settings_manager]]
-            #- [setSettingModel, [@fox_ddal.session.admin.settingModel]]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
-    #ongr_admin.domains_manager:
-    #    class: %ongr_admin.domains_manager.class%
-    #    calls:
-    #        - [setSessionModel, [@fox_ddal.session.admin.SettingModel]]
-
-    #ongr_admin.power_user_domains_provider:
-    #    class: %ongr_admin.power_user_domains_provider.class%
-    #    calls:
-    #        - [setDomainManager, [@ongr_admin.domains_manager]]
-    #        - [setSettingsStructure, [@ongr_admin.settings.settings_structure]]
-    #    tags:
-    #        - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - @event_dispatcher
