@@ -58,6 +58,6 @@ services:
             - { name: ongr_cookie.cookie }
 
     ongr_admin.settings_manager:
-        class: %fox_admin.settings_manager.class%
+        class: %ongr_admin.settings_manager.class%
         arguments:
             - @event_dispatcher

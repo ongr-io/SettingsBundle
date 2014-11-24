@@ -5,7 +5,7 @@ services:
     ongr_admin.twig.admin_extension:
         class: %ongr_admin.twig.admin_extension.class%
         arguments:
-            - @ongr_utils.settings.user_settings_manager
+            - @ongr_admin.settings.user_settings_manager
         calls:
             - [setSettingsContainer, [@ongr_admin.settings_container]]
             - [setLogger, [@?logger]]
