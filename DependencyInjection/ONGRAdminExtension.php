@@ -41,11 +41,6 @@ class ONGRAdminExtension extends Extension
         if (isset($config['power_user'])) {
             $this->loadPowerUserSettings($config['power_user'], $container);
         }
-
-//        if (isset($config['es_maping'])) {
-//            $this->loadSettingsSettings($config['es_maping'], $container);
-//        }
-
     }
 
     /**
@@ -60,15 +55,4 @@ class ONGRAdminExtension extends Extension
         $containerBuilder->setParameter('ongr_admin.settings.settings', $config['settings']);
     }
 
-    /**
-     * Sets parameters for admin settings ES mapping.
-     *
-     * @param array             $config
-     * @param ContainerBuilder  $containerBuilder
-     */
-    protected function loadSettingsSettings($config, ContainerBuilder $containerBuilder)
-    {
-        //$containerBuilder->setParameter('ongr_admin.settings.categories', $config['categories']);
-        //$containerBuilder->setParameter('ongr_admin.settings.settings', $config['settings']);
-    }
 }
