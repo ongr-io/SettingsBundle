@@ -30,8 +30,6 @@ class ONGRAdminExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         // Set domains.
-        //$container->setParameter('ongr_admin.settings_container.domains', $config['domains']);
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services/auth.yml');
         $loader->load('services/settings.yml');
@@ -39,9 +37,15 @@ class ONGRAdminExtension extends Extension
         $loader->load('services/power_user_settings.yml');
         $loader->load('services/twig_extension.yml');
 
+
         if (isset($config['power_user'])) {
             $this->loadPowerUserSettings($config['power_user'], $container);
         }
+
+//        if (isset($config['es_maping'])) {
+//            $this->loadSettingsSettings($config['es_maping'], $container);
+//        }
+
     }
 
     /**
@@ -54,5 +58,17 @@ class ONGRAdminExtension extends Extension
     {
         $containerBuilder->setParameter('ongr_admin.settings.categories', $config['categories']);
         $containerBuilder->setParameter('ongr_admin.settings.settings', $config['settings']);
+    }
+
+    /**
+     * Sets parameters for admin settings ES mapping.
+     *
+     * @param array             $config
+     * @param ContainerBuilder  $containerBuilder
+     */
+    protected function loadSettingsSettings($config, ContainerBuilder $containerBuilder)
+    {
+        //$containerBuilder->setParameter('ongr_admin.settings.categories', $config['categories']);
+        //$containerBuilder->setParameter('ongr_admin.settings.settings', $config['settings']);
     }
 }

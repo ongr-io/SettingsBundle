@@ -136,7 +136,7 @@ class SettingsContainer implements SettingsContainerInterface
         /** @noinspection PhpUnusedParameterInspection */
         SettingChangeEvent $event
     ) {
-        $this->pool->getItem('fox_admin.settings_cache')->clear();
+        $this->pool->getItem('ongr_admin.settings_cache')->clear();
     }
 
     /**

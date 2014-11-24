@@ -78,7 +78,7 @@ class SettingsManager
      */
     public function duplicate(SettingModel $setting, $newDomain)
     {
-        //TODO: implement dublicating settings
+        //TODO: implement duplicating settings
     }
 
     /**
@@ -94,10 +94,6 @@ class SettingsManager
     public function get($name, $domain = 'default', $mustExist = true, $type = 'string')
     {
         //TODO: implement getting settings
-
-        /** @var ContentService $service */
-        $contentService = $this->get('ongr_content.content_service');
-
         return [];
     }
 

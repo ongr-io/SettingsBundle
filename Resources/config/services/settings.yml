@@ -10,7 +10,6 @@ parameters:
     ongr_admin.power_user_domains_provider.class: ONGR\AdminBundle\Settings\PowerUserDomainsProvider
 
 services:
-
     ongr_admin.settings_container:
         class: %ongr_admin.settings_container.class%
         arguments:
