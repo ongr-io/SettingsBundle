@@ -39,8 +39,9 @@ class ONGRAdminExtension extends Extension
         if (isset($config['power_user'])) {
             $this->loadPowerUserSettings($config['power_user'], $container);
         }
-    }
 
+        $this->injectPowerUserSettings($container);
+    }
     /**
      * Sets parameters for power user.
      *
@@ -52,5 +53,36 @@ class ONGRAdminExtension extends Extension
         $containerBuilder->setParameter('ongr_admin.settings.categories', $config['categories']);
         $containerBuilder->setParameter('ongr_admin.settings.settings', $config['settings']);
     }
+
+    /**
+     * Injects additional Power User settings to service container
+     *
+     * @param ContainerBuilder $container
+     */
+    protected function injectPowerUserSettings(ContainerBuilder $container)
+    {
+        // Add category for ONGR admin settings
+        $categories = $container->getParameter('ongr_admin.settings.categories');
+        $categories['ongr_admin_settings'] = [
+            'name' => 'ONGR admin',
+            'description' => 'Special settings for ONGR admin',
+        ];
+        $categories['ongr_admin_domains'] = [
+            'name' => 'ONGR admin domains',
+            'description' => 'Profiles for domain settings',
+        ];
+        $container->setParameter('ongr_admin.settings.categories', $categories);
+
+
+        // Inject custom Power User settings
+        $settings = $container->getParameter('ongr_admin.settings.settings');
+        $settings['ongr_admin_live_settings'] = [
+            'name' => 'Show settings widget in frontend',
+            'category' => 'ongr_admin_settings',
+            'description' => 'Enables Edit button in shop frontend',
+        ];
+        $container->setParameter('ongr_admin.settings.settings', $settings);
+    }
+
 
 }
