@@ -36,7 +36,6 @@ class ONGRAdminExtension extends Extension
         $loader->load('services/twig_extension.yml');
         $loader->load('services/settings.yml');
 
-
         if (isset($config['power_user'])) {
             $this->loadPowerUserSettings($config['power_user'], $container);
         }
