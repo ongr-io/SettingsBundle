@@ -12,7 +12,7 @@
 namespace ONGR\AdminBundle\Settings;
 
 /**
- * This interface provides structure for settings container
+ * This interface provides structure for settings container.
  */
 interface SettingsContainerInterface
 {

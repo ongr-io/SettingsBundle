@@ -16,6 +16,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use ONGR\AdminBundle\Document\Settings;
+
+use ONGR\FilterManagerBundle\Filters\ViewData;
+use ONGR\FilterManagerBundle\Search\FiltersContainer;
+use ONGR\FilterManagerBundle\Search\FiltersManager;
+
 /**
  * Class SettingsListController. Is used for managing settings in Admin env.
  *
@@ -32,23 +38,69 @@ class SettingsListController extends Controller
      */
     protected function getListData(Request $request)
     {
-        /** @var FilteredList $list */
-//TODO: rewrite this according to https://github.com/ongr-io/FilterManagerBundle/blob/master/Resources/doc/usage.md
-//        $list = $this->get('ongr_admin.browser.filteredList');
-//        $list->setRequest($request);
-//
-//        return [
-//            'state' => $list->getStateLink(),
-//            'data' => iterator_to_array($list->getProducts()),
-//            'filters' => $list->getFiltersViewData(),
-//            'routeParams' => $list->getRouteParamsValues()
-//        ];
+
+        $manager = $this->get('es.manager');
+        $repository = $manager->getRepository('ONGRAdminBundle:Settings');
+
+//        $content = new Settings();
+//        $content->key = "first";
+//        $content->value = "FIRST test VAL";
+//        $manager->persist($content); //adds to bulk container
+//        $manager->commit(); //bulk data to index and fs
+//        var_dump($manager);
+
+
+
+//        try {
+//            //$document = $repository->find('MseS7rmiQq6t6-6pOxpHcQ');
+//            $document = $repository->findBy(['key'=>'first']);
+//            var_dump($document);
+//        } catch(\Exception $e) {
+//            var_dump($e->getMessage());
+//        }
+//        exit;
+
+        ///** @var FilteredList $list */
+        //TODO: rewrite this according to https://github.com/ongr-io/FilterManagerBundle/blob/master/Resources/doc/usage.md
+        //        $list = $this->get('ongr_admin.browser.filteredList');
+        //        $list->setRequest($request);
+        //
+        //        return [
+        //            'state' => $list->getStateLink(),
+        //            'data' => iterator_to_array($list->getProducts()),
+        //            'filters' => $list->getFiltersViewData(),
+        //            'routeParams' => $list->getRouteParamsValues()
+        //        ];
+
+//        $fm = $this->getProductsData($request);
+//        var_dump( $fm, get_class_methods($fm) );
+//        var_dump( $fm->getUrlParameters() );
+//        exit;
+
         return [
             'state' => [],
             'data' => [],
-            'filters' => [],
-            'routeParams' => [],
+            'filters' => [],//$fm->getFilters(),
+            'routeParams' => [],//=> $fm->getUrlParameters() ,
         ];
+    }
+
+    /**
+     * Returns item list.
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    private function getProductsData($request)
+    {
+        //here we get our filter manager
+       return $this->get('ongr_filter_manager.product_list')->execute($request);
+
+//        $container = new FiltersContainer();
+//        $manager = $this->get('es.manager');
+//        $filterManager = new FiltersManager($container, $manager->getRepository('ONGRAdminBundle:Settings'));
+//        return $filterManager->execute($request);
     }
 
     /**
@@ -69,4 +121,6 @@ class SettingsListController extends Controller
             )
         );
     }
+
+
 }
