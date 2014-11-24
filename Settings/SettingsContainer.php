@@ -103,7 +103,7 @@ class SettingsContainer implements SettingsContainerInterface
      */
     protected function getCache()
     {
-        return $this->pool->getItem('ongr.settings_cache', join($this->domains, ','));
+        return $this->pool->getItem('ongr_admin.settings_cache', join($this->domains, ','));
     }
 
     /**
