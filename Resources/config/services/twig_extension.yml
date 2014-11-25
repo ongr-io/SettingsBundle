@@ -23,9 +23,11 @@ parameters:
     ongr_admin.twig.image_path_extension.image_fields_mapping: ~
     ongr_admin.twig.image_path_extension.images_cache_prefix: /cdn
 
+    # Pager extension
+    ongr_admin.twig.extension.pager.class: ONGR\AdminBundle\Twig\PagerExtension
+
 #    ongr_admin.twig.wrapper_extension.class: ONGR\AdminBundle\Twig\WrapperExtension
 #    ongr_admin.twig.slugify_extension.class: ONGR\AdminBundle\Twig\SlugifyExtension
-#    ongr_admin.twig.extension.pager.class: ONGR\AdminBundle\Twig\PagerExtension
 
 services:
     ongr_admin.twig.admin_extension:
@@ -71,12 +73,12 @@ services:
             'mapping': %ongr_admin.twig.image_path_extension.image_fields_mapping%
           - %ongr_admin.twig.image_path_extension.images_cache_prefix%
 
-#    ongr_utils.twig.extension.pager:
-#        class: %ongr_utils.twig.extension.pager.class%
-#        arguments:
-#            - @router
-#        tags:
-#            - { name: twig.extension, alias: pager }
+    ongr_admin.twig.extension.pager:
+        class: %ongr_admin.twig.extension.pager.class%
+        arguments:
+            - @router
+        tags:
+            - { name: twig.extension, alias: pager }
 #
 #    ongr_utils.twig.price_extension:
 #        class: %ongr_utils.twig.price_extension.class%
