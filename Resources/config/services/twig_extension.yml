@@ -26,8 +26,10 @@ parameters:
     # Pager extension
     ongr_admin.twig.extension.pager.class: ONGR\AdminBundle\Twig\PagerExtension
 
+    # Slugify extension
+    ongr_admin.twig.slugify_extension.class: ONGR\AdminBundle\Twig\SlugifyExtension
+
 #    ongr_admin.twig.wrapper_extension.class: ONGR\AdminBundle\Twig\WrapperExtension
-#    ongr_admin.twig.slugify_extension.class: ONGR\AdminBundle\Twig\SlugifyExtension
 
 services:
     ongr_admin.twig.admin_extension:
@@ -40,6 +42,13 @@ services:
         tags:
             - { name: twig.extension }
             - { name: monolog.logger, channel: admin }
+
+    ongr_utils.twig.setting_extension:
+        class: %ongr_admin.twig.setting_extension.class%
+        arguments:
+          - @ongr_admin.settings.user_settings_manager
+        tags:
+          - { name: twig.extension }
 
     ongr_admin.twig.checkout_extension:
         class: %ongr_admin.twig.checkout_extension.class%
@@ -79,44 +88,21 @@ services:
             - @router
         tags:
             - { name: twig.extension, alias: pager }
-#
-#    ongr_utils.twig.price_extension:
-#        class: %ongr_utils.twig.price_extension.class%
-#        tags:
-#          - { name: twig.extension }
-#        arguments:
-#          - %ongr_utils.twig.price_extension.currency.sign%
-#          - %ongr_utils.twig.price_extension.currency.dec_point_separator%
-#          - %ongr_utils.twig.price_extension.currency.thousands_separator%
-#          - %ongr_utils.twig.price_extension.currency.name%
-#          - %ongr_utils.twig.price_extension.display_map%
-#          - %ongr_utils.twig.price_extension.to_print_list%
-#
 
-#
-#    ongr_utils.twig.loader_extension:
-#        class: Twig_Extension_StringLoader
-#        tags:
-#          - { name: 'twig.extension' }
-#
+    ongr_admin.twig.loader_extension:
+        class: Twig_Extension_StringLoader
+        tags:
+          - { name: 'twig.extension' }
 
 
+    ongr_admin.twig.slugify_extension:
+        class: %ongr_admin.twig.slugify_extension.class%
+        tags:
+          - { name: twig.extension }
 
-#
 #    ongr_utils.twig.wrapper_extension:
 #        class: %ongr_utils.twig.wrapper_extension.class%
 #        tags:
 #          - { name: twig.extension }
 #
 
-#    ongr_utils.twig.slugify_extension:
-#        class: %ongr_utils.twig.slugify_extension.class%
-#        tags:
-#          - { name: twig.extension }
-#
-    ongr_utils.twig.setting_extension:
-        class: %ongr_admin.twig.setting_extension.class%
-        arguments:
-          - @ongr_admin.settings.user_settings_manager
-        tags:
-          - { name: twig.extension }
