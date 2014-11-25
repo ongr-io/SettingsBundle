@@ -29,7 +29,8 @@ parameters:
     # Slugify extension
     ongr_admin.twig.slugify_extension.class: ONGR\AdminBundle\Twig\SlugifyExtension
 
-#    ongr_admin.twig.wrapper_extension.class: ONGR\AdminBundle\Twig\WrapperExtension
+    # Wrapper extension
+    ongr_admin.twig.wrapper_extension.class: ONGR\AdminBundle\Twig\WrapperExtension
 
 services:
     ongr_admin.twig.admin_extension:
@@ -100,9 +101,8 @@ services:
         tags:
           - { name: twig.extension }
 
-#    ongr_utils.twig.wrapper_extension:
-#        class: %ongr_utils.twig.wrapper_extension.class%
-#        tags:
-#          - { name: twig.extension }
-#
+    ongr_admin.twig.wrapper_extension:
+        class: %ongr_admin.twig.wrapper_extension.class%
+        tags:
+          - { name: twig.extension }
 
