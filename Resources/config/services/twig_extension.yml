@@ -16,6 +16,13 @@ parameters:
     # Hidden extension
     ongr_admin.twig.hidden_extension.class: ONGR\AdminBundle\Twig\HiddenExtension
 
+    # Image path extension
+    ongr_admin.twig.image_path_extension.class: ONGR\AdminBundle\Twig\ImagePathExtension
+    ongr_admin.twig.image_path_extension.cdn_url: //cdn.fox-project.com
+    ongr_admin.twig.image_path_extension.image_presets: ~
+    ongr_admin.twig.image_path_extension.image_fields_mapping: ~
+    ongr_admin.twig.image_path_extension.images_cache_prefix: /cdn
+
 #    ongr_admin.twig.wrapper_extension.class: ONGR\AdminBundle\Twig\WrapperExtension
 #    ongr_admin.twig.slugify_extension.class: ONGR\AdminBundle\Twig\SlugifyExtension
 #    ongr_admin.twig.extension.pager.class: ONGR\AdminBundle\Twig\PagerExtension
@@ -53,6 +60,17 @@ services:
             tags:
               - { name: twig.extension }
 
+    ongr_admin.twig.image_path_extension:
+        class: %ongr_admin.twig.image_path_extension.class%
+        tags:
+          - { name: twig.extension }
+        arguments:
+          - %ongr_admin.twig.image_path_extension.cdn_url%
+          -
+            'presets': %ongr_admin.twig.image_path_extension.image_presets%
+            'mapping': %ongr_admin.twig.image_path_extension.image_fields_mapping%
+          - %ongr_admin.twig.image_path_extension.images_cache_prefix%
+
 #    ongr_utils.twig.extension.pager:
 #        class: %ongr_utils.twig.extension.pager.class%
 #        arguments:
@@ -72,16 +90,7 @@ services:
 #          - %ongr_utils.twig.price_extension.display_map%
 #          - %ongr_utils.twig.price_extension.to_print_list%
 #
-#    ongr_utils.twig.image_path_extension:
-#        class: %ongr_utils.twig.image_path_extension.class%
-#        tags:
-#          - { name: twig.extension }
-#        arguments:
-#          - %ongr_utils.twig.image_path_extension.cdn_url%
-#          -
-#            'presets': %ongr_utils.twig.image_path_extension.image_presets%
-#            'mapping': %ongr_utils.twig.image_path_extension.image_fields_mapping%
-#          - %ongr_utils.twig.image_path_extension.images_cache_prefix%
+
 #
 #    ongr_utils.twig.loader_extension:
 #        class: Twig_Extension_StringLoader
