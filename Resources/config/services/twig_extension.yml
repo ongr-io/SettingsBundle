@@ -13,9 +13,11 @@ parameters:
     # Encryption extension
     ongr_admin.twig.encryption_extension.class: ONGR\AdminBundle\Twig\EncryptionExtension
 
+    # Hidden extension
+    ongr_admin.twig.hidden_extension.class: ONGR\AdminBundle\Twig\HiddenExtension
+
 #    ongr_admin.twig.wrapper_extension.class: ONGR\AdminBundle\Twig\WrapperExtension
 #    ongr_admin.twig.slugify_extension.class: ONGR\AdminBundle\Twig\SlugifyExtension
-#    ongr_admin.twig.hidden_extension.class: ONGR\AdminBundle\Twig\HiddenExtension
 #    ongr_admin.twig.extension.pager.class: ONGR\AdminBundle\Twig\PagerExtension
 
 services:
@@ -43,6 +45,13 @@ services:
         class: %ongr_admin.twig.encryption_extension.class%
         tags:
           - { name: twig.extension }
+
+    ongr_admin.twig.hidden_extension:
+            class: %ongr_admin.twig.hidden_extension.class%
+            arguments:
+              - @service_container
+            tags:
+              - { name: twig.extension }
 
 #    ongr_utils.twig.extension.pager:
 #        class: %ongr_utils.twig.extension.pager.class%
@@ -100,10 +109,3 @@ services:
           - @ongr_admin.settings.user_settings_manager
         tags:
           - { name: twig.extension }
-
-#    ongr_utils.twig.hidden_extension:
-#            class: %ongr_utils.twig.hidden_extension.class%
-#            arguments:
-#              - @service_container
-#            tags:
-#              - { name: twig.extension }
