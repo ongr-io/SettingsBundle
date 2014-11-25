@@ -1,11 +1,20 @@
 parameters:
+    # Admin extension
     ongr_admin.twig.admin_extension.class: ONGR\AdminBundle\Twig\AdminExtension
-    ongr_admin.twig.encryption_extension.class: ONGR\AdminBundle\Twig\EncryptionExtension
-    ongr_admin.twig.wrapper_extension.class: ONGR\AdminBundle\Twig\WrapperExtension
-    ongr_admin.twig.slugify_extension.class: ONGR\AdminBundle\Twig\SlugifyExtension
-    ongr_admin.twig.hidden_extension.class: ONGR\AdminBundle\Twig\HiddenExtension
+
+    # Settings extension
     ongr_admin.twig.setting_extension.class: ONGR\AdminBundle\Twig\SettingExtension
-    ongr_admin.twig.extension.pager.class: ONGR\AdminBundle\Twig\PagerExtension
+
+    # Checkout extension
+    ongr_admin.twig.checkout_extension.class: ONGR\AdminBundle\Twig\CheckoutExtension
+    ongr_admin.twig.checkout_extension.checkout_path: '/o/'
+    ongr_admin.twig.checkout_extension.ssl: 1
+
+#    ongr_admin.twig.encryption_extension.class: ONGR\AdminBundle\Twig\EncryptionExtension
+#    ongr_admin.twig.wrapper_extension.class: ONGR\AdminBundle\Twig\WrapperExtension
+#    ongr_admin.twig.slugify_extension.class: ONGR\AdminBundle\Twig\SlugifyExtension
+#    ongr_admin.twig.hidden_extension.class: ONGR\AdminBundle\Twig\HiddenExtension
+#    ongr_admin.twig.extension.pager.class: ONGR\AdminBundle\Twig\PagerExtension
 
 services:
     ongr_admin.twig.admin_extension:
@@ -54,15 +63,15 @@ services:
 #        tags:
 #          - { name: 'twig.extension' }
 #
-#    ongr_utils.twig.checkout_extension:
-#        class: %ongr_utils.twig.checkout_extension.class%
-#        tags:
-#          - { name: twig.extension }
-#        arguments:
-#          - @service_container
-#          - %ongr_utils.twig.checkout_extension.checkout_path%
-#          - %ongr_utils.twig.checkout_extension.ssl%
-#
+    ongr_utils.twig.checkout_extension:
+        class: %ongr_admin.twig.checkout_extension.class%
+        tags:
+          - { name: twig.extension }
+        arguments:
+          - @service_container
+          - %ongr_admin.twig.checkout_extension.checkout_path%
+          - %ongr_admin.twig.checkout_extension.ssl%
+
 #    ongr_utils.twig.encryption_extension:
 #        class: %ongr_utils.twig.encryption_extension.class%
 #        tags:
