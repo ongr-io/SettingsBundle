@@ -11,12 +11,6 @@
 
 namespace ONGR\AdminBundle\Service;
 
-//use Fox\DDALBundle\Core\Facet;
-//use Fox\DDALBundle\Core\Query;
-//use Fox\DDALBundle\Core\SessionModel;
-//use Fox\DDALBundle\Query\Aggregations\Terms;
-//use Fox\DDALBundle\Session\SessionModelAwareInterface;
-//use Fox\DDALBundle\Session\SessionModelInterface;
 
 use ONGR\ElasticsearchBundle\DSL\Aggregation\TermsAggregation;
 use ONGR\ElasticsearchBundle\ORM\Repository;
@@ -27,19 +21,6 @@ use ONGR\ElasticsearchBundle\ORM\Repository;
  */
 class DomainsManager implements SessionModelAwareInterface
 {
-    /**
-     * @var SessionModel
-     */
-    protected $sessionModel;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setSessionModel(SessionModelInterface $sessionModel)
-    {
-        $this->sessionModel = $sessionModel;
-    }
-
     /**
      * Get domains list from Elasticsearch.
      *

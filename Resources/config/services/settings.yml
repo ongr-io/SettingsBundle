@@ -93,10 +93,8 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
-    #ongr_admin.domains_manager:
-    #    class: %ongr_admin.domains_manager.class%
-    #    calls:
-    #        - [setSessionModel, [@fox_ddal.session.admin.SettingModel]]
+    ongr_admin.domains_manager:
+        class: %ongr_admin.domains_manager.class%
 
     #ongr_admin.power_user_domains_provider:
     #    class: %ongr_admin.power_user_domains_provider.class%
