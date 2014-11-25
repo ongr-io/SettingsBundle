@@ -16,7 +16,7 @@ use ONGR\ElasticsearchBundle\Document\DocumentInterface;
 use ONGR\ElasticsearchBundle\Document\DocumentTrait;
 
 /**
- * Stores admin settings key - value data.
+ * Stores admin settings.
  *
  * @ES\Document(type="settings")
  */
@@ -28,15 +28,36 @@ class Settings implements DocumentInterface
     /**
      * @var string
      *
-     * @ES\Property(name="key",  type="string", index="not_analyzed")
+     * @ES\Property(name="name", type="string", search_analyzer="standard")
      */
-    public $key;
+    public $name;
 
     /**
      * @var string
      *
-     * @ES\Property(name="value", type="string", search_analyzer="standard")
+     * @ES\Property(name="description", type="string", search_analyzer="standard")
      */
-    public $value;
+    public $description;
+
+    /**
+     * @var string
+     *
+     * @ES\Property(name="domain", type="string", search_analyzer="standard")
+     */
+    public $domain;
+
+    /**
+     * @var string
+     *
+     * @ES\Property(name="type", type="string", search_analyzer="standard")
+     */
+    public $type;
+
+    /**
+     * @var string
+     *
+     * @ES\Property(name="data", type="string", search_analyzer="standard")
+     */
+    public $data;
 
 } 

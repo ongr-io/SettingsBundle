@@ -18,8 +18,12 @@ namespace ONGR\AdminBundle\Service;
 //use Fox\DDALBundle\Session\SessionModelAwareInterface;
 //use Fox\DDALBundle\Session\SessionModelInterface;
 
+use ONGR\ElasticsearchBundle\DSL\Aggregation\TermsAggregation;
+use ONGR\ElasticsearchBundle\ORM\Repository;
+
 /**
  * Fetches all used domains from settings type.
+ * @todo: rewiev and fix - index and data types
  */
 class DomainsManager implements SessionModelAwareInterface
 {
@@ -37,24 +41,23 @@ class DomainsManager implements SessionModelAwareInterface
     }
 
     /**
-     * Get domains from Elasticsearch
+     * Get domains list from Elasticsearch.
      *
      * @return array
      */
     public function getDomains()
     {
-        $aggregation = new Terms();
+        $manager = $this->get('es.manager');
+        $repo = $manager->getRepository('ONGRAdminBundle:Settings');
+
+        //create aggregated domains list from all available settings
+        $aggregation = new TermsAggregation('domain_agg');
         $aggregation->setField('domain');
+        //create query
+        $search = $repo->createSearch()->addAggregation($aggregation)->setFields(['domain']);
+        //process query
+        $results = $repo->execute($search, Repository::RESULTS_ARRAY); //RESULTS_RAW
 
-        $query = new Query();
-        $query->facet->add('domain', $aggregation);
-        $result = $this->sessionModel->findDocuments($query);
-
-        $aggregations = $result->getAggregations();
-        $domainFacet = [];
-        if (isset($aggregations[Facet::KEY_FIELDS])) {
-            $domainFacet = $aggregations[Facet::KEY_FIELDS]['domain'];
-        }
-        return array_keys($domainFacet);
+        return $results;
     }
 }
