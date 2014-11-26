@@ -29,7 +29,14 @@ class ONGRAdminExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        // Set connection settings.
+        $container->setParameter('ongr_admin.connection.index_name', $config['connection']['index_name']);
+        $container->setParameter('ongr_admin.connection.port', $config['connection']['port']);
+        $container->setParameter('ongr_admin.connection.host', $config['connection']['host']);
+
         // Set domains.
+        $container->setParameter('ongr_admin.settings_container.domains', $config['domains']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services/auth.yml');
         $loader->load('services/flash_bag.yml');
@@ -42,6 +49,7 @@ class ONGRAdminExtension extends Extension
 
         $this->injectPowerUserSettings($container);
     }
+
     /**
      * Sets parameters for power user.
      *

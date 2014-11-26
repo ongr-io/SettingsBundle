@@ -12,6 +12,7 @@
 namespace ONGR\AdminBundle;
 
 use ONGR\AdminBundle\DependencyInjection\Compiler\EnvironmentVariablesPass;
+use ONGR\AdminBundle\DependencyInjection\Compiler\ProviderPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -28,5 +29,6 @@ class ONGRAdminBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new EnvironmentVariablesPass());
+        $container->addCompilerPass(new ProviderPass());
     }
 }

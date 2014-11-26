@@ -20,10 +20,29 @@ use ONGR\ElasticsearchBundle\Document\DocumentTrait;
  *
  * @ES\Document(type="settings")
  */
-
-class Settings implements DocumentInterface
+class Setting implements DocumentInterface
 {
     use DocumentTrait;
+
+    /**
+     * @const TYPE_STRING setting model of string type
+     */
+    const TYPE_STRING = 'string';
+
+    /**
+     * @const TYPE_ARRAY setting model of array type
+     */
+    const TYPE_ARRAY = 'array';
+
+    /**
+     * @const TYPE_BOOLEAN setting model of boolean type
+     */
+    const TYPE_BOOLEAN = 'bool';
+
+    /**
+     * @const TYPE_OBJECT setting model of object type
+     */
+    const TYPE_OBJECT = 'object';
 
     /**
      * @var string
@@ -59,5 +78,4 @@ class Settings implements DocumentInterface
      * @ES\Property(name="data", type="string", search_analyzer="standard")
      */
     public $data;
-
-} 
+}

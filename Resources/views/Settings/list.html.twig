@@ -54,21 +54,21 @@
             </div>
         </div>
         {% endverbatim %}
-        {% block pager %}
-            {% if filters.pager is defined %}
-                <div class="pull-right">{{ paginate(filters.pager.pager.pager, 'ognr_admin_settings_list', state) }}</div>
-                <div class="clearfix"></div>
-            {% endif %}
-        {% endblock %}
+        {#{% block pager %}#}
+            {#{% if filters.pager is defined %}#}
+                {#<div class="pull-right">{{ paginate(filters.pager.pager.pager, 'ognr_admin_settings_list', state) }}</div>#}
+                {#<div class="clearfix"></div>#}
+            {#{% endif %}#}
+        {#{% endblock %}#}
     </div>
 {% endblock %}
 
 {% block admin_javascripts %}
-    {% set domain = filters.domain.domain %}
+    {#{% set domain = filters.domain.domain %}#}
     <script type="text/javascript">
-        var setting = {{ data|json_encode|raw }},
-            domains = {{ domain.values|json_encode|raw }},
-            currentDomain = '{{ filters.domain.domain.activeValue|raw }}';
+        {#var setting = {{ data|json_encode|raw }},#}
+            {#domains = {{ domain.values|json_encode|raw }},#}
+            {#currentDomain = '{{ filters.domain.domain.activeValue|raw }}';#}
     </script>
     <script src="{{ asset('bundles/ongradmin/js/controller/SettingsController.js') }}"></script>
     <script src="{{ asset('bundles/ongradmin/js/controller/modal/DuplicateModalController.js') }}"></script>

@@ -70,12 +70,12 @@ services:
             arguments:
               - @service_container
             tags:
-              - { name: twig.extension }
+              - { name: 'twig.extension' }
 
     ongr_admin.twig.image_path_extension:
         class: %ongr_admin.twig.image_path_extension.class%
         tags:
-          - { name: twig.extension }
+          - { name: 'twig.extension' }
         arguments:
           - %ongr_admin.twig.image_path_extension.cdn_url%
           -
@@ -88,7 +88,7 @@ services:
         arguments:
             - @router
         tags:
-            - { name: twig.extension, alias: pager }
+            - { name: 'twig.extension', alias: pager }
 
     ongr_admin.twig.loader_extension:
         class: Twig_Extension_StringLoader
@@ -99,10 +99,10 @@ services:
     ongr_admin.twig.slugify_extension:
         class: %ongr_admin.twig.slugify_extension.class%
         tags:
-          - { name: twig.extension }
+          - { name: 'twig.extension' }
 
     ongr_admin.twig.wrapper_extension:
         class: %ongr_admin.twig.wrapper_extension.class%
         tags:
-          - { name: twig.extension }
+          - { name: 'twig.extension' }
 

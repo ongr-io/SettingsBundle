@@ -12,6 +12,7 @@
 namespace ONGR\AdminBundle\Controller;
 
 //use ONGR\ProductBundle\Service\FilteredList;
+use ONGR\FilterManagerBundle\ONGRFilterManagerBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,9 +39,6 @@ class SettingsListController extends Controller
      */
     protected function getListData(Request $request)
     {
-
-        $manager = $this->get('es.manager');
-        $repository = $manager->getRepository('ONGRAdminBundle:Settings');
 
 //        $content = new Settings();
 //        $content->key = "first";
@@ -77,47 +75,48 @@ class SettingsListController extends Controller
 //        var_dump( $fm->getUrlParameters() );
 //        exit;
 
+
+
+        /** @var ONGR\FilterManagerBundle\FilterManager $fm */
+//        $fm = $this->get('ongr_filter_manager.product_list')->execute($request);
+//        var_dump($fm);
+//        var_dump($this->get('ongr_admin.settings_container')->getDomains());
+        var_dump($this->get('ongr_admin.settings_container')->getDomains());
+        var_dump($this->get('ongr_admin.domains_manager')->getDomains());
+
+//            $manager = $this->get('es.manager');
+//        var_dump(get_class($manager));
+
+
+        exit;
+//        var_dump($fm->getFilters()["search"]->getState()->getUrlParameters() ); echo '<hr/>';
+//        var_dump($fm->getFilters()); echo '<hr/>';
+//        var_dump($this->getFilterManagerResponse($request, $managerName)); echo '<hr/>';
+//        exit;        return $this->render(
+//        $template,
+//        $this->getFilterManagerResponse($request, $managerName);
+
         return [
             'state' => [],
             'data' => [],
-            'filters' => [],//$fm->getFilters(),
+            'filters' => $fm->getFilters(),
             'routeParams' => [],//=> $fm->getUrlParameters() ,
         ];
-    }
-
-    /**
-     * Returns item list.
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
-    private function getProductsData($request)
-    {
-        //here we get our filter manager
-       return $this->get('ongr_filter_manager.product_list')->execute($request);
-
-//        $container = new FiltersContainer();
-//        $manager = $this->get('es.manager');
-//        $filterManager = new FiltersManager($container, $manager->getRepository('ONGRAdminBundle:Settings'));
-//        return $filterManager->execute($request);
     }
 
     /**
      * Renders list page.
      *
      * @param Request   $request
-     * @param string    $domain
      *
      * @return Response
      */
-    public function listAction(Request $request, $domain = 'default')
+    public function listAction(Request $request)
     {
         return $this->render(
             'ONGRAdminBundle:Settings:list.html.twig',
             array_merge(
-                $this->getListData($request),
-                ['domain' => $domain]
+                $this->getListData($request)
             )
         );
     }

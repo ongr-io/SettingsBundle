@@ -11,33 +11,46 @@
 
 namespace ONGR\AdminBundle\Service;
 
-
 use ONGR\ElasticsearchBundle\DSL\Aggregation\TermsAggregation;
 use ONGR\ElasticsearchBundle\ORM\Repository;
+use ONGR\ElasticsearchBundle\ORM\Manager;
 
 /**
  * Fetches all used domains from settings type.
- * @todo: rewiev and fix - index and data types
  */
-class DomainsManager implements SessionModelAwareInterface
+class DomainsManager
 {
     /**
-     * Get domains list from Elasticsearch.
+     * @var Manager
+     */
+    protected $manager;
+
+    /**
+     * Constructor.
+     *
+     * @param Manager $manager
+     */
+    public function __construct(Manager $manager)
+    {
+        $this->manager = $manager;
+    }
+
+    /**
+     * Get domains from Elasticsearch.
      *
      * @return array
      */
     public function getDomains()
     {
-        $manager = $this->get('es.manager');
-        $repo = $manager->getRepository('ONGRAdminBundle:Settings');
+        $repo = $this->manager->getRepository('ONGRAdminBundle:Settings');
 
-        //create aggregated domains list from all available settings
+        // Create aggregated domains list from all available settings.
         $aggregation = new TermsAggregation('domain_agg');
         $aggregation->setField('domain');
-        //create query
+        // Create query.
         $search = $repo->createSearch()->addAggregation($aggregation)->setFields(['domain']);
-        //process query
-        $results = $repo->execute($search, Repository::RESULTS_ARRAY); //RESULTS_RAW
+        // Process query. Get RESULTS_RAW.
+        $results = $repo->execute($search, Repository::RESULTS_ARRAY);
 
         return $results;
     }

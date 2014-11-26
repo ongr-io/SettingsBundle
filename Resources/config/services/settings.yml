@@ -1,9 +1,12 @@
 parameters:
     # Cookie service
+    ongr_admin.settings.settings_cookie_service.class: ONGR\AdminBundle\Settings\SettingsCookieService
     ongr_admin.settings.settings_cookie.name: ongr_power_user_settings
     ongr_admin.settings.settings_cookie.defaults:
         expires_interval: P1Y # 1 year
-    ongr_admin.settings.settings_cookie_service.class: ONGR\AdminBundle\Settings\SettingsCookieService
+
+    # Cookie listener
+    ongr_admin.settings.settings_cookie_listener.class: ONGR\AdminBundle\EventListener\SettingsCookieListener
 
     # Settings structure service
     ongr_admin.settings.settings_structure.class: ONGR\AdminBundle\Settings\SettingsStructure
@@ -13,37 +16,22 @@ parameters:
     # Other services
     ongr_admin.settings.user_settings_manager.class: ONGR\AdminBundle\Settings\UserSettingsManager
 
-    # Cookie listener
-    ongr_admin.settings.settings_cookie_listener.class: ONGR\AdminBundle\EventListener\SettingsCookieListener
-
     # Settings manager
     ongr_admin.settings_manager.class: ONGR\AdminBundle\Service\SettingsManager
 
-    ongr_admin.settings_provider.class: ONGR\AdminBundle\Settings\Provider\SessionModelAwareProvider
     ongr_admin.settings_container.class: ONGR\AdminBundle\Settings\SettingsContainer
     ongr_admin.setting_aware_service_factory.class: ONGR\AdminBundle\Service\SettingAwareServiceFactory
-    ongr_admin.twig.admin_extension.class: ONGR\AdminBundle\Twig\AdminExtension
     ongr_admin.listener.cookie_domain.class: ONGR\AdminBundle\EventListener\ProfileRequestListener
     ongr_admin.domains_manager.class: ONGR\AdminBundle\Service\DomainsManager
-    ongr_admin.power_user_domains_provider.class: ONGR\AdminBundle\Settings\PowerUserDomainsProvider
+
+    ongr_admin.settings_provider.class: ONGR\AdminBundle\Settings\Provider\ManagerAwareProvider
+#    ongr_admin.power_user_domains_provider.class: ONGR\AdminBundle\Settings\PowerUserDomainsProvider
 
 services:
     ongr_admin.settings.settings_cookie_service:
         class: %ongr_admin.settings.settings_cookie_service.class%
         arguments:
           - %ongr_admin.settings.settings_cookie.name%
-
-    ongr_admin.settings.user_settings_manager:
-        class: %ongr_admin.settings.user_settings_manager.class%
-        arguments:
-          - @ongr_admin.authentication.sessionless_security_context
-          - @ongr_admin.settings.settings_structure
-
-    ongr_admin.settings.settings_structure:
-        class: %ongr_admin.settings.settings_structure.class%
-        arguments:
-            - %ongr_admin.settings.settings%
-            - %ongr_admin.settings.categories%
 
     ongr_admin.settings.settings_cookie_listener:
         class: %ongr_admin.settings.settings_cookie_listener.class%
@@ -65,17 +53,28 @@ services:
         tags:
             - { name: ongr_cookie.cookie }
 
+    ongr_admin.settings.user_settings_manager:
+        class: %ongr_admin.settings.user_settings_manager.class%
+        arguments:
+          - @ongr_admin.authentication.sessionless_security_context
+          - @ongr_admin.settings.settings_structure
+
+    ongr_admin.settings.settings_structure:
+        class: %ongr_admin.settings.settings_structure.class%
+        arguments:
+            - %ongr_admin.settings.settings%
+            - %ongr_admin.settings.categories%
+
     ongr_admin.settings_manager:
         class: %ongr_admin.settings_manager.class%
         arguments:
             - @event_dispatcher
 
-
     ongr_admin.settings_container:
         class: %ongr_admin.settings_container.class%
         arguments:
             - @stash
-            #- %ongr_admin.settings_container.domains%
+            - %ongr_admin.settings_container.domains%
         tags:
             - { name: kernel.event_listener, event: ongr_admin.setting_change, method: onSettingChange }
 
@@ -93,12 +92,14 @@ services:
         calls:
             - [setSettingsContainer, [@ongr_admin.settings_container]]
             - [setUserSettingsManager, [@ongr_admin.settings.user_settings_manager]]
-            #- [setSettingModel, [@fox_ddal.session.admin.settingModel]]
+            - [setManager, [@es.manager]]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     ongr_admin.domains_manager:
         class: %ongr_admin.domains_manager.class%
+        arguments:
+            - @es.manager
 
     #ongr_admin.power_user_domains_provider:
     #    class: %ongr_admin.power_user_domains_provider.class%

@@ -1,22 +1,19 @@
 <?php
 
 /*
- *************************************************************************
- * NFQ eXtremes CONFIDENTIAL
- * [2013] - [2014] NFQ eXtremes UAB
- * All Rights Reserved.
- *************************************************************************
- * NOTICE:
- * All information contained herein is, and remains the property of NFQ eXtremes UAB.
- * Dissemination of this information or reproduction of this material is strictly forbidden
- * unless prior written permission is obtained from NFQ eXtremes UAB.
- *************************************************************************
+ * This file is part of the ONGR package.
+ *
+ * (c) NFQ Technologies UAB <info@nfq.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace ONGR\AdminBundle\EventListener;
 
 use ONGR\AdminBundle\Service\UnderscoreEscaper;
-use ONGR\AdminBundle\Settings\Provider\SessionModelAwareProvider;
+use ONGR\AdminBundle\Settings\Provider\ManagerAwareProvider;
+use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\AdminBundle\Settings\SettingsContainer;
 use ONGR\DDALBundle\Session\SessionModelInterface;
 use ONGR\UtilsBundle\Settings\UserSettingsManager;
@@ -37,10 +34,14 @@ class ProfileRequestListener
      */
     protected $settingsContainer;
 
-    /** @var  SessionModelInterface */
-    protected $settingModel;
+    /**
+     * @var Manager
+     */
+    protected $manager;
 
     /**
+     * On kernel request.
+     *
      * @param GetResponseEvent $event
      */
     public function onKernelRequest(
@@ -50,7 +51,7 @@ class ProfileRequestListener
         $settings = $this->userSettingsManager->getSettings();
 
         foreach ($settings as $id => $value) {
-            $prefix = 'fox_admin_domain_';
+            $prefix = 'ongr_admin_domain_';
             if (strpos($id, $prefix) === 0 && $value === true) {
                 $escapedDomain = mb_substr($id, strlen($prefix), null, 'UTF-8');
                 $domain = UnderscoreEscaper::unescape($escapedDomain);
@@ -61,7 +62,7 @@ class ProfileRequestListener
     }
 
     /**
-     * @param \Fox\UtilsBundle\Settings\UserSettingsManager $userSettingsManager
+     * @param \ONGR\AdminBundle\Settings\UserSettingsManager $userSettingsManager
      */
     public function setUserSettingsManager($userSettingsManager)
     {
@@ -69,7 +70,7 @@ class ProfileRequestListener
     }
 
     /**
-     * @param \Fox\AdminBundle\Settings\SettingsContainer $settingsContainer
+     * @param \ONGR\AdminBundle\Settings\SettingsContainer $settingsContainer
      */
     public function setSettingsContainer($settingsContainer)
     {
@@ -77,11 +78,11 @@ class ProfileRequestListener
     }
 
     /**
-     * @param SessionModelInterface $settingModel
+     * @param Manager $manager
      */
-    public function setSettingModel(SessionModelInterface $settingModel)
+    public function setManager(Manager $manager)
     {
-        $this->settingModel = $settingModel;
+        $this->manager = $manager;
     }
 
     /**
@@ -89,12 +90,12 @@ class ProfileRequestListener
      *
      * @param string $domain
      *
-     * @return SessionModelAwareProvider
+     * @return ManagerAwareProvider
      */
     private function buildProvider($domain)
     {
-        $provider = new SessionModelAwareProvider($domain);
-        $provider->setSessionModel($this->settingModel);
+        $provider = new ManagerAwareProvider($domain);
+        $provider->setManager($this->manager);
 
         return $provider;
     }
