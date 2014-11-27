@@ -11,19 +11,15 @@
 
 namespace ONGR\AdminBundle\Controller;
 
-use ONGR\FilterManagerBundle\ONGRFilterManagerBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use ONGR\AdminBundle\Document\Setting;
 use ONGR\FilterManagerBundle\Filters\ViewData;
 use ONGR\FilterManagerBundle\Search\FiltersContainer;
 use ONGR\FilterManagerBundle\Search\FiltersManager;
-use ONGR\ElasticsearchBundle\ORM\Repository;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\FilterManagerBundle\Filters\Widget\Pager\Pager;
 use ONGR\FilterManagerBundle\Filters\Widget\Sort\Sort;
-use ONGR\FilterManagerBundle\Filters\Widget\Search\DocumentField;
 use ONGR\FilterManagerBundle\Filters\Widget\Search\MatchSearch;
 use ONGR\FilterManagerBundle\Filters\Widget\Choice\SingleTermChoice;
 

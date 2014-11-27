@@ -101,10 +101,10 @@ services:
         arguments:
             - @es.manager
 
-    #ongr_admin.power_user_domains_provider:
-    #    class: %ongr_admin.power_user_domains_provider.class%
-    #    calls:
-    #        - [setDomainManager, [@ongr_admin.domains_manager]]
-    #        - [setSettingsStructure, [@ongr_admin.settings.settings_structure]]
-    #    tags:
-    #        - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+#    ongr_admin.power_user_domains_provider:
+#        class: %ongr_admin.power_user_domains_provider.class%
+#        calls:
+#            - [setDomainManager, [@ongr_admin.domains_manager]]
+#            - [setSettingsStructure, [@ongr_admin.settings.settings_structure]]
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

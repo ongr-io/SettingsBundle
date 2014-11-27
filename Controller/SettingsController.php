@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace ONGR\AdminBundle\Controller;
 
 use ONGR\CookiesBundle\Cookie\Model\CookieInterface;

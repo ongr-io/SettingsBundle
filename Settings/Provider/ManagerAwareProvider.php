@@ -69,7 +69,7 @@ class ManagerAwareProvider implements SettingsProviderInterface
         if ($this->manager === null) {
             throw new \LogicException('setManager must be called before getSettings.');
         }
-
+// todo: rewrite this
 //        $query = new Query();
 //        $query->filter->setMust('domain', $this->getDomain());
 //        $query->filter->setLimit($this->getLimit());
