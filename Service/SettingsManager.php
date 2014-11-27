@@ -18,22 +18,50 @@ namespace ONGR\AdminBundle\Service;
 //use ONGR\DDALBundle\Session\SessionModelInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use ONGR\ElasticsearchBundle\ORM\Repository;
+use ONGR\ElasticsearchBundle\ORM\Manager;
+use ONGR\AdminBundle\Document\Setting;
+use ONGR\AdminBundle\Event\SettingChangeEvent;
+use Exception;
 
 class SettingsManager
 {
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
     /**
      * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
 
     /**
+     * @var Manager
+     */
+    protected $manager;
+
+    /**
+     * @var Repository
+     */
+    protected $repo;
+
+    /**
      * Constructor.
      *
+     * @param TranslatorInterface      $translator
      * @param EventDispatcherInterface $eventDispatcher
+     * @param Manager                  $manager
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        EventDispatcherInterface $eventDispatcher,
+        Manager $manager
+    ) {
+        $this->translator = $translator;
         $this->eventDispatcher = $eventDispatcher;
+        $this->manager = $manager;
+        $this->repo = $this->manager->getRepository('ONGRAdminBundle:Setting');
     }
 
     /**
@@ -47,38 +75,77 @@ class SettingsManager
      */
     public function set($name, $value, $domain = 'default')
     {
-        //TODO: implement setting settings
+        switch (gettype($value)) {
+            case 'boolean':
+                $type = Setting::TYPE_BOOLEAN;
+                break;
+            case 'array':
+                $type = Setting::TYPE_ARRAY;
+                break;
+            case 'object':
+                $type = Setting::TYPE_OBJECT;
+                break;
+            default:
+                $type = Setting::TYPE_STRING;
+                break;
+        }
+
+        $setting = new Setting();
+        $setting->setId($domain . '_' . $name);
+        $setting->name = $name;
+        $setting->description = 'ongr_admin.' . $this->translator->trans($name);
+        $setting->data = (object)['value' => $value];
+        $setting->type = $type;
+        $setting->domain = $domain;
+
+        $this->manager->persist($setting);
+        $this->manager->commit();
+        $this->manager->flush();
+
+        $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('save'));
     }
 
     /**
      * Saves setting.
      *
-     * @param SettingModel $model
+     * @param Setting $setting
      */
-    public function save(SettingModel $model)
+    public function save(Setting $setting)
     {
-        //TODO: implement saving settings
+        $this->manager->persist($setting);
+        $this->manager->commit();
+        $this->manager->flush();
+
+        $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('save'));
     }
 
     /**
      * Removes a setting.
      *
-     * @param SettingModel $model
+     * @param Setting $setting
      */
-    public function remove(SettingModel $model)
+    public function remove(Setting $setting)
     {
-        //TODO: implement removing settings
+        $this->repo->remove($setting->getId());
+        $this->manager->flush();
+
+        $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('delete'));
     }
 
     /**
      * Copy a setting to the new domain.
      *
-     * @param SettingModel $setting
-     * @param string       $newDomain
+     * @param Setting $setting
+     * @param string  $newDomain
      */
-    public function duplicate(SettingModel $setting, $newDomain)
+    public function duplicate(Setting $setting, $newDomain)
     {
-        //TODO: implement duplicating settings
+        $newSetting = clone $setting;
+
+        $newSetting->setId($newDomain . '_' . $setting->name);
+        $newSetting->domain = $newDomain;
+
+        $this->save($newSetting);
     }
 
     /**
@@ -89,12 +156,23 @@ class SettingsManager
      * @param bool   $mustExist
      * @param string $type
      *
-     * @return SettingModel
+     * @throws Exception
+     *
+     * @return Setting
      */
     public function get($name, $domain = 'default', $mustExist = true, $type = 'string')
     {
-        //TODO: implement getting settings
-        return [];
+        try {
+            $setting = $this->repo->find($domain . '_' . $name);
+        } catch (Exception $exception) {
+            if ($mustExist == true) {
+                throw $exception;
+            }
+
+            $setting = $this->createSetting($name, $domain, $type);
+        }
+
+        return $setting;
     }
 
     /**
@@ -104,10 +182,20 @@ class SettingsManager
      * @param string $domain
      * @param string $type
      *
-     * @return SettingModel
+     * @return Setting
      */
     protected function createSetting($name, $domain, $type)
     {
-        //TODO: implement creating setting
+        $setting = new Setting();
+        $setting->setId($domain . '_' . $name);
+        $setting->name = $name;
+        $setting->domain = $domain;
+        $setting->type = $type;
+
+        if ($type == 'array') {
+            $setting->data['value'] = [];
+        }
+
+        return $setting;
     }
 }

@@ -42,7 +42,7 @@ class DomainsManager
      */
     public function getDomains()
     {
-        $repo = $this->manager->getRepository('ONGRAdminBundle:Settings');
+        $repo = $this->manager->getRepository('ONGRAdminBundle:Setting');
 
         // Create aggregated domains list from all available settings.
         $aggregation = new TermsAggregation('domain_agg');

@@ -68,7 +68,9 @@ services:
     ongr_admin.settings_manager:
         class: %ongr_admin.settings_manager.class%
         arguments:
+            - @translator
             - @event_dispatcher
+            - @es.manager
 
     ongr_admin.settings_container:
         class: %ongr_admin.settings_container.class%
