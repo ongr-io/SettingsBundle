@@ -11,17 +11,21 @@
 
 namespace ONGR\AdminBundle\Controller;
 
-//use ONGR\ProductBundle\Service\FilteredList;
 use ONGR\FilterManagerBundle\ONGRFilterManagerBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-use ONGR\AdminBundle\Document\Settings;
-
+use ONGR\AdminBundle\Document\Setting;
 use ONGR\FilterManagerBundle\Filters\ViewData;
 use ONGR\FilterManagerBundle\Search\FiltersContainer;
 use ONGR\FilterManagerBundle\Search\FiltersManager;
+use ONGR\ElasticsearchBundle\ORM\Repository;
+use ONGR\ElasticsearchBundle\ORM\Manager;
+use ONGR\FilterManagerBundle\Filters\Widget\Pager\Pager;
+use ONGR\FilterManagerBundle\Filters\Widget\Sort\Sort;
+use ONGR\FilterManagerBundle\Filters\Widget\Search\DocumentField;
+use ONGR\FilterManagerBundle\Filters\Widget\Search\MatchSearch;
+use ONGR\FilterManagerBundle\Filters\Widget\Choice\SingleTermChoice;
 
 /**
  * Class SettingsListController. Is used for managing settings in Admin env.
@@ -39,68 +43,48 @@ class SettingsListController extends Controller
      */
     protected function getListData(Request $request)
     {
+        /** @var Manager $manager */
+        $manager = $this->container->get('es.manager');
 
-//        $content = new Settings();
-//        $content->key = "first";
-//        $content->value = "FIRST test VAL";
-//        $manager->persist($content); //adds to bulk container
-//        $manager->commit(); //bulk data to index and fs
-//        var_dump($manager);
+        /** @var FiltersContainer $container */
+        $container = new FiltersContainer();
 
+        /** @var Pager $pager */
+        $pager = new Pager();
+        $pager->setRequestField('page');
+        $pager->setCountPerPage(15);
+        $container->set('pager', $pager);
 
+        /** @var Sort $sort */
+        $sort = new Sort();
+        $sort->setRequestField('sort');
+        $choices = [
+            'nameAsc' => ['label' => 'Name Asc', 'field' => 'name', 'order' => 'asc', 'default' => true],
+            'nameDesc' => ['label' => 'Name Desc', 'field' => 'name', 'order' => 'desc', 'default' => false],
+        ];
+        $sort->setChoices($choices);
+        $container->set('sort', $sort);
 
-//        try {
-//            //$document = $repository->find('MseS7rmiQq6t6-6pOxpHcQ');
-//            $document = $repository->findBy(['key'=>'first']);
-//            var_dump($document);
-//        } catch(\Exception $e) {
-//            var_dump($e->getMessage());
-//        }
-//        exit;
+        /** @var MatchSearch $search */
+        $search = new MatchSearch();
+        $search->setRequestField('q');
+        $search->setField('name,description');
+        $container->set('search', $search);
 
-        ///** @var FilteredList $list */
-        //TODO: rewrite this according to https://github.com/ongr-io/FilterManagerBundle/blob/master/Resources/doc/usage.md
-        //        $list = $this->get('ongr_admin.browser.filteredList');
-        //        $list->setRequest($request);
-        //
-        //        return [
-        //            'state' => $list->getStateLink(),
-        //            'data' => iterator_to_array($list->getProducts()),
-        //            'filters' => $list->getFiltersViewData(),
-        //            'routeParams' => $list->getRouteParamsValues()
-        //        ];
+        /** @var SingleTermChoice $domain */
+        $domain = new SingleTermChoice();
+        $domain->setRequestField('domain');
+        $domain->setField('domain');
+        $container->set('domain', $domain);
 
-//        $fm = $this->getProductsData($request);
-//        var_dump( $fm, get_class_methods($fm) );
-//        var_dump( $fm->getUrlParameters() );
-//        exit;
-
-
-
-        /** @var ONGR\FilterManagerBundle\FilterManager $fm */
-//        $fm = $this->get('ongr_filter_manager.product_list')->execute($request);
-//        var_dump($fm);
-//        var_dump($this->get('ongr_admin.settings_container')->getDomains());
-        var_dump($this->get('ongr_admin.settings_container')->getDomains());
-        var_dump($this->get('ongr_admin.domains_manager')->getDomains());
-
-//            $manager = $this->get('es.manager');
-//        var_dump(get_class($manager));
-
-
-        exit;
-//        var_dump($fm->getFilters()["search"]->getState()->getUrlParameters() ); echo '<hr/>';
-//        var_dump($fm->getFilters()); echo '<hr/>';
-//        var_dump($this->getFilterManagerResponse($request, $managerName)); echo '<hr/>';
-//        exit;        return $this->render(
-//        $template,
-//        $this->getFilterManagerResponse($request, $managerName);
+        /** @var FiltersManager $fm */
+        $fm = new FiltersManager($container, $manager->getRepository('ONGRAdminBundle:Setting'));
+        $fmr = $fm->execute($request);
 
         return [
-            'state' => [],
-            'data' => [],
-            'filters' => $fm->getFilters(),
-            'routeParams' => [],//=> $fm->getUrlParameters() ,
+            'data' => iterator_to_array($fmr->getResult()),
+            'filters' => $fmr->getFilters(),
+            'routeParams' => $fmr->getUrlParameters(),
         ];
     }
 

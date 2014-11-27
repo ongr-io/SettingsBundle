@@ -5,11 +5,11 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             {% block search %}
-                {% if filters.term_search is defined %}
-                    {% set search = filters.term_search.search %}
+                {% if filters.search is defined %}
+                    {% set search = filters.search %}
                     <form class="navbar-form navbar-right" role="search" method="get" action="{{ path('ongr_admin_settings_list', routeParams) }}">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="q" value="{% if search is defined %}{{ search.value }}{% endif %}" placeholder="{% if search is defined %}{{ search.caption | trans }}{% else %}Search{% endif %}" autocomplete="off">
+                            <input type="text" class="form-control" name="q" value="{% if search is defined %}{{ search.state.value }}{% endif %}" placeholder="{% if search is defined %}{{ search.name | capitalize | trans }}{% else %}Search{% endif %}" autocomplete="off">
                         </div>
                         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                     </form>
@@ -17,22 +17,22 @@
             {% endblock %}
             {% block sort %}
                 {% if filters.sort is defined %}
-                    {% set sort = filters.sort.sort %}
+                    {% set sort = filters.sort %}
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                {{ sort.caption }}
-                                {% for option in sort.options %}
-                                    {% if option.active or sort.active==false and option.default %}: {{ option.title }}{% endif %}
+                                {{ sort.name | capitalize }}
+                                {% for option in sort.choices %}
+                                    {% if option.active or sort.state.active==false and option.default %}: {{ option.label }}{% endif %}
                                 {% endfor %}
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                {% for option in sort.options %}
-                                    {% if option.default and sort.active == false %}
+                                {% for option in sort.choices %}
+                                    {% if option.default and sort.state.active == false %}
                                         {# Nothing to display #}
                                     {% elseif option.active == false %}
-                                        <li><a href="{{ path('ongr_admin_settings_list', option.link) }}">{{ option.title }}</a></li>
+                                        <li><a href="{{ path('ongr_admin_settings_list', option.urlParameters) }}">{{ option.label }}</a></li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>
@@ -41,18 +41,18 @@
             {% endblock %}
             {% block domain_choice %}
                 {% if filters.domain is defined %}
-                    {% set domain = filters.domain.domain %}
+                    {% set domain = filters.domain.state %}
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                {{ domain.caption }}: {{ domain.activeValue }}
+                                {{ domain.name | capitalize }}: {{ domain.value }}
                                 <span class="caret"></span>
                             </a>
-                            {% if domain.values|length > 1%}
+                            {% if filters.domain.choices|length > 1%}
                                 <ul class="dropdown-menu">
-                                    {% for value in domain.values %}
+                                    {% for value in filters.domain.choices %}
                                         {% if not value.active %}
-                                            <li><a href="{{ path('ongr_admin_settings_list', value.link) }}">{{ value.value }}</a></li>
+                                            <li><a href="{{ path('ongr_admin_settings_list', value.urlParameters) }}">{{ value.label }}</a></li>
                                         {% endif %}
                                     {% endfor %}
                                 </ul>

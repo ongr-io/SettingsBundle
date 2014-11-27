@@ -18,7 +18,7 @@ use ONGR\ElasticsearchBundle\Document\DocumentTrait;
 /**
  * Stores admin settings.
  *
- * @ES\Document(type="settings")
+ * @ES\Document(type="setting")
  */
 class Setting implements DocumentInterface
 {
