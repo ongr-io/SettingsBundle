@@ -115,6 +115,7 @@ class SettingsManager
         $this->manager->persist($setting);
         $this->manager->commit();
         $this->manager->flush();
+        $this->manager->refresh();
 
         $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('save'));
     }
@@ -128,6 +129,7 @@ class SettingsManager
     {
         $this->repo->remove($setting->getId());
         $this->manager->flush();
+        $this->manager->refresh();
 
         $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('delete'));
     }
