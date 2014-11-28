@@ -13,6 +13,11 @@ namespace ONGR\AdminBundle\Twig;
 
 use ONGR\AdminBundle\Settings\UserSettingsManager;
 
+/**
+ * Class SettingExtension to show settings value on twig.
+ *
+ * @package ONGR\AdminBundle\Twig
+ */
 class SettingExtension extends \Twig_Extension
 {
     /**

@@ -39,8 +39,8 @@ class SessionlessAuthenticationProvider implements AuthenticationProviderInterfa
 
     /**
      * @param SessionlessSignatureGenerator $generator
-     * @param array $usersParameters
-     * @param array $settingsParameters
+     * @param array                         $usersParameters
+     * @param array                         $settingsParameters
      */
     public function __construct($generator, $usersParameters, $settingsParameters)
     {
@@ -59,6 +59,7 @@ class SessionlessAuthenticationProvider implements AuthenticationProviderInterfa
 
         if ($token->getExpirationTime() >= time() && $signature === $token->getSignature()) {
             $token->setAuthenticated(true);
+
             return $token;
         }
 
@@ -97,7 +98,10 @@ class SessionlessAuthenticationProvider implements AuthenticationProviderInterfa
     }
 
     /**
+     * User by name getter.
+     *
      * @param string $username
+     *
      * @return array|bool User settings array or false
      */
     private function getUserByName($username)
@@ -113,7 +117,10 @@ class SessionlessAuthenticationProvider implements AuthenticationProviderInterfa
     }
 
     /**
+     * Generates user signature.
+     *
      * @param SessionlessToken $token
+     *
      * @return string
      */
     private function generateSignature(SessionlessToken $token)

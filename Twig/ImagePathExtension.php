@@ -11,6 +11,11 @@
 
 namespace ONGR\AdminBundle\Twig;
 
+/**
+ * Class ImagePathExtension.
+ *
+ * @package ONGR\AdminBundle\Twig
+ */
 class ImagePathExtension extends \Twig_Extension
 {
     /**
@@ -39,11 +44,11 @@ class ImagePathExtension extends \Twig_Extension
     protected $prefix;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param string $cdnUrl CDN URL
-     * @param array  $config Image presets config
-     * @param string $prefix URL prefix
+     * @param string $cdnUrl CDN URL.
+     * @param array  $config Image presets config.
+     * @param string $prefix URL prefix.
      */
     public function __construct($cdnUrl, $config, $prefix)
     {
@@ -53,7 +58,7 @@ class ImagePathExtension extends \Twig_Extension
     }
 
     /**
-     * Provide a list of helper functions to be used
+     * Provide a list of helper functions to be used.
      *
      * @return array
      */
@@ -67,11 +72,11 @@ class ImagePathExtension extends \Twig_Extension
     }
 
     /**
-     * Returns path to given image
+     * Returns path to given image.
      *
-     * @param string $image  Image name
-     * @param string $preset Preset ID
-     * @param string $part   [Optional] Subdirectory
+     * @param string $image  Image name.
+     * @param string $preset Preset ID.
+     * @param string $part   Subdirectory [Optional].
      *
      * @return string
      * @throws \Exception
@@ -103,11 +108,11 @@ class ImagePathExtension extends \Twig_Extension
     }
 
     /**
-     * Returns full URL to given image
+     * Returns full URL to given image.
      *
-     * @param string $image  Image name
-     * @param string $preset Preset ID
-     * @param string $part   [Optional] Subdirectory
+     * @param string $image  Image name.
+     * @param string $preset Preset ID.
+     * @param string $part   Subdirectory [Optional].
      *
      * @return string
      */
@@ -117,7 +122,7 @@ class ImagePathExtension extends \Twig_Extension
     }
 
     /**
-     * Returns name of the extension
+     * Returns name of the extension.
      *
      * @return string
      */

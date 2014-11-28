@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace ONGR\AdminBundle\Controller;
 
 use ONGR\CookiesBundle\Cookie\Model\JsonCookie;
@@ -19,7 +18,6 @@ use ONGR\AdminBundle\Security\Authentication\Provider\SessionlessAuthenticationP
 use ONGR\AdminBundle\Security\Authentication\Token\SessionlessToken;
 use ONGR\AdminBundle\Security\Core\SessionlessSecurityContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -27,7 +25,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UserController extends Controller
 {
-
     /**
      * Login action.
      *
@@ -93,9 +90,11 @@ class UserController extends Controller
      */
     protected function getAuthCookieService()
     {
-        return $this->authCookieService = $this->get(
+        $this->authCookieService = $this->get(
             'ongr_admin.authentication.authentication_cookie_service'
         );
+
+        return $this->authCookieService;
     }
 
     /**
@@ -103,9 +102,11 @@ class UserController extends Controller
      */
     protected function getAuthProvider()
     {
-        return $this->authenticationProvider = $this->get(
+        $this->authenticationProvider = $this->get(
             'ongr_admin.authentication.sessionless_authentication_provider'
         );
+
+        return $this->authenticationProvider;
     }
 
     /**

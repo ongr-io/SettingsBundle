@@ -11,11 +11,6 @@
 
 namespace ONGR\AdminBundle\Service;
 
-//use ONGR\AdminBundle\Event\SettingChangeEvent;
-//use ONGR\AdminBundle\Model\SettingModel;
-//use ONGR\DDALBundle\Exception\DocumentNotFoundException;
-//use ONGR\DDALBundle\Session\SessionModelAwareInterface;
-//use ONGR\DDALBundle\Session\SessionModelInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use ONGR\ElasticsearchBundle\ORM\Repository;
@@ -24,6 +19,11 @@ use ONGR\AdminBundle\Document\Setting;
 use ONGR\AdminBundle\Event\SettingChangeEvent;
 use Exception;
 
+/**
+ * Class SettingsManager responsible for managing settings actions.
+ *
+ * @package ONGR\AdminBundle\Service
+ */
 class SettingsManager
 {
     /**

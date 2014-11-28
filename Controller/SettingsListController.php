@@ -18,7 +18,6 @@ use ONGR\FilterManagerBundle\Filters\ViewData;
 use ONGR\FilterManagerBundle\Search\FiltersContainer;
 use ONGR\FilterManagerBundle\Search\FiltersManager;
 use ONGR\ElasticsearchBundle\ORM\Manager;
-use ONGR\ElasticsearchBundle\ORM\Repository;
 use ONGR\FilterManagerBundle\Filters\Widget\Pager\Pager;
 use ONGR\FilterManagerBundle\Filters\Widget\Sort\Sort;
 use ONGR\FilterManagerBundle\Filters\Widget\Search\MatchSearch;

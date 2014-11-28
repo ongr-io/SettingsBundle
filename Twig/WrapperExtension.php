@@ -11,10 +11,15 @@
 
 namespace ONGR\AdminBundle\Twig;
 
+/**
+ * Class WrapperExtension.
+ *
+ * @package ONGR\AdminBundle\Twig
+ */
 class WrapperExtension extends \Twig_Extension
 {
     /**
-     * Returns list of new Twig functions
+     * Returns list of new Twig functions.
      *
      * @return array
      */
@@ -29,32 +34,32 @@ class WrapperExtension extends \Twig_Extension
      * Wraps keywords with prefix and suffix in given text.
      *
      * @param string $text
-     * @param array $keywords
-     * @param string  $prefix
+     * @param array  $keywords
+     * @param string $prefix
      * @param string $suffix
      *
      * @return string
-     *
      */
-    public function wrap($text, $keywords, $prefix = "<strong>", $suffix = "</strong>")
+    public function wrap($text, $keywords, $prefix = '<strong>', $suffix = '</strong>')
     {
-        $result = "";
+        $result = '';
         $lowerCaseText = strtolower($text);
 
-        $explodedText = explode(" ", $text);
-        $explodedLowerCaseText = explode(" ", $lowerCaseText);
+        $explodedText = explode(' ', $text);
+        $explodedLowerCaseText = explode(' ', $lowerCaseText);
 
         end($explodedLowerCaseText);
         $lastElementKey = key($explodedLowerCaseText);
 
         foreach ($explodedLowerCaseText as $key => $word) {
             if (in_array($word, $keywords)) {
-                // keyword matches entire word
+                // Keyword matches entire word.
                 $result .= $prefix . $explodedText[$key] . $suffix;
             } else {
                 foreach ($keywords as $keyword) {
-                    if (($startPosition = strpos($word, $keyword)) !== false) {
-                        // keyword matches only a part of word
+                    $startPosition = strpos($word, $keyword);
+                    if ($startPosition !== false) {
+                        // Keyword matches only a part of word.
                         $wordStart = substr($explodedText[$key], 0, $startPosition);
                         $wordMiddle = substr($explodedText[$key], $startPosition, strlen($keyword));
                         $wordEnd = substr($explodedText[$key], $startPosition + strlen($keyword));
@@ -62,19 +67,19 @@ class WrapperExtension extends \Twig_Extension
                         $result .= $wordStart . $prefix . $wordMiddle . $suffix . $wordEnd;
 
                         if ($lastElementKey !== $key) {
-                            $result .= " ";
+                            $result .= ' ';
                         }
 
                         continue 2;
                     }
                 }
 
-                // if not continued before, add not changed word
+                // If not continued before, add not changed word.
                 $result .= $explodedText[$key];
             }
 
             if ($lastElementKey !== $key) {
-                $result .= " ";
+                $result .= ' ';
             }
         }
 
@@ -82,7 +87,7 @@ class WrapperExtension extends \Twig_Extension
     }
 
     /**
-     * Returns the name of the extension
+     * Returns the name of the extension.
      *
      * @return string The extension name
      */

@@ -63,13 +63,13 @@ class ONGRAdminExtension extends Extension
     }
 
     /**
-     * Injects additional Power User settings to service container
+     * Injects additional Power User settings to service container.
      *
      * @param ContainerBuilder $container
      */
     protected function injectPowerUserSettings(ContainerBuilder $container)
     {
-        // Add category for ONGR admin settings
+        // Add category for ONGR admin settings.
         $categories = $container->getParameter('ongr_admin.settings.categories');
         $categories['ongr_admin_settings'] = [
             'name' => 'ONGR admin',
@@ -81,8 +81,7 @@ class ONGRAdminExtension extends Extension
         ];
         $container->setParameter('ongr_admin.settings.categories', $categories);
 
-
-        // Inject custom Power User settings
+        // Inject custom Power User settings.
         $settings = $container->getParameter('ongr_admin.settings.settings');
         $settings['ongr_admin_live_settings'] = [
             'name' => 'Show settings widget in frontend',
@@ -91,6 +90,4 @@ class ONGRAdminExtension extends Extension
         ];
         $container->setParameter('ongr_admin.settings.settings', $settings);
     }
-
-
 }

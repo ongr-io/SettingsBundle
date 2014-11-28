@@ -50,7 +50,7 @@ class SettingsStructure
     /**
      * Call service's method and store returned additional structure.
      *
-     * @param        $service
+     * @param object $service
      * @param string $method
      *
      * @throws \InvalidArgumentException

@@ -11,12 +11,21 @@
 
 namespace ONGR\AdminBundle\Twig;
 
+/**
+ * Class for encrypting string with base64.
+ *
+ * @package ONGR\AdminBundle\Twig
+ */
 class EncryptionExtension extends \Twig_Extension
 {
 
     const NAME = 'encryption_extension';
 
-
+    /**
+     * Gets filter settings.
+     *
+     * @return array
+     */
     public function getFilters()
     {
         return [
@@ -25,9 +34,10 @@ class EncryptionExtension extends \Twig_Extension
     }
 
     /**
-     * Encodes string to base64
+     * Encodes string to base64.
      *
-     * @param $str
+     * @param string $str
+     *
      * @return string
      */
     public function base64EncodeFilter($str)
@@ -36,9 +46,10 @@ class EncryptionExtension extends \Twig_Extension
     }
 
     /**
-     * Decodes string from base64
+     * Decodes string from base64.
      *
-     * @param $str
+     * @param string $str
+     *
      * @return string
      */
     public function base64DecodeFilter($str)
@@ -46,9 +57,8 @@ class EncryptionExtension extends \Twig_Extension
         return base64_decode($str);
     }
 
-
     /**
-     * Get name of the twig extension
+     * Get name of the twig extension.
      *
      * @return string
      */

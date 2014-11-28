@@ -44,6 +44,8 @@ class SessionlessAuthenticationCookieService
     }
 
     /**
+     * Creates cookies.
+     *
      * @param string $username
      * @param string $password
      * @param string $ipAddress

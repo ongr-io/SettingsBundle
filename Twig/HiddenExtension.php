@@ -14,6 +14,11 @@ namespace ONGR\AdminBundle\Twig;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class for outputing hidden information.
+ *
+ * @package ONGR\AdminBundle\Twig
+ */
 class HiddenExtension extends \Twig_Extension
 {
     /**
@@ -50,26 +55,30 @@ class HiddenExtension extends \Twig_Extension
                     'needs_environment' => true,
                     'is_safe' => ['html']
                 ]
-            )
+            ),
         ];
     }
 
     /**
+     * Generate twig view.
+     *
      * @param \Twig_Environment $environment
-     * @param array $data
-     * @param bool $checkRequest to check if requst has
+     * @param array             $data
+     * @param bool              $checkRequest
+     *
      * @return string
      */
     public function generate($environment, $data, $checkRequest = false)
     {
-        if ($checkRequest && !is_null($this->request)) {
+        if ($checkRequest && ($this->request != null)) {
             foreach ($data as $name => $value) {
                 $requestVal = $this->request->get($name);
-                if (!isset($requestVal) || empty($requestVal) || is_null($requestVal)) {
+                if (!isset($requestVal) || empty($requestVal) || ($requestVal != null)) {
                     unset($data[$name]);
                 }
             }
         }
+
         return $environment->render(
             'ONGRAdminBundle:Utils:hidden.html.twig',
             ['data' => $this->modify($data)]
@@ -77,9 +86,10 @@ class HiddenExtension extends \Twig_Extension
     }
 
     /**
-     * modifies data array for easier view rendering
+     * Modifies data array for easier view rendering.
      *
-     * @param array $data data to modify
+     * @param array $data Data to modify.
+     *
      * @return array
      */
     protected function modify($data)
@@ -91,18 +101,19 @@ class HiddenExtension extends \Twig_Extension
                 foreach ($value as $value2) {
                     if (!is_array($value2)) {
                         $new[] = [
-                            'name' => $name."[]",
-                            'value' => $value2
+                            'name' => $name . '[]',
+                            'value' => $value2,
                         ];
                     }
                 }
             } else {
                 $new[] = [
                     'name' => $name,
-                    'value' => $value
+                    'value' => $value,
                 ];
             }
         }
+
         return $new;
     }
 
