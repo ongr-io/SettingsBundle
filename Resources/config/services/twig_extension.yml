@@ -5,11 +5,6 @@ parameters:
     # Settings extension
     ongr_admin.twig.setting_extension.class: ONGR\AdminBundle\Twig\SettingExtension
 
-    # Checkout extension
-    ongr_admin.twig.checkout_extension.class: ONGR\AdminBundle\Twig\CheckoutExtension
-    ongr_admin.twig.checkout_extension.checkout_path: '/o/'
-    ongr_admin.twig.checkout_extension.ssl: 1
-
     # Encryption extension
     ongr_admin.twig.encryption_extension.class: ONGR\AdminBundle\Twig\EncryptionExtension
 
@@ -47,15 +42,6 @@ services:
           - @ongr_admin.settings.user_settings_manager
         tags:
           - { name: twig.extension }
-
-    ongr_admin.twig.checkout_extension:
-        class: %ongr_admin.twig.checkout_extension.class%
-        tags:
-          - { name: twig.extension }
-        arguments:
-          - @service_container
-          - %ongr_admin.twig.checkout_extension.checkout_path%
-          - %ongr_admin.twig.checkout_extension.ssl%
 
     ongr_admin.twig.encryption_extension:
         class: %ongr_admin.twig.encryption_extension.class%
