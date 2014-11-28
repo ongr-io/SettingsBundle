@@ -11,9 +11,13 @@
 
 namespace ONGR\AdminBundle\Settings\Provider;
 
-use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\AdminBundle\Document\Setting;
 use ONGR\AdminBundle\Settings\SettingsProviderInterface;
+use ONGR\FilterManagerBundle\Filters\ViewData;
+use ONGR\ElasticsearchBundle\ORM\Manager;
+use ONGR\ElasticsearchBundle\ORM\Repository;
+use ONGR\ElasticsearchBundle\DSL\Query\MatchQuery;
+use ONGR\ElasticsearchBundle\DSL\Filter\LimitFilter;
 
 /**
  * Provider which uses session model to get settings from database using domain.
@@ -69,24 +73,30 @@ class ManagerAwareSettingProvider implements SettingsProviderInterface
         if ($this->manager === null) {
             throw new \LogicException('setManager must be called before getSettings.');
         }
-// todo: rewrite this
-//        $query = new Query();
-//        $query->filter->setMust('domain', $this->getDomain());
-//        $query->filter->setLimit($this->getLimit());
-//
-//        $result = [];
-//        try {
-//            $settings = $this->sessionModel->findDocuments($query);
-            /** @var SettingModel[] $settings */
-//            foreach ($settings as $setting) {
-//                $result[$setting->name] = $setting->data['value'];
-//            }
-//        } catch (ResponseException $e) {
-            // Do nothing.
-//        }
 
-//        return $result;
-        return null;
+        /** @var Repository $repo */
+        $repo = $this->manager->getRepository('ONGRAdminBundle:Setting');
+
+        // Create query.
+        $search = $repo->createSearch();
+
+        $match = new MatchQuery('domain', $this->getDomain());
+        $search->addFilter($match);
+
+        $limit = new LimitFilter($this->getLimit());
+        $search->addFilter($limit);
+
+        // Process query.
+        $settings = $repo->execute($search);
+
+        $result = [];
+
+        /** @var Setting $setting */
+        foreach ($settings as $setting) {
+            $result[$setting->name] = $setting->data['value'];
+        }
+
+        return $result;
     }
 
     /**
