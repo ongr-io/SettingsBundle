@@ -12,7 +12,7 @@
 namespace ONGR\AdminBundle\EventListener;
 
 use ONGR\AdminBundle\Service\UnderscoreEscaper;
-use ONGR\AdminBundle\Settings\Provider\ManagerAwareProvider;
+use ONGR\AdminBundle\Settings\Provider\ManagerAwareSettingProvider;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\AdminBundle\Settings\SettingsContainer;
 use ONGR\DDALBundle\Session\SessionModelInterface;
@@ -90,11 +90,11 @@ class ProfileRequestListener
      *
      * @param string $domain
      *
-     * @return ManagerAwareProvider
+     * @return ManagerAwareSettingProvider
      */
     private function buildProvider($domain)
     {
-        $provider = new ManagerAwareProvider($domain);
+        $provider = new ManagerAwareSettingProvider($domain);
         $provider->setManager($this->manager);
 
         return $provider;

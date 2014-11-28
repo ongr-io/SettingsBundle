@@ -24,7 +24,7 @@ parameters:
     ongr_admin.listener.cookie_domain.class: ONGR\AdminBundle\EventListener\ProfileRequestListener
     ongr_admin.domains_manager.class: ONGR\AdminBundle\Service\DomainsManager
 
-    ongr_admin.settings_provider.class: ONGR\AdminBundle\Settings\Provider\ManagerAwareProvider
+    ongr_admin.settings_provider.class: ONGR\AdminBundle\Settings\Provider\ManagerAwareSettingProvider
 #    ongr_admin.power_user_domains_provider.class: ONGR\AdminBundle\Settings\PowerUserDomainsProvider
 
 services:

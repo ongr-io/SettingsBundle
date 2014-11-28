@@ -18,7 +18,7 @@ use ONGR\AdminBundle\Settings\SettingsProviderInterface;
 /**
  * Provider which uses session model to get settings from database using domain.
  */
-class ManagerAwareProvider implements SettingsProviderInterface
+class ManagerAwareSettingProvider implements SettingsProviderInterface
 {
     /**
      * @var string specific domain to be used
