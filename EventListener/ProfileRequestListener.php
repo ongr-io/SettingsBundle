@@ -49,7 +49,6 @@ class ProfileRequestListener
         GetResponseEvent $event
     ) {
         $settings = $this->userSettingsManager->getSettings();
-
         foreach ($settings as $id => $value) {
             $prefix = 'ongr_admin_profile_';
             if (strpos($id, $prefix) === 0 && $value === true) {
