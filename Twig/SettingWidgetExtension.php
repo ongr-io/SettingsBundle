@@ -13,7 +13,7 @@ namespace ONGR\AdminBundle\Twig;
 
 use ONGR\AdminBundle\Exception\SettingNotFoundException;
 use ONGR\AdminBundle\Settings\Common\SettingsContainerInterface;
-use ONGR\AdminBundle\Settings\AdminSettingsManager;
+use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
 use Psr\Log\LoggerAwareTrait;
 
 /**
@@ -47,7 +47,7 @@ class SettingWidgetExtension extends \Twig_Extension
      * Constructor.
      *
      * @param AdminSettingsManager $adminSettingsManager
-     * @param string              $template
+     * @param string               $template
      */
     public function __construct($adminSettingsManager, $template = 'ONGRAdminBundle:Controls:edit_setting.html.twig')
     {
