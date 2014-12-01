@@ -12,11 +12,9 @@
 namespace ONGR\AdminBundle\EventListener;
 
 use ONGR\AdminBundle\Service\UnderscoreEscaper;
-use ONGR\AdminBundle\Settings\Provider\ManagerAwareSettingProvider;
+use ONGR\AdminBundle\Settings\Common\Provider\ManagerAwareSettingProvider;
 use ONGR\ElasticsearchBundle\ORM\Manager;
-use ONGR\AdminBundle\Settings\SettingsContainer;
-use ONGR\DDALBundle\Session\SessionModelInterface;
-use ONGR\UtilsBundle\Settings\UserSettingsManager;
+use ONGR\AdminBundle\Settings\Common\SettingsContainer;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
@@ -69,7 +67,7 @@ class ProfileRequestListener
     }
 
     /**
-     * @param \ONGR\AdminBundle\Settings\SettingsContainer $settingsContainer
+     * @param \ONGR\AdminBundle\Settings\Common\SettingsContainer $settingsContainer
      */
     public function setSettingsContainer($settingsContainer)
     {

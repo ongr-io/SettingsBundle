@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Settings;
+namespace ONGR\AdminBundle\Settings\Common;
 
 /**
  * Manages settings structure that is displayed for the user.

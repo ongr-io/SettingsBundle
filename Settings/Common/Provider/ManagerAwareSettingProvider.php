@@ -9,10 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Settings\Provider;
+namespace ONGR\AdminBundle\Settings\Common\Provider;
 
 use ONGR\AdminBundle\Document\Setting;
-use ONGR\AdminBundle\Settings\SettingsProviderInterface;
 use ONGR\FilterManagerBundle\Filters\ViewData;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;

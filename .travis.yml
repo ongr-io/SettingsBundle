@@ -13,5 +13,5 @@ install:
 before_script:
   - composer update --prefer-dist
 script:
-#  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
-  - vendor/bin/phpcs -p --standard=vendor/ongr/ongr-strict-standard/ONGR  --ignore=vendor/,Tests/app/ ./
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+  - vendor/bin/phpcs -p --standard=vendor/ongr/ongr-strict-standard/ONGR  --ignore=vendor/,Tests/app/,Resources/public/ ./
