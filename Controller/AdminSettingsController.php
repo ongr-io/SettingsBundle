@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Controller for managing user(Power User) settings.
  */
-class SettingsController extends Controller
+class AdminSettingsController extends Controller
 {
     /**
      * @return UserSettingsManager
