@@ -46,8 +46,8 @@ class SettingWidgetExtension extends \Twig_Extension
     /**
      * Constructor.
      *
-     * @param UserSettingsManager   $userSettingsManager
-     * @param string                $template
+     * @param UserSettingsManager $userSettingsManager
+     * @param string              $template
      */
     public function __construct($userSettingsManager, $template = 'ONGRAdminBundle:Controls:edit_setting.html.twig')
     {

@@ -67,9 +67,9 @@ class SettingsManager
     /**
      * Overwrites setting with given name.
      *
-     * @param string        $name
-     * @param string|array  $value
-     * @param string        $profile
+     * @param string       $name
+     * @param string|array $value
+     * @param string       $profile
      *
      * @throws \LogicException
      */

@@ -21,8 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Controller for managing Admin login and logout (Authentication).
- * After authentication user is authorized to view and change settings.
+ * Controller for managing Admin login and logout.
  */
 class UserController extends Controller
 {

@@ -53,8 +53,8 @@ class ONGRAdminExtension extends Extension
     /**
      * Sets parameters for power user.
      *
-     * @param array             $config
-     * @param ContainerBuilder  $containerBuilder
+     * @param array            $config
+     * @param ContainerBuilder $containerBuilder
      */
     protected function loadPowerUserSettings($config, ContainerBuilder $containerBuilder)
     {

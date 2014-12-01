@@ -18,7 +18,6 @@ namespace ONGR\AdminBundle\Twig;
  */
 class EncryptionExtension extends \Twig_Extension
 {
-
     const NAME = 'encryption_extension';
 
     /**

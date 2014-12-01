@@ -39,8 +39,8 @@ class AdminSettingsManager
     protected $userSettings = [];
 
     /**
-     * @param SecurityContextInterface  $securityContext
-     * @param SettingsStructure         $settingsStructure
+     * @param SecurityContextInterface $securityContext
+     * @param SettingsStructure        $settingsStructure
      */
     public function __construct($securityContext, $settingsStructure)
     {

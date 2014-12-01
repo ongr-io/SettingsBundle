@@ -57,8 +57,8 @@ class FlashBagCookieInjectorListener
     }
 
     /**
-     * @param DirtyFlashBag     $flashBagService
-     * @param CookieInterface   $flashBagCookie
+     * @param DirtyFlashBag   $flashBagService
+     * @param CookieInterface $flashBagCookie
      */
     public function __construct(DirtyFlashBag $flashBagService, CookieInterface $flashBagCookie)
     {

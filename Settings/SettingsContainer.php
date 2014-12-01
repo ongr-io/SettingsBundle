@@ -27,6 +27,8 @@ class SettingsContainer implements SettingsContainerInterface
     protected $pool;
 
     /**
+     * Array of profiles.
+     *
      * Array of selected profiles / profiles to apply.
      *
      * @var array
