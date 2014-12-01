@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Settings;
+namespace ONGR\AdminBundle\Settings\Common\Provider;
 
 /**
  * This interface provides all app settings.

@@ -12,7 +12,7 @@
 namespace ONGR\AdminBundle\Twig;
 
 use ONGR\AdminBundle\Exception\SettingNotFoundException;
-use ONGR\AdminBundle\Settings\SettingsContainerInterface;
+use ONGR\AdminBundle\Settings\Common\SettingsContainerInterface;
 use ONGR\AdminBundle\Settings\UserSettingsManager;
 use Psr\Log\LoggerAwareTrait;
 

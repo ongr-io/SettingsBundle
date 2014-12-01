@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Settings;
+namespace ONGR\AdminBundle\Settings\Common;
+
+use ONGR\AdminBundle\Settings\Common\Provider\SettingsProviderInterface;
 
 /**
  * This interface provides structure for settings container.

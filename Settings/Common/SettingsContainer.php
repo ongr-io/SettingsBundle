@@ -9,12 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Settings;
+namespace ONGR\AdminBundle\Settings\Common;
 
 use ONGR\AdminBundle\Event\SettingChangeEvent;
 use ONGR\AdminBundle\Exception\SettingNotFoundException;
 use Stash\Interfaces\ItemInterface;
 use Stash\Interfaces\PoolInterface;
+use ONGR\AdminBundle\Settings\Common\Provider\SettingsProviderInterface;
 
 /**
  * This class provides access to application settings.

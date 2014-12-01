@@ -136,7 +136,7 @@ HEREDOC;
     {
         $expectedValue = 'foo-bar';
 
-        $settingContainer = $this->getMock('ONGR\AdminBundle\Settings\SettingsContainerInterface');
+        $settingContainer = $this->getMock('ONGR\AdminBundle\Settings\Common\SettingsContainerInterface');
         $settingContainer->expects($this->once())->method('get')->with('test')->willReturn($expectedValue);
 
         $extension = new AdminExtension(null);
@@ -150,7 +150,7 @@ HEREDOC;
      */
     public function testGetAdminSettingException()
     {
-        $settingContainer = $this->getMock('ONGR\AdminBundle\Settings\SettingsContainerInterface');
+        $settingContainer = $this->getMock('ONGR\AdminBundle\Settings\Common\SettingsContainerInterface');
         $settingContainer
             ->expects($this->once())
             ->method('get')
