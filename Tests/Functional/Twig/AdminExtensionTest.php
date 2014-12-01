@@ -14,7 +14,7 @@ namespace ONGR\AdminBundle\Tests\Integration\Twig;
 use ONGR\AdminBundle\Exception\SettingNotFoundException;
 use ONGR\AdminBundle\Tests\Integration\BaseTest;
 use ONGR\AdminBundle\Twig\AdminExtension;
-use ONGR\AdminBundle\Settings\UserSettingsManager;
+use ONGR\AdminBundle\Settings\AdminSettingsManager;
 
 /**
  * Class used to test AdminExtension.
@@ -38,15 +38,15 @@ class AdminExtensionTest extends BaseTest
     }
 
     /**
-     * Gets a UserSettingsManager mock.
+     * Gets a AdminSettingsManager mock.
      *
      * @param bool $authenticated
      *
-     * @return UserSettingsManager
+     * @return AdminSettingsManager
      */
     protected function getSettingsManagerMock($authenticated)
     {
-        $settingsManager = $this->getMockBuilder('ONGR\AdminBundle\Settings\UserSettingsManager')
+        $settingsManager = $this->getMockBuilder('ONGR\AdminBundle\Settings\AdminSettingsManager')
             ->disableOriginalConstructor()
             ->setMethods(['isAuthenticated'])
             ->getMock();
