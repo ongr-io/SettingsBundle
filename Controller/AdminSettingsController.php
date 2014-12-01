@@ -13,7 +13,7 @@ namespace ONGR\AdminBundle\Controller;
 
 use ONGR\CookiesBundle\Cookie\Model\CookieInterface;
 use ONGR\AdminBundle\Form\Type\SettingsType;
-use ONGR\AdminBundle\Settings\UserSettingsManager;
+use ONGR\AdminBundle\Settings\AdminSettingsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,9 +25,9 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminSettingsController extends Controller
 {
     /**
-     * @return UserSettingsManager
+     * @return AdminSettingsManager
      */
-    protected function getUserSettingsManager()
+    protected function getAdminSettingsManager()
     {
         return $this->get('ongr_admin.settings.admin_settings_manager');
     }
@@ -42,7 +42,7 @@ class AdminSettingsController extends Controller
      */
     public function settingsAction(Request $request)
     {
-        $manager = $this->getUserSettingsManager();
+        $manager = $this->getAdminSettingsManager();
         if (!$manager->isAuthenticated()) {
             return $this->redirect($this->generateUrl('ongr_admin_sessionless_login'));
         }
@@ -100,7 +100,7 @@ class AdminSettingsController extends Controller
      */
     public function changeSettingAction(Request $request, $hash)
     {
-        $manager = $this->getUserSettingsManager();
+        $manager = $this->getAdminSettingsManager();
 
         if (!$manager->isAuthenticated()) {
             return new JsonResponse(Response::$statusTexts[403], 403);

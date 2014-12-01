@@ -23,9 +23,9 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 class ProfileRequestListener
 {
     /**
-     * @var UserSettingsManager
+     * @var AdminSettingsManager
      */
-    protected $userSettingsManager;
+    protected $adminSettingsManager;
 
     /**
      * @var SettingsContainer
@@ -46,7 +46,7 @@ class ProfileRequestListener
         /** @noinspection PhpUnusedParameterInspection */
         GetResponseEvent $event
     ) {
-        $settings = $this->userSettingsManager->getSettings();
+        $settings = $this->adminSettingsManager->getSettings();
         foreach ($settings as $id => $value) {
             $prefix = 'ongr_admin_profile_';
             if (strpos($id, $prefix) === 0 && $value === true) {
@@ -59,11 +59,11 @@ class ProfileRequestListener
     }
 
     /**
-     * @param \ONGR\AdminBundle\Settings\UserSettingsManager $userSettingsManager
+     * @param \ONGR\AdminBundle\Settings\AdminSettingsManager $adminSettingsManager
      */
-    public function setUserSettingsManager($userSettingsManager)
+    public function setAdminSettingsManager($adminSettingsManager)
     {
-        $this->userSettingsManager = $userSettingsManager;
+        $this->adminSettingsManager = $adminSettingsManager;
     }
 
     /**

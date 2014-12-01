@@ -13,7 +13,7 @@ namespace ONGR\AdminBundle\EventListener;
 
 use ONGR\CookiesBundle\Cookie\Model\JsonCookie;
 use ONGR\CookiesBundle\Utils\ContainerAwareTrait;
-use ONGR\AdminBundle\Settings\UserSettingsManager;
+use ONGR\AdminBundle\Settings\AdminSettingsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
@@ -25,9 +25,9 @@ class SettingsCookieListener
     use ContainerAwareTrait;
 
     /**
-     * @var UserSettingsManager
+     * @var AdminSettingsManager
      */
-    protected $userSettingsManager;
+    protected $adminSettingsManager;
 
     /**
      * {@inheritdoc}
@@ -36,7 +36,7 @@ class SettingsCookieListener
         /** @noinspection PhpUnusedParameterInspection */
         GetResponseEvent $event
     ) {
-        $settingsMap = $this->userSettingsManager->getSettingsMap();
+        $settingsMap = $this->adminSettingsManager->getSettingsMap();
         $cookiesServiceNames = array_map(
             function ($setting) {
                 return $setting['cookie'];
@@ -49,16 +49,16 @@ class SettingsCookieListener
             /** @var JsonCookie $cookie */
             $cookie = $this->container->get($cookieServiceName, ContainerInterface::NULL_ON_INVALID_REFERENCE);
             if ($cookie !== null && $cookie->getValue() !== null) {
-                $this->userSettingsManager->addSettingsFromCookie($cookie->getValue());
+                $this->adminSettingsManager->addSettingsFromCookie($cookie->getValue());
             }
         }
     }
 
     /**
-     * @param \ONGR\AdminBundle\Settings\UserSettingsManager $userSettingsManager
+     * @param \ONGR\AdminBundle\Settings\AdminSettingsManager $adminSettingsManager
      */
-    public function setUserSettingsManager($userSettingsManager)
+    public function setAdminSettingsManager($adminSettingsManager)
     {
-        $this->userSettingsManager = $userSettingsManager;
+        $this->adminSettingsManager = $adminSettingsManager;
     }
 }

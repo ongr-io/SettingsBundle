@@ -11,7 +11,7 @@
 
 namespace ONGR\AdminBundle\Twig;
 
-use ONGR\AdminBundle\Settings\UserSettingsManager;
+use ONGR\AdminBundle\Settings\AdminSettingsManager;
 
 /**
  * Class SettingExtension to show settings value on twig.
@@ -26,16 +26,16 @@ class AdminSettingWidgetExtension extends \Twig_Extension
     const NAME = 'setting_extension';
 
     /**
-     * @var UserSettingsManager
+     * @var AdminSettingsManager
      */
-    private $userSettingsManager;
+    private $adminSettingsManager;
 
     /**
-     * @param UserSettingsManager $userSettingsManager
+     * @param AdminSettingsManager $adminSettingsManager
      */
-    public function __construct($userSettingsManager)
+    public function __construct($adminSettingsManager)
     {
-        $this->userSettingsManager = $userSettingsManager;
+        $this->adminSettingsManager = $adminSettingsManager;
     }
 
     /**
@@ -66,6 +66,6 @@ class AdminSettingWidgetExtension extends \Twig_Extension
      */
     public function getSettingEnabled($settingName, $mustAuthorize = true)
     {
-        return $this->userSettingsManager->getSettingEnabled($settingName, $mustAuthorize);
+        return $this->adminSettingsManager->getSettingEnabled($settingName, $mustAuthorize);
     }
 }
