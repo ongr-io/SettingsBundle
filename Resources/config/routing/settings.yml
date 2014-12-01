@@ -1,15 +1,3 @@
-#Admin settings
-ongr_admin_settings_settings:
-    path: /settings
-    defaults:
-        _controller: ONGRAdminBundle:AdminSettings:settings
-
-ongr_admin_settings_change:
-    path: /setting/change/{hash}
-    defaults:
-        _controller: ONGRAdminBundle:AdminSettings:changeSetting
-        methods: [GET]
-
 #Common settings
 ongr_admin_homepage:
     pattern:  /
