@@ -13,7 +13,6 @@ parameters:
     ongr_admin.profiles_manager.class: ONGR\AdminBundle\Service\ProfilesManager
 
     ongr_admin.settings_provider.class: ONGR\AdminBundle\Settings\Common\Provider\ManagerAwareSettingProvider
-#    ongr_admin.power_user_profiles_provider.class: ONGR\AdminBundle\Settings\PowerUserProfilesProvider
 
 services:
     ongr_admin.settings.settings_structure:
@@ -59,11 +58,3 @@ services:
         class: %ongr_admin.profiles_manager.class%
         arguments:
             - @es.manager
-
-#    ongr_admin.power_user_profiles_provider:
-#        class: %ongr_admin.power_user_profiles_provider.class%
-#        calls:
-#            - [setProfileManager, [@ongr_admin.profiles_manager]]
-#            - [setSettingsStructure, [@ongr_admin.settings.settings_structure]]
-#        tags:
-#            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

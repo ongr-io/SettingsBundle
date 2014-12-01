@@ -11,6 +11,9 @@ parameters:
     # Admin Settings manager service class
     ongr_admin.settings.admin_settings_manager.class: ONGR\AdminBundle\Settings\Admin\AdminSettingsManager
 
+    # Admin profiles provider
+    ongr_admin.admin_profiles_provider.class: ONGR\AdminBundle\Settings\Admin\AdminProfilesProvider
+
 services:
     ongr_admin.settings.settings_cookie_service:
         class: %ongr_admin.settings.settings_cookie_service.class%
@@ -43,3 +46,12 @@ services:
         arguments:
           - @ongr_admin.authentication.sessionless_security_context
           - @ongr_admin.settings.settings_structure
+
+    # Admin profiles provider
+    ongr_admin.admin_profiles_provider:
+        class: %ongr_admin.admin_profiles_provider.class%
+        calls:
+            - [setProfileManager, [@ongr_admin.profiles_manager]]
+            - [setSettingsStructure, [@ongr_admin.settings.settings_structure]]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
