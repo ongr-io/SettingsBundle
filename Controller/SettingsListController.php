@@ -87,7 +87,7 @@ class SettingsListController extends Controller
     /**
      * Renders list page.
      *
-     * @param Request   $request
+     * @param Request $request
      *
      * @return Response
      */

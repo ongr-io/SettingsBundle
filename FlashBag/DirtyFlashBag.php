@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 class DirtyFlashBag extends FlashBag
 {
     /**
+     * Flag.
+     *
      * Flag indicating if $messages array was changed or not.
      *
      * @var bool

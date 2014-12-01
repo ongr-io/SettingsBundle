@@ -45,9 +45,9 @@ class SettingsManagerController extends Controller
     /**
      * Action for saving/seting setting values.
      *
-     * @param Request   $request
-     * @param string    $name
-     * @param string    $profile
+     * @param Request $request
+     * @param string  $name
+     * @param string  $profile
      *
      * @return Response
      */
@@ -91,9 +91,9 @@ class SettingsManagerController extends Controller
     /**
      * Action for Angularjs to edit settings.
      *
-     * @param Request   $request
-     * @param string    $name
-     * @param string    $profile
+     * @param Request $request
+     * @param string  $name
+     * @param string  $profile
      *
      * @return Response
      * @throws NotFoundHttpException
@@ -124,8 +124,8 @@ class SettingsManagerController extends Controller
     /**
      * Action for deleting a setting.
      *
-     * @param string  $name
-     * @param string  $profile
+     * @param string $name
+     * @param string $profile
      *
      * @return Response
      * @throws NotFoundHttpException
