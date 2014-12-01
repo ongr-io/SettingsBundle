@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Settings;
+namespace ONGR\AdminBundle\Settings\Admin;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Service responsible as a gateway to user settings.
  */
-class UserSettingsManager
+class AdminSettingsManager
 {
     /**
      * @var string

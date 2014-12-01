@@ -18,7 +18,7 @@ use ONGR\AdminBundle\Settings\UserSettingsManager;
  *
  * @package ONGR\AdminBundle\Twig
  */
-class SettingExtension extends \Twig_Extension
+class AdminSettingWidgetExtension extends \Twig_Extension
 {
     /**
      * Extension name
