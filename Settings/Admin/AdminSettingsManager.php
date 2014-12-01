@@ -12,6 +12,7 @@
 namespace ONGR\AdminBundle\Settings\Admin;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use ONGR\AdminBundle\Settings\Common\SettingsStructure;
 
 /**
  * Service responsible as a gateway to user settings.

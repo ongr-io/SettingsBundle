@@ -13,7 +13,7 @@ namespace ONGR\AdminBundle\EventListener;
 
 use ONGR\CookiesBundle\Cookie\Model\JsonCookie;
 use ONGR\CookiesBundle\Utils\ContainerAwareTrait;
-use ONGR\AdminBundle\Settings\AdminSettingsManager;
+use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
@@ -55,7 +55,7 @@ class SettingsCookieListener
     }
 
     /**
-     * @param \ONGR\AdminBundle\Settings\AdminSettingsManager $adminSettingsManager
+     * @param \ONGR\AdminBundle\Settings\Admin\AdminSettingsManager $adminSettingsManager
      */
     public function setAdminSettingsManager($adminSettingsManager)
     {

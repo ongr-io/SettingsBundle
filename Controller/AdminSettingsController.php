@@ -13,7 +13,7 @@ namespace ONGR\AdminBundle\Controller;
 
 use ONGR\CookiesBundle\Cookie\Model\CookieInterface;
 use ONGR\AdminBundle\Form\Type\SettingsType;
-use ONGR\AdminBundle\Settings\AdminSettingsManager;
+use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

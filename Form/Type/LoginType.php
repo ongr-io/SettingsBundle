@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace ONGR\AdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;

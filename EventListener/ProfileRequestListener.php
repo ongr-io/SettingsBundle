@@ -16,6 +16,7 @@ use ONGR\AdminBundle\Settings\Common\Provider\ManagerAwareSettingProvider;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\AdminBundle\Settings\Common\SettingsContainer;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
 
 /**
  * Listens for request event and sets selected profiles from power-user cookie to SettingsContainer.
@@ -59,7 +60,7 @@ class ProfileRequestListener
     }
 
     /**
-     * @param \ONGR\AdminBundle\Settings\AdminSettingsManager $adminSettingsManager
+     * @param \ONGR\AdminBundle\Settings\Admin\AdminSettingsManager $adminSettingsManager
      */
     public function setAdminSettingsManager($adminSettingsManager)
     {
