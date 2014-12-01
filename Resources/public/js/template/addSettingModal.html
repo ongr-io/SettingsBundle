@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body">
 
-    <!-- typeahead="domain for domain in domains | filter:$viewValue | limitTo:8" -->
+    <!-- typeahead="profile for profile in profiles | filter:$viewValue | limitTo:8" -->
 
     <form class="form-horizontal" name="addSettingForm">
         <div class="form-group">
@@ -15,10 +15,10 @@
             <p class="help-block" ng-show="addSettingForm.settingName.$error.required">Setting name required!</p>
         </div>
         <div class="form-group">
-            <label for="domain" class="col-sm-2 control-label">Domain</label>
+            <label for="profile" class="col-sm-2 control-label">Profile</label>
             <div class="col-sm-6">
-                <input id="domain" type="text" name="settingDomain"
-                       ng-model="settingService.setting.domain" class="form-control" ng-required="true"/>
+                <input id="profile" type="text" name="settingProfile"
+                       ng-model="settingService.setting.profile" class="form-control" ng-required="true"/>
             </div>
         </div>
         <div class="form-group">

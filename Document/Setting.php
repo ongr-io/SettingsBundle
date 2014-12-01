@@ -61,9 +61,9 @@ class Setting implements DocumentInterface
     /**
      * @var string
      *
-     * @ES\Property(name="domain", type="string", search_analyzer="standard")
+     * @ES\Property(name="profile", type="string", search_analyzer="standard")
      */
-    public $domain;
+    public $profile;
 
     /**
      * @var string

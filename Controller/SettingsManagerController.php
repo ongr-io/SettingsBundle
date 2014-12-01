@@ -47,11 +47,11 @@ class SettingsManagerController extends Controller
      *
      * @param Request   $request
      * @param string    $name
-     * @param string    $domain
+     * @param string    $profile
      *
      * @return Response
      */
-    public function setSettingAction(Request $request, $name, $domain = 'default')
+    public function setSettingAction(Request $request, $name, $profile = 'default')
     {
         $value = json_decode($request->request->get('value'), true);
 
@@ -61,7 +61,7 @@ class SettingsManagerController extends Controller
         }
 
         $manager = $this->getSettingsManager();
-        $manager->set($name, $value, $domain);
+        $manager->set($name, $value, $profile);
 
         return new Response();
     }
@@ -71,14 +71,14 @@ class SettingsManagerController extends Controller
      *
      * @param Request $request
      * @param string  $name
-     * @param string  $domain
+     * @param string  $profile
      *
      * @return Response
      * @throws NotFoundHttpException
      */
-    public function editAction(Request $request, $name, $domain)
+    public function editAction(Request $request, $name, $profile)
     {
-        $setting = $this->getSettingsManager()->get($name, $domain, false, $request->query->get('type', 'string'));
+        $setting = $this->getSettingsManager()->get($name, $profile, false, $request->query->get('type', 'string'));
 
         return $this->render(
             'ONGRAdminBundle:Settings:edit.html.twig',
@@ -93,12 +93,12 @@ class SettingsManagerController extends Controller
      *
      * @param Request   $request
      * @param string    $name
-     * @param string    $domain
+     * @param string    $profile
      *
      * @return Response
      * @throws NotFoundHttpException
      */
-    public function ngEditAction(Request $request, $name, $domain)
+    public function ngEditAction(Request $request, $name, $profile)
     {
         $content = $request->getContent();
         if (empty($content)) {
@@ -113,7 +113,7 @@ class SettingsManagerController extends Controller
         $type = isset($content['setting']['type']) ? $content['setting']['type'] : 'string';
 
         $manager = $this->getSettingsManager();
-        $model = $manager->get($name, $domain, false, $type);
+        $model = $manager->get($name, $profile, false, $type);
 
         $model->data = $content['setting']['data'];
         $manager->save($model);
@@ -125,14 +125,14 @@ class SettingsManagerController extends Controller
      * Action for deleting a setting.
      *
      * @param string  $name
-     * @param string  $domain
+     * @param string  $profile
      *
      * @return Response
      * @throws NotFoundHttpException
      */
-    public function removeAction($name, $domain)
+    public function removeAction($name, $profile)
     {
-        $setting = $this->getSettingsManager()->get($name, $domain);
+        $setting = $this->getSettingsManager()->get($name, $profile);
 
         $this->getSettingsManager()->remove($setting);
 
@@ -140,7 +140,7 @@ class SettingsManagerController extends Controller
     }
 
     /**
-     * Copies a setting to a new domain.
+     * Copies a setting to a new profile.
      *
      * @param string $name
      * @param string $from

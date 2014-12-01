@@ -24,9 +24,9 @@ interface SettingsProviderInterface
     public function getSettings();
 
     /**
-     * Returns name of provided settings domain.
+     * Returns name of provided settings profile.
      *
      * @return string
      */
-    public function getDomain();
+    public function getProfile();
 }

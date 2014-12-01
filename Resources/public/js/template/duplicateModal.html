@@ -3,14 +3,14 @@
 </div>
 <div class="modal-body">
     <form name="duplicateForm">
-        Duplicate from {{ setting.domain }} to
+        Duplicate from {{ setting.profile }} to
         <input class="form-control" type="text" value="default"
-               typeahead="domain for domain in domains | filter:$viewValue | limitTo:8"
-               name="newDomain" ng-model="newDomain" ng-required="true">
-        <p class="help-block" ng-show="duplicateForm.newDomain.$error.required">Required!</p>
+               typeahead="profile for profile in profiles | filter:$viewValue | limitTo:8"
+               name="newProfile" ng-model="newProfile" ng-required="true">
+        <p class="help-block" ng-show="duplicateForm.newProfile.$error.required">Required!</p>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-disabled="!duplicateForm.$valid" ng-click="copy(newDomain)">Duplicate</button>
+    <button class="btn btn-primary" ng-disabled="!duplicateForm.$valid" ng-click="copy(newProfile)">Duplicate</button>
     <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
 </div>

@@ -16,7 +16,7 @@ namespace ONGR\AdminBundle\Service;
  *
  * E.g.
  *
- * www.example_domain.com -> www-2e-example_domain-2e-com
+ * www.example_profile.com -> www-2e-example_profile-2e-com
  */
 class UnderscoreEscaper
 {

@@ -9,15 +9,15 @@
 
 angular
     .module('controller.modal.addSetting', [])
-    .controller('addSetting', ['$scope', '$modalInstance', '$http', 'domains', 'settingService',
-        'settingsList', 'currentDomain',
-        function($scope, $modalInstance, $http, domains, settingService,
-                 settingsList, currentDomain) {
+    .controller('addSetting', ['$scope', '$modalInstance', '$http', 'profiles', 'settingService',
+        'settingsList', 'currentProfile',
+        function($scope, $modalInstance, $http, profiles, settingService,
+                 settingsList, currentProfile) {
 
             /**
              * @type {[]}
              */
-            $scope.domains = domains;
+            $scope.profiles = profiles;
 
             /**
              * Setting service
@@ -37,9 +37,9 @@ angular
             $scope.settingService.setSettingsList(settingsList);
 
             /**
-             * Set current domain
+             * Set current profile
              */
-            $scope.settingService.setCurrentDomain(currentDomain);
+            $scope.settingService.setCurrentProfile(currentProfile);
 
             /**
              * Closes modal and reload page if settings were added

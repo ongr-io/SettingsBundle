@@ -47,7 +47,7 @@ angular
                     requestUrl = Routing.generate('ongr_admin_setting_ng_edit',
                         {
                             name: scope.setting.name,
-                            domain: scope.setting.domain
+                            profile: scope.setting.profile
                         }
                     );
 

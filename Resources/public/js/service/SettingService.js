@@ -19,7 +19,7 @@ angular
              */
             this.setting = {
                 name:   "name",
-                domain: "default",
+                profile: "default",
                 description: "-",
                 type:   "string",
                 data:   {
@@ -61,9 +61,9 @@ angular
             this.settingsList = null;
 
             /**
-             * Current domain of the setting list
+             * Current profile of the setting list
              */
-            this.currentDomain = null;
+            this.currentProfile = null;
 
             /**
              * Data value cache. Used when switching between setting types
@@ -125,7 +125,7 @@ angular
                 this.selectedTypeIndex = 0;
                 this.setting = {
                     name:   "",
-                    domain: "default",
+                    profile: "default",
                     description: "",
                     type:   "string",
                     data:   {
@@ -159,12 +159,12 @@ angular
             };
 
             /**
-             * Sets current domain
+             * Sets current profile
              *
-             * @param currentDomain
+             * @param currentProfile
              */
-            this.setCurrentDomain = function(currentDomain) {
-                this.currentDomain = currentDomain;
+            this.setCurrentProfile = function(currentProfile) {
+                this.currentProfile = currentProfile;
             };
 
             /**
@@ -174,7 +174,7 @@ angular
 
                 var requestUrl = Routing.generate('ongr_admin_setting_ng_edit', {
                     name: this.setting.name,
-                    domain: this.setting.domain
+                    profile: this.setting.profile
                 });
 
                 if (this.setting.type == 'object') {
@@ -189,7 +189,7 @@ angular
                         _this.status = 200;
                         if (_this.settingsList != null) {
                             var newSetting = angular.copy(_this.setting);
-                            if (_this.setting.domain == _this.currentDomain) {
+                            if (_this.setting.profile == _this.currentProfile) {
                                 _this.settingsList.list.push(newSetting);
                             }
                         }

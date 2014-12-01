@@ -20,14 +20,14 @@ use ONGR\ElasticsearchBundle\DSL\Query\MatchQuery;
 use ONGR\ElasticsearchBundle\DSL\Filter\LimitFilter;
 
 /**
- * Provider which uses session model to get settings from database using domain.
+ * Provider which uses session model to get settings from database using profile.
  */
 class ManagerAwareSettingProvider implements SettingsProviderInterface
 {
     /**
-     * @var string specific domain to be used
+     * @var string specific profile to be used
      */
-    private $domain;
+    private $profile;
 
     /**
      * @var Manager
@@ -42,12 +42,12 @@ class ManagerAwareSettingProvider implements SettingsProviderInterface
     /**
      * Constructor.
      *
-     * @param string $domain Domain value.
+     * @param string $profile Profile value.
      * @param int    $limit  Limit number of results.
      */
-    public function __construct($domain = 'default', $limit = 1000)
+    public function __construct($profile = 'default', $limit = 1000)
     {
-        $this->domain = $domain;
+        $this->profile = $profile;
         $this->limit = $limit;
     }
 
@@ -80,7 +80,7 @@ class ManagerAwareSettingProvider implements SettingsProviderInterface
         // Create query.
         $search = $repo->createSearch();
 
-        $match = new MatchQuery('domain', $this->getDomain());
+        $match = new MatchQuery('profile', $this->getProfile());
         $search->addFilter($match);
 
         $limit = new LimitFilter($this->getLimit());
@@ -102,9 +102,9 @@ class ManagerAwareSettingProvider implements SettingsProviderInterface
     /**
      * @return string
      */
-    public function getDomain()
+    public function getProfile()
     {
-        return $this->domain;
+        return $this->profile;
     }
 
     /**

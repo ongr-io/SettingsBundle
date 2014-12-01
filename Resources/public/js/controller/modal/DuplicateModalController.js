@@ -9,8 +9,8 @@
 
 angular
     .module('controller.modal.duplicate', [])
-    .controller('duplicate', ['$scope', '$modalInstance', '$http', 'item', 'domains',
-        function($scope, $modalInstance, $http, item, domains) {
+    .controller('duplicate', ['$scope', '$modalInstance', '$http', 'item', 'profiles',
+        function($scope, $modalInstance, $http, item, profiles) {
 
             /**
              * @type {}
@@ -20,23 +20,23 @@ angular
             /**
              * @type string
              */
-            $scope.newDomain = 'default';
+            $scope.newProfile = 'default';
 
             /**
              * @type []
              */
-            $scope.domains = domains;
+            $scope.profiles = profiles;
 
             /**
-             * Copies setting to another domain
+             * Copies setting to another profile
              *
-             * @param newDomain string
+             * @param newProfile string
              */
-            $scope.copy = function(newDomain) {
+            $scope.copy = function(newProfile) {
                 requestUrl = Routing.generate('ongr_admin_setting_copy', {
                     name: $scope.setting.name,
-                    from: $scope.setting.domain,
-                    to: newDomain
+                    from: $scope.setting.profile,
+                    to: newProfile
                 });
 
                 $http({ method: "GET", url: requestUrl  })

@@ -31,26 +31,26 @@ class ProviderPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $orderedDomains = $container->getParameter('ongr_admin.settings_container.domains');
-        $providers = array_flip($orderedDomains);
+        $orderedProfiles = $container->getParameter('ongr_admin.settings_container.profiles');
+        $providers = array_flip($orderedProfiles);
 
         $providerDefinitions = $container->findTaggedServiceIds('ongr_admin.settings_provider');
 
         foreach ($providerDefinitions as $serviceId => $tags) {
             foreach ($tags as $tag) {
                 $priority = !empty($tag['priority']) ? $tag['priority'] : self::DEFAULT_PROVIDER_PRIORITY;
-                if (isset($tag['domain']) && array_key_exists($tag['domain'], $providers)) {
-                    $providers[$tag['domain']] = ['id' => $serviceId, 'priority' => $priority];
+                if (isset($tag['profile']) && array_key_exists($tag['profile'], $providers)) {
+                    $providers[$tag['profile']] = ['id' => $serviceId, 'priority' => $priority];
                 } else {
                     $providers[] = ['id' => $serviceId, 'priority' => $priority];
                 }
             }
         }
 
-        foreach ($providers as $domain => &$tempProvider) {
-            if (!is_array($tempProvider) && is_string($domain)) {
+        foreach ($providers as $profile => &$tempProvider) {
+            if (!is_array($tempProvider) && is_string($profile)) {
                 $tempProvider = [
-                    'id' => $this->generateProvider($container, $domain),
+                    'id' => $this->generateProvider($container, $profile),
                     'priority' => self::DEFAULT_PROVIDER_PRIORITY,
                 ];
             }
@@ -78,19 +78,19 @@ class ProviderPass implements CompilerPassInterface
     }
 
     /**
-     * Generates provider by given domain.
+     * Generates provider by given profile.
      *
      * @param ContainerBuilder $container
-     * @param string           $domain
+     * @param string           $profile
      *
      * @return string
      */
-    protected function generateProvider(ContainerBuilder $container, $domain)
+    protected function generateProvider(ContainerBuilder $container, $profile)
     {
-        $id = "ongr_admin.dynamic_provider.{$domain}";
-        $provider = new Definition($container->getParameter('ongr_admin.settings_provider.class'), [$domain]);
+        $id = "ongr_admin.dynamic_provider.{$profile}";
+        $provider = new Definition($container->getParameter('ongr_admin.settings_provider.class'), [$profile]);
         $provider->addMethodCall('setManager', [new Reference('es.manager')]);
-        $provider->addTag('ongr_admin.settings_provider', ['domain' => $domain]);
+        $provider->addTag('ongr_admin.settings_provider', ['profile' => $profile]);
         $container->setDefinition($id, $provider);
 
         return $id;

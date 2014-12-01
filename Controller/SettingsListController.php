@@ -67,11 +67,11 @@ class SettingsListController extends Controller
         $search->setField('name');
         $container->set('search', $search);
 
-        /** @var SingleTermChoice $domain */
-        $domain = new SingleTermChoice();
-        $domain->setRequestField('domain');
-        $domain->setField('domain');
-        $container->set('domain', $domain);
+        /** @var SingleTermChoice $profile */
+        $profile = new SingleTermChoice();
+        $profile->setRequestField('profile');
+        $profile->setField('profile');
+        $container->set('profile', $profile);
 
         /** @var FiltersManager $fm */
         $fm = new FiltersManager($container, $manager->getRepository('ONGRAdminBundle:Setting'));

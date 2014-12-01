@@ -25,8 +25,8 @@ angular
         return {list: {data: null } }
     })
     .constant('DATA', setting)
-    .constant('currentDomain', currentDomain)
-    .constant('domains', domains)
+    .constant('currentProfile', currentProfile)
+    .constant('profiles', profiles)
     .run(['$templateCache', function($templateCache) {
         $templateCache.put('yaml.textarea', '<textarea id="yaml" class="form-control" cols="30" rows="12"></textarea>');
     }]);

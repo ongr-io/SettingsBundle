@@ -9,8 +9,8 @@
 
 angular
     .module('controller.settings', [])
-    .controller('settings', ['$scope', '$http', 'DATA', 'domains', '$modal', 'asset', 'settingsList',
-        function($scope, $http, DATA, domains, $modal, $asset, settingsList) {
+    .controller('settings', ['$scope', '$http', 'DATA', 'profiles', '$modal', 'asset', 'settingsList',
+        function($scope, $http, DATA, profiles, $modal, $asset, settingsList) {
 
             /**
              * @type {}
@@ -25,7 +25,7 @@ angular
             /**
              * @type {}
              */
-            $scope.domains = domains;
+            $scope.profiles = profiles;
 
             /**
              * Calls a duplicate modal
@@ -42,14 +42,14 @@ angular
                                 setting: $scope.settings[settingId]
                             };
                         },
-                        domains: function() {
-                            var domainNames = [];
+                        profiles: function() {
+                            var profileNames = [];
 
-                            angular.forEach($scope.domains, function(value, key) {
+                            angular.forEach($scope.profiles, function(value, key) {
                                 this.push(value.value);
-                            }, domainNames);
+                            }, profileNames);
 
-                            return domainNames;
+                            return profileNames;
                         }
                     }
                 });
@@ -63,14 +63,14 @@ angular
                     templateUrl: $asset.getLink('template/addSettingModal.html'),
                     controller: 'addSetting',
                     resolve: {
-                        domains: function() {
-                            var domainNames = [];
+                        profiles: function() {
+                            var profileNames = [];
 
-                            angular.forEach($scope.domains, function(value, key) {
+                            angular.forEach($scope.profiles, function(value, key) {
                                 this.push(value.value);
-                            }, domainNames);
+                            }, profileNames);
 
-                            return domainNames;
+                            return profileNames;
                         }
                     }
                 });
@@ -89,7 +89,7 @@ angular
                         'ongr_admin_setting_remove',
                         {
                             name: setting.name,
-                            domain: setting.domain,
+                            profile: setting.profile,
                         }
                     )
                 }).
@@ -110,7 +110,7 @@ angular
                     'ongr_admin_setting_ng_edit',
                     {
                         name: setting.name,
-                        domain: setting.domain,
+                        profile: setting.profile,
                     }
                 );
 
@@ -134,7 +134,7 @@ angular
                     'ongr_admin_setting_edit',
                     {
                         name: setting.name,
-                        domain: setting.domain
+                        profile: setting.profile
                     }
                 );
             }

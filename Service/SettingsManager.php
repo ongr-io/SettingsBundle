@@ -69,11 +69,11 @@ class SettingsManager
      *
      * @param string        $name
      * @param string|array  $value
-     * @param string        $domain
+     * @param string        $profile
      *
      * @throws \LogicException
      */
-    public function set($name, $value, $domain = 'default')
+    public function set($name, $value, $profile = 'default')
     {
         switch (gettype($value)) {
             case 'boolean':
@@ -91,12 +91,12 @@ class SettingsManager
         }
 
         $setting = new Setting();
-        $setting->setId($domain . '_' . $name);
+        $setting->setId($profile . '_' . $name);
         $setting->name = $name;
         $setting->description = 'ongr_admin.' . $this->translator->trans($name);
         $setting->data = (object)['value' => $value];
         $setting->type = $type;
-        $setting->domain = $domain;
+        $setting->profile = $profile;
 
         $this->manager->persist($setting);
         $this->manager->commit();
@@ -135,26 +135,26 @@ class SettingsManager
     }
 
     /**
-     * Copy a setting to the new domain.
+     * Copy a setting to the new profile.
      *
      * @param Setting $setting
-     * @param string  $newDomain
+     * @param string  $newProfile
      */
-    public function duplicate(Setting $setting, $newDomain)
+    public function duplicate(Setting $setting, $newProfile)
     {
         $newSetting = clone $setting;
 
-        $newSetting->setId($newDomain . '_' . $setting->name);
-        $newSetting->domain = $newDomain;
+        $newSetting->setId($newProfile . '_' . $setting->name);
+        $newSetting->profile = $newProfile;
 
         $this->save($newSetting);
     }
 
     /**
-     * Returns setting model by name and domain or creates new if $mustExist is set to FALSE.
+     * Returns setting model by name and profile or creates new if $mustExist is set to FALSE.
      *
      * @param string $name
-     * @param string $domain
+     * @param string $profile
      * @param bool   $mustExist
      * @param string $type
      *
@@ -162,16 +162,16 @@ class SettingsManager
      *
      * @return Setting
      */
-    public function get($name, $domain = 'default', $mustExist = true, $type = 'string')
+    public function get($name, $profile = 'default', $mustExist = true, $type = 'string')
     {
         try {
-            $setting = $this->repo->find($domain . '_' . $name);
+            $setting = $this->repo->find($profile . '_' . $name);
         } catch (Exception $exception) {
             if ($mustExist == true) {
                 throw $exception;
             }
 
-            $setting = $this->createSetting($name, $domain, $type);
+            $setting = $this->createSetting($name, $profile, $type);
         }
 
         return $setting;
@@ -181,17 +181,17 @@ class SettingsManager
      * Creates new setting object.
      *
      * @param string $name
-     * @param string $domain
+     * @param string $profile
      * @param string $type
      *
      * @return Setting
      */
-    protected function createSetting($name, $domain, $type)
+    protected function createSetting($name, $profile, $type)
     {
         $setting = new Setting();
-        $setting->setId($domain . '_' . $name);
+        $setting->setId($profile . '_' . $name);
         $setting->name = $name;
-        $setting->domain = $domain;
+        $setting->profile = $profile;
         $setting->type = $type;
 
         if ($type == 'array') {

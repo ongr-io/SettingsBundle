@@ -27,11 +27,11 @@ class SettingsContainer implements SettingsContainerInterface
     protected $pool;
 
     /**
-     * Array of selected domains / profiles to apply.
+     * Array of selected profiles / profiles to apply.
      *
      * @var array
      */
-    protected $domains;
+    protected $profiles;
 
     /**
      * @var SettingsProviderInterface[]
@@ -47,12 +47,12 @@ class SettingsContainer implements SettingsContainerInterface
      * Constructor.
      *
      * @param PoolInterface $pool
-     * @param array         $domains
+     * @param array         $profiles
      */
-    public function __construct(PoolInterface $pool, $domains = ['default'])
+    public function __construct(PoolInterface $pool, $profiles = ['default'])
     {
         $this->pool = $pool;
-        $this->domains = $domains;
+        $this->profiles = $profiles;
     }
 
     /**
@@ -85,7 +85,7 @@ class SettingsContainer implements SettingsContainerInterface
         $settings = [];
 
         foreach ($this->providers as $provider) {
-            if (in_array($provider->getDomain(), $this->domains)) {
+            if (in_array($provider->getProfile(), $this->profiles)) {
                 $settings = array_merge($settings, $provider->getSettings());
             }
         }
@@ -103,7 +103,7 @@ class SettingsContainer implements SettingsContainerInterface
      */
     protected function getCache()
     {
-        return $this->pool->getItem('ongr_admin.settings_cache', join($this->domains, ','));
+        return $this->pool->getItem('ongr_admin.settings_cache', join($this->profiles, ','));
     }
 
     /**
@@ -142,24 +142,24 @@ class SettingsContainer implements SettingsContainerInterface
     /**
      * @return array
      */
-    public function getDomains()
+    public function getProfiles()
     {
-        return $this->domains;
+        return $this->profiles;
     }
 
     /**
-     * @param array $domains
+     * @param array $profiles
      */
-    public function setDomains($domains)
+    public function setProfiles($profiles)
     {
-        $this->domains = $domains;
+        $this->profiles = $profiles;
     }
 
     /**
-     * @param string $domain
+     * @param string $profile
      */
-    public function addDomain($domain)
+    public function addProfile($profile)
     {
-        $this->domains[] = $domain;
+        $this->profiles[] = $profile;
     }
 }

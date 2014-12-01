@@ -51,12 +51,12 @@ class ProfileRequestListener
         $settings = $this->userSettingsManager->getSettings();
 
         foreach ($settings as $id => $value) {
-            $prefix = 'ongr_admin_domain_';
+            $prefix = 'ongr_admin_profile_';
             if (strpos($id, $prefix) === 0 && $value === true) {
-                $escapedDomain = mb_substr($id, strlen($prefix), null, 'UTF-8');
-                $domain = UnderscoreEscaper::unescape($escapedDomain);
-                $this->settingsContainer->addDomain($domain);
-                $this->settingsContainer->addProvider($this->buildProvider($domain));
+                $escapedProfile = mb_substr($id, strlen($prefix), null, 'UTF-8');
+                $profile = UnderscoreEscaper::unescape($escapedProfile);
+                $this->settingsContainer->addProfile($profile);
+                $this->settingsContainer->addProvider($this->buildProvider($profile));
             }
         }
     }
@@ -88,13 +88,13 @@ class ProfileRequestListener
     /**
      * BuildProvider.
      *
-     * @param string $domain
+     * @param string $profile
      *
      * @return ManagerAwareSettingProvider
      */
-    private function buildProvider($domain)
+    private function buildProvider($profile)
     {
-        $provider = new ManagerAwareSettingProvider($domain);
+        $provider = new ManagerAwareSettingProvider($profile);
         $provider->setManager($this->manager);
 
         return $provider;

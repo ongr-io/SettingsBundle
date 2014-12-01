@@ -16,9 +16,9 @@ use ONGR\ElasticsearchBundle\ORM\Repository;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 
 /**
- * Fetches all used domains from settings type.
+ * Fetches all used profiles from settings type.
  */
-class DomainsManager
+class ProfilesManager
 {
     /**
      * @var Manager
@@ -36,19 +36,19 @@ class DomainsManager
     }
 
     /**
-     * Get domains from Elasticsearch.
+     * Get profiles from Elasticsearch.
      *
      * @return array
      */
-    public function getDomains()
+    public function getProfiles()
     {
         $repo = $this->manager->getRepository('ONGRAdminBundle:Setting');
 
-        // Create aggregated domains list from all available settings.
-        $aggregation = new TermsAggregation('domain_agg');
-        $aggregation->setField('domain');
+        // Create aggregated profiles list from all available settings.
+        $aggregation = new TermsAggregation('profile_agg');
+        $aggregation->setField('profile');
         // Create query.
-        $search = $repo->createSearch()->addAggregation($aggregation)->setFields(['domain']);
+        $search = $repo->createSearch()->addAggregation($aggregation)->setFields(['profile']);
         // Process query. Get RESULTS_RAW.
         $results = $repo->execute($search, Repository::RESULTS_ARRAY);
 

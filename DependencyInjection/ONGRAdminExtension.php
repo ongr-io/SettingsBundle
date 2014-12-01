@@ -34,8 +34,8 @@ class ONGRAdminExtension extends Extension
         $container->setParameter('ongr_admin.connection.port', $config['connection']['port']);
         $container->setParameter('ongr_admin.connection.host', $config['connection']['host']);
 
-        // Set domains.
-        $container->setParameter('ongr_admin.settings_container.domains', $config['domains']);
+        // Set profiles.
+        $container->setParameter('ongr_admin.settings_container.profiles', $config['profiles']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services/auth.yml');
@@ -75,9 +75,9 @@ class ONGRAdminExtension extends Extension
             'name' => 'ONGR admin',
             'description' => 'Special settings for ONGR admin',
         ];
-        $categories['ongr_admin_domains'] = [
-            'name' => 'ONGR admin domains',
-            'description' => 'Profiles for domain settings',
+        $categories['ongr_admin_profiles'] = [
+            'name' => 'ONGR admin profiles',
+            'description' => 'Profiles for profile settings',
         ];
         $container->setParameter('ongr_admin.settings.categories', $categories);
 

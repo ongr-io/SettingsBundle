@@ -64,11 +64,11 @@
 {% endblock %}
 
 {% block admin_javascripts %}
-    {% set domain = filters.domain.state.value %}
+    {% set profile = filters.profile.state.value %}
     <script type="text/javascript">
         var setting = {{ data|json_encode|raw }},
-            domains = {{ filters.domain.choices|json_encode|raw }},
-            currentDomain = '{{ filters.domain.state.value|raw }}';
+            profiles = {{ filters.profile.choices|json_encode|raw }},
+            currentProfile = '{{ filters.profile.state.value|raw }}';
     </script>
     <script src="{{ asset('bundles/ongradmin/js/controller/SettingsController.js') }}"></script>
     <script src="{{ asset('bundles/ongradmin/js/controller/modal/DuplicateModalController.js') }}"></script>

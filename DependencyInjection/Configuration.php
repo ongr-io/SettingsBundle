@@ -35,7 +35,7 @@ class Configuration implements ConfigurationInterface
                         ->treatNullLike([])
                     ->end()
                 ->end()
-                ->arrayNode('domains')
+                ->arrayNode('profiles')
                     ->defaultValue(['default'])
                     ->prototype('scalar')
                     ->end()
