@@ -41,6 +41,7 @@ class ONGRAdminExtension extends Extension
         $loader->load('services/auth.yml');
         $loader->load('services/flash_bag.yml');
         $loader->load('services/twig_extension.yml');
+        $loader->load('services/admin_settings.yml');
         $loader->load('services/settings.yml');
 
         if (isset($config['power_user'])) {

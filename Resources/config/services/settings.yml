@@ -1,20 +1,8 @@
 parameters:
-    # Cookie service
-    ongr_admin.settings.settings_cookie_service.class: ONGR\AdminBundle\Settings\SettingsCookieService
-    ongr_admin.settings.settings_cookie.name: ongr_power_user_settings
-    ongr_admin.settings.settings_cookie.defaults:
-        expires_interval: P1Y # 1 year
-
-    # Cookie listener
-    ongr_admin.settings.settings_cookie_listener.class: ONGR\AdminBundle\EventListener\SettingsCookieListener
-
     # Settings structure service
     ongr_admin.settings.settings_structure.class: ONGR\AdminBundle\Settings\Common\SettingsStructure
     ongr_admin.settings.settings: []
     ongr_admin.settings.categories: []
-
-    # Admin Settings manager service class
-    ongr_admin.settings.admin_settings_manager.class: ONGR\AdminBundle\Settings\Admin\AdminSettingsManager
 
     # Settings manager
     ongr_admin.settings_manager.class: ONGR\AdminBundle\Service\SettingsManager
@@ -28,38 +16,6 @@ parameters:
 #    ongr_admin.power_user_profiles_provider.class: ONGR\AdminBundle\Settings\PowerUserProfilesProvider
 
 services:
-    ongr_admin.settings.settings_cookie_service:
-        class: %ongr_admin.settings.settings_cookie_service.class%
-        arguments:
-          - %ongr_admin.settings.settings_cookie.name%
-
-    ongr_admin.settings.settings_cookie_listener:
-        class: %ongr_admin.settings.settings_cookie_listener.class%
-        calls:
-            - [setUserSettingsManager, [@ongr_admin.settings.admin_settings_manager]]
-            - [setContainer, [@service_container]]
-        tags:
-          - name: kernel.event_listener
-            event: kernel.request
-            method: onKernelRequest
-            priority: 6
-        scope: request
-
-    ongr_admin.settings.settings_cookie:
-        class: %ongr_cookie.json.class%
-        arguments: [ %ongr_admin.settings.settings_cookie.name% ]
-        calls:
-            - [setDefaults, [%ongr_admin.settings.settings_cookie.defaults%]]
-        tags:
-            - { name: ongr_cookie.cookie }
-
-    #Admin settings manager class
-    ongr_admin.settings.admin_settings_manager:
-        class: %ongr_admin.settings.admin_settings_manager.class%
-        arguments:
-          - @ongr_admin.authentication.sessionless_security_context
-          - @ongr_admin.settings.settings_structure
-
     ongr_admin.settings.settings_structure:
         class: %ongr_admin.settings.settings_structure.class%
         arguments:
