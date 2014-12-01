@@ -1,9 +1,9 @@
 parameters:
-    # Admin extension
-    ongr_admin.twig.admin_extension.class: ONGR\AdminBundle\Twig\AdminExtension
+    #Application settings widget extension
+    ongr_admin.twig.admin_extension.class: ONGR\AdminBundle\Twig\SettingWidgetExtension
 
-    # Settings extension
-    ongr_admin.twig.setting_extension.class: ONGR\AdminBundle\Twig\SettingExtension
+    #Admin settings widget extension
+    ongr_admin.twig.setting_extension.class: ONGR\AdminBundle\Twig\AdminSettingWidgetExtension
 
     # Encryption extension
     ongr_admin.twig.encryption_extension.class: ONGR\AdminBundle\Twig\EncryptionExtension
@@ -25,7 +25,7 @@ services:
     ongr_admin.twig.admin_extension:
         class: %ongr_admin.twig.admin_extension.class%
         arguments:
-            - @ongr_admin.settings.user_settings_manager
+            - @ongr_admin.settings.admin_settings_manager
         calls:
             - [setSettingsContainer, [@ongr_admin.settings_container]]
             - [setLogger, [@?logger]]
@@ -36,7 +36,7 @@ services:
     ongr_utils.twig.setting_extension:
         class: %ongr_admin.twig.setting_extension.class%
         arguments:
-          - @ongr_admin.settings.user_settings_manager
+          - @ongr_admin.settings.admin_settings_manager
         tags:
           - { name: twig.extension }
 

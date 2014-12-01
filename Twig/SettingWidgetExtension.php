@@ -19,7 +19,7 @@ use Psr\Log\LoggerAwareTrait;
 /**
  * Extension for twig, which allows you to show/hide setting edit button depending on authorization.
  */
-class AdminExtension extends \Twig_Extension
+class SettingWidgetExtension extends \Twig_Extension
 {
     use LoggerAwareTrait;
 
@@ -80,14 +80,14 @@ class AdminExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction(
-                'ongr_show_setting',
+                'ongr_show_setting_widget',
                 [$this, 'showSetting'],
                 [
                     'needs_environment' => true,
                     'is_safe' => ['html']
                 ]
             ),
-            new \Twig_SimpleFunction('admin_setting', [$this, 'getAdminSetting']),
+            new \Twig_SimpleFunction('ongr_show_setting_value', [$this, 'getAdminSetting']),
         ];
     }
 

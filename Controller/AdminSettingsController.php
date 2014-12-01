@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Controller for managing user(Power User) settings.
+ * Controller for managing Admin (private) settings.
  */
 class AdminSettingsController extends Controller
 {
@@ -29,7 +29,7 @@ class AdminSettingsController extends Controller
      */
     protected function getUserSettingsManager()
     {
-        return $this->get('ongr_admin.settings.user_settings_manager');
+        return $this->get('ongr_admin.settings.admin_settings_manager');
     }
 
     /**

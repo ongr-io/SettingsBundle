@@ -13,8 +13,8 @@ parameters:
     ongr_admin.settings.settings: []
     ongr_admin.settings.categories: []
 
-    # Other services
-    ongr_admin.settings.user_settings_manager.class: ONGR\AdminBundle\Settings\UserSettingsManager
+    # Admin Settings manager service class
+    ongr_admin.settings.admin_settings_manager.class: ONGR\AdminBundle\Settings\Admin\AdminSettingsManager
 
     # Settings manager
     ongr_admin.settings_manager.class: ONGR\AdminBundle\Service\SettingsManager
@@ -36,7 +36,7 @@ services:
     ongr_admin.settings.settings_cookie_listener:
         class: %ongr_admin.settings.settings_cookie_listener.class%
         calls:
-            - [setUserSettingsManager, [@ongr_admin.settings.user_settings_manager]]
+            - [setUserSettingsManager, [@ongr_admin.settings.admin_settings_manager]]
             - [setContainer, [@service_container]]
         tags:
           - name: kernel.event_listener
@@ -53,8 +53,9 @@ services:
         tags:
             - { name: ongr_cookie.cookie }
 
-    ongr_admin.settings.user_settings_manager:
-        class: %ongr_admin.settings.user_settings_manager.class%
+    #Admin settings manager class
+    ongr_admin.settings.admin_settings_manager:
+        class: %ongr_admin.settings.admin_settings_manager.class%
         arguments:
           - @ongr_admin.authentication.sessionless_security_context
           - @ongr_admin.settings.settings_structure
@@ -93,7 +94,7 @@ services:
         class: %ongr_admin.listener.cookie_profile.class%
         calls:
             - [setSettingsContainer, [@ongr_admin.settings_container]]
-            - [setUserSettingsManager, [@ongr_admin.settings.user_settings_manager]]
+            - [setUserSettingsManager, [@ongr_admin.settings.admin_settings_manager]]
             - [setManager, [@es.manager]]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
