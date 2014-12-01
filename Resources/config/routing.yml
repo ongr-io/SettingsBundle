@@ -1,5 +1,8 @@
 ongr_routing_authentication:
     resource: "@ONGRAdminBundle/Resources/config/routing/auth.yml"
 
+ongr_admin_routing_settings:
+    resource: "@ONGRAdminBundle/Resources/config/routing/admin_settings.yml"
+
 ongr_routing_settings:
     resource: "@ONGRAdminBundle/Resources/config/routing/settings.yml"
