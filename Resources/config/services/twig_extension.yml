@@ -30,7 +30,7 @@ services:
             - [setSettingsContainer, [@ongr_admin.settings_container]]
             - [setLogger, [@?logger]]
         tags:
-            - { name: twig.extension }
+            - { name: "twig.extension" }
             - { name: monolog.logger, channel: admin }
 
     ongr_utils.twig.setting_extension:
@@ -38,12 +38,12 @@ services:
         arguments:
           - @ongr_admin.settings.user_settings_manager
         tags:
-          - { name: twig.extension }
+          - { name: "twig.extension" }
 
     ongr_admin.twig.encryption_extension:
         class: %ongr_admin.twig.encryption_extension.class%
         tags:
-          - { name: twig.extension }
+          - { name: "twig.extension" }
 
     ongr_admin.twig.hidden_extension:
             class: %ongr_admin.twig.hidden_extension.class%
