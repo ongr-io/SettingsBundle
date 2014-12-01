@@ -50,7 +50,7 @@ services:
         class: %ongr_admin.listener.cookie_profile.class%
         calls:
             - [setSettingsContainer, [@ongr_admin.settings_container]]
-            - [setUserSettingsManager, [@ongr_admin.settings.admin_settings_manager]]
+            - [setAdminSettingsManager, [@ongr_admin.settings.admin_settings_manager]]
             - [setManager, [@es.manager]]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

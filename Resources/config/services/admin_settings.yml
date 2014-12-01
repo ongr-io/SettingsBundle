@@ -20,7 +20,7 @@ services:
     ongr_admin.settings.settings_cookie_listener:
         class: %ongr_admin.settings.settings_cookie_listener.class%
         calls:
-            - [setUserSettingsManager, [@ongr_admin.settings.admin_settings_manager]]
+            - [setAdminSettingsManager, [@ongr_admin.settings.admin_settings_manager]]
             - [setContainer, [@service_container]]
         tags:
           - name: kernel.event_listener
