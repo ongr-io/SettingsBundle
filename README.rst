@@ -6,8 +6,8 @@ Provides settings API and admin interface for ONGR projects.
 
 It includes:
 
-- Admin functionality:
-- Settings functionality;
+- Admin settings functionality:
+- Common settings functionality;
 - FlashBag functionality:
 - Using environment variables functionality:
 
