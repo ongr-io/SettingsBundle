@@ -58,3 +58,26 @@ services:
         arguments: [ ongr_ab_settings ]
         tags:
             - { name: ongr_cookie.cookie }
+
+ongr_admin:
+    profiles: [ test1, test2, default, meh ]
+    admin_user:
+        categories:
+            category_1:
+                name: Category 1
+                description: cat_desc_1
+            category_2:
+                name: Category 2
+
+        settings:
+            foo_setting_1:
+                name: Foo Setting 1
+                category: category_1
+                description: 'foo_desc_1'
+            foo_setting_2:
+                name: Foo Setting 2
+                category: category_1
+            foo_setting_3:
+                name: Foo Setting 3
+                category: category_2
+                description: 'foo_desc_3'
