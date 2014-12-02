@@ -11,7 +11,7 @@
 
 namespace ONGR\AdminBundle\Twig;
 
-use ONGR\AdminBundle\Settings\AdminSettingsManager;
+use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
 
 /**
  * Class SettingExtension to show settings value on twig.
