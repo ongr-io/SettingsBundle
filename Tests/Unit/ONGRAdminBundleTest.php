@@ -21,9 +21,7 @@ use Symfony\Component\Finder\SplFileInfo;
 class ONGRAdminBundleTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * List of passes, which should not be added to compiler.
-     *
-     * @var array
+     * @var array List of passes, which should not be added to compiler.
      */
     protected $passesBlacklist = [];
 
@@ -36,7 +34,7 @@ class ONGRAdminBundleTest extends \PHPUnit_Framework_TestCase
         $bundle = new ONGRAdminBundle();
         $bundle->build($container);
 
-        /** @var array $loadedPasses  Array of class names of loaded passes*/
+        /** @var array $loadedPasses  Array of class names of loaded passes */
         $loadedPasses = [];
         /** @var PassConfig $passConfig */
         $passConfig = $container->getCompiler()->getPassConfig();
