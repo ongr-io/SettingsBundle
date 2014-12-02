@@ -1,6 +1,6 @@
 parameters:
     # Settings structure service
-    ongr_admin.settings.settings_structure.class: ONGR\AdminBundle\Settings\Common\SettingsStructure
+    ongr_admin.settings.settings_structure.class: ONGR\AdminBundle\Settings\Admin\SettingsStructure
     ongr_admin.settings.settings: []
     ongr_admin.settings.categories: []
 
