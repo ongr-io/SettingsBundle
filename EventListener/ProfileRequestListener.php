@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
 
 /**
- * Listens for request event and sets selected profiles from power-user cookie to SettingsContainer.
+ * Listens for request event and sets selected profiles from admin-user cookie to SettingsContainer.
  */
 class ProfileRequestListener
 {

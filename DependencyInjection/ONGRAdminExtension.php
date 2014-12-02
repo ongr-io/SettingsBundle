@@ -44,31 +44,31 @@ class ONGRAdminExtension extends Extension
         $loader->load('services/admin_settings.yml');
         $loader->load('services/settings.yml');
 
-        if (isset($config['power_user'])) {
-            $this->loadPowerUserSettings($config['power_user'], $container);
+        if (isset($config['admin_user'])) {
+            $this->loadAdminSettings($config['admin_user'], $container);
         }
 
-        $this->injectPowerUserSettings($container);
+        $this->injectAdminSettings($container);
     }
 
     /**
-     * Sets parameters for power user.
+     * Sets parameters for admin user.
      *
      * @param array            $config
      * @param ContainerBuilder $containerBuilder
      */
-    protected function loadPowerUserSettings($config, ContainerBuilder $containerBuilder)
+    protected function loadAdminSettings($config, ContainerBuilder $containerBuilder)
     {
         $containerBuilder->setParameter('ongr_admin.settings.categories', $config['categories']);
         $containerBuilder->setParameter('ongr_admin.settings.settings', $config['settings']);
     }
 
     /**
-     * Injects additional Power User settings to service container.
+     * Injects additional Admin User settings to service container.
      *
      * @param ContainerBuilder $container
      */
-    protected function injectPowerUserSettings(ContainerBuilder $container)
+    protected function injectAdminSettings(ContainerBuilder $container)
     {
         // Add category for ONGR admin settings.
         $categories = $container->getParameter('ongr_admin.settings.categories');
@@ -82,7 +82,7 @@ class ONGRAdminExtension extends Extension
         ];
         $container->setParameter('ongr_admin.settings.categories', $categories);
 
-        // Inject custom Power User settings.
+        // Inject custom Admin User settings.
         $settings = $container->getParameter('ongr_admin.settings.settings');
         $settings['ongr_admin_live_settings'] = [
             'name' => 'Show settings widget in frontend',
