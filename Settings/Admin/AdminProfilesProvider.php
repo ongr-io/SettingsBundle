@@ -47,7 +47,7 @@ class AdminProfilesProvider
     }
 
     /**
-     * Get profile list to display in power-user select list.
+     * Get profile list to display in admin-user select list.
      *
      * @return array
      */
