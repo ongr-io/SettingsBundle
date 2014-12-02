@@ -18,6 +18,9 @@
         <testsuite name="Integration">
             <directory>./Tests/Integration/</directory>
         </testsuite>
+        <testsuite name="Unit">
+            <directory>./Tests/Unit/</directory>
+        </testsuite>
         <testsuite name="All">
             <directory>./Tests/</directory>
         </testsuite>
