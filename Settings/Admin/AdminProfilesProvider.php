@@ -13,7 +13,7 @@ namespace ONGR\AdminBundle\Settings\Admin;
 
 use ONGR\AdminBundle\Service\ProfilesManager;
 use ONGR\AdminBundle\Service\UnderscoreEscaper;
-use ONGR\AdminBundle\Settings\Common\SettingsStructure;
+use ONGR\AdminBundle\Settings\Admin\SettingsStructure;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
