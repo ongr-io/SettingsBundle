@@ -1,7 +1,7 @@
 parameters:
     # Cookie service
     ongr_admin.settings.settings_cookie_service.class: ONGR\AdminBundle\Settings\SettingsCookieService
-    ongr_admin.settings.settings_cookie.name: ongr_power_user_settings
+    ongr_admin.settings.settings_cookie.name: ongr_admin_user_settings
     ongr_admin.settings.settings_cookie.defaults:
         expires_interval: P1Y # 1 year
 

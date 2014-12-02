@@ -1,7 +1,7 @@
 parameters:
     # Authentication cookie service
     ongr_admin.authentication.authentication_cookie_service.class: ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService
-    ongr_admin.authentication.authentication_cookie.name: ongr_power_user_auth
+    ongr_admin.authentication.authentication_cookie.name: ongr_admin_user_auth
     ongr_admin.authentication.authentication_cookie.expiration: P1D # 1 day
     ongr_admin.authentication.authentication_cookie.defaults:
         expires_interval: %ongr_admin.authentication.authentication_cookie.expiration%
