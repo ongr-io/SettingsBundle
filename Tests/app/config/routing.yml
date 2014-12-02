@@ -17,3 +17,7 @@ project_flash_bag:
     pattern: flash_bag
     defaults:
         _controller: project.controller.flash_bag:indexAction
+
+ongr_admin:
+    resource: "@ONGRAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin/
