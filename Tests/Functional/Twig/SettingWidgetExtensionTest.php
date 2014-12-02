@@ -12,25 +12,25 @@
 namespace ONGR\AdminBundle\Tests\Integration\Twig;
 
 use ONGR\AdminBundle\Exception\SettingNotFoundException;
-use ONGR\AdminBundle\Tests\Integration\BaseTest;
-use ONGR\AdminBundle\Twig\AdminExtension;
-use ONGR\AdminBundle\Settings\AdminSettingsManager;
+use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
+use ONGR\AdminBundle\Twig\SettingWidgetExtension;
+use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
 
 /**
  * Class used to test AdminExtension.
  */
-class AdminExtensionTest extends BaseTest
+class SettingWidgetExtensionTest extends ElasticsearchTestCase
 {
     /**
      * Tests if extension is loaded correctly.
      */
     public function testGetExtension()
     {
-        $container = self::createClient()->getContainer();
-        /** @var AdminExtension $extension */
+        $container = $this->getContainer();
+        /** @var SettingWidgetExtension $extension */
         $extension = $container->get('ongr_admin.twig.admin_extension');
         $this->assertInstanceOf(
-            'ONGR\AdminBundle\Twig\AdminExtension',
+            'ONGR\AdminBundle\Twig\SettingWidgetExtension',
             $extension,
             'extension has wrong instance.'
         );
@@ -46,7 +46,7 @@ class AdminExtensionTest extends BaseTest
      */
     protected function getSettingsManagerMock($authenticated)
     {
-        $settingsManager = $this->getMockBuilder('ONGR\AdminBundle\Settings\AdminSettingsManager')
+        $settingsManager = $this->getMockBuilder('ONGR\AdminBundle\Settings\Admin\AdminSettingsManager')
             ->disableOriginalConstructor()
             ->setMethods(['isAuthenticated'])
             ->getMock();
@@ -81,7 +81,7 @@ class AdminExtensionTest extends BaseTest
 
         // Case #1 default type (string).
         $expectedOutput = <<<HEREDOC
-<a href="http://localhost/setting/test/edit?type=string" class="btn btn-default pull-right" title="Edit test">
+<a href="http://localhost/admin/setting/test/edit?type=string" class="btn btn-default pull-right" title="Edit test">
     <span class="glyphicon glyphicon-wrench"></span>
 </a>
 HEREDOC;
@@ -89,7 +89,7 @@ HEREDOC;
 
         // Case #2 custom type (array).
         $expectedOutput = <<<HEREDOC
-<a href="http://localhost/setting/test/edit?type=array" class="btn btn-default pull-right" title="Edit test">
+<a href="http://localhost/admin/setting/test/edit?type=array" class="btn btn-default pull-right" title="Edit test">
     <span class="glyphicon glyphicon-wrench"></span>
 </a>
 HEREDOC;
@@ -101,10 +101,10 @@ HEREDOC;
     /**
      * Test getPriceList().
      *
-     * @param string    $expectedOutput
-     * @param string    $settingName
-     * @param bool      $isAuthenticated
-     * @param string    $type
+     * @param string $expectedOutput
+     * @param string $settingName
+     * @param bool   $isAuthenticated
+     * @param string $type
      *
      * @dataProvider showSettingData
      */
@@ -113,12 +113,12 @@ HEREDOC;
         $container = self::createClient()->getContainer();
         $securityContext = $container->get('ongr_admin.authentication.sessionless_security_context');
         $securityContext->setToken($this->getTokenMock());
-        $settingsManager = $container->get('ongr_admin.settings.user_settings_manager');
+        $settingsManager = $container->get('ongr_admin.settings.admin_settings_manager');
         $settingsManager->setSettingsFromForm(['ongr_admin_live_settings' => true]);
 
         /** @var \Twig_Environment $twig */
         $twig = $container->get('twig');
-        $extension = new AdminExtension($this->getSettingsManagerMock($isAuthenticated));
+        $extension = new SettingWidgetExtension($this->getSettingsManagerMock($isAuthenticated));
 
         if (empty($type)) {
             $result = $extension->showSetting($twig, $settingName);
@@ -139,7 +139,7 @@ HEREDOC;
         $settingContainer = $this->getMock('ONGR\AdminBundle\Settings\Common\SettingsContainerInterface');
         $settingContainer->expects($this->once())->method('get')->with('test')->willReturn($expectedValue);
 
-        $extension = new AdminExtension(null);
+        $extension = new SettingWidgetExtension(null);
         $extension->setSettingsContainer($settingContainer);
 
         $this->assertEquals($expectedValue, $extension->getAdminSetting('test'));
@@ -157,7 +157,7 @@ HEREDOC;
             ->with('test')
             ->willThrowException(new SettingNotFoundException());
 
-        $extension = new AdminExtension(null);
+        $extension = new SettingWidgetExtension(null);
         $extension->setSettingsContainer($settingContainer);
 
         $this->assertNull($extension->getAdminSetting('test'));
