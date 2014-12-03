@@ -11,38 +11,19 @@
 
 namespace ONGR\AdminBundle\Tests\Unit\Settings\Admin;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
 /**
  * Test how AdminProfilesProvider collects Admin settings from ES.
  */
-class AdminProfilesProviderTest extends WebTestCase
+class AdminProfilesProviderTest extends ElasticsearchTestCase
 {
-    /**
-     * @var Container.
-     */
-    private $container;
-
-    /**
-     * Get Container.
-     *
-     * @return Service container
-     */
-    protected function getServiceContainer()
-    {
-        if ($this->container === null) {
-            $this->container = self::createClient()->getContainer();
-        }
-
-        return $this->container;
-    }
-
     /**
      * Test method getSettings.
      */
     public function testGetSettings()
     {
-        $manager = $this->getServiceContainer()->get('ongr_admin.admin_profiles_provider');
+        $manager = $this->getContainer()->get('ongr_admin.admin_profiles_provider');
         $this->assertEquals($manager->getSettings(), []);
     }
 }
