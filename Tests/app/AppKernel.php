@@ -32,9 +32,6 @@ class AppKernel extends Kernel
             new ONGR\ElasticsearchBundle\ONGRElasticsearchBundle(),
             new Tedivm\StashBundle\TedivmStashBundle(),
 
-            new ONGR\RouterBundle\ONGRRouterBundle(),
-            // New ONGR\FilterManagerBundle\ONGRFilterManagerBundle(), .
-            // New ONGR\ContentBundle\ONGRContentBundle(), .
 
             new ONGR\CookiesBundle\ONGRCookiesBundle(),
             new ONGR\AdminBundle\ONGRAdminBundle(),

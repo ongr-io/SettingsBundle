@@ -18,6 +18,7 @@ project_flash_bag:
     defaults:
         _controller: project.controller.flash_bag:indexAction
 
+
 #Admin settings auth routing
 ongr_routing_authentication:
     resource: "@ONGRAdminBundle/Resources/config/routing/auth.yml"

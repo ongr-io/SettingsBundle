@@ -1,9 +1,4 @@
 parameters:
-    # Settings structure service
-    ongr_admin.settings.settings_structure.class: ONGR\AdminBundle\Settings\Admin\SettingsStructure
-    ongr_admin.settings.settings: []
-    ongr_admin.settings.categories: []
-
     # Settings manager
     ongr_admin.settings_manager.class: ONGR\AdminBundle\Service\SettingsManager
 
@@ -15,12 +10,6 @@ parameters:
     ongr_admin.settings_provider.class: ONGR\AdminBundle\Settings\Common\Provider\ManagerAwareSettingProvider
 
 services:
-    ongr_admin.settings.settings_structure:
-        class: %ongr_admin.settings.settings_structure.class%
-        arguments:
-            - %ongr_admin.settings.settings%
-            - %ongr_admin.settings.categories%
-
     ongr_admin.settings_manager:
         class: %ongr_admin.settings_manager.class%
         arguments:
