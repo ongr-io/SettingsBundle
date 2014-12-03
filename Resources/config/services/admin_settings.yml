@@ -1,4 +1,9 @@
 parameters:
+    # Settings structure service
+    ongr_admin.settings.settings_structure.class: ONGR\AdminBundle\Settings\Admin\SettingsStructure
+    ongr_admin.settings.settings: []
+    ongr_admin.settings.categories: []
+
     # Cookie service
     ongr_admin.settings.settings_cookie_service.class: ONGR\AdminBundle\Settings\SettingsCookieService
     ongr_admin.settings.settings_cookie.name: ongr_admin_user_settings
@@ -15,6 +20,12 @@ parameters:
     ongr_admin.admin_profiles_provider.class: ONGR\AdminBundle\Settings\Admin\AdminProfilesProvider
 
 services:
+    ongr_admin.settings.settings_structure:
+        class: %ongr_admin.settings.settings_structure.class%
+        arguments:
+            - %ongr_admin.settings.settings%
+            - %ongr_admin.settings.categories%
+
     ongr_admin.settings.settings_cookie_service:
         class: %ongr_admin.settings.settings_cookie_service.class%
         arguments:
