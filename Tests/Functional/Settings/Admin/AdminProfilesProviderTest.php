@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\Settings\Admin;
+namespace ONGR\AdminBundle\Tests\Functional\Settings\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -38,11 +38,11 @@ class AdminProfilesProviderTest extends WebTestCase
     }
 
     /**
-     * Test method getSettings.
+     * Get Service init.
      */
-    public function testGetSettings()
+    public function testGetAdminProfilesProvider()
     {
         $manager = $this->getServiceContainer()->get('ongr_admin.admin_profiles_provider');
-        $this->assertEquals($manager->getSettings(), []);
+        $this->assertInstanceOf('ONGR\AdminBundle\Settings\Admin\AdminProfilesProvider', $manager, '');
     }
 }
