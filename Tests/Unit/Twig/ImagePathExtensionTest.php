@@ -16,8 +16,14 @@ use ONGR\AdminBundle\Twig\ImagePathExtension;
 
 class ImagePathExtensionTest extends WebTestCase
 {
+    /**
+     * @var string Cdn url
+     */
     protected $cdnUrl = 'http://fox.dev';
 
+    /**
+     * @var string Prefixes
+     */
     protected $prefix = '/cdn';
 
     /**
@@ -60,14 +66,16 @@ class ImagePathExtensionTest extends WebTestCase
     ];
 
     /**
-     * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImagePath()
-     *
-     * @dataProvider getTestData
+     * Test get image path.
      *
      * @param array  $expected
      * @param string $image
      * @param string $preset
      * @param string $part
+     *
+     * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImagePath()
+     *
+     * @dataProvider getTestData
      */
     public function testGetImagePath(array $expected, $image, $preset, $part = null)
     {
@@ -80,6 +88,8 @@ class ImagePathExtensionTest extends WebTestCase
     }
 
     /**
+     * Tests get image path exception preset.
+     *
      * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImagePath()
      *
      * @expectedException \Exception
@@ -93,7 +103,9 @@ class ImagePathExtensionTest extends WebTestCase
     }
 
     /**
-     * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImagePath()
+     *Tests get image path part.
+     *
+     * @covers \ONGR\UtilsBundle\Twig\ImagePathExtension::getImagePath()
      *
      * @expectedException \Exception
      * @expectedExceptionMessage Part '__fake_part__' was not found
@@ -106,15 +118,17 @@ class ImagePathExtensionTest extends WebTestCase
     }
 
     /**
-     * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImageUrl()
-     * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImagePath()
-     *
-     * @dataProvider getTestData
+     * Test get image url.
      *
      * @param array  $expected
      * @param string $image
      * @param string $preset
      * @param string $part
+     *
+     * @covers \ONGR\UtilsBundle\Twig\ImagePathExtension::getImageUrl()
+     * @covers \ONGR\UtilsBundle\Twig\ImagePathExtension::getImagePath()
+     *
+     * @dataProvider getTestData
      */
     public function testGetImageUrl(array $expected, $image, $preset, $part = null)
     {
@@ -127,7 +141,7 @@ class ImagePathExtensionTest extends WebTestCase
     }
 
     /**
-     * Test data provider
+     * Test data provider.
      *
      * @return array
      */
@@ -182,7 +196,7 @@ class ImagePathExtensionTest extends WebTestCase
     }
 
     /**
-     * Expected filters getter
+     * Expected filters getter.
      *
      * @return array
      */
@@ -190,14 +204,16 @@ class ImagePathExtensionTest extends WebTestCase
     {
         return [
             ['imagePath'],
-            ['imageUrl']
+            ['imageUrl'],
         ];
     }
 
     /**
-     * @dataProvider getExpectedFunctions()
+     * Tet get functions.
      *
      * @param string $function
+     *
+     * @dataProvider getExpectedFunctions()
      */
     public function testGetFunctions($function)
     {
@@ -205,7 +221,7 @@ class ImagePathExtensionTest extends WebTestCase
 
         $exists = false;
         foreach ($extension->getFunctions() as $filterObject) {
-            if ($filterObject->getName()==$function) {
+            if ($filterObject->getName() == $function) {
                 $exists = true;
                 $this->assertTrue(is_callable($filterObject->getCallable()));
                 break;
@@ -216,7 +232,7 @@ class ImagePathExtensionTest extends WebTestCase
     }
 
     /**
-     * function test
+     * Function test.
      */
     public function testGetName()
     {
@@ -226,7 +242,7 @@ class ImagePathExtensionTest extends WebTestCase
     }
 
     /**
-     * Test image path without image name
+     * Test image path without image name.
      */
     public function testImagePathWithoutImage()
     {

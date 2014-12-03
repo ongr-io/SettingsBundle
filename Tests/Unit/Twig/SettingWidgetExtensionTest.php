@@ -17,7 +17,7 @@ use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
 class SettingWidgetExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Returns setting extension
+     * Returns setting extension.
      *
      * @return SettingWidgetExtension
      */
@@ -33,7 +33,7 @@ class SettingWidgetExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests if extension has functions
+     * Tests if extension has functions.
      */
     public function testFunctions()
     {

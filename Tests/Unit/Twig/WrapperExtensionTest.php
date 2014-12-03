@@ -16,7 +16,7 @@ use ONGR\AdminBundle\Twig\WrapperExtension;
 class WrapperExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test if extension has filters set
+     * Test if extension has filters set.
      */
     public function testHasFilters()
     {
@@ -26,7 +26,7 @@ class WrapperExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * name getter test
+     * Name getter test.
      */
     public function testGetName()
     {
@@ -36,19 +36,19 @@ class WrapperExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case when nothing need to changed
+     * Test case when nothing need to changed.
      */
     public function testNoChanges()
     {
         $extension = new WrapperExtension();
 
-        $text = "This is test string";
+        $text = 'This is test string';
 
         $keywords = [];
 
         $returned = $extension->wrap($text, $keywords);
 
-        $expected = "This is test string";
+        $expected = 'This is test string';
 
         $this->assertEquals($expected, $returned);
     }
@@ -60,31 +60,31 @@ class WrapperExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $extension = new WrapperExtension();
 
-        $text = "This is test string";
+        $text = 'This is test string';
 
-        $keywords = ["test"];
+        $keywords = ['test'];
 
         $returned = $extension->wrap($text, $keywords);
 
-        $expected = "This is <strong>test</strong> string";
+        $expected = 'This is <strong>test</strong> string';
 
         $this->assertEquals($expected, $returned);
     }
 
     /**
-     * Test if substring is wrapped correctly
+     * Test if substring is wrapped correctly.
      */
     public function testSubstringChange()
     {
         $extension = new WrapperExtension();
 
-        $text = "This is test string";
+        $text = 'This is test string';
 
-        $keywords = ["is"];
+        $keywords = ['is'];
 
         $returned = $extension->wrap($text, $keywords);
 
-        $expected = "Th<strong>is</strong> <strong>is</strong> test string";
+        $expected = 'Th<strong>is</strong> <strong>is</strong> test string';
 
         $this->assertEquals($expected, $returned);
     }

@@ -14,13 +14,12 @@ namespace ONGR\UtilsBundle\Tests\Functional\Twig;
 use ONGR\AdminBundle\Twig\EncryptionExtension;
 
 /**
- * Provides tests for content extention
+ * Provides tests for content extention.
  */
 class EncryptionExtensionTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
-     * Test getName function
+     * Test getName function.
      */
     public function testGetName()
     {
@@ -30,7 +29,7 @@ class EncryptionExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * test getFunctions
+     * Test getFunctions.
      */
     public function testGetFilters()
     {
@@ -42,22 +41,22 @@ class EncryptionExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * test base64EncodeFilter function
+     * Test base64EncodeFilter function.
      */
     public function testBase64EncodeFilter()
     {
-        $string = "teststring";
+        $string = 'teststring';
         $expected = base64_encode($string);
         $extension = new EncryptionExtension();
         $this->assertEquals($expected, $extension->base64EncodeFilter($string));
     }
 
     /**
-     * test base64DecodeFilter function
+     * Test base64DecodeFilter function.
      */
     public function testBase64DecodeFilter()
     {
-        $string = "teststring";
+        $string = 'teststring';
         $expected = base64_decode($string);
         $extension = new EncryptionExtension();
         $this->assertEquals($expected, $extension->base64DecodeFilter($string));
