@@ -19,7 +19,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class HiddenExtensionTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @param Request $request
      * 
@@ -28,16 +27,17 @@ class HiddenExtensionTest extends \PHPUnit_Framework_TestCase
     public function getContainer(Request $request = null)
     {
         $container = new Container();
-        if (!is_null($request)) {
+        if ($request !== null) {
             $container->addScope(new Scope('request'));
             $container->enterScope('request');
             $container->set('request', $request);
         }
+
         return $container;
     }
 
     /**
-     * tests name
+     * Tests name.
      */
     public function testName()
     {
@@ -46,7 +46,7 @@ class HiddenExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test if extension has functions
+     * Test if extension has functions.
      */
     public function testHasFunctions()
     {
@@ -55,19 +55,19 @@ class HiddenExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * data provider for testGenerate
+     * Data provider for testGenerate.
      *
      * @return array
      */
     public function getTestGenerateData()
     {
         $data = [];
-        $template = 'FoxUtilsBundle:Utils:hidden.html.twig';
+        $template = 'ONGRAdminBundle:Utils:hidden.html.twig';
 
-        //case 0: dont check request
+        // Case 0: dont check request.
         $data0 = [
             'test1' => 1,
-            'nested2' => [5, 4]
+            'nested2' => [5, 4],
         ];
         $env0 = $this->getMock('stdClass', ['render']);
         $env0
@@ -75,30 +75,32 @@ class HiddenExtensionTest extends \PHPUnit_Framework_TestCase
             ->method('render')
             ->with(
                 $template,
-                ['data' => [
-                    [
-                        'value' => 1,
-                        'name' => 'test1'
+                [
+                    'data' => [
+                        [
+                            'value' => 1,
+                            'name' => 'test1',
+                        ],
+                        [
+                            'value' => 5,
+                            'name' => 'nested2[]',
+                        ],
+                        [
+                            'value' => 4,
+                            'name' => 'nested2[]',
+                        ],
                     ],
-                    [
-                        'value' => 5,
-                        'name' => 'nested2[]'
-                    ],
-                    [
-                        'value' => 4,
-                        'name' => 'nested2[]'
-                    ]
-                ]]
+                ]
             );
         $container0 = $this->getContainer();
 
         $data[] = [$data0, false, $env0, $container0];
 
-        //case 1: check request
+        // Case 1: check request.
         $data1 = [
             'test1' => 1,
             'test12' => 12,
-            'nested2' => [5, 4]
+            'nested2' => [5, 4],
         ];
         $env1 = $this->getMock('stdClass', ['render']);
         $env1
@@ -106,36 +108,30 @@ class HiddenExtensionTest extends \PHPUnit_Framework_TestCase
             ->method('render')
             ->with(
                 $template,
-                ['data' => [
-                    [
-                        'value' => 12,
-                        'name' => 'test12'
-                    ],
-                    [
-                        'value' => 5,
-                        'name' => 'nested2[]'
-                    ],
-                    [
-                        'value' => 4,
-                        'name' => 'nested2[]'
-                    ]
-                ]]
+                [
+                    'data' => [],
+                ]
             );
-        $container1 = $this->getContainer(new Request([
-                'test12' => 'smth',
-                'nested2' => 'smth'
-            ]));
+        $container1 = $this->getContainer(
+            new Request(
+                [
+                    'test12' => 'smth',
+                    'nested2' => 'smth',
+                ]
+            )
+        );
 
         $data[] = [$data1, true, $env1, $container1];
+
         return $data;
     }
 
     /**
-     * test for generate method
+     * Test for generate method.
      *
-     * @param array $data
-     * @param bool $checkRequest
-     * @param \Twig_Environment $env
+     * @param array              $data
+     * @param bool               $checkRequest
+     * @param \Twig_Environment  $env
      * @param ContainerInterface $container
      *
      * @dataProvider getTestGenerateData
