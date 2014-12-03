@@ -19,7 +19,7 @@ class ImagePathExtensionTest extends WebTestCase
     /**
      * @var string Cdn url
      */
-    protected $cdnUrl = 'http://fox.dev';
+    protected $cdnUrl = 'http://ongr.dev';
 
     /**
      * @var string Prefixes
@@ -105,7 +105,7 @@ class ImagePathExtensionTest extends WebTestCase
     /**
      *Tests get image path part.
      *
-     * @covers \ONGR\UtilsBundle\Twig\ImagePathExtension::getImagePath()
+     * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImagePath()
      *
      * @expectedException \Exception
      * @expectedExceptionMessage Part '__fake_part__' was not found
@@ -125,8 +125,8 @@ class ImagePathExtensionTest extends WebTestCase
      * @param string $preset
      * @param string $part
      *
-     * @covers \ONGR\UtilsBundle\Twig\ImagePathExtension::getImageUrl()
-     * @covers \ONGR\UtilsBundle\Twig\ImagePathExtension::getImagePath()
+     * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImageUrl()
+     * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImagePath()
      *
      * @dataProvider getTestData
      */
