@@ -9,8 +9,8 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Class AppKernel.
@@ -33,8 +33,8 @@ class AppKernel extends Kernel
             new Tedivm\StashBundle\TedivmStashBundle(),
 
             new ONGR\RouterBundle\ONGRRouterBundle(),
-            //new ONGR\FilterManagerBundle\ONGRFilterManagerBundle(),
-            //new ONGR\ContentBundle\ONGRContentBundle(),
+            // New ONGR\FilterManagerBundle\ONGRFilterManagerBundle(), .
+            // New ONGR\ContentBundle\ONGRContentBundle(), .
 
             new ONGR\CookiesBundle\ONGRCookiesBundle(),
             new ONGR\AdminBundle\ONGRAdminBundle(),
@@ -49,5 +49,6 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
+        $loader->load(__DIR__ . '/config/auth.yml');
     }
 }

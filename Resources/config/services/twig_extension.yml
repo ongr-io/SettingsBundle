@@ -33,7 +33,7 @@ services:
             - { name: "twig.extension" }
             - { name: monolog.logger, channel: admin }
 
-    ongr_utils.twig.setting_extension:
+    ongr_admin.twig.setting_extension:
         class: %ongr_admin.twig.setting_extension.class%
         arguments:
           - @ongr_admin.settings.admin_settings_manager
