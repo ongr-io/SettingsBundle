@@ -34,7 +34,6 @@ class ProviderPassTest extends \PHPUnit_Framework_TestCase
         $definition->addTag('ongr_admin.settings_provider', ['profile' => 'custom', 'priority' => 9]);
         $container->setDefinition('ongr_admin.custom_settings_provider', $definition);
 
-
         $definition = new Definition();
         $definition->addTag('ongr_admin.settings_provider');
         $container->setDefinition('ongr_admin.unregistered_settings_provider', $definition);
