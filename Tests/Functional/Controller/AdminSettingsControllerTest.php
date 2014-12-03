@@ -11,6 +11,7 @@
 
 namespace ONGR\AdminBundle\Tests\Functional\Controller;
 
+use ONGR\AdminBundle\Tests\Functional\PrepareAdminData;
 use ONGR\CookiesBundle\Tests\Functional\CookieTestHelper;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -32,6 +33,7 @@ class AdminSettingsControllerTest extends WebTestCase
     {
         parent::setUp();
         $this->client = self::createClient();
+        new PrepareAdminData();
     }
 
     /**
