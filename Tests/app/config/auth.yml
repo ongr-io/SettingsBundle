@@ -8,9 +8,6 @@ parameters:
 
     # Authentication provider
     ongr_admin.authentication.sessionless_authentication_provider.class: ONGR\AdminBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider
-    ongr_admin.authentication.users:
-            foo_user:
-              password: 'foo_password'
 
     # Signature generator
     ongr_admin.authentication.signature_generator.class: ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessSignatureGenerator

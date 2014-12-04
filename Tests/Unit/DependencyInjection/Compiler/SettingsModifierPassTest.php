@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\UtilsBundle\Tests\Functional\DependencyInjection\Compiler;
+namespace ONGR\Functional\Tests\Functional\DependencyInjection\Compiler;
 
 use ONGR\AdminBundle\DependencyInjection\Compiler\SettingsModifierPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -54,7 +54,7 @@ class SettingsModifierPassTest extends \PHPUnit_Framework_TestCase
         $container
             ->expects($this->once())
             ->method('findTaggedServiceIds')
-            ->with('ongr_admin.settings_provider')
+            ->with('ongr_admin.admin_profiles_provider')
             ->willReturn(
                 [
                     'service_id' => [$tagAttributes],

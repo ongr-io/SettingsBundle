@@ -11,7 +11,7 @@
 
 namespace ONGR\AdminBundle\Tests\Integration\Controller;
 
-use ONGR\CookiesBundle\Tests\Functional\CookieTestHelper;
+use ONGR\AdminBundle\Tests\Functional\CookieTestHelper;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -68,7 +68,7 @@ class UserControllerTest extends WebTestCase
     public function testLoginAction($username, $password, $shouldSucceed)
     {
         // Visit login page.
-        $crawler = $this->client->request('GET', '/auth_prefix/login');
+        $crawler = $this->client->request('GET', '/login');
 
         // Submit login form.
         $buttonNode = $crawler->selectButton('login_submit');
@@ -80,12 +80,12 @@ class UserControllerTest extends WebTestCase
 
         if ($shouldSucceed) {
             // Assert successful redirect.
-            $this->assertSame('/auth_prefix/login', $response->headers->get('location'));
+            $this->assertSame('/login', $response->headers->get('location'));
 
             // Assert correct cookie has been set.
             /** @var Cookie $cookie */
             $cookie = $response->headers->getCookies()[0];
-            $this->assertSame('ongr_admin_auth', $cookie->getName());
+            $this->assertSame('ongr_admin_user_auth', $cookie->getName());
             $this->assertSame('foo_user', json_decode($cookie->getValue(), true)['username']);
         } else {
             // Assert not a redirect.
@@ -102,7 +102,7 @@ class UserControllerTest extends WebTestCase
         CookieTestHelper::setAuthenticationCookie($this->client);
 
         // Visit login page.
-        $crawler = $this->client->request('GET', '/auth_prefix/login');
+        $crawler = $this->client->request('GET', '/login');
 
         // Assert content contains message.
         $response = $this->client->getResponse();
@@ -144,7 +144,7 @@ class UserControllerTest extends WebTestCase
         CookieTestHelper::setAuthenticationCookie($this->client, time() - 360 * 24 * 3600);
 
         // Visit login page.
-        $crawler = $this->client->request('GET', '/auth_prefix/login');
+        $crawler = $this->client->request('GET', '/login');
 
         // Assert there is a form.
         $buttonNode = $crawler->selectButton('login_submit');
@@ -188,11 +188,11 @@ class UserControllerTest extends WebTestCase
         }
 
         // Visit logout page.
-        $this->client->request('GET', '/auth_prefix/logout');
+        $this->client->request('GET', '/logout');
 
         // Assert successful redirect.
         $response = $this->client->getResponse();
-        $this->assertSame('/auth_prefix/login', $response->headers->get('location'));
+        $this->assertSame('/login', $response->headers->get('location'));
 
         // Assert cookie has been cleared.
         $this->assertSame(0, count($this->client->getCookieJar()->all()));
@@ -207,7 +207,7 @@ class UserControllerTest extends WebTestCase
         CookieTestHelper::setAuthenticationCookie($this->client);
 
         // Get cookie value.
-        $cookie = $this->client->getCookieJar()->get('ongr_admin_auth');
+        $cookie = $this->client->getCookieJar()->get('ongr_admin_user_auth');
         $valueJson = $cookie->getValue();
         $value = json_decode($valueJson, true);
 
@@ -222,7 +222,7 @@ class UserControllerTest extends WebTestCase
     {
         // Set cookie.
         $newCookie = new \Symfony\Component\BrowserKit\Cookie(
-            'ongr_admin_auth',
+            'ongr_admin_user_auth',
             json_encode(
                 $cookieValue
             ),
@@ -233,7 +233,7 @@ class UserControllerTest extends WebTestCase
         $this->client->getCookieJar()->set($newCookie);
 
         // Visit login page.
-        $crawler = $this->client->request('GET', '/auth_prefix/login');
+        $crawler = $this->client->request('GET', '/login');
 
         // Assert there is a form.
         $buttonNode = $crawler->selectButton('login_submit');

@@ -23,7 +23,7 @@ class CookieTestHelper
     /**
      * Construct authenticated cookie and set it in the cookie jar.
      *
-     * This method is also used by fox-admin.
+     * This method is also used by ongr-admin.
      *
      * @param Client $client
      * @param int    $expirationTime

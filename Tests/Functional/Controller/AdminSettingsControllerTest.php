@@ -11,8 +11,8 @@
 
 namespace ONGR\AdminBundle\Tests\Functional\Controller;
 
+use ONGR\AdminBundle\Tests\Functional\CookieTestHelper;
 use ONGR\AdminBundle\Tests\Functional\PrepareAdminData;
-use ONGR\CookiesBundle\Tests\Functional\CookieTestHelper;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -22,7 +22,12 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class AdminSettingsControllerTest extends WebTestCase
 {
     /**
-     * @var Client
+     * @var ElasticSearch indexes.
+     */
+    private $elastic;
+
+    /**
+     * @var Client.
      */
     private $client;
 
@@ -33,7 +38,7 @@ class AdminSettingsControllerTest extends WebTestCase
     {
         parent::setUp();
         $this->client = self::createClient();
-        new PrepareAdminData();
+        $this->elastic = new PrepareAdminData();
     }
 
     /**
@@ -41,6 +46,9 @@ class AdminSettingsControllerTest extends WebTestCase
      */
     public function testSettingsAction()
     {
+        $this->client = self::createClient();
+        $this->client->restart();
+
         // Set authentication cookie.
         CookieTestHelper::setAuthenticationCookie($this->client);
 
@@ -60,6 +68,7 @@ class AdminSettingsControllerTest extends WebTestCase
         // Submit settings form.
         $buttonNode = $crawler->selectButton('settings_submit');
         $form = $buttonNode->form();
+
         /** @noinspection PhpUndefinedMethodInspection */
         $form['settings[foo_setting_1]']->tick();
         /** @noinspection PhpUndefinedMethodInspection */
@@ -67,12 +76,18 @@ class AdminSettingsControllerTest extends WebTestCase
         /** @noinspection PhpUndefinedMethodInspection */
         $form['settings[foo_setting_3]']->tick();
         /** @noinspection PhpUndefinedMethodInspection */
-        $form['settings[profiles][0]']->tick();
+        $form['settings[ongr_admin_profile_Acme2]']->tick();
+        /** @noinspection PhpUndefinedMethodInspection */
+        $form['settings[ongr_admin_live_settings]']->untick();
+        /** @noinspection PhpUndefinedMethodInspection */
+        $form['settings[ongr_admin_profile_Acme1]']->untick();
+
         $this->client->submit($form);
+
 
         // Assert successful redirect.
         $this->assertStringEndsWith(
-            '/settings_prefix/settings',
+            '/settings',
             $this->client->getResponse()->headers->get('location'),
             'response must be a correct redirect'
         );
@@ -82,11 +97,14 @@ class AdminSettingsControllerTest extends WebTestCase
             ->getCookieJar()
             ->get($this->client->getContainer()->getParameter('ongr_admin.settings.settings_cookie.name'))
             ->getValue();
+
         $expectedValue = [
             'foo_setting_1' => true,
             'foo_setting_2' => false,
             'foo_setting_3' => true,
-            'domains' => ['settings_set_foo'],
+            'ongr_admin_profile_Acme2' => true,
+            'ongr_admin_live_settings' => false,
+            'ongr_admin_profile_Acme1' => false,
         ];
         $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
 
@@ -98,8 +116,11 @@ class AdminSettingsControllerTest extends WebTestCase
             ->getCookieJar()
             ->get($this->client->getContainer()->getParameter('ongr_admin.settings.settings_cookie.name'))
             ->getValue();
-        $expectedValue['foo_setting_1'] = false;
+        $expectedValue['foo_setting_1'] = true;
         $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
+
+        $this->elastic->cleanUp();
+        $this->client->restart();
     }
 
     /**

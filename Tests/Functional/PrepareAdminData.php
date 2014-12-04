@@ -25,17 +25,22 @@ use Symfony\Component\Console\Tester\CommandTester;
 class PrepareAdminData extends ElasticsearchTestCase
 {
     /**
+     * @var Connection
+     */
+    private $connection;
+
+    /**
      * Creates Elastic search indexes and adds test data.
      */
-    public function testCreateElasticSearchIndexes()
+    public function __construct()
     {
-        $argument = 'default';
-
-        $manager = $this->getManager($argument, false);
+        $manager = $this->getManager('default', false);
 
         $connection = $manager->getConnection();
+        $this->connection = $connection;
+
         if ($connection->indexExists()) {
-            $connection->dropIndex();
+            $this->cleanUp();
         }
 
         $app = new Application();
@@ -46,29 +51,21 @@ class PrepareAdminData extends ElasticsearchTestCase
         $commandTester = new CommandTester($command);
         $arguments = [
             'command' => $command->getName(),
-            '--manager' => $argument,
         ];
-
-        $arguments['--time'] = null;
-
         $commandTester->execute($arguments);
-
         $indexName = $this->extractIndexName($commandTester);
+
         $connection->setIndexName($indexName);
-
-        $this->assertTrue($connection->indexExists(), 'Index should exist.');
-        $connection->dropIndex();
-
 
         $manager = $this->getManager('default', false);
 
+        // Add some settings.
         $content = new Setting();
-        $content->name = 'Acme';
-        $content->description = 'Acme';
-        $content->profile = 'Acme';
-        $content->type = 'Acme';
-        $content->data = 'Acme';
-
+        $content->name = 'Acme1';
+        $content->description = 'Acme1';
+        $content->profile = 'Acme1';
+        $content->type = 'Acme1';
+        $content->data = 'Acme1';
         $manager->persist($content);
 
         $content = new Setting();
@@ -77,7 +74,6 @@ class PrepareAdminData extends ElasticsearchTestCase
         $content->profile = 'Acme2';
         $content->type = 'Acme2';
         $content->data = 'Acme2';
-
         $manager->persist($content);
 
         $manager->commit();
@@ -89,13 +85,11 @@ class PrepareAdminData extends ElasticsearchTestCase
             ->addQuery(new MatchAllQuery());
         $results = $repo->execute($search);
 
-        $ids = [];
+        $profiles = [];
         foreach ($results as $doc) {
             $profiles[] = $doc->profile;
         }
         sort($profiles);
-
-        $this->assertEquals(['Acme', 'Acme2'], $profiles);
     }
 
     /**
@@ -125,5 +119,13 @@ class PrepareAdminData extends ElasticsearchTestCase
         $indexName = $matches[1];
 
         return $indexName;
+    }
+
+    /**
+     * Cleanup indexes after test.
+     */
+    public function cleanUp()
+    {
+        $this->connection->dropIndex();
     }
 }

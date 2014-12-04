@@ -1,6 +1,6 @@
 parameters:
     database_driver: pdo_mysql
-    database_host: localhost
+    database_host: ongr.dev
     database_port: null
     database_name: ongr-admin-test
     database_user: root
