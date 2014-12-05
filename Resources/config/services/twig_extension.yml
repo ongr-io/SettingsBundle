@@ -13,7 +13,7 @@ parameters:
 
     # Image path extension
     ongr_admin.twig.image_path_extension.class: ONGR\AdminBundle\Twig\ImagePathExtension
-    ongr_admin.twig.image_path_extension.cdn_url: //cdn.fox-project.com
+    ongr_admin.twig.image_path_extension.cdn_url: //cdn.ongr.io
     ongr_admin.twig.image_path_extension.image_presets: ~
     ongr_admin.twig.image_path_extension.image_fields_mapping: ~
     ongr_admin.twig.image_path_extension.images_cache_prefix: /cdn
