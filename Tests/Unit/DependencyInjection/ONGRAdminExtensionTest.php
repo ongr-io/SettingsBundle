@@ -9,12 +9,10 @@
  * file that was distributed with this source code.
  */
 
-
-namespace ONGR\UtilsBundle\Tests\Functional\DependencyInjection;
+namespace ONGR\AdminBundle\Tests\Unit\DependencyInjection;
 
 use ONGR\AdminBundle\DependencyInjection\ONGRAdminExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 
 /**
  * This class holds tests for extension loader.
@@ -51,5 +49,4 @@ class ONGRAdminExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($container->hasParameter('ongr_admin.settings.categories'));
         $this->assertTrue($container->hasParameter('ongr_admin.settings.settings'));
     }
-
 }
