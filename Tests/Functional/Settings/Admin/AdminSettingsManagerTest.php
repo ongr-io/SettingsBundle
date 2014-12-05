@@ -18,16 +18,6 @@ use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
 class AdminSettingsManagerTest extends WebTestCase
 {
     /**
-     * Get manager.
-     *
-     * @return AdminSettingsManager
-     */
-    public function getServiceSettingsManager()
-    {
-        return self::createClient()->getContainer()->get('ongr_admin.settings.admin_settings_manager');
-    }
-
-    /**
      * Create mock array.
      *
      * @return array
@@ -38,9 +28,55 @@ class AdminSettingsManagerTest extends WebTestCase
     }
 
     /**
+     * Data provider for testGeneralGet.
+     *
+     * @return array
+     */
+    public function getGeneralTestData()
+    {
+        $out = [];
+
+        // Case #0 Tests are settings inserted and loaded from cookies.
+        $out[] = [
+            'data' => $this->getMockArray(),
+            'add' => [],
+            'form' => [],
+            'expected' => $this->getMockArray(),
+        ];
+
+        // Case #1 Tests are settings added (merged) and loaded from cookies.
+        $out[] = [
+            'data' => $this->getMockArray(),
+            'add' => [ 'Key 2' => 'Test 2' ],
+            'form' => [],
+            'expected' => $this->getMockArray() + [ 'Key 2' => 'Test 2' ],
+        ];
+
+        // Case #2 Tests are settings inserted and loaded from form.
+        $out[] = [
+            'data' => [],
+            'add' => [],
+            'form' => $this->getMockArray(),
+            'expected' => $this->getMockArray(),
+        ];
+
+        return $out;
+    }
+
+    /**
+     * Get manager.
+     *
+     * @return AdminSettingsManager
+     */
+    public function getServiceSettingsManager()
+    {
+        return self::createClient()->getContainer()->get('ongr_admin.settings.admin_settings_manager');
+    }
+
+    /**
      * Create mock Admin settings manager with authorization enabled.
      *
-     * @return Container
+     * @return ContainerBuilder
      */
     public function getManagerWithSecurityMock()
     {
@@ -58,111 +94,114 @@ class AdminSettingsManagerTest extends WebTestCase
     }
 
     /**
-     * Tests are settings inserted and loaded from cookies.
+     * Test Settings manager.
+     *
+     * @param array $data
+     * @param array $add
+     * @param array $form
+     * @param array $expected
+     *
+     * @dataProvider getGeneralTestData
      */
-    public function testSetSettingsFromCookie()
-    {
-        $manager = $this->getServiceSettingsManager();
-        $manager->setSettingsFromCookie($this->getMockArray());
-
-        $this->assertEquals($manager->getSettings(), $this->getMockArray());
-    }
-
-    /**
-     * Tests are settings added (merged) and loaded from cookies.
-     */
-    public function testAddSettingsFromCookie()
+    public function testGeneralGet($data, $add, $form, $expected)
     {
         $manager = $this->getServiceSettingsManager();
 
-        // Add first element so initial array for test case wont be empty.
-        $manager->setSettingsFromCookie($this->getMockArray());
+        if (!empty($data)) {
+            $manager->setSettingsFromCookie($data);
+        }
 
-        // Add new element for merge inside a method.
-        $manager->addSettingsFromCookie([ 'Key 2' => 'Test 2' ]);
+        if (!empty($add)) {
+            $manager->addSettingsFromCookie($add);
+        }
 
-        // Assert.
-        $this->assertEquals(
-            $manager->getSettings(),
-            [
-                'Key 1' => 'Test 1',
-                'Key 2' => 'Test 2',
-            ]
-        );
+        if (!empty($form)) {
+            $manager->setSettingsFromForm($form);
+        }
+
+        $this->assertEquals($manager->getSettings(), $expected);
     }
 
     /**
-     * Tests are settings inserted and loaded from form.
+     * Data provider for testValueGet.
+     *
+     * @return array
      */
-    public function testSetSettingsFromForm()
+    public function getValueTestData()
     {
-        $manager = $this->getServiceSettingsManager();
-        $manager->setSettingsFromForm($this->getMockArray());
+        $out = [];
 
-        $this->assertEquals($manager->getSettings(), $this->getMockArray());
+        // Case #0 Tests is single setting disabled. Authentication check is on but fails.
+        $out[] = [
+            'security' => false,
+            'data' => $this->getMockArray(),
+            'key' => 'Key 1',
+            'authorize' => true,
+            'expected' => false,
+        ];
+
+        // Case #1 Tests is single setting enabled. Authentication check is off.
+        $out[] = [
+            'security' => false,
+            'data' => $this->getMockArray(),
+            'key' => 'Key 1',
+            'authorize' => false,
+            'expected' => 'Test 1',
+        ];
+
+        // Case #2 Tests is single setting disabled. Authentication check is off.
+        $out[] = [
+            'security' => false,
+            'data' => $this->getMockArray(),
+            'key' => 'Key 2',
+            'authorize' => false,
+            'expected' => false,
+        ];
+
+        // Case #3 Tests is single setting enabled. Authentication check is on.
+        $out[] = [
+            'security' => true,
+            'data' => $this->getMockArray(),
+            'key' => 'Key 1',
+            'authorize' => true,
+            'expected' => 'Test 1',
+        ];
+
+        // Case #4 Tests is single setting disabled. Authentication check is on.
+        $out[] = [
+            'security' => true,
+            'data' => $this->getMockArray(),
+            'key' => 'Key 2',
+            'authorize' => true,
+            'expected' => false,
+        ];
+
+        return $out;
     }
 
     /**
-     * Tests is single setting disabled. Authentication check is on but fails.
+     * Test Settings manager.
+     *
+     * @param bool   $security
+     * @param array  $data
+     * @param string $key
+     * @param bool   $authorize
+     * @param mixed  $expected
+     *
+     * @dataProvider getValueTestData
      */
-    public function testGetSettingEnabledIsEnabledFailAuth()
-    {
-        $manager = $this->getServiceSettingsManager();
-        $manager->setSettingsFromCookie($this->getMockArray());
-        $setting = $manager->getSettingEnabled('Key 1', true);
-
-        $this->assertEquals($setting, false);
-    }
-
-    /**
-     * Tests is single setting enabled. Authentication check is off.
-     */
-    public function testGetSettingEnabledIsEnabledNotAuth()
-    {
-        $manager = $this->getServiceSettingsManager();
-        $manager->setSettingsFromCookie($this->getMockArray());
-        $setting = $manager->getSettingEnabled('Key 1', false);
-
-        $this->assertEquals($setting, 'Test 1');
-    }
-
-    /**
-     * Tests is single setting disabled. Authentication check is off.
-     */
-    public function testGetSettingEnabledIsNotEnabledNotAuth()
-    {
-        $manager = $this->getServiceSettingsManager();
-        $manager->setSettingsFromCookie($this->getMockArray());
-        $setting = $manager->getSettingEnabled('Key 2', false);
-
-        $this->assertEquals($setting, false);
-    }
-
-    /**
-     * Tests is single setting enabled. Authentication check is on.
-     */
-    public function testGetSettingEnabledIsEnabledAuth()
+    public function testValueGet($security, $data, $key, $authorize, $expected)
     {
         /** @var AdminSettingsManager $manager */
-        $manager = $this->getManagerWithSecurityMock();
-        $manager->setSettingsFromCookie($this->getMockArray());
-        $setting = $manager->getSettingEnabled('Key 1', true);
+        if ($security == true) {
+            $manager = $this->getManagerWithSecurityMock();
+        } else {
+            $manager = $this->getServiceSettingsManager();
+        }
 
-        $this->assertEquals($setting, 'Test 1');
-    }
+        $manager->setSettingsFromCookie($data);
 
-    /**
-     * Tests is single setting disabled. Authentication check is on.
-     */
-    public function testGetSettingEnabledIsNotEnabledAuth()
-    {
-        // Test case, that setting is enabled, for authorized.
-        /** @var AdminSettingsManager $manager */
-        $manager = $this->getManagerWithSecurityMock();
-        $manager->setSettingsFromCookie($this->getMockArray());
-        $setting = $manager->getSettingEnabled('Key 2');
-
-        $this->assertEquals($setting, false);
+        $this->assertEquals($manager->getSettingEnabled($key, $authorize), $expected);
     }
 
     /**
@@ -181,13 +220,6 @@ class AdminSettingsManagerTest extends WebTestCase
     public function testIsAuthenticatedTrue()
     {
         $this->assertEquals($this->getManagerWithSecurityMock()->isAuthenticated(), true);
-    }
-
-    /**
-     * Tests method getSettingsMap.
-     */
-    public function testGetSettingsMap()
-    {
     }
 
     /**

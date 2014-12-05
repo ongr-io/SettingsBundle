@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Settings\Provider;
+namespace ONGR\AdminBundle\Tests\Unit\Settings\Provider;
 
 use ONGR\AdminBundle\Settings\Common\Provider\ManagerAwareSettingProvider;
 
