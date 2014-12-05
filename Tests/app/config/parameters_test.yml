@@ -1,6 +1,6 @@
 parameters:
     database_driver: pdo_mysql
-    database_host: ongr.dev
+    database_host: localhost
     database_port: null
     database_name: ongr-admin-test
     database_user: root
@@ -20,3 +20,23 @@ parameters:
     ongr_admin.authentication.users:
         foo_user:
             password: 'foo_password'
+
+    ongr_admin.settings.settings:
+        foo_setting_1:
+            name: Foo Setting 1
+            category: category_1
+            description: 'foo_desc_1'
+        foo_setting_2:
+            name: Foo Setting 2
+            category: category_1
+        foo_setting_3:
+            name: Foo Setting 3
+            category: category_2
+            description: 'foo_desc_3'
+        foo_setting_4:
+            name: Foo Setting 4
+            category: category_2
+            description: 'foo_desc_4'
+            cookie: project.cookie.ab_settings
+
+    ongr_admin.authentication.secret: O0EKwvq8Sv30O3ImKdXT7aT

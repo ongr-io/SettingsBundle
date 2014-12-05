@@ -96,7 +96,7 @@ services:
             - { name: ongr_cookie.cookieNew }
 
     project.controller.cookie:
-        class: ONGR\AdminBundle\Tests\Fixtures\Cookie\CookieController
+        class: ONGR\CookiesBundle\Tests\Fixtures\Cookie\CookieController
         calls:
             - [setContainer, [@service_container]]
 
