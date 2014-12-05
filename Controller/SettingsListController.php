@@ -56,7 +56,6 @@ class SettingsListController extends Controller
      */
     protected function getListData(Request $request)
     {
-
         /** @var Manager $manager */
         $manager = $this->container->get('es.manager');
 
@@ -93,7 +92,6 @@ class SettingsListController extends Controller
 
         /** @var FiltersManager $fm */
         $fm = new FiltersManager($container, $manager->getRepository('ONGRAdminBundle:Setting'));
-        //var_dump($fm); exit;
         $fmr = $fm->execute($request);
 
         return [

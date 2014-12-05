@@ -13,7 +13,7 @@ namespace ONGR\AdminBundle\Tests\Functional;
 
 use ONGR\AdminBundle\Document\Setting;
 use ONGR\ElasticsearchBundle\Command\IndexCreateCommand;
-use ONGR\ElasticsearchBundle\Command\IndexImportCommand;
+use ONGR\ElasticsearchBundle\Command\TypeUpdateCommand;
 use ONGR\ElasticsearchBundle\DSL\Query\MatchAllQuery;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Component\Console\Application;
@@ -30,24 +30,39 @@ class PrepareAdminData extends ElasticsearchTestCase
     private $connection;
 
     /**
+     * @var Manager
+     */
+    private $manager;
+
+    /**
+     * @var Application
+     */
+    private $app;
+
+    /**
      * Creates Elastic search indexes and adds test data.
      */
     public function __construct()
     {
-        $manager = $this->getManager('default', false);
+        $this->app = new Application();
+        $this->manager = $this->getManager('default', false);
+        $this->connection = $this->manager->getConnection();
+    }
 
-        $connection = $manager->getConnection();
-        $this->connection = $connection;
+    /**
+     * Creates Elastic search indexes and adds test data.
+     */
+    public function createIndexSetting()
+    {
+        $this->app->add($this->getCreateCommand());
 
-        if ($connection->indexExists()) {
+        // Clean indexes if exists.
+        if ($this->connection->indexExists()) {
             $this->cleanUp();
         }
 
-        $app = new Application();
-        $app->add($this->getCreateCommand());
-
         // Creates index.
-        $command = $app->find('es:index:create');
+        $command = $this->app->find('es:index:create');
         $commandTester = new CommandTester($command);
         $arguments = [
             'command' => $command->getName(),
@@ -55,10 +70,20 @@ class PrepareAdminData extends ElasticsearchTestCase
         $commandTester->execute($arguments);
         $indexName = $this->extractIndexName($commandTester);
 
-        $connection->setIndexName($indexName);
+        $this->connection->setIndexName($indexName);
+        $repo = $this->manager->getRepository('ONGRAdminBundle:Setting');
 
-        $manager = $this->getManager('default', false);
+        $search = $repo
+            ->createSearch()
+            ->addQuery(new MatchAllQuery());
+        $repo->execute($search);
+    }
 
+    /**
+     * Adds test data for Setting.
+     */
+    public function insertSettingData()
+    {
         // Add some settings.
         $content = new Setting();
         $content->name = 'Acme1';
@@ -66,7 +91,7 @@ class PrepareAdminData extends ElasticsearchTestCase
         $content->profile = 'Acme1';
         $content->type = 'Acme1';
         $content->data = 'Acme1';
-        $manager->persist($content);
+        $this->manager->persist($content);
 
         $content = new Setting();
         $content->name = 'Acme2';
@@ -74,22 +99,27 @@ class PrepareAdminData extends ElasticsearchTestCase
         $content->profile = 'Acme2';
         $content->type = 'Acme2';
         $content->data = 'Acme2';
-        $manager->persist($content);
+        $this->manager->persist($content);
 
-        $manager->commit();
+        $this->manager->commit();
+    }
 
+    /**
+     * Load types from config, and update.
+     */
+    public function updateTypes()
+    {
+        $this->app->add($this->getUpdateCommand());
 
-        $repo = $manager->getRepository('ONGRAdminBundle:Setting');
-        $search = $repo
-            ->createSearch()
-            ->addQuery(new MatchAllQuery());
-        $results = $repo->execute($search);
+        $commandToTest = $this->app->find('es:type:update');
+        $commandTester = new CommandTester($commandToTest);
 
-        $profiles = [];
-        foreach ($results as $doc) {
-            $profiles[] = $doc->profile;
-        }
-        sort($profiles);
+        $result = $commandTester->execute(
+            [
+                'command' => $commandToTest->getName(),
+                '--force' => true,
+            ]
+        );
     }
 
     /**
@@ -100,6 +130,19 @@ class PrepareAdminData extends ElasticsearchTestCase
     protected function getCreateCommand()
     {
         $command = new IndexCreateCommand();
+        $command->setContainer($this->getContainer());
+
+        return $command;
+    }
+
+    /**
+     * Returns update type command with assigned container.
+     *
+     * @return TypeImportCommand
+     */
+    protected function getUpdateCommand()
+    {
+        $command = new TypeUpdateCommand();
         $command->setContainer($this->getContainer());
 
         return $command;

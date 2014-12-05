@@ -22,6 +22,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AdminSettingWidgetExtensionTest extends ElasticsearchTestCase
 {
     /**
+     * @var ElasticSearch indexes.
+     */
+    private $elastic;
+
+    /**
      * @var \Twig_Environment
      */
     private $twig;
@@ -40,6 +45,7 @@ class AdminSettingWidgetExtensionTest extends ElasticsearchTestCase
 
         $this->client = self::createClient();
         $this->twig = $this->client->getContainer()->get('twig');
+        //$this->elastic = new PrepareAdminData();
     }
 
     /**
@@ -87,6 +93,8 @@ class AdminSettingWidgetExtensionTest extends ElasticsearchTestCase
         $expectedResult,
         $authorizedCommand = true
     ) {
+        //$this->elastic->updateTypes();
+
         if ($shouldAuthorize) {
             CookieTestHelper::setAuthenticationCookie($this->client);
         }

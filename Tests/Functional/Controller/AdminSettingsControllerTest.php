@@ -13,13 +13,13 @@ namespace ONGR\AdminBundle\Tests\Functional\Controller;
 
 use ONGR\AdminBundle\Tests\Functional\CookieTestHelper;
 use ONGR\AdminBundle\Tests\Functional\PrepareAdminData;
+use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Tests for SettingsController.
  */
-class AdminSettingsControllerTest extends WebTestCase
+class AdminSettingsControllerTest extends ElasticsearchTestCase
 {
     /**
      * @var ElasticSearch indexes.
@@ -46,6 +46,9 @@ class AdminSettingsControllerTest extends WebTestCase
      */
     public function testSettingsAction()
     {
+        $this->elastic->createIndexSetting();
+        $this->elastic->insertSettingData();
+
         $this->client = self::createClient();
         $this->client->restart();
 
