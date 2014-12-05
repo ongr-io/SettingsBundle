@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Integration\Twig;
+namespace ONGR\AdminBundle\Tests\Functional\Twig;
 
 use ONGR\AdminBundle\Exception\SettingNotFoundException;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
-use ONGR\AdminBundle\Twig\SettingWidgetExtension;
 use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
+use ONGR\AdminBundle\Twig\SettingWidgetExtension;
+use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
 /**
  * Class used to test AdminExtension.

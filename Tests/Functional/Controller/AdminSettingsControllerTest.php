@@ -81,12 +81,9 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
         /** @noinspection PhpUndefinedMethodInspection */
         $form['settings[ongr_admin_profile_Acme2]']->tick();
         /** @noinspection PhpUndefinedMethodInspection */
-        $form['settings[ongr_admin_live_settings]']->untick();
-        /** @noinspection PhpUndefinedMethodInspection */
         $form['settings[ongr_admin_profile_Acme1]']->untick();
 
         $this->client->submit($form);
-
 
         // Assert successful redirect.
         $this->assertStringEndsWith(
@@ -106,7 +103,6 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
             'foo_setting_2' => false,
             'foo_setting_3' => true,
             'ongr_admin_profile_Acme2' => true,
-            'ongr_admin_live_settings' => false,
             'ongr_admin_profile_Acme1' => false,
         ];
         $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);

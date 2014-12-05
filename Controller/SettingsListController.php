@@ -100,6 +100,4 @@ class SettingsListController extends Controller
             'routeParams' => $fmr->getUrlParameters(),
         ];
     }
-
-
 }
