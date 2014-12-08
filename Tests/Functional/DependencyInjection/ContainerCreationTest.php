@@ -14,7 +14,7 @@ namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * This class checks if we are able to create container
+ * This class checks if we are able to create container.
  */
 class ContainerCreationTest extends WebTestCase
 {
