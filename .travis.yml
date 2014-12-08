@@ -11,7 +11,7 @@ install:
   - "echo 'script.disable_dynamic: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml"
   - sudo service elasticsearch restart
 before_script:
-  - echo "extension = <memcache>.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "extension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer update --prefer-dist
 script:
   - vendor/bin/phpunit
