@@ -34,6 +34,14 @@ monolog:
             type:   console
             bubble: false
 
+stash:
+    caches:
+        default:
+            drivers: [ Memcache ]
+            Memcache:
+                servers:
+                    - { server: 127.0.0.1, port: 11211, weight: 1 }
+
 #ES Bundle
 ongr_elasticsearch:
     connections:
@@ -110,6 +118,17 @@ services:
         arguments: [ ongr_ab_settings ]
         tags:
             - { name: ongr_cookie.cookie }
+
+    ongr_admin.dummy_service:
+        class: ONGR\AdminBundle\Tests\Functional\DependencyInjection\DummyService
+        tags:
+            - { name: 'ongr_admin.setting_aware', setting: 'setting_1' }
+
+    ongr_admin.dummy_domain_provider:
+        class: %ongr_admin.settings_provider.class%
+        arguments: [domain_foo]
+        calls:
+            - [setManager, [@es.manager]]
 
 ongr_admin:
     profiles: [ test1, test2, default, meh ]
