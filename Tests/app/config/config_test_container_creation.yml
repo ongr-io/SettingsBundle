@@ -1,0 +1,95 @@
+imports:
+    - { resource: parameters_test_container_creation.yml }
+
+# Framework Configuration
+framework:
+    esi:             ~
+    fragments:       { path: /_proxy }
+    translator:      { fallback: "%locale%" }
+    secret:          %secret%
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: %kernel.debug%
+    form:            true
+    csrf_protection: true
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: 201204261
+        assets_base_urls:
+            http: [%cdn_url%]
+            ssl: [%cdn_url_ssl%]
+    default_locale:  "%locale%"
+    trusted_proxies: ~
+    session:         ~
+    test: ~
+
+monolog:
+    handlers:
+        main:
+            type:   stream
+            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            level:  notice
+        console:
+            type:   console
+            bubble: false
+
+stash:
+    caches:
+        default:
+            drivers: [ Memcache ]
+            Memcache:
+                servers:
+                    - { server: 127.0.0.1, port: 11211, weight: 1 }
+
+#ES Bundle
+ongr_elasticsearch:
+    connections:
+        default:
+            hosts:
+                - { host: 127.0.0.1:9200 }
+            index_name: tests
+            settings:
+                number_of_shards: 2
+                number_of_replicas: 0
+                index:
+                    refresh_interval: -1
+                analysis:
+                    tokenizer:
+                        pathTokenizer:
+                            type : path_hierarchy
+                            buffer_size: 2024
+                            skip: 0
+                            delimiter: /
+                    filter:
+                        incremental_filter:
+                            type: edge_ngram
+                            min_gram: 1
+                            max_gram: 20
+                    analyzer:
+                        indexAnalyzer:
+                            type: snowball
+                            language: German2
+                            stopwords: "der,die,das,mit,und,für"
+                        searchAnalyzer:
+                            type: snowball
+                            language: German2
+                            stopwords: "der,die,das,mit,und,für"
+                        pathAnalyzer:
+                            type: custom
+                            tokenizer: pathTokenizer
+                        urlAnalyzer:
+                            type: custom
+                            tokenizer: keyword
+                            filter: [lowercase]
+                        incrementalAnalyzer:
+                            type: custom
+                            tokenizer: standard
+                            filter:
+                                - lowercase
+                                - incremental_filter
+    managers:
+        default:
+            connection: default
+            mappings:
+              - ONGRAdminBundle
