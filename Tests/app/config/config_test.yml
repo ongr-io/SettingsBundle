@@ -40,7 +40,7 @@ ongr_elasticsearch:
         default:
             hosts:
                 - { host: 127.0.0.1:9200 }
-            index_name: ongr
+            index_name: tests
             settings:
                 number_of_shards: 2
                 number_of_replicas: 0
@@ -87,13 +87,13 @@ ongr_elasticsearch:
               - ONGRAdminBundle
 
 services:
-    project.cookie_foo:
+    project.cookie_bar:
         class: %ongr_cookie.json.class%
-        arguments: [ cookie_foo ]
+        arguments: [ cookie_bar ]
         calls:
             - [setDefaults, [{http_only: false}]]
         tags:
-            - { name: ongr_cookie.cookie }
+            - { name: ongr_cookie.cookieNew }
 
     project.controller.cookie:
         class: ONGR\CookiesBundle\Tests\Fixtures\Cookie\CookieController

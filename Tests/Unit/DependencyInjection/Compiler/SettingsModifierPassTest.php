@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\UtilsBundle\Tests\Functional\DependencyInjection\Compiler;
+namespace ONGR\Functional\Tests\Functional\DependencyInjection\Compiler;
 
 use ONGR\AdminBundle\DependencyInjection\Compiler\SettingsModifierPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

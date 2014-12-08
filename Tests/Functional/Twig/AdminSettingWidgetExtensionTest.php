@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\UtilsBundle\Tests\Integration\Twig;
+namespace ONGR\AdminBundle\Tests\Functional\Twig;
 
 use ONGR\AdminBundle\Tests\Functional\CookieTestHelper;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;

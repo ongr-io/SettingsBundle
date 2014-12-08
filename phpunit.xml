@@ -15,6 +15,7 @@
         <testsuite name="Functional">
             <directory>./Tests/Functional/</directory>
         </testsuite>
+
         <testsuite name="Integration">
             <directory>./Tests/Integration/</directory>
         </testsuite>

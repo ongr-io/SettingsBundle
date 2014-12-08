@@ -11,17 +11,17 @@
 
 namespace ONGR\AdminBundle\Controller;
 
+use ONGR\ElasticsearchBundle\ORM\Manager;
+use ONGR\FilterManagerBundle\Filters\ViewData;
+use ONGR\FilterManagerBundle\Filters\Widget\Choice\SingleTermChoice;
+use ONGR\FilterManagerBundle\Filters\Widget\Pager\Pager;
+use ONGR\FilterManagerBundle\Filters\Widget\Search\MatchSearch;
+use ONGR\FilterManagerBundle\Filters\Widget\Sort\Sort;
+use ONGR\FilterManagerBundle\Search\FiltersContainer;
+use ONGR\FilterManagerBundle\Search\FiltersManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use ONGR\FilterManagerBundle\Filters\ViewData;
-use ONGR\FilterManagerBundle\Search\FiltersContainer;
-use ONGR\FilterManagerBundle\Search\FiltersManager;
-use ONGR\ElasticsearchBundle\ORM\Manager;
-use ONGR\FilterManagerBundle\Filters\Widget\Pager\Pager;
-use ONGR\FilterManagerBundle\Filters\Widget\Sort\Sort;
-use ONGR\FilterManagerBundle\Filters\Widget\Search\MatchSearch;
-use ONGR\FilterManagerBundle\Filters\Widget\Choice\SingleTermChoice;
 
 /**
  * Class SettingsListController. Is used for managing settings in Admin env.
@@ -30,6 +30,23 @@ use ONGR\FilterManagerBundle\Filters\Widget\Choice\SingleTermChoice;
  */
 class SettingsListController extends Controller
 {
+    /**
+     * Renders list page.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function listAction(Request $request)
+    {
+        return $this->render(
+            'ONGRAdminBundle:Settings:list.html.twig',
+            array_merge(
+                $this->getListData($request)
+            )
+        );
+    }
+
     /**
      * Gets list data.
      *
@@ -82,22 +99,5 @@ class SettingsListController extends Controller
             'filters' => $fmr->getFilters(),
             'routeParams' => $fmr->getUrlParameters(),
         ];
-    }
-
-    /**
-     * Renders list page.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function listAction(Request $request)
-    {
-        return $this->render(
-            'ONGRAdminBundle:Settings:list.html.twig',
-            array_merge(
-                $this->getListData($request)
-            )
-        );
     }
 }
