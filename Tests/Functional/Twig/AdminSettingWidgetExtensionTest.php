@@ -22,11 +22,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AdminSettingWidgetExtensionTest extends ElasticsearchTestCase
 {
     /**
-     * @var ElasticSearch indexes.
-     */
-    private $elastic;
-
-    /**
      * @var \Twig_Environment
      */
     private $twig;
