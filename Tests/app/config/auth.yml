@@ -37,9 +37,9 @@ services:
             - [setAuthCookie, [@ongr_admin.authentication.authentication_cookie]]
         tags:
             - name: kernel.event_listener
-        event: kernel.request
-        method: onKernelRequest
-        priority: 128
+              event: kernel.request
+              method: onKernelRequest
+              priority: 128
         scope: request
 
     ongr_admin.authentication.sessionless_authentication_provider:
