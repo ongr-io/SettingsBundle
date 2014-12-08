@@ -124,7 +124,7 @@ services:
         tags:
             - { name: 'ongr_admin.setting_aware', setting: 'setting_1' }
 
-    ongr_admin.dummy_domain_provider:
+    ongr_admin.dummy_profile_provider:
         class: %ongr_admin.settings_provider.class%
         arguments: [domain_foo]
         calls:

@@ -182,7 +182,7 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
         $settingsContainer->setProfiles(['domain_foo']);
 
         /** @var ManagerAwareSettingProvider $provider */
-        $provider = $container->get('ongr_admin.dummy_domain_provider');
+        $provider = $container->get('ongr_admin.dummy_profile_provider');
         $settingsContainer->addProvider($provider);
     }
 }
