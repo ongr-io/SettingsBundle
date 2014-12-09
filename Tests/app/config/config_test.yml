@@ -40,7 +40,7 @@ ongr_elasticsearch:
         default:
             hosts:
                 - { host: 127.0.0.1:9200 }
-            index_name: tests
+            index_name: ongr-admin-test
             settings:
                 number_of_shards: 2
                 number_of_replicas: 0
