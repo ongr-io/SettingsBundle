@@ -11,20 +11,24 @@
 
 namespace ONGR\AdminBundle\Tests\Unit\Service;
 
+use ONGR\AdminBundle\Document\Setting;
 use ONGR\AdminBundle\Service\SettingsManager;
 use ONGR\ElasticsearchBundle\ORM\Manager;
+use ONGR\ElasticsearchBundle\ORM\Repository;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
+use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\Translator;
 
 class SettingsManagerTest extends ElasticsearchTestCase
 {
     /**
-     * @var $ormManagerMock  \ONGR\ElasticsearchBundle\ORM\Manager mock
+     * @var $ormManagerMock  Manager mock
      */
     private $ormManagerMock;
 
     /**
-     * @var $ormRepositoryMock  \ONGR\ElasticsearchBundle\ORM\Repository mock
+     * @var $ormRepositoryMock Repository mock
      */
     private $repositoryMock;
 
@@ -98,7 +102,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     /**
      * Returns mock of event dispatcher.
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return EventDispatcherInterface|MockObject
      */
     protected function getEventDispatcherMock()
     {
