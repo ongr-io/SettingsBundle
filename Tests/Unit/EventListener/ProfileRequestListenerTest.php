@@ -10,7 +10,7 @@
  */
 
 
-namespace ONGR\AdminBundle\Tests\Functional\EventListener;
+namespace ONGR\AdminBundle\Tests\Unit\EventListener;
 
 use ONGR\AdminBundle\EventListener\ProfileRequestListener;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;

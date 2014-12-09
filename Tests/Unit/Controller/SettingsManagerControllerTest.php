@@ -20,6 +20,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
 {
     const HTTP_NOT_ACCEPTABLE = 406;
     const HTTP_OK = 200;
+    const HTTP_BAD_REQUEST = 400;
 
     /**
      * Data provider for testSetSettingAction.
@@ -117,7 +118,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
         $controller->setContainer($container);
 
         $this->assertEquals(
-            200,
+            self::HTTP_OK,
             $controller->ngEditAction($request, 'fooname', 'profile')->getStatusCode()
         );
     }
@@ -139,7 +140,10 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
 
         $controller = new SettingsManagerController();
         $response = $controller->ngEditAction($request, 'foobaz', 'default');
-        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertEquals(
+            self::HTTP_BAD_REQUEST,
+            $response->getStatusCode()
+        );
     }
 
     /**

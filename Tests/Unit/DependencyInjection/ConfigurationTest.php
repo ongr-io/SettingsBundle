@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Fox\AdminBundle\Tests\Functional\DependencyInjection;
+namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection;
 
 use ONGR\AdminBundle\DependencyInjection\Configuration;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
