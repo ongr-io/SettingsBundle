@@ -56,7 +56,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        if ($status == self::HTTP_OK) {
+        if ($status == Response::HTTP_OK) {
             $manager
                 ->expects($this->once())
                 ->method('set')
