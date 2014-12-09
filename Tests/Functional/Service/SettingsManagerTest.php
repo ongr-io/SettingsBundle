@@ -116,9 +116,9 @@ class SettingsManagerTest extends WebTestCase
         $documents = iterator_to_array($documents);
 
         sort($documents);
-        rsort($expected);
+        sort($expected);
 
-        $this->assertEquals($expected, iterator_to_array($documents));
+        $this->assertEquals($expected, $documents);
     }
 
     /**
