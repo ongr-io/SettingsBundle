@@ -113,7 +113,9 @@ class SettingsManagerTest extends WebTestCase
 
         $expected = [$setting1, $setting2];
 
-        sort(iterator_to_array($documents));
+        $documents = iterator_to_array($documents);
+
+        sort($documents);
         rsort($expected);
 
         $this->assertEquals($expected, iterator_to_array($documents));
