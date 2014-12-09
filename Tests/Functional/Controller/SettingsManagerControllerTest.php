@@ -25,22 +25,22 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function getDataArray()
     {
-        parent::setUp();
-
-        $setting = new Setting();
-        $setting->setId('default_name0');
-        $setting->name = 'name0';
-        $setting->description = 'this should be updated';
-        $setting->profile = 'default';
-        $setting->type = Setting::TYPE_STRING;
-        $setting->data = (object)['value' => 'test1'];
-
-        $manager = $this->getManager();
-        $manager->persist($setting);
-        $manager->commit();
-        $manager->flush();
+        return [
+            'default' => [
+                'setting' => [
+                    [
+                        '_id' => 'default_name0',
+                        'name' => 'name0',
+                        'profile' => 'default',
+                        'description' => 'this should be updated',
+                        'type' => Setting::TYPE_STRING,
+                        'data' => (object)['value' => 'test1'],
+                    ],
+                ],
+            ],
+        ];
     }
 
     /**

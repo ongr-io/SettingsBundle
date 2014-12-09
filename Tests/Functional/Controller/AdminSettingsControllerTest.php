@@ -22,7 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Client;
 class AdminSettingsControllerTest extends ElasticsearchTestCase
 {
     /**
-     * @var PrepareAdminData indexes.
+     * @var PrepareAdminData elastic helper and index.
      */
     private $elastic;
 

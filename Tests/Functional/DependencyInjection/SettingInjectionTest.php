@@ -24,22 +24,22 @@ class SettingInjectionTest extends ElasticsearchTestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function getDataArray()
     {
-        parent::setUp();
-
-        $setting = new Setting();
-        $setting->setId('default_setting_1');
-        $setting->name = 'setting_1';
-        $setting->description = 'test item #1';
-        $setting->profile = 'default';
-        $setting->type = Setting::TYPE_ARRAY;
-        $setting->data = (object)['value' => $this->expected];
-
-        $manager = $this->getManager();
-        $manager->persist($setting);
-        $manager->commit();
-        $manager->flush();
+        return [
+            'default' => [
+                'setting' => [
+                    [
+                        '_id' => 'default_setting_1',
+                        'name' => 'setting_1',
+                        'profile' => 'default',
+                        'description' => 'test item #1',
+                        'type' => Setting::TYPE_ARRAY,
+                        'data' => (object)['value' => $this->expected],
+                    ],
+                ],
+            ],
+        ];
     }
 
     /**
