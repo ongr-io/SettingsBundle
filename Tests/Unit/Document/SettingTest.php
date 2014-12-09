@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Document;
+namespace ONGR\AdminBundle\Tests\Unit\Document;
 
 use ONGR\AdminBundle\Document\Setting;
 
