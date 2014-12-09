@@ -15,13 +15,10 @@ use ONGR\AdminBundle\Controller\SettingsManagerController;
 use ONGR\AdminBundle\Document\Setting;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
 {
-    const HTTP_NOT_ACCEPTABLE = 406;
-    const HTTP_OK = 200;
-    const HTTP_BAD_REQUEST = 400;
-
     /**
      * Data provider for testSetSettingAction.
      *
@@ -38,7 +35,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
         $out[] = ['name2', json_encode(['value2', 'value3'])];
 
         // Case #2: invalid json.
-        $out[] = ['name3', serialize(['value4', 'value5']), self::HTTP_NOT_ACCEPTABLE];
+        $out[] = ['name3', serialize(['value4', 'value5']), Response::HTTP_NOT_ACCEPTABLE];
 
         return $out;
     }
@@ -52,7 +49,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider getSetSettingActionData
      */
-    public function testSetSettingAction($name, $value, $status = self::HTTP_OK)
+    public function testSetSettingAction($name, $value, $status = Response::HTTP_OK)
     {
         $manager = $this
             ->getMockBuilder('ONGR\AdminBundle\Service\SettingsManager')
@@ -118,7 +115,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
         $controller->setContainer($container);
 
         $this->assertEquals(
-            self::HTTP_OK,
+            Response::HTTP_OK,
             $controller->ngEditAction($request, 'fooname', 'profile')->getStatusCode()
         );
     }
@@ -141,7 +138,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
         $controller = new SettingsManagerController();
         $response = $controller->ngEditAction($request, 'foobaz', 'default');
         $this->assertEquals(
-            self::HTTP_BAD_REQUEST,
+            Response::HTTP_BAD_REQUEST,
             $response->getStatusCode()
         );
     }
