@@ -1,5 +1,5 @@
 imports:
-    - { resource: parameters_test.yml }
+    - { resource: parameters_test_container_creation.yml }
 
 # Framework Configuration
 framework:
@@ -93,62 +93,3 @@ ongr_elasticsearch:
             connection: default
             mappings:
               - ONGRAdminBundle
-
-services:
-    project.cookie_bar:
-        class: %ongr_cookie.json.class%
-        arguments: [ cookie_bar ]
-        calls:
-            - [setDefaults, [{http_only: false}]]
-        tags:
-            - { name: ongr_cookie.cookieNew }
-
-    project.controller.cookie:
-        class: ONGR\CookiesBundle\Tests\Fixtures\Cookie\CookieController
-        calls:
-            - [setContainer, [@service_container]]
-
-    project.controller.flash_bag:
-        class: ONGR\AdminBundle\Tests\Fixtures\FlashBag\FlashBagController
-        calls:
-            - [setContainer, [@service_container]]
-
-    project.cookie.ab_settings:
-        class: %ongr_cookie.json.class%
-        arguments: [ ongr_ab_settings ]
-        tags:
-            - { name: ongr_cookie.cookie }
-
-    ongr_admin.dummy_service:
-        class: ONGR\AdminBundle\Tests\Functional\DependencyInjection\DummyService
-        tags:
-            - { name: 'ongr_admin.setting_aware', setting: 'setting_1' }
-
-    ongr_admin.dummy_profile_provider:
-        class: %ongr_admin.settings_provider.class%
-        arguments: [domain_foo]
-        calls:
-            - [setManager, [@es.manager]]
-
-ongr_admin:
-    profiles: [ test1, test2, default, meh ]
-    admin_user:
-        categories:
-            category_1:
-                name: Category 1
-                description: cat_desc_1
-            category_2:
-                name: Category 2
-
-        settings:
-            foo_setting_1:
-                name: Foo Setting 1
-                category: category_1
-                description: 'foo_desc_1'
-            foo_setting_2:
-                name: Foo Setting 2
-                category: category_1
-            foo_setting_3:
-                name: Foo Setting 3
-                category: category_2
-                description: 'foo_desc_3'

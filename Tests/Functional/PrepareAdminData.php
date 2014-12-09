@@ -14,6 +14,8 @@ namespace ONGR\AdminBundle\Tests\Functional;
 use ONGR\AdminBundle\Document\Setting;
 use ONGR\ElasticsearchBundle\Command\IndexCreateCommand;
 use ONGR\ElasticsearchBundle\Command\TypeUpdateCommand;
+use ONGR\ElasticsearchBundle\Client\Connection;
+use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\DSL\Query\MatchAllQuery;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Component\Console\Application;

@@ -68,7 +68,7 @@ class UserControllerTest extends WebTestCase
     public function testLoginAction($username, $password, $shouldSucceed)
     {
         // Visit login page.
-        $crawler = $this->client->request('GET', '/login');
+        $crawler = $this->client->request('GET', '/admin/login');
 
         // Submit login form.
         $buttonNode = $crawler->selectButton('login_submit');
@@ -80,7 +80,7 @@ class UserControllerTest extends WebTestCase
 
         if ($shouldSucceed) {
             // Assert successful redirect.
-            $this->assertSame('/login', $response->headers->get('location'));
+            $this->assertSame('/admin/login', $response->headers->get('location'));
 
             // Assert correct cookie has been set.
             /** @var Cookie $cookie */
@@ -102,7 +102,7 @@ class UserControllerTest extends WebTestCase
         CookieTestHelper::setAuthenticationCookie($this->client);
 
         // Visit login page.
-        $crawler = $this->client->request('GET', '/login');
+        $crawler = $this->client->request('GET', '/admin/login');
 
         // Assert content contains message.
         $response = $this->client->getResponse();
@@ -144,7 +144,7 @@ class UserControllerTest extends WebTestCase
         CookieTestHelper::setAuthenticationCookie($this->client, time() - 360 * 24 * 3600);
 
         // Visit login page.
-        $crawler = $this->client->request('GET', '/login');
+        $crawler = $this->client->request('GET', '/admin/login');
 
         // Assert there is a form.
         $buttonNode = $crawler->selectButton('login_submit');
@@ -188,11 +188,11 @@ class UserControllerTest extends WebTestCase
         }
 
         // Visit logout page.
-        $this->client->request('GET', '/logout');
+        $this->client->request('GET', '/admin/logout');
 
         // Assert successful redirect.
         $response = $this->client->getResponse();
-        $this->assertSame('/login', $response->headers->get('location'));
+        $this->assertSame('/admin/login', $response->headers->get('location'));
 
         // Assert cookie has been cleared.
         $this->assertSame(0, count($this->client->getCookieJar()->all()));
@@ -233,7 +233,7 @@ class UserControllerTest extends WebTestCase
         $this->client->getCookieJar()->set($newCookie);
 
         // Visit login page.
-        $crawler = $this->client->request('GET', '/login');
+        $crawler = $this->client->request('GET', '/admin/login');
 
         // Assert there is a form.
         $buttonNode = $crawler->selectButton('login_submit');
