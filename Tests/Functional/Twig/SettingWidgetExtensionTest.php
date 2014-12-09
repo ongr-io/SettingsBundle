@@ -81,7 +81,7 @@ class SettingWidgetExtensionTest extends ElasticsearchTestCase
 
         // Case #1 default type (string).
         $expectedOutput = <<<HEREDOC
-<a href="http://localhost/setting/test/edit?type=string" class="btn btn-default pull-right" title="Edit test">
+<a href="http://localhost/admin/setting/test/edit?type=string" class="btn btn-default pull-right" title="Edit test">
     <span class="glyphicon glyphicon-wrench"></span>
 </a>
 HEREDOC;
@@ -89,7 +89,7 @@ HEREDOC;
 
         // Case #2 custom type (array).
         $expectedOutput = <<<HEREDOC
-<a href="http://localhost/setting/test/edit?type=array" class="btn btn-default pull-right" title="Edit test">
+<a href="http://localhost/admin/setting/test/edit?type=array" class="btn btn-default pull-right" title="Edit test">
     <span class="glyphicon glyphicon-wrench"></span>
 </a>
 HEREDOC;

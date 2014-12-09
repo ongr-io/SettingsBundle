@@ -22,7 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Client;
 class AdminSettingsControllerTest extends ElasticsearchTestCase
 {
     /**
-     * @var ElasticSearch indexes.
+     * @var PrepareAdminData indexes.
      */
     private $elastic;
 
@@ -56,7 +56,7 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
         CookieTestHelper::setAuthenticationCookie($this->client);
 
         // Visit settings page.
-        $crawler = $this->client->request('GET', '/settings');
+        $crawler = $this->client->request('GET', '/admin/settings');
 
         // Assert categories are rendered.
         /** @var array $categories */
@@ -108,7 +108,7 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
         $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
 
         // Try to change value through change setting action.
-        $this->client->request('get', '/setting/change/' . base64_encode('foo_setting_1'));
+        $this->client->request('get', '/admin/setting/change/' . base64_encode('foo_setting_1'));
 
         // Assert cookie values updated.
         $cookieValue = $this->client
@@ -130,8 +130,8 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
     public function getTestActionsWhenNotLoggedInData()
     {
         return [
-            ['/settings', 302],
-            ['/setting/change/new', 403],
+            ['/admin/settings', 302],
+            ['/admin/setting/change/new', 403],
         ];
     }
 
