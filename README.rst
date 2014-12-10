@@ -63,16 +63,14 @@ Then register it in `AppKernel.php`:
 ..
 
 Enabling Authentication support:
-
-Users
-~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To enable authentication support, please add this to your main `routing.yml`
 
 .. code-block:: yaml
 
     _power_user:
-        resource: "@FoxUtilsBundle/Resources/config/routing_authentication.yml"
+        resource: "@ONGRAdminBundle/Resources/config/routing_authentication.yml"
         prefix: /power_user_prefix
 
 ..
@@ -82,7 +80,7 @@ Then add some users to you `config.yml` parameters section:
 .. code-block:: yaml
 
     parameters:
-        fox_utils.authentication.users:
+        ongr_admin.authentication.users:
             foo_user:
                 password: 'foo_password'
             foo_user_bar:
@@ -90,7 +88,7 @@ Then add some users to you `config.yml` parameters section:
 
 ..
 
-Login page is at `/power_user_prefix/login`. There is also a logout page at `/power_user_prefix/logout`.
+Login page is at `/admin_prefix/login`. There is also a logout page at `/admin_prefix/logout`.
 
 Some auth cookie properties:
 
@@ -104,10 +102,7 @@ Some auth cookie properties:
 
 
 Enabling Admin settings (PowerUser) functionality:
-=================================================
-
-Settings
-~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Settings can be changed per user from the settings page and the selected values are stored in a separate cookie.
 
@@ -177,8 +172,8 @@ Or using a `UserSettingsManager` service:
 
 .. code-block:: php
 
-$this->userSettingsManager = $container->get('fox_utils.settings.user_settings_manager');
-$isEnabled = $this->userSettingsManager->getSettingEnabled($settingName);
+    $this->userSettingsManager = $container->get('fox_utils.settings.user_settings_manager');
+    $isEnabled = $this->userSettingsManager->getSettingEnabled($settingName);
 
 ..
 
@@ -191,7 +186,10 @@ Boolean type settings can be toggled when the user visits specific URL generated
 http://example.com/power-user/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe==
 ```
 
-## Enabling Common settings functionality
+
+
+Enabling Common settings functionality
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
