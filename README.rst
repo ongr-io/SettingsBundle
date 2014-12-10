@@ -113,7 +113,7 @@ Login page is at `/admin_prefix/login`. There is also a logout page at `/admin_p
 
 Some auth cookie properties:
 
-* Login credentials are stored in a signed tamper-proof authentication cookie that is **valid for X hours** (see fox-utils configuration).
+* Login credentials are stored in a signed tamper-proof authentication cookie that is **valid for X hours**.
 * Authentication cookie's signature **contains username**, **IP address**, expiration **timestamp** and **password**. Therefore if any of the values change, then cookie becomes invalid.
 
     Values can change in several places. Eg. IP address is dependent on the network, password can change in the configuration file and the expiration timestamp or the username can be modified in the cookie itself.
@@ -181,7 +181,7 @@ User selected values can be queried easily from TWIG like this:
 
 .. code-block:: twig
 
-    {% if fox_setting_enabled('foo_setting_2') %}
+    {% if ongr_setting_enabled('foo_setting_2') %}
         Text when user is logged in and setting equals to true.
     {% else %}
         Otherwise.
@@ -218,8 +218,8 @@ And add routes to `routing.yml`:
     fos_js_routing:
         resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
-    fox_admin:
-        resource: "@FoxAdminBundle/Resources/config/routing.yml"
+    ongr_admin:
+        resource: "@ONGRAdminBundle/Resources/config/routing.yml"
         prefix:   /settings/
 
 ..
@@ -228,13 +228,13 @@ That's it. Now you should be able to open settings list which should be empty un
 
 ## Adding Setting
 
-Default way to add settings is through edit buttons in front-end. To use this functionality please make sure you have integration of [Power User](https://github.com/nfq-extremes/fox-standard/wiki/Power-User) from `fox-utils`.
+Default way to add settings is through edit buttons in front-end.
 
 Everywhere you want to have something configurable just render settings button with setting name. For example:
 
 .. code-block:: twig
 
-    <div>{{ fox_show_setting('count_per_page') }}</div>
+    <div>{{ ongr_show_setting('count_per_page') }}</div>
 
 ..
 
@@ -242,24 +242,24 @@ By passing second parameter any of **string**, **boolean**, **array** or **objec
 
 .. code-block:: twig
 
-<div>{{ fox_show_setting('count_per_page', 'object') }}</div>
+<div>{{ ongr_show_setting('count_per_page', 'object') }}</div>
 
 ..
 
-To see this button you need to log in as Power User and enable "live settings". After this button appears just click on it and you will be redirected to edit page where you can set or update value of the setting.
+To see this button you need to log in as Admin and enable "live settings". After this button appears just click on it and you will be redirected to edit page where you can set or update value of the setting.
 
 ## Injecting Settings to Services
 
-Injecting settings we made as simple as it can be. To inject setting you only need to create setter method and add `fox_admin.setting_aware` tag to service declaration:
+Injecting settings we made as simple as it can be. To inject setting you only need to create setter method and add `ongr_admin.setting_aware` tag to service declaration:
 
 .. code-block:: yaml
 
     services:
         ongr_admin.demo_service:
-            class: %fox_admin.demo_service.class%
+            class: %ongr_admin.demo_service.class%
             tags:
-                # This is an example how fox-admin can be used
-                - { name: 'fox_admin.setting_aware', setting: 'count_per_page' }
+                # This is an example how ongr-admin can be used
+                - { name: 'ongr_admin.setting_aware', setting: 'count_per_page' }
 
 ..
 
@@ -271,16 +271,19 @@ What happens in background? Actual service will be replaced with proxy service u
 
 You can easily access setting value in any template using `admin_setting` function. Example:
 
-```html
+.. code-block:: html
+
 <p>Default items count per page: {{ admin_setting('count_per_page') }}</p>
-```
+
+..
+
 ## Settings Cache
 
 `ongr-admin` uses [StashBundle](https://github.com/tedious/TedivmStashBundle) to cache settings. By default Filesystem cache driver is used. To ensure best performance change it `Memcache` or other fast cache engine.
 
 ## Tags
 
-* ####Setting aware
+#### Setting aware
     Sets service values from admin. Service must have a setter.
 
     * **Tag name**:  `ongr_admin.setting_aware`
@@ -288,18 +291,19 @@ You can easily access setting value in any template using `admin_setting` functi
         * `setting` - specify setting name set in admin
         * `method` - setter method name (optional)
     * **Example YAML configuration**
-        .. code-block:: yaml
 
-        parameters:
-            my_bundle.db_driver.class: Vendor\MyBundle\Service\MyService
+    .. code-block:: yaml
 
-        services:
-            my_bundle.service:
-                class: %my_bundle.service.class%
-                tags:
-                 - { name: ongr_admin.setting_aware, setting: my_setting, method: setMySetting}
+    parameters:
+        my_bundle.db_driver.class: Vendor\MyBundle\Service\MyService
 
-        ..
+    services:
+        my_bundle.service:
+            class: %my_bundle.service.class%
+            tags:
+             - { name: ongr_admin.setting_aware, setting: my_setting, method: setMySetting}
+
+    ..
 
 
 
