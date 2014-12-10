@@ -32,8 +32,9 @@ Usage
 `Usage examples </Resources/doc/examples.rst>`_
 
 
+---------------
 Setting it up
-~~~~~~~~~~~~
+---------------
 
 `AdminBundle` requires minimal efforts to get it working. Firstly, install package using Composer:
 
@@ -187,9 +188,9 @@ http://example.com/power-user/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6O
 ```
 
 
-
+---------------------------------------------
 Enabling Common settings functionality
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------
 
 
 
