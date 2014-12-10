@@ -112,7 +112,7 @@ To enable a user to edit it's settings, add a route:
 .. code-block:: yaml
 
     _power_settings:
-        resource: "@FoxUtilsBundle/Resources/config/routing_settings.yml"
+        resource: "@ONGRAdminBundle/Resources/config/routing_settings.yml"
         prefix: /power_settings_prefix
 
 ..
