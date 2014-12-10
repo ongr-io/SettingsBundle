@@ -46,18 +46,18 @@ Then register it in `AppKernel.php`:
 
 .. code-block:: php
 
-class AppKernel extends Kernel
-{
-    public function registerBundles()
+    class AppKernel extends Kernel
     {
-        return [
-            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-            new ONGR\AdminBundle\ONGRAdminBundle(),
-        );
-    }
+        public function registerBundles()
+        {
+            return [
+                new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+                new ONGR\AdminBundle\ONGRAdminBundle(),
+            );
+        }
 
-    // ...
-}
+        // ...
+    }
 
 ..
 
@@ -69,9 +69,9 @@ To enable authentication support, please add this to your main `routing.yml`
 
 .. code-block:: yaml
 
-_power_user:
-    resource: "@FoxUtilsBundle/Resources/config/routing_authentication.yml"
-    prefix: /power_user_prefix
+    _power_user:
+        resource: "@FoxUtilsBundle/Resources/config/routing_authentication.yml"
+        prefix: /power_user_prefix
 
 ..
 
@@ -79,12 +79,12 @@ Then add some users to you `config.yml` parameters section:
 
 .. code-block:: yaml
 
-parameters:
-    fox_utils.authentication.users:
-        foo_user:
-            password: 'foo_password'
-        foo_user_bar:
-            password: 'foo_bar_password'
+    parameters:
+        fox_utils.authentication.users:
+            foo_user:
+                password: 'foo_password'
+            foo_user_bar:
+                password: 'foo_bar_password'
 
 ..
 
@@ -117,48 +117,31 @@ To enable a user to edit it's settings, add a route:
 
 ..
 
-
-.. code-block:: yaml
-
-    parameters:
-        project.cookie_foo.name: cookie_foo
-        project.cookie_foo.defaults: # Defaults section is optional
-            http_only: false
-            expires_interval: P5DT4H # 5 days and 4 hours
-
-    services:
-        project.cookie_foo:
-                - [setDefaults, [%project.cookie_foo.defaults%]] # Optional
-            tags:
-                - { name: ongr_cookie.cookie }
-
-..
-
 And add some settings that are grouped in categories:
 
 .. code-block:: yaml
 
-parameters:
-    fox_utils.settings.settings:
-        foo_setting_1:
-            name: Foo Setting 1
-            category: category_1
-            description: 'foo_desc_1'
-        foo_setting_2:
-            name: Foo Setting 2
-            category: category_1
-        foo_setting_3:
-            name: Foo Setting 3
-            category: category_2
-            description: 'foo_desc_3'
-            cookie: project.cookie.alternative_settings # Setting stored in a separate cookie
+    parameters:
+        fox_utils.settings.settings:
+            foo_setting_1:
+                name: Foo Setting 1
+                category: category_1
+                description: 'foo_desc_1'
+            foo_setting_2:
+                name: Foo Setting 2
+                category: category_1
+            foo_setting_3:
+                name: Foo Setting 3
+                category: category_2
+                description: 'foo_desc_3'
+                cookie: project.cookie.alternative_settings # Setting stored in a separate cookie
 
-    fox_utils.settings.categories:
-        category_1:
-            name: Category 1
-            description: cat_desc_1
-        category_2:
-            name: Category 2
+        fox_utils.settings.categories:
+            category_1:
+                name: Category 1
+                description: cat_desc_1
+            category_2:
+                name: Category 2
 
 ..
 
@@ -177,11 +160,11 @@ User selected values can be queried easily from TWIG like this:
 
 .. code-block:: twig
 
-{% if fox_setting_enabled('foo_setting_2') %}
-    Text when user is logged in and setting equals to true.
-{% else %}
-    Otherwise.
-{% endif %}
+    {% if fox_setting_enabled('foo_setting_2') %}
+        Text when user is logged in and setting equals to true.
+    {% else %}
+        Otherwise.
+    {% endif %}
 
 ..
 
