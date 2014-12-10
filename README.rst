@@ -40,7 +40,7 @@ Setting it up
 
 .. code-block:: bash
 
-composer require ongr-io/AdminBundle 0.1.*
+    composer require ongr-io/AdminBundle 0.1.*
 
 ..
 
@@ -53,13 +53,25 @@ Then register it in `AppKernel.php`:
         public function registerBundles()
         {
             return [
-                new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-                new ONGR\AdminBundle\ONGRAdminBundle(),
+            // ...
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Tedivm\StashBundle\TedivmStashBundle(),
+            new ONGR\CookiesBundle\ONGRCookiesBundle(),
+            new ONGR\AdminBundle\ONGRAdminBundle(),
             );
         }
 
         // ...
     }
+
+..
+
+
+Next Elastic Search types should be updated, by running a command in console:
+
+.. code-block:: bash
+
+    es:type:update --force
 
 ..
 
@@ -70,9 +82,9 @@ To enable authentication support, please add this to your main `routing.yml`
 
 .. code-block:: yaml
 
-    _power_user:
-        resource: "@ONGRAdminBundle/Resources/config/routing_authentication.yml"
-        prefix: /power_user_prefix
+    _ongr_admin:
+        resource: "@ONGRAdminBundle/Resources/config/routing/auth.yml"
+        prefix: /admin_prefix
 
 ..
 
@@ -122,7 +134,7 @@ And add some settings that are grouped in categories:
 .. code-block:: yaml
 
     parameters:
-        fox_utils.settings.settings:
+        ongr_admin.settings.settings:
             foo_setting_1:
                 name: Foo Setting 1
                 category: category_1
@@ -136,7 +148,7 @@ And add some settings that are grouped in categories:
                 description: 'foo_desc_3'
                 cookie: project.cookie.alternative_settings # Setting stored in a separate cookie
 
-        fox_utils.settings.categories:
+        ongr_admin.settings.categories:
             category_1:
                 name: Category 1
                 description: cat_desc_1
@@ -173,7 +185,7 @@ Or using a `UserSettingsManager` service:
 
 .. code-block:: php
 
-    $this->userSettingsManager = $container->get('fox_utils.settings.user_settings_manager');
+    $this->userSettingsManager = $container->get('ongr_admin.settings.user_settings_manager');
     $isEnabled = $this->userSettingsManager->getSettingEnabled($settingName);
 
 ..
