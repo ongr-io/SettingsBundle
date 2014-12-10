@@ -44,7 +44,8 @@ composer require ongr-io/AdminBundle 0.1.*
 
 Then register it in `AppKernel.php`:
 
-```php
+.. code-block:: php
+
 class AppKernel extends Kernel
 {
     public function registerBundles()
@@ -57,7 +58,8 @@ class AppKernel extends Kernel
 
     // ...
 }
-```
+
+..
 
 Enabling Authentication support:
 
@@ -65,22 +67,26 @@ Enabling Authentication support:
 
 To enable authentication support, please add this to your main `routing.yml`
 
-```yaml
+.. code-block:: yaml
+
 _power_user:
     resource: "@FoxUtilsBundle/Resources/config/routing_authentication.yml"
     prefix: /power_user_prefix
-```
+
+..
 
 Then add some users to you `config.yml` parameters section:
 
-```yaml
+.. code-block:: yaml
+
 parameters:
     fox_utils.authentication.users:
         foo_user:
             password: 'foo_password'
         foo_user_bar:
             password: 'foo_bar_password'
-```
+
+..
 
 Login page is at `/power_user_prefix/login`. There is also a logout page at `/power_user_prefix/logout`.
 
@@ -103,15 +109,18 @@ Settings can be changed per user from the settings page and the selected values 
 
 To enable a user to edit it's settings, add a route:
 
-```yaml
+.. code-block:: yaml
+
 _power_settings:
     resource: "@FoxUtilsBundle/Resources/config/routing_settings.yml"
     prefix: /power_settings_prefix
-```
+
+..
 
 And add some settings that are grouped in categories:
 
-```yaml
+.. code-block:: yaml
+
 parameters:
     fox_utils.settings.settings:
         foo_setting_1:
@@ -133,7 +142,8 @@ parameters:
             description: cat_desc_1
         category_2:
             name: Category 2
-```
+
+..
 
 Settings must have a `name` and `category`. `description` is optional but highly recommended.
 
@@ -148,20 +158,24 @@ Settings can be stored in multiple cookie stating `cookie` parameter and providi
 
 User selected values can be queried easily from TWIG like this:
 
-```twig
+.. code-block:: twig
+
 {% if fox_setting_enabled('foo_setting_2') %}
     Text when user is logged in and setting equals to true.
 {% else %}
     Otherwise.
 {% endif %}
-```
+
+..
 
 Or using a `UserSettingsManager` service:
 
-```php
+.. code-block:: php
+
 $this->userSettingsManager = $container->get('fox_utils.settings.user_settings_manager');
 $isEnabled = $this->userSettingsManager->getSettingEnabled($settingName);
-```
+
+..
 
 ## Settings change API
 
