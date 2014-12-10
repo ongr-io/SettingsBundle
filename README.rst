@@ -36,9 +36,11 @@ Usage
 
 `AdminBundle` requires minimal efforts to get it working. Firstly, install package using Composer:
 
-```bash
+.. code-block:: bash
+
 composer require ongr-io/AdminBundle 0.1.*
-```
+
+..
 
 Then register it in `AppKernel.php`:
 
