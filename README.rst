@@ -111,9 +111,26 @@ To enable a user to edit it's settings, add a route:
 
 .. code-block:: yaml
 
-_power_settings:
-    resource: "@FoxUtilsBundle/Resources/config/routing_settings.yml"
-    prefix: /power_settings_prefix
+    _power_settings:
+        resource: "@FoxUtilsBundle/Resources/config/routing_settings.yml"
+        prefix: /power_settings_prefix
+
+..
+
+
+.. code-block:: yaml
+
+    parameters:
+        project.cookie_foo.name: cookie_foo
+        project.cookie_foo.defaults: # Defaults section is optional
+            http_only: false
+            expires_interval: P5DT4H # 5 days and 4 hours
+
+    services:
+        project.cookie_foo:
+                - [setDefaults, [%project.cookie_foo.defaults%]] # Optional
+            tags:
+                - { name: ongr_cookie.cookie }
 
 ..
 
