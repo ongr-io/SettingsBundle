@@ -29,7 +29,7 @@
         "ongr/elasticsearch-bundle": ">=0.2,<2",
         "ongr/content-bundle": "~0.1",
         "ongr/cookies-bundle": "dev-master",
-        "ongr/filter-manager-bundle": "dev-master",
+        "ongr/filter-manager-bundle": "~0.1"
         "tedivm/stash-bundle": "0.4.*",
         "friendsofsymfony/jsrouting-bundle": "~1.5"
     },
