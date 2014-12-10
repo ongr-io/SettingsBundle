@@ -269,7 +269,8 @@ What happens in background? Actual service will be replaced with proxy service u
 
 > **Note.** `ongr-admin` tries to guess setter name by transforming setting name to camel case. If you want to specify custom setter name, add tag attribute `method`.
 
-## Getting Setting in Template
+Getting Setting in Template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can easily access setting value in any template using `admin_setting` function. Example:
 
@@ -282,7 +283,7 @@ You can easily access setting value in any template using `admin_setting` functi
 Settings Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`ongr-admin` uses [StashBundle](https://github.com/tedious/TedivmStashBundle) to cache settings. By default Filesystem cache driver is used. To ensure best performance change it `Memcache` or other fast cache engine.
+`ongr-admin` uses [StashBundle](`here <https://github.com/tedious/TedivmStashBundle>`_) to cache settings. By default Filesystem cache driver is used. To ensure best performance change it `Memcache` or other fast cache engine.
 
 Tags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -299,18 +300,80 @@ Setting aware
 
     .. code-block:: yaml
 
-    parameters:
-        my_bundle.db_driver.class: Vendor\MyBundle\Service\MyService
+        parameters:
+            my_bundle.db_driver.class: Vendor\MyBundle\Service\MyService
 
-    services:
-        my_bundle.service:
-            class: %my_bundle.service.class%
-            tags:
-             - { name: ongr_admin.setting_aware, setting: my_setting, method: setMySetting}
+        services:
+            my_bundle.service:
+                class: %my_bundle.service.class%
+                tags:
+                 - { name: ongr_admin.setting_aware, setting: my_setting, method: setMySetting}
 
     ..
 
 
+
+======================================
+How to use cookie flash bag
+======================================
+
+Introduction
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Flashbag is a service that registers front-end messages for the user. E.g.
+
+> Your post have been successfully saved!
+
+It is not possible to used [default Symfony flash bag](http://symfony.com/doc/current/components/http_foundation/sessions.html#flash-messages), because FOXX does not support PHP sessions. Therefore, flash bag that stores messages in a cookie is needed.
+
+Usage
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+FOXX flash_bag service can be accessed and used like this:
+
+.. code-block:: php
+
+    class FlashBagController
+    {
+        use ContainerAwareTrait;
+
+        public function indexAction()
+        {
+            /** @var FlashBagInterface $flashBag */
+            $flashBag = $this->container->get('fox_utils.flash_bag.flash_bag');
+
+            if ($request->getMethod() == 'POST') {
+                $flashBag->add(
+                    'success',
+                    'Your post have been successfully saved!'
+                );
+            }
+
+            return ['flash_bag' => $flashBag];
+        }
+    }
+
+..
+
+.. code-block:: twig
+
+    {% for message in flash_bag.get('success') %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+..
+
+
+======================================
+Using environment variables
+======================================
+
+FOX provides the ability to override container parameters by specifying them in your environment.
+FOX will grab all variables predefined with FOX__ and set it as a parameter in the service container.
+Double underscores are replaced with a period, as a period is not a valid character in an environment variable name.
+Note that unlike Symfony environment variables, we override parameters after everything is loaded i.e. your parameters in configuration files will be overwritten.
 
 
 
