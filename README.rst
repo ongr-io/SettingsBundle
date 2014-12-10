@@ -324,7 +324,7 @@ Flashbag is a service that registers front-end messages for the user. E.g.
 
 > Your post have been successfully saved!
 
-It is not possible to used [default Symfony flash bag](http://symfony.com/doc/current/components/http_foundation/sessions.html#flash-messages), because FOXX does not support PHP sessions. Therefore, flash bag that stores messages in a cookie is needed.
+It is not possible to used [default Symfony flash bag](http://symfony.com/doc/current/components/http_foundation/sessions.html#flash-messages), because ongr.io does not support PHP sessions. Therefore, flash bag that stores messages in a cookie is needed.
 
 Usage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -340,7 +340,7 @@ FOXX flash_bag service can be accessed and used like this:
         public function indexAction()
         {
             /** @var FlashBagInterface $flashBag */
-            $flashBag = $this->container->get('fox_utils.flash_bag.flash_bag');
+            $flashBag = $this->container->get('ongr_admin.flash_bag.flash_bag');
 
             if ($request->getMethod() == 'POST') {
                 $flashBag->add(
@@ -371,7 +371,7 @@ Using environment variables
 ======================================
 
 FOX provides the ability to override container parameters by specifying them in your environment.
-FOX will grab all variables predefined with FOX__ and set it as a parameter in the service container.
+FOX will grab all variables predefined with ONGR__ and set it as a parameter in the service container.
 Double underscores are replaced with a period, as a period is not a valid character in an environment variable name.
 Note that unlike Symfony environment variables, we override parameters after everything is loaded i.e. your parameters in configuration files will be overwritten.
 
