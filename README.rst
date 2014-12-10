@@ -32,9 +32,9 @@ Usage
 `Usage examples </Resources/doc/examples.rst>`_
 
 
----------------
+======================
 Setting it up
----------------
+======================
 
 `AdminBundle` requires minimal efforts to get it working. Firstly, install package using Composer:
 
@@ -63,8 +63,9 @@ Then register it in `AppKernel.php`:
 
 ..
 
+---------------------------------
 Enabling Authentication support:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 To enable authentication support, please add this to your main `routing.yml`
 
@@ -101,9 +102,9 @@ Some auth cookie properties:
 
 
 
-
+------------------------------------------------------------------
 Enabling Admin settings (PowerUser) functionality:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------------
 
 Settings can be changed per user from the settings page and the selected values are stored in a separate cookie.
 
