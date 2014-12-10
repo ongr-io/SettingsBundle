@@ -32,7 +32,8 @@ Usage
 `Usage examples </Resources/doc/examples.rst>`_
 
 
-### Setting it up
+Setting it up
+~~~~~~~~~~~~
 
 `AdminBundle` requires minimal efforts to get it working. Firstly, install package using Composer:
 
@@ -63,7 +64,8 @@ Then register it in `AppKernel.php`:
 
 Enabling Authentication support:
 
-## Users
+Users
+~~~~~~~~~~~~
 
 To enable authentication support, please add this to your main `routing.yml`
 
@@ -101,9 +103,11 @@ Some auth cookie properties:
 
 
 
-## Enabling Admin settings (PowerUser) functionality:
+Enabling Admin settings (PowerUser) functionality:
+=================================================
 
-##Settings
+Settings
+~~~~~~~~~~~~
 
 Settings can be changed per user from the settings page and the selected values are stored in a separate cookie.
 
@@ -154,7 +158,8 @@ Settings menu is visible under `/power_settings_prefix/settings`. The user must 
 Settings can be stored in multiple cookie stating `cookie` parameter and providing cookie service. More info on usage in [[How to work with cookies]].
 
 
-## TWIG
+TWIG
+~~~~
 
 User selected values can be queried easily from TWIG like this:
 
@@ -177,7 +182,8 @@ $isEnabled = $this->userSettingsManager->getSettingEnabled($settingName);
 
 ..
 
-## Settings change API
+Settings change API
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Boolean type settings can be toggled when the user visits specific URL generated for that setting. E. g.
 
