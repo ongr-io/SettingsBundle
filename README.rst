@@ -203,7 +203,7 @@ Settings change API
 
 Boolean type settings can be toggled when the user visits specific URL generated for that setting. E. g.
 
-- `http://example.com/power-user/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe== <http://example.com/power-user/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe==>`_
+- `http://example.com/admin_settings_prefix/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe== <http://example.com/admin_settings_prefix/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe==>`_
 
 
 
@@ -226,7 +226,8 @@ And add routes to `routing.yml`:
 
 That's it. Now you should be able to open settings list which should be empty until you add some settings.
 
-## Adding Setting
+Adding Setting
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Default way to add settings is through edit buttons in front-end.
 
@@ -242,13 +243,14 @@ By passing second parameter any of **string**, **boolean**, **array** or **objec
 
 .. code-block:: twig
 
-<div>{{ ongr_show_setting('count_per_page', 'object') }}</div>
+    <div>{{ ongr_show_setting('count_per_page', 'object') }}</div>
 
 ..
 
 To see this button you need to log in as Admin and enable "live settings". After this button appears just click on it and you will be redirected to edit page where you can set or update value of the setting.
 
-## Injecting Settings to Services
+Injecting Settings to Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Injecting settings we made as simple as it can be. To inject setting you only need to create setter method and add `ongr_admin.setting_aware` tag to service declaration:
 
@@ -273,17 +275,20 @@ You can easily access setting value in any template using `admin_setting` functi
 
 .. code-block:: html
 
-<p>Default items count per page: {{ admin_setting('count_per_page') }}</p>
+    <p>Default items count per page: {{ admin_setting('count_per_page') }}</p>
 
 ..
 
-## Settings Cache
+Settings Cache
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `ongr-admin` uses [StashBundle](https://github.com/tedious/TedivmStashBundle) to cache settings. By default Filesystem cache driver is used. To ensure best performance change it `Memcache` or other fast cache engine.
 
-## Tags
+Tags
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#### Setting aware
+Setting aware
+--------------
     Sets service values from admin. Service must have a setter.
 
     * **Tag name**:  `ongr_admin.setting_aware`
