@@ -66,6 +66,14 @@ Then register it in `AppKernel.php`:
 
 ..
 
+After this is completed, you shoud add a type mapping to your Elastic Search configuration:
+If You had defined mappings for your system, you should add
+.. code-block:: yaml
+
+- ONGRAdminBundle
+
+..
+to your mapping section. More about mappings can be found (- `here<https://github.com/ongr-io/ElasticsearchBundle/blob/master/Resources/doc/mapping.md>`_)
 
 Next Elastic Search types should be updated, by running a command in console:
 
@@ -195,9 +203,7 @@ Settings change API
 
 Boolean type settings can be toggled when the user visits specific URL generated for that setting. E. g.
 
-```
-http://example.com/power-user/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe==
-```
+- `http://example.com/power-user/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe== <http://example.com/power-user/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe==>`_
 
 
 ---------------------------------------------
