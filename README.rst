@@ -32,9 +32,9 @@ Usage
 `Usage examples </Resources/doc/examples.rst>`_
 
 
----------------
-Setting it up
----------------
+=================================
+Enabling and setting it up
+=================================
 
 `AdminBundle` requires minimal efforts to get it working. Firstly, install package using Composer:
 
