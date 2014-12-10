@@ -122,7 +122,7 @@ Some auth cookie properties:
 
 
 
-Enabling Admin settings (PowerUser) functionality:
+Enabling Admin settings (PowerUser) functionality (WONT WORK WITHOUT ATHENTICATION):
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Settings can be changed per user from the settings page and the selected values are stored in a separate cookie.
@@ -131,9 +131,9 @@ To enable a user to edit it's settings, add a route:
 
 .. code-block:: yaml
 
-    _power_settings:
-        resource: "@ONGRAdminBundle/Resources/config/routing_settings.yml"
-        prefix: /power_settings_prefix
+    _admin_settings:
+        resource: "@ONGRAdminBundle/Resources/config/routing/admin_settings.yml"
+        prefix: /admin_settings_prefix
 
 ..
 
@@ -169,7 +169,7 @@ Settings must have a `name` and `category`. `description` is optional but highly
 
 Categories must have a `name`. `description` is optional.
 
-Settings menu is visible under `/power_settings_prefix/settings`. The user must be logged in to see the page.
+Settings menu is visible under `/admin_settings_prefix/settings`. The user must be logged in to see the page.
 
 Settings can be stored in multiple cookie stating `cookie` parameter and providing cookie service. More info on usage in [[How to work with cookies]].
 
