@@ -1,0 +1,82 @@
+Enabling Admin settings (PowerUser) functionality (WONT WORK WITHOUT ATHENTICATION):
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Settings can be changed per user from the settings page and the selected values are stored in a separate cookie.
+
+To enable a user to edit it's settings, add a route:
+
+.. code-block:: yaml
+
+    _admin_settings:
+        resource: "@ONGRAdminBundle/Resources/config/routing/admin_settings.yml"
+        prefix: /admin_settings_prefix
+
+..
+
+And add some settings that are grouped in categories:
+
+.. code-block:: yaml
+
+    parameters:
+        ongr_admin.settings.settings:
+            foo_setting_1:
+                name: Foo Setting 1
+                category: category_1
+                description: 'foo_desc_1'
+            foo_setting_2:
+                name: Foo Setting 2
+                category: category_1
+            foo_setting_3:
+                name: Foo Setting 3
+                category: category_2
+                description: 'foo_desc_3'
+                cookie: project.cookie.alternative_settings # Setting stored in a separate cookie
+
+        ongr_admin.settings.categories:
+            category_1:
+                name: Category 1
+                description: cat_desc_1
+            category_2:
+                name: Category 2
+
+..
+
+Settings must have a `name` and `category`. `description` is optional but highly recommended.
+
+Categories must have a `name`. `description` is optional.
+
+Settings menu is visible under `/admin_settings_prefix/settings`. The user must be logged in to see the page.
+
+Settings can be stored in multiple cookie stating `cookie` parameter and providing cookie service. More info on usage in [[How to work with cookies]].
+
+
+TWIG
+~~~~
+
+User selected values can be queried easily from TWIG like this:
+
+.. code-block:: twig
+
+    {% if ongr_setting_enabled('foo_setting_2') %}
+        Text when user is logged in and setting equals to true.
+    {% else %}
+        Otherwise.
+    {% endif %}
+
+..
+
+Or using a `UserSettingsManager` service:
+
+.. code-block:: php
+
+    $this->userSettingsManager = $container->get('ongr_admin.settings.user_settings_manager');
+    $isEnabled = $this->userSettingsManager->getSettingEnabled($settingName);
+
+..
+
+Settings change API
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Boolean type settings can be toggled when the user visits specific URL generated for that setting. E. g.
+
+- `http://example.com/admin_settings_prefix/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe== <http://example.com/admin_settings_prefix/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe==>`_
