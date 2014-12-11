@@ -9,7 +9,7 @@ Introduction
 
 While using this functionality, settings can be changed per user, from the settings page and the selected values are stored in a separate cookie.
 
-Installation
+Enabling
 ----------------
 To enable a user to edit it's settings, to your main ``routing.yml`` add a route:
 

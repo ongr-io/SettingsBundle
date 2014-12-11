@@ -2,6 +2,14 @@
 Enabling and using Common settings functionality
 ==================================================
 
+Introduction
+----------------
+
+
+
+Enabling
+----------------
+
 To enable this functionality, You simply need to add routes to `routing.yml`:
 
 .. code-block:: yaml
@@ -15,7 +23,10 @@ To enable this functionality, You simply need to add routes to `routing.yml`:
 
 ..
 
-That's it. Now you should be able to open settings list which should be empty until you add some settings.
+That's it. Now you should be able to open settings list which should be empty until you add some settings.7
+
+Usage
+--------
 
 Adding Setting
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

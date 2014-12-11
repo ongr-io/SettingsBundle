@@ -11,6 +11,10 @@ Flashbag is a service that registers front-end messages for the user. E.g.:
 
 It is not possible to used `default Symfony flash bag <http://symfony.com/doc/current/components/http_foundation/sessions.html#flash-messages>`_ ], because ONGR does not support PHP sessions. Therefore, flash bag that stores messages in a cookie is needed.
 
+Enabling
+---------
+This functionality is enabled by default.
+
 Usage
 --------
 
