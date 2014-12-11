@@ -60,7 +60,7 @@ What happens in background? Actual service will be replaced with proxy service u
 
 .. note::
 
-`ongr-admin` tries to guess setter name by transforming setting name to camel case. If you want to specify custom setter name, add tag attribute `method`.
+    Note: ``ongr-admin`` tries to guess setter name by transforming setting name to camel case. If you want to specify custom setter name, add tag attribute `method`.
 
 Getting Setting in Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -75,8 +75,8 @@ Next Elastic Search types should be updated, by running a command in console:
 
 ..
 
-Enabling Sessionless authentication support:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Enabling Sessionless authentication support
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To enable authentication support, please add this to your main `routing.yml`
 
@@ -112,8 +112,9 @@ Values can change in several places. Eg. IP address is dependent on the network,
 
 * Cookie **can be stolen** if sent over *http://*, so do not trust it's security absolutely.
 
-Usage
-~~~~~
+===============
+Bundles usage
+===============
 
 - `Admin settings usage </Resources/doc/admin_settings.rst>`_
 - `Common settings usage </Resources/doc/common_settings.rst>`_
