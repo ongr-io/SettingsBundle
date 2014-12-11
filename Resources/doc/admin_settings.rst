@@ -1,10 +1,16 @@
-Enabling Admin settings functionality:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+======================================
+Enabling and using Admin settings functionality:
+======================================
 
+
+Introduction
+----------------
     Note: This functionality will require You to login using Sessionless authentication.
 
 While using this functionality, settings can be changed per user, from the settings page and the selected values are stored in a separate cookie.
 
+Installation
+----------------
 To enable a user to edit it's settings, to your main ``routing.yml`` add a route:
 
 .. code-block:: yaml
@@ -43,6 +49,8 @@ And add some settings that are grouped in categories (``config.yml``):
 
 ..
 
+Usage
+-------
 Settings must have a ``name`` and ``category``. ``description`` is optional but highly recommended.
 
 Categories must have a ``name``. ``description`` is optional.

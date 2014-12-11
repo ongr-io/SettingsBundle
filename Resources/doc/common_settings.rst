@@ -1,8 +1,8 @@
-======================================
-Enabling Common settings functionality
-======================================
+==================================================
+Enabling and using Common settings functionality
+==================================================
 
-And add routes to `routing.yml`:
+To enable this functionality, You simply need to add routes to `routing.yml`:
 
 .. code-block:: yaml
 

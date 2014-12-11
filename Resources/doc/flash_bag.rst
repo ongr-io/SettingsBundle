@@ -1,9 +1,9 @@
 ======================================
-How to use cookie flash bag
+Enabling and using Cookie flash bag
 ======================================
 
 Introduction
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------
 
 Flashbag is a service that registers front-end messages for the user. E.g.:
 
