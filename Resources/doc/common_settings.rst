@@ -107,3 +107,8 @@ Example YAML configuration:
 ..
 
 
+More about
+~~~~~~~
+- `Admin settings usage </Resources/doc/admin_settings.rst>`_
+- `Flash bag usage </Resources/doc/flash_bag.rst>`_
+- `Environment variables usage </Resources/doc/env_variable.rst>`_

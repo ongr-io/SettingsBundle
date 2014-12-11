@@ -49,3 +49,9 @@ ONGR flash_bag service can be accessed and used like this:
     {% endfor %}
 
 ..
+
+More about
+~~~~~~~
+- `Admin settings usage </Resources/doc/admin_settings.rst>`_
+- `Common settings usage </Resources/doc/common_settings.rst>`_
+- `Environment variables usage </Resources/doc/env_variable.rst>`_

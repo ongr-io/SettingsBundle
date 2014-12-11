@@ -1,5 +1,5 @@
 ======================================
-Enabling and using Admin settings functionality:
+Enabling and using Admin settings functionality
 ======================================
 
 
@@ -91,3 +91,10 @@ Settings change API
 Boolean type settings can be toggled when the user visits specific URL generated for that setting. E. g.
 
 - `http://example.com/admin_settings_prefix/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe== <http://example.com/admin_settings_prefix/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe==>`_
+
+
+More about
+~~~~~~~
+- `Common settings usage </Resources/doc/common_settings.rst>`_
+- `Flash bag usage </Resources/doc/flash_bag.rst>`_
+- `Environment variables usage </Resources/doc/env_variable.rst>`_
