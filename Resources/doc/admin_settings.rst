@@ -1,4 +1,4 @@
-Enabling Admin settings (PowerUser) functionality (WONT WORK WITHOUT ATHENTICATION):
+Enabling Admin settings functionality:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Settings can be changed per user from the settings page and the selected values are stored in a separate cookie.
