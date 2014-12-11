@@ -122,7 +122,7 @@ Bundles usage
 - `Environment variables usage </Resources/doc/env_variable.rst>`_
 
 .. toctree::
-:maxdepth: 1
-            :glob:
+    :maxdepth: 1
+        :glob:
 
-            *
+        *
