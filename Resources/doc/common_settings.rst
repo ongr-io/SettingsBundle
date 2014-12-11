@@ -93,17 +93,17 @@ Sets service values from admin. Service must have a setter.
 
 - Example YAML configuration**
 
-    .. code-block:: yaml
+.. code-block:: yaml
 
-        parameters:
-            my_bundle.db_driver.class: Vendor\MyBundle\Service\MyService
+    parameters:
+        my_bundle.db_driver.class: Vendor\MyBundle\Service\MyService
 
-        services:
-            my_bundle.service:
-                class: %my_bundle.service.class%
-                tags:
-                 - { name: ongr_admin.setting_aware, setting: my_setting, method: setMySetting}
+    services:
+        my_bundle.service:
+            class: %my_bundle.service.class%
+            tags:
+             - { name: ongr_admin.setting_aware, setting: my_setting, method: setMySetting}
 
-    ..
+..
 
 
