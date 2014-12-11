@@ -121,5 +121,6 @@ Some auth cookie properties:
 * Login credentials are stored in a signed tamper-proof authentication cookie that is **valid for X hours**.
 * Authentication cookie's signature **contains username**, **IP address**, expiration **timestamp** and **password**. Therefore if any of the values change, then cookie becomes invalid.
 
-    Values can change in several places. Eg. IP address is dependent on the network, password can change in the configuration file and the expiration timestamp or the username can be modified in the cookie itself.
+Values can change in several places. Eg. IP address is dependent on the network, password can change in the configuration file and the expiration timestamp or the username can be modified in the cookie itself.
+
 * Cookie **can be stolen** if sent over *http://*, so do not trust it's security absolutely.
