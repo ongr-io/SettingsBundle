@@ -9,10 +9,10 @@ Provides settings API and admin interface for ONGR projects.
 
 It includes:
 
-- Admin settings functionality:
-- Common settings functionality;
-- FlashBag functionality:
-- Using environment variables functionality:
+- `Admin functionality </Resources/doc/admin_settings.rst>`_
+- `Common functionality </Resources/doc/common_settings.rst>`_
+- `Flash functionality </Resources/doc/flash_bag.rst>`_
+- `Environment functionality </Resources/doc/env_variable.rst>`_
 
 Depends on:
 
@@ -20,19 +20,6 @@ Depends on:
 - `ONGR/ElasticsearchBundle <https://github.com/ongr-io/ElasticsearchBundle>`_
 - `ONGR/ContentBundle <https://github.com/ongr-io/ContentBundle>`_
 - `ONGR/FilterManagerBundle <https://github.com/ongr-io/FilterManagerBundle>`_
-
-Installation
-~~~~~~~~~~~~
-
-`Instalation documentation </Resources/doc/install.rst>`_
-
-Usage
-~~~~~
-
-- `Admin settings usage and examples </Resources/doc/admin_settings.rst>`_
-- `Common settings usage and examples </Resources/doc/common_settings.rst>`_
-- `Flash bag usage and examples </Resources/doc/flash_bag.rst>`_
-- `Environment variables usage and examples </Resources/doc/env_variable.rst>`_
 
 
 =================================
@@ -88,7 +75,7 @@ Next Elastic Search types should be updated, by running a command in console:
 
 ..
 
-Enabling Authentication support:
+Enabling Sessionless authentication support:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To enable authentication support, please add this to your main `routing.yml`
@@ -121,5 +108,14 @@ Some auth cookie properties:
 * Login credentials are stored in a signed tamper-proof authentication cookie that is **valid for X hours**.
 * Authentication cookie's signature **contains username**, **IP address**, expiration **timestamp** and **password**. Therefore if any of the values change, then cookie becomes invalid.
 
-    Values can change in several places. Eg. IP address is dependent on the network, password can change in the configuration file and the expiration timestamp or the username can be modified in the cookie itself.
+Values can change in several places. Eg. IP address is dependent on the network, password can change in the configuration file and the expiration timestamp or the username can be modified in the cookie itself.
+
 * Cookie **can be stolen** if sent over *http://*, so do not trust it's security absolutely.
+
+Usage
+~~~~~
+
+- `Admin settings usage </Resources/doc/admin_settings.rst>`_
+- `Common settings usage </Resources/doc/common_settings.rst>`_
+- `Flash bag usage </Resources/doc/flash_bag.rst>`_
+- `Environment variables usage </Resources/doc/env_variable.rst>`_

@@ -1,9 +1,11 @@
 Enabling Admin settings functionality:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Settings can be changed per user from the settings page and the selected values are stored in a separate cookie.
+    Note: This functionality will require You to login using Sessionless authentication.
 
-To enable a user to edit it's settings, add a route:
+While using this functionality, settings can be changed per user, from the settings page and the selected values are stored in a separate cookie.
+
+To enable a user to edit it's settings, to your main `routing.yml` add a route:
 
 .. code-block:: yaml
 
@@ -13,7 +15,7 @@ To enable a user to edit it's settings, add a route:
 
 ..
 
-And add some settings that are grouped in categories:
+And add some settings that are grouped in categories (`config.yml`):
 
 .. code-block:: yaml
 
@@ -47,7 +49,8 @@ Categories must have a `name`. `description` is optional.
 
 Settings menu is visible under `/admin_settings_prefix/settings`. The user must be logged in to see the page.
 
-Settings can be stored in multiple cookie stating `cookie` parameter and providing cookie service. More info on usage in [[How to work with cookies]].
+Settings can be stored in multiple cookie stating `cookie` parameter and providing cookie service.
+More info on usage in `How to work with cookies documentation <https://github.com/ongr-io/CookiesBundle>`_.
 
 
 TWIG
