@@ -13,7 +13,8 @@ It is not possible to used `default Symfony flash bag <http://symfony.com/doc/cu
 
 Enabling
 ---------
-This functionality is enabled by default.
+
+    This functionality is enabled by default.
 
 Usage
 --------

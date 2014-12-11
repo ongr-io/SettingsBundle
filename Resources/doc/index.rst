@@ -123,6 +123,6 @@ Bundles usage
 
 .. toctree::
 :maxdepth: 1
-        :glob:
+            :glob:
 
-        *
+            *

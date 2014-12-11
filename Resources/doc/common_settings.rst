@@ -4,8 +4,7 @@ Enabling and using Common settings functionality
 
 Introduction
 ----------------
-
-
+This component provides functionality to configure website in real time.
 
 Enabling
 ----------------
