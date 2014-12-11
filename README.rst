@@ -26,7 +26,7 @@ Depends on:
 Enabling and setting it up
 =================================
 
-`AdminBundle` requires minimal efforts to get it working. Firstly, install package using Composer:
+``AdminBundle`` requires minimal efforts to get it working. Firstly, install package using Composer:
 
 .. code-block:: bash
 
@@ -34,7 +34,7 @@ Enabling and setting it up
 
 ..
 
-Then register it in `AppKernel.php`:
+Then register it in ``AppKernel.php``:
 
 .. code-block:: php
 
@@ -75,10 +75,10 @@ Next Elastic Search types should be updated, by running a command in console:
 
 ..
 
-Enabling Sessionless authentication support:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Enabling Sessionless authentication support
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To enable authentication support, please add this to your main `routing.yml`
+To enable authentication support, please add this to your main ``routing.yml``
 
 .. code-block:: yaml
 
@@ -88,7 +88,7 @@ To enable authentication support, please add this to your main `routing.yml`
 
 ..
 
-Then add some users to you `config.yml` parameters section:
+Then add some users to you ``config.yml`` parameters section:
 
 .. code-block:: yaml
 
@@ -101,7 +101,7 @@ Then add some users to you `config.yml` parameters section:
 
 ..
 
-Login page is at `/admin_prefix/login`. There is also a logout page at `/admin_prefix/logout`.
+Login page is at ``/admin_prefix/login``. There is also a logout page at ``/admin_prefix/logout``.
 
 Some auth cookie properties:
 
@@ -112,8 +112,9 @@ Values can change in several places. Eg. IP address is dependent on the network,
 
 * Cookie **can be stolen** if sent over *http://*, so do not trust it's security absolutely.
 
-Usage
-~~~~~
+===============
+Bundles usage
+===============
 
 - `Admin settings usage </Resources/doc/admin_settings.rst>`_
 - `Common settings usage </Resources/doc/common_settings.rst>`_

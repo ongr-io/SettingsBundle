@@ -5,9 +5,9 @@ How to use cookie flash bag
 Introduction
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Flashbag is a service that registers front-end messages for the user. E.g.
+Flashbag is a service that registers front-end messages for the user. E.g.:
 
-> Your post have been successfully saved!
+    > Your post have been successfully saved!
 
 It is not possible to used `default Symfony flash bag <http://symfony.com/doc/current/components/http_foundation/sessions.html#flash-messages>`_ ], because ONGR does not support PHP sessions. Therefore, flash bag that stores messages in a cookie is needed.
 

@@ -43,7 +43,7 @@ To see this button you need to log in as Admin and enable "live settings". After
 Injecting Settings to Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Injecting settings we made as simple as it can be. To inject setting you only need to create setter method and add `ongr_admin.setting_aware` tag to service declaration:
+Injecting settings we made as simple as it can be. To inject setting you only need to create setter method and add `ongr_admin.setting_aware`` tag to service declaration:
 
 .. code-block:: yaml
 
@@ -59,12 +59,12 @@ Injecting settings we made as simple as it can be. To inject setting you only ne
 What happens in background? Actual service will be replaced with proxy service using service factory. Factory service gets actual service as parameter and on demand injects tagged settings.
 
 
-    ``ongr-admin`` tries to guess setter name by transforming setting name to camel case. If you want to specify custom setter name, add tag attribute `method`.
+   Note: ``ongr-admin`` tries to guess setter name by transforming setting name to camel case. If you want to specify custom setter name, add tag attribute `method`.
 
 Getting Setting in Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can easily access setting value in any template using `admin_setting` function. Example:
+You can easily access setting value in any template using ``admin_setting`` function. Example:
 
 .. code-block:: html
 
@@ -85,10 +85,10 @@ Setting aware
 
 Sets service values from admin. Service must have a setter.
 
-- `ongr_admin.setting_aware`
+- ``ongr_admin.setting_aware``
 - Parameters
-    - `setting` - specify setting name set in admin
-    - `method` - setter method name (optional)
+    - ``setting`` - specify setting name set in admin
+    - ``method`` - setter method name (optional)
 
 
 Example YAML configuration:

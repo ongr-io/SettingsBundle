@@ -5,7 +5,7 @@ Enabling Admin settings functionality:
 
 While using this functionality, settings can be changed per user, from the settings page and the selected values are stored in a separate cookie.
 
-To enable a user to edit it's settings, to your main `routing.yml` add a route:
+To enable a user to edit it's settings, to your main ``routing.yml`` add a route:
 
 .. code-block:: yaml
 
@@ -15,7 +15,7 @@ To enable a user to edit it's settings, to your main `routing.yml` add a route:
 
 ..
 
-And add some settings that are grouped in categories (`config.yml`):
+And add some settings that are grouped in categories (``config.yml``):
 
 .. code-block:: yaml
 
@@ -43,13 +43,13 @@ And add some settings that are grouped in categories (`config.yml`):
 
 ..
 
-Settings must have a `name` and `category`. `description` is optional but highly recommended.
+Settings must have a ``name`` and ``category``. ``description`` is optional but highly recommended.
 
-Categories must have a `name`. `description` is optional.
+Categories must have a ``name``. ``description`` is optional.
 
-Settings menu is visible under `/admin_settings_prefix/settings`. The user must be logged in to see the page.
+Settings menu is visible under ``/admin_settings_prefix/settings``. The user must be logged in to see the page.
 
-Settings can be stored in multiple cookie stating `cookie` parameter and providing cookie service.
+Settings can be stored in multiple cookie stating ``cookie`` parameter and providing cookie service.
 More info on usage in `How to work with cookies documentation <https://github.com/ongr-io/CookiesBundle>`_.
 
 
@@ -68,7 +68,7 @@ User selected values can be queried easily from TWIG like this:
 
 ..
 
-Or using a `UserSettingsManager` service:
+Or using a ``UserSettingsManager`` service:
 
 .. code-block:: php
 
