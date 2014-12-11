@@ -29,10 +29,10 @@ Installation
 Usage
 ~~~~~
 
-`Admin settings usage and examples </Resources/doc/admin_settings.rst>`_
-`Common settings usage and examples </Resources/doc/common_settings.rst>`_
-`Flash bag usage and examples </Resources/doc/flash_bag.rst>`_
-`Environment variables usage and examples </Resources/doc/env_variables.rst>`_
+- `Admin settings usage and examples </Resources/doc/admin_settings.rst>`_
+- `Common settings usage and examples </Resources/doc/common_settings.rst>`_
+- `Flash bag usage and examples </Resources/doc/flash_bag.rst>`_
+- `Environment variables usage and examples </Resources/doc/env_variable.rst>`_
 
 
 =================================
