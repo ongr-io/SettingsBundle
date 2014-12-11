@@ -87,11 +87,12 @@ Setting aware
 Sets service values from admin. Service must have a setter.
 
 - `ongr_admin.setting_aware`
-    - Parameters
-        - `setting` - specify setting name set in admin
-        - `method` - setter method name (optional)
+- Parameters
+    - `setting` - specify setting name set in admin
+    - `method` - setter method name (optional)
 
-- Example YAML configuration**
+
+Example YAML configuration:
 
 .. code-block:: yaml
 
