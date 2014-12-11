@@ -58,9 +58,8 @@ Injecting settings we made as simple as it can be. To inject setting you only ne
 
 What happens in background? Actual service will be replaced with proxy service using service factory. Factory service gets actual service as parameter and on demand injects tagged settings.
 
-.. note::
 
-    Note: ``ongr-admin`` tries to guess setter name by transforming setting name to camel case. If you want to specify custom setter name, add tag attribute `method`.
+    ``ongr-admin`` tries to guess setter name by transforming setting name to camel case. If you want to specify custom setter name, add tag attribute `method`.
 
 Getting Setting in Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
