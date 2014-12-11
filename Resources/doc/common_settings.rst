@@ -58,7 +58,9 @@ Injecting settings we made as simple as it can be. To inject setting you only ne
 
 What happens in background? Actual service will be replaced with proxy service using service factory. Factory service gets actual service as parameter and on demand injects tagged settings.
 
-> **Note.** `ongr-admin` tries to guess setter name by transforming setting name to camel case. If you want to specify custom setter name, add tag attribute `method`.
+.. note::
+
+`ongr-admin` tries to guess setter name by transforming setting name to camel case. If you want to specify custom setter name, add tag attribute `method`.
 
 Getting Setting in Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,7 +76,7 @@ You can easily access setting value in any template using `admin_setting` functi
 Settings Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`ongr-admin` uses [StashBundle](`here <https://github.com/tedious/TedivmStashBundle>`_) to cache settings. By default Filesystem cache driver is used. To ensure best performance change it `Memcache` or other fast cache engine.
+`ongr-admin` uses `StashBundle <https://github.com/tedious/TedivmStashBundle>`_ to cache settings. By default Filesystem cache driver is used. To ensure best performance change it `Memcache` or other fast cache engine.
 
 Tags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -83,10 +85,10 @@ Setting aware
 --------------
     Sets service values from admin. Service must have a setter.
 
-    * **Tag name**:  `ongr_admin.setting_aware`
-    * **Parameters**
-        * `setting` - specify setting name set in admin
-        * `method` - setter method name (optional)
+    - `ongr_admin.setting_aware`
+        - Parameters**
+            - `setting` - specify setting name set in admin
+            - `method` - setter method name (optional)
     * **Example YAML configuration**
 
     .. code-block:: yaml
