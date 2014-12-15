@@ -21,8 +21,6 @@ use Exception;
 
 /**
  * Class SettingsManager responsible for managing settings actions.
- *
- * @package ONGR\AdminBundle\Service
  */
 class SettingsManager
 {

@@ -19,8 +19,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class SettingsManagerController.
- *
- * @package ONGR\AdminBundle\Controller
  */
 class SettingsManagerController extends Controller
 {
