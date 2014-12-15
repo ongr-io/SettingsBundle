@@ -21,7 +21,6 @@ use Exception;
 
 /**
  * Class SettingsManager responsible for managing settings actions.
- *
  */
 class SettingsManager
 {
