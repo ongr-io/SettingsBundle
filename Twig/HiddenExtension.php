@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class for outputing hidden information.
- *
- * @package ONGR\AdminBundle\Twig
  */
 class HiddenExtension extends \Twig_Extension
 {

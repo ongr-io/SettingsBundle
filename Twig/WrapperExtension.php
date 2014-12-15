@@ -13,8 +13,6 @@ namespace ONGR\AdminBundle\Twig;
 
 /**
  * Class WrapperExtension.
- *
- * @package ONGR\AdminBundle\Twig
  */
 class WrapperExtension extends \Twig_Extension
 {

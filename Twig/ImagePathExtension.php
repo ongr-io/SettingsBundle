@@ -13,8 +13,6 @@ namespace ONGR\AdminBundle\Twig;
 
 /**
  * Class ImagePathExtension.
- *
- * @package ONGR\AdminBundle\Twig
  */
 class ImagePathExtension extends \Twig_Extension
 {
