@@ -28,19 +28,6 @@ class SettingsManagerController extends Controller
     protected $settingsManager;
 
     /**
-     * @return SettingsManager
-     */
-    protected function getSettingsManager()
-    {
-        if ($this->settingsManager == null) {
-            /** @var SettingsManager settingsManager */
-            $this->settingsManager = $this->get('ongr_admin.settings_manager');
-        }
-
-        return $this->settingsManager;
-    }
-
-    /**
      * Action for saving/seting setting values.
      *
      * @param Request $request
@@ -156,5 +143,18 @@ class SettingsManagerController extends Controller
         $this->getSettingsManager()->duplicate($setting, $to);
 
         return new Response();
+    }
+
+    /**
+     * @return SettingsManager
+     */
+    protected function getSettingsManager()
+    {
+        if ($this->settingsManager == null) {
+            /** @var SettingsManager settingsManager */
+            $this->settingsManager = $this->get('ongr_admin.settings_manager');
+        }
+
+        return $this->settingsManager;
     }
 }
