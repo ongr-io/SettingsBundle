@@ -14,10 +14,10 @@ namespace ONGR\AdminBundle\Service;
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\AdminBundle\Document\Parameter;
-use Exception;
+use Elasticsearch\Common\Exceptions\Missing404Exception;
 
 /**
- * Class SettingsManager responsible for managing settings actions.
+ * Responsible for managing parameters actions.
  *
  * @package ONGR\AdminBundle\Service
  */
@@ -36,7 +36,7 @@ class ParametersManager
     /**
      * @var Repository
      */
-    protected $repo;
+    protected $repository;
 
     /**
      * Constructor.
@@ -47,11 +47,11 @@ class ParametersManager
         Manager $manager
     ) {
         $this->manager = $manager;
-        $this->repo = $this->manager->getRepository('ONGRAdminBundle:Parameter');
+        $this->repository = $this->manager->getRepository('ONGRAdminBundle:Parameter');
     }
 
     /**
-     * Returns parameter model by key.
+     * Returns parameter value by key.
      *
      * @param string $key
      *
@@ -60,14 +60,13 @@ class ParametersManager
     public function get($key)
     {
         try {
-            $parameter = $this->repo->find(self::ID_PREFIX . $key);
-        } catch (Exception $exception) {
+            $parameter = $this->repository->find(self::ID_PREFIX . $key);
+        } catch (Missing404Exception $exception) {
             $parameter = new Parameter();
             $parameter->setId(self::ID_PREFIX . $key);
-            $parameter->key = $key;
         }
 
-        return $parameter;
+        return unserialize($parameter->value);
     }
 
     /**
@@ -81,14 +80,13 @@ class ParametersManager
     public function set($key, $value)
     {
         try {
-            $parameter = $this->repo->find(self::ID_PREFIX . $key);
-        } catch (Exception $exception) {
+            $parameter = $this->repository->find(self::ID_PREFIX . $key);
+        } catch (Missing404Exception $exception) {
             $parameter = new Parameter();
             $parameter->setId(self::ID_PREFIX . $key);
         }
 
-        $parameter->key = $key;
-        $parameter->value = json_encode($value);
+        $parameter->value = serialize($value);
 
         $this->save($parameter);
 
@@ -96,26 +94,32 @@ class ParametersManager
     }
 
     /**
+     * Removes a parameter.
+     *
+     * @param string $key
+     */
+    public function remove($key)
+    {
+        try {
+            $parameter = $this->repository->find(self::ID_PREFIX . $key);
+
+            $this->repository->remove($parameter->getId());
+            $this->manager->flush();
+            $this->manager->refresh();
+        } catch (Missing404Exception $exception) {
+            // If parameter wasn't found, wo don't do anything.
+        }
+    }
+
+    /**
      * Saves parameter.
      *
      * @param Parameter $parameter
      */
-    public function save(Parameter $parameter)
+    private function save(Parameter $parameter)
     {
         $this->manager->persist($parameter);
         $this->manager->commit();
-        $this->manager->refresh();
-    }
-
-    /**
-     * Removes a parameter.
-     *
-     * @param Parameter $parameter
-     */
-    public function remove(Parameter $parameter)
-    {
-        $this->repo->remove($parameter->getId());
-        $this->manager->flush();
         $this->manager->refresh();
     }
 }

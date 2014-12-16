@@ -72,13 +72,16 @@ class ParametersManagerTest extends WebTestCase
         $manager = new ParametersManager(
             $this->manager
         );
-        $parameter = $manager->get('name0');
+        $parameter_value = $manager->get('name0');
 
-        $this->assertInstanceOf('ONGR\AdminBundle\Document\Parameter', $parameter);
+        $this->assertEquals('will not be here', $parameter_value);
 
-        $manager->remove($parameter);
+        $manager->remove('name0');
 
-        $manager->get('name0');
+        // Check if item was deleted.
+        $parameter_value = $manager->get('name0');
+
+        $this->assertEquals(null, $parameter_value);
     }
 
     /**
@@ -91,16 +94,14 @@ class ParametersManagerTest extends WebTestCase
         );
 
         // This item must exist in db.
-        $parameter = $manager->get('name0');
+        $parameter_value = $manager->get('name0');
 
-        $this->assertInstanceOf('ONGR\AdminBundle\Document\Parameter', $parameter);
-        $this->assertEquals('"will not be here"', $parameter->value);
+        $this->assertEquals('will not be here', $parameter_value);
 
         // This item is not existing.
-        $parameter = $manager->get('name13');
+        $parameter_value = $manager->get('name13');
 
-        $this->assertInstanceOf('ONGR\AdminBundle\Document\Parameter', $parameter);
-        $this->assertEquals(null, $parameter->value);
+        $this->assertEquals(null, $parameter_value);
     }
 
     /**
@@ -123,8 +124,7 @@ class ParametersManagerTest extends WebTestCase
         // if we don't create in here all test data, it's not existing when test is run.
         $content = new Parameter();
         $content->setId(ParametersManager::ID_PREFIX . 'name0');
-        $content->key = 'name0';
-        $content->value = json_encode('will not be here');
+        $content->value = serialize('will not be here');
 
         $this->manager->persist($content);
         $this->manager->commit();
@@ -142,8 +142,7 @@ class ParametersManagerTest extends WebTestCase
     {
         $parameter = new Parameter();
         $parameter->setId(ParametersManager::ID_PREFIX . $key);
-        $parameter->key = $key;
-        $parameter->value = json_encode($value);
+        $parameter->value = serialize($value);
         $parameter->setScore(1.0);
 
         return $parameter;

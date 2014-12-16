@@ -15,10 +15,10 @@ use ONGR\AdminBundle\Document\Parameter;
 use ONGR\AdminBundle\Service\ParametersManager;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
-use Exception;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Elasticsearch\Common\Exceptions\Missing404Exception;
 
-class ParametersManagerTest extends ElasticsearchTestCase
+class ParametersManagerTest extends WebTestCase
 {
     /**
      * @var $ormManagerMock  Manager mock
@@ -69,35 +69,35 @@ class ParametersManagerTest extends ElasticsearchTestCase
             'exception' => false,
         ];
 
-        // Case No 3. Object.
+        // Case No 4. Object.
         $cases[] = [
             'key' => 'bar_name',
-            'value' => $this->getOrmRepositoryMock(),
+            'value' => new Parameter(),
             'exception' => false,
         ];
 
-        // Case No 4. String with exception.
+        // Case No 5. String with exception.
         $cases[] = [
             'key' => 'bar_name',
             'value' => 'test 15',
             'exception' => true,
         ];
 
-        // Case No 5. Boolean with exception.
+        // Case No 6. Boolean with exception.
         $cases[] = [
             'key' => 'bar_name',
             'value' => true,
             'exception' => true,
         ];
 
-        // Case No 6. Array with exception.
+        // Case No 7. Array with exception.
         $cases[] = [
             'key' => 'bar_name',
             'value' => ['value1', 'value2'],
             'exception' => true,
         ];
 
-        // Case No 7. Object with exception.
+        // Case No 8. Object with exception.
         $cases[] = [
             'key' => 'bar_name',
             'value' => $this->getOrmRepositoryMock(),
@@ -120,14 +120,13 @@ class ParametersManagerTest extends ElasticsearchTestCase
     {
         $par = new Parameter();
         $par->setId(ParametersManager::ID_PREFIX . $key);
-        $par->key = $key;
-        $par->value = json_encode($value);
+        $par->value = serialize($value);
 
         if ($exception) {
             $this->repositoryMock->expects(
                 $this->once()
             )->method('find')
-                ->will($this->throwException(new Exception));
+                ->will($this->throwException(new Missing404Exception));
         } else {
             $this->repositoryMock->expects(
                 $this->once()
@@ -155,16 +154,16 @@ class ParametersManagerTest extends ElasticsearchTestCase
      */
     public function testGet($key, $value, $exception)
     {
-        $par = new Parameter();
-        $par->setId(ParametersManager::ID_PREFIX . $key);
-        $par->key = $key;
-
         if ($exception) {
             $this->repositoryMock->expects(
                 $this->once()
             )->method('find')
-                ->will($this->throwException(new Exception));
+                ->will($this->throwException(new Missing404Exception));
         } else {
+            $par = new Parameter();
+            $par->setId(ParametersManager::ID_PREFIX . $key);
+            $par->value = serialize($value);
+
             $this->repositoryMock->expects(
                 $this->once()
             )->method('find')
@@ -178,24 +177,7 @@ class ParametersManagerTest extends ElasticsearchTestCase
 
         $parameterManager = $this->getParametersManager($this->ormManagerMock);
 
-        $this->assertEquals($par, $parameterManager->get($key, $value));
-    }
-
-    /**
-     * Test for save() .
-     */
-    public function testSave()
-    {
-        $ormManagerMock = $this->getOrmManagerMock();
-        $repositoryMock = $this->getOrmRepositoryMock();
-
-        $ormManagerMock->expects(
-            $this->once()
-        )->method('getRepository')
-            ->willReturn($repositoryMock);
-
-        $parameterManager = $this->getParametersManager($ormManagerMock);
-        $parameterManager->save($this->getParameterMock());
+        $this->assertEquals(($exception ? null : $value), $parameterManager->get($key));
     }
 
     /**
@@ -203,8 +185,17 @@ class ParametersManagerTest extends ElasticsearchTestCase
      */
     public function testRemove()
     {
+        $par = new Parameter();
+        $par->setId(ParametersManager::ID_PREFIX . 'demo');
+        $par->value = serialize('demo value');
+
         $ormManagerMock = $this->getOrmManagerMock();
         $repositoryMock = $this->getOrmRepositoryMock();
+
+        $repositoryMock->expects(
+            $this->once()
+        )->method('find')
+            ->willReturn($par);
 
         $ormManagerMock->expects(
             $this->once()
@@ -212,11 +203,11 @@ class ParametersManagerTest extends ElasticsearchTestCase
             ->willReturn($repositoryMock);
 
         $parameterManager = $this->getParametersManager($ormManagerMock);
-        $parameterManager->remove($this->getParameterMock());
+        $parameterManager->remove('demo');
     }
 
     /**
-     *  Returns mock of ORM Manager.
+     * Returns mock of ORM Manager.
      *
      * @return Manager
      */

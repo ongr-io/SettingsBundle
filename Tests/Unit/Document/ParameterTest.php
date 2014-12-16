@@ -26,12 +26,11 @@ class ParameterTest extends \PHPUnit_Framework_TestCase
 
         // Case #0.
         $model0 = new Parameter();
-        $model0->setId('s1');
-        $model0->key = 'ongr.test.parameter1';
+        $model0->setId('ongr.test.parameter1');
         $model0->value = json_encode(['a' => 'b', 'c' => 3]);
 
-        $expected0 = '{"key":"ongr.test.parameter1","value":"{\"a\":\"b\",\"c\":3}"'
-            . ',"id":"s1","score":null,"parent":null,"ttl":null,"highlight":null}';
+        $expected0 = '{"value":"{\"a\":\"b\",\"c\":3}"'
+            . ',"id":"ongr.test.parameter1","score":null,"parent":null,"ttl":null,"highlight":null}';
         $out[] = [$model0, $expected0];
 
         return $out;
