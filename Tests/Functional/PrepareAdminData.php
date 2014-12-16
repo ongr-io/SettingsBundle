@@ -125,6 +125,14 @@ class PrepareAdminData extends ElasticsearchTestCase
     }
 
     /**
+     * Cleanup indexes after test.
+     */
+    public function cleanUp()
+    {
+        $this->connection->dropIndex();
+    }
+
+    /**
      * Returns import index command with assigned container.
      *
      * @return IndexImportCommand
@@ -164,13 +172,5 @@ class PrepareAdminData extends ElasticsearchTestCase
         $indexName = $matches[1];
 
         return $indexName;
-    }
-
-    /**
-     * Cleanup indexes after test.
-     */
-    public function cleanUp()
-    {
-        $this->connection->dropIndex();
     }
 }

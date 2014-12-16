@@ -84,6 +84,14 @@ class HiddenExtension extends \Twig_Extension
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'ongr_hidden';
+    }
+
+    /**
      * Modifies data array for easier view rendering.
      *
      * @param array $data Data to modify.
@@ -113,13 +121,5 @@ class HiddenExtension extends \Twig_Extension
         }
 
         return $new;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'ongr_hidden';
     }
 }

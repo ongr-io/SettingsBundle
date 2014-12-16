@@ -42,6 +42,92 @@ class SettingsManagerTest extends ElasticsearchTestCase
     }
 
     /**
+     * Tests if exception is being thrown.
+     *
+     * @expectedException \LogicException
+     */
+    public function testLogicException()
+    {
+        $this->ormManagerMock->expects(
+            $this->once()
+        )->method('getRepository')
+        ->willReturn($this->repositoryMock);
+
+        $settingsManager = $this->getSettingsManager($this->ormManagerMock);
+        $testData = $this->getDataSetForSet();
+        $settingsManager->get($testData[0]['name'], $testData[0]['profile']);
+    }
+
+    /**
+     * Test for set().
+     */
+    public function testSet()
+    {
+        $dataSet = $this->getDataSetForSet();
+        foreach ($dataSet as $item) {
+            $this->ormManagerMock->expects(
+                $this->any()
+            )->method('getRepository')
+                ->willReturn($this->repositoryMock);
+            $settingsManager = $this->getSettingsManager($this->ormManagerMock);
+            $settingsManager->set($item['name'], $item['profile']);
+        }
+    }
+
+    /**
+     * Test for get().
+     */
+    public function testGet()
+    {
+        $this->ormManagerMock->expects(
+            $this->once()
+        )->method('getRepository')
+            ->willReturn($this->repositoryMock);
+
+        $settingsManager = $this->getSettingsManager($this->ormManagerMock);
+        $testData = $this->getDataSetForSet();
+
+        // String type.
+        $settingsManager->get($testData[0]['name'], $testData[0]['profile'], false);
+        // Array type.
+        $settingsManager->get($testData[0]['name'], $testData[0]['profile'], false, 'array');
+    }
+
+    /**
+     * Test for save() .
+     */
+    public function testSave()
+    {
+        $ormManagerMock = $this->getOrmManagerMock();
+        $repositoryMock = $this->getOrmRepositoryMock();
+
+        $ormManagerMock->expects(
+            $this->once()
+        )->method('getRepository')
+            ->willReturn($repositoryMock);
+
+        $settingsManager = $this->getSettingsManager($ormManagerMock);
+        $settingsManager->save($this->getSettingMock());
+    }
+
+    /**
+     * Test for remove() .
+     */
+    public function testDuplicate()
+    {
+        $ormManagerMock = $this->getOrmManagerMock();
+        $repositoryMock = $this->getOrmRepositoryMock();
+
+        $ormManagerMock->expects(
+            $this->once()
+        )->method('getRepository')
+            ->willReturn($repositoryMock);
+
+        $settingsManager = $this->getSettingsManager($ormManagerMock);
+        $settingsManager->duplicate($this->getSettingMock(), 'new_profile');
+    }
+
+    /**
      *  Returns mock of ORM Manager.
      *
      * @return Manager
@@ -131,91 +217,5 @@ class SettingsManagerTest extends ElasticsearchTestCase
         $cases[3] = ['name' => 'bar_name', 'profile' => $this->getOrmRepositoryMock() ];
 
         return $cases;
-    }
-
-    /**
-     * Tests if exception is being thrown.
-     *
-     * @expectedException \LogicException
-     */
-    public function testLogicException()
-    {
-        $this->ormManagerMock->expects(
-            $this->once()
-        )->method('getRepository')
-        ->willReturn($this->repositoryMock);
-
-        $settingsManager = $this->getSettingsManager($this->ormManagerMock);
-        $testData = $this->getDataSetForSet();
-        $settingsManager->get($testData[0]['name'], $testData[0]['profile']);
-    }
-
-    /**
-     * Test for set().
-     */
-    public function testSet()
-    {
-        $dataSet = $this->getDataSetForSet();
-        foreach ($dataSet as $item) {
-            $this->ormManagerMock->expects(
-                $this->any()
-            )->method('getRepository')
-                ->willReturn($this->repositoryMock);
-            $settingsManager = $this->getSettingsManager($this->ormManagerMock);
-            $settingsManager->set($item['name'], $item['profile']);
-        }
-    }
-
-    /**
-     * Test for get().
-     */
-    public function testGet()
-    {
-        $this->ormManagerMock->expects(
-            $this->once()
-        )->method('getRepository')
-            ->willReturn($this->repositoryMock);
-
-        $settingsManager = $this->getSettingsManager($this->ormManagerMock);
-        $testData = $this->getDataSetForSet();
-
-        // String type.
-        $settingsManager->get($testData[0]['name'], $testData[0]['profile'], false);
-        // Array type.
-        $settingsManager->get($testData[0]['name'], $testData[0]['profile'], false, 'array');
-    }
-
-    /**
-     * Test for save() .
-     */
-    public function testSave()
-    {
-        $ormManagerMock = $this->getOrmManagerMock();
-        $repositoryMock = $this->getOrmRepositoryMock();
-
-        $ormManagerMock->expects(
-            $this->once()
-        )->method('getRepository')
-            ->willReturn($repositoryMock);
-
-        $settingsManager = $this->getSettingsManager($ormManagerMock);
-        $settingsManager->save($this->getSettingMock());
-    }
-
-    /**
-     * Test for remove() .
-     */
-    public function testDuplicate()
-    {
-        $ormManagerMock = $this->getOrmManagerMock();
-        $repositoryMock = $this->getOrmRepositoryMock();
-
-        $ormManagerMock->expects(
-            $this->once()
-        )->method('getRepository')
-            ->willReturn($repositoryMock);
-
-        $settingsManager = $this->getSettingsManager($ormManagerMock);
-        $settingsManager->duplicate($this->getSettingMock(), 'new_profile');
     }
 }
