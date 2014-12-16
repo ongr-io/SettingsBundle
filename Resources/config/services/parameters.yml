@@ -1,0 +1,9 @@
+parameters:
+    # Parameters manager
+    ongr_admin.parameters_manager.class: ONGR\AdminBundle\Service\ParametersManager
+
+services:
+    ongr_admin.parameters_manager:
+        class: %ongr_admin.parameters_manager.class%
+        arguments:
+            - @es.manager

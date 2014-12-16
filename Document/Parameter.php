@@ -27,14 +27,14 @@ class Parameter implements DocumentInterface
     /**
      * @var string
      *
-     * @ES\Property(name="name", type="string", search_analyzer="standard")
+     * @ES\Property(name="key", type="string", search_analyzer="standard")
      */
-    public $name;
+    public $key;
 
     /**
      * @var string
      *
-     * @ES\Property(name="data", type="string", search_analyzer="standard")
+     * @ES\Property(name="value", type="string", search_analyzer="standard")
      */
-    public $data;
+    public $value;
 }
