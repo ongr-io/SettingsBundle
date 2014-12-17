@@ -13,15 +13,15 @@ namespace ONGR\AdminBundle\Service;
 
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use ONGR\ElasticsearchBundle\ORM\Manager;
-use ONGR\AdminBundle\Document\Parameter;
+use ONGR\AdminBundle\Document\Pair;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 
 /**
- * Responsible for managing parameters actions.
+ * Responsible for managing pairs actions.
  *
  * @package ONGR\AdminBundle\Service
  */
-class ParametersManager
+class PairStorage
 {
     /**
      * @var Manager
@@ -42,11 +42,11 @@ class ParametersManager
         Manager $manager
     ) {
         $this->manager = $manager;
-        $this->repository = $this->manager->getRepository('ONGRAdminBundle:Parameter');
+        $this->repository = $this->manager->getRepository('ONGRAdminBundle:Pair');
     }
 
     /**
-     * Returns parameter value by key.
+     * Returns pair value by key.
      *
      * @param string $key
      *
@@ -55,65 +55,65 @@ class ParametersManager
     public function get($key)
     {
         try {
-            $parameter = $this->repository->find($key);
+            $pair = $this->repository->find($key);
         } catch (Missing404Exception $exception) {
-            $parameter = new Parameter();
-            $parameter->setId($key);
+            $pair = new Pair();
+            $pair->setId($key);
         }
 
-        return unserialize($parameter->value);
+        return unserialize($pair->value);
     }
 
     /**
-     * Sets parameter value. Returns parameter with values.
+     * Sets pair value. Returns pair with values.
      *
      * @param string $key
      * @param mixed  $value
      *
-     * @return Parameter
+     * @return Pair
      */
     public function set($key, $value)
     {
         try {
-            $parameter = $this->repository->find($key);
+            $pair = $this->repository->find($key);
         } catch (Missing404Exception $exception) {
-            $parameter = new Parameter();
-            $parameter->setId($key);
+            $pair = new Pair();
+            $pair->setId($key);
         }
 
-        $parameter->value = serialize($value);
+        $pair->value = serialize($value);
 
-        $this->save($parameter);
+        $this->save($pair);
 
-        return $parameter;
+        return $pair;
     }
 
     /**
-     * Removes a parameter.
+     * Removes a pair.
      *
      * @param string $key
      */
     public function remove($key)
     {
         try {
-            $parameter = $this->repository->find($key);
+            $pair = $this->repository->find($key);
 
-            $this->repository->remove($parameter->getId());
+            $this->repository->remove($pair->getId());
             $this->manager->flush();
             $this->manager->refresh();
         } catch (Missing404Exception $exception) {
-            // If parameter wasn't found, we don't do anything.
+            // If pair wasn't found, we don't do anything.
         }
     }
 
     /**
-     * Saves parameter.
+     * Saves pair.
      *
-     * @param Parameter $parameter
+     * @param Pair $pair
      */
-    private function save(Parameter $parameter)
+    private function save(Pair $pair)
     {
-        $this->manager->persist($parameter);
+        $this->manager->persist($pair);
         $this->manager->commit();
         $this->manager->refresh();
     }

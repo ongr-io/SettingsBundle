@@ -11,14 +11,14 @@
 
 namespace ONGR\AdminBundle\Tests\Unit\Service;
 
-use ONGR\AdminBundle\Document\Parameter;
-use ONGR\AdminBundle\Service\ParametersManager;
+use ONGR\AdminBundle\Document\Pair;
+use ONGR\AdminBundle\Service\PairStorage;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 
-class ParametersManagerTest extends WebTestCase
+class PairStorageTest extends WebTestCase
 {
     /**
      * @var $ormManagerMock  Manager mock
@@ -72,7 +72,7 @@ class ParametersManagerTest extends WebTestCase
         // Case No 4. Object.
         $cases[] = [
             'key' => 'bar_name',
-            'value' => new Parameter(),
+            'value' => new Pair(),
             'exception' => false,
         ];
 
@@ -118,7 +118,7 @@ class ParametersManagerTest extends WebTestCase
      */
     public function testSet($key, $value, $exception)
     {
-        $par = new Parameter();
+        $par = new Pair();
         $par->setId($key);
         $par->value = serialize($value);
 
@@ -139,7 +139,7 @@ class ParametersManagerTest extends WebTestCase
         )->method('getRepository')
             ->willReturn($this->repositoryMock);
 
-        $parameterManager = $this->getParametersManager($this->ormManagerMock);
+        $parameterManager = $this->getPairStorage($this->ormManagerMock);
         $this->assertEquals($par, $parameterManager->set($key, $value));
     }
 
@@ -160,7 +160,7 @@ class ParametersManagerTest extends WebTestCase
             )->method('find')
                 ->will($this->throwException(new Missing404Exception));
         } else {
-            $par = new Parameter();
+            $par = new Pair();
             $par->setId($key);
             $par->value = serialize($value);
 
@@ -175,9 +175,9 @@ class ParametersManagerTest extends WebTestCase
         )->method('getRepository')
             ->willReturn($this->repositoryMock);
 
-        $parameterManager = $this->getParametersManager($this->ormManagerMock);
+        $pairStorage = $this->getPairStorage($this->ormManagerMock);
 
-        $this->assertEquals(($exception ? null : $value), $parameterManager->get($key));
+        $this->assertEquals(($exception ? null : $value), $pairStorage->get($key));
     }
 
     /**
@@ -185,7 +185,7 @@ class ParametersManagerTest extends WebTestCase
      */
     public function testRemove()
     {
-        $par = new Parameter();
+        $par = new Pair();
         $par->setId('demo');
         $par->value = serialize('demo value');
 
@@ -202,8 +202,8 @@ class ParametersManagerTest extends WebTestCase
         )->method('getRepository')
             ->willReturn($repositoryMock);
 
-        $parameterManager = $this->getParametersManager($ormManagerMock);
-        $parameterManager->remove('demo');
+        $pairStorage = $this->getPairStorage($ormManagerMock);
+        $pairStorage->remove('demo');
     }
 
     /**
@@ -237,27 +237,27 @@ class ParametersManagerTest extends WebTestCase
     }
 
     /**
-     *  Returns mock of Parameter.
+     *  Returns mock of Pair.
      *
-     * @return Parameter
+     * @return Pair
      */
-    protected function getParameterMock()
+    protected function getPairMock()
     {
         return $this->getMock(
-            'ONGR\AdminBundle\Document\Parameter'
+            'ONGR\AdminBundle\Document\Pair'
         );
     }
 
     /**
-     *  Returns mock of ParametersManager.
+     *  Returns mock of PairStorage.
      *
      * @param object $ormManagerMock
      *
-     * @return ParametersManager
+     * @return PairStorage
      */
-    protected function getParametersManager($ormManagerMock)
+    protected function getPairStorage($ormManagerMock)
     {
-        return new ParametersManager(
+        return new PairStorage(
             $ormManagerMock
         );
     }

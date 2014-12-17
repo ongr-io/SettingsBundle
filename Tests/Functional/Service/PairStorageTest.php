@@ -11,14 +11,14 @@
 
 namespace ONGR\AdminBundle\Tests\Functional\Service;
 
-use ONGR\AdminBundle\Document\Parameter;
-use ONGR\AdminBundle\Service\ParametersManager;
+use ONGR\AdminBundle\Document\Pair;
+use ONGR\AdminBundle\Service\PairStorage;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\DSL\Query\MatchAllQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class ParametersManagerTest extends WebTestCase
+class PairStorageTest extends WebTestCase
 {
     /**
      * @var Manager
@@ -33,25 +33,25 @@ class ParametersManagerTest extends WebTestCase
     /**
      * Tests the method set.
      */
-    public function testSetParameter()
+    public function testSetPair()
     {
-        $manager = new ParametersManager(
+        $manager = new PairStorage(
             $this->manager
         );
 
         $manager->set('name0', 'test1');
         $manager->set('name1', 'test13');
-        $parameter1 = $this->getParameter('name0', 'test1');
-        $parameter2 = $this->getParameter('name1', 'test13');
+        $pair1 = $this->getPair('name0', 'test1');
+        $pair2 = $this->getPair('name1', 'test13');
 
-        $repo = $this->manager->getRepository('ONGRAdminBundle:Parameter');
+        $repo = $this->manager->getRepository('ONGRAdminBundle:Pair');
 
         $search = $repo
             ->createSearch()
             ->addQuery(new MatchAllQuery());
         $documents = $repo->execute($search);
 
-        $expected = [$parameter1, $parameter2];
+        $expected = [$pair1, $pair2];
 
         $documents = iterator_to_array($documents);
 
@@ -62,23 +62,23 @@ class ParametersManagerTest extends WebTestCase
     }
 
     /**
-     * Function test removing a parameter.
+     * Function test removing a pair.
      */
     public function testRemove()
     {
-        $manager = new ParametersManager(
+        $manager = new PairStorage(
             $this->manager
         );
-        $parameter_value = $manager->get('name0');
+        $pair_value = $manager->get('name0');
 
-        $this->assertEquals('will not be here', $parameter_value);
+        $this->assertEquals('will not be here', $pair_value);
 
         $manager->remove('name0');
 
         // Check if item was deleted.
-        $parameter_value = $manager->get('name0');
+        $pair_value = $manager->get('name0');
 
-        $this->assertEquals(null, $parameter_value);
+        $this->assertEquals(null, $pair_value);
     }
 
     /**
@@ -86,19 +86,19 @@ class ParametersManagerTest extends WebTestCase
      */
     public function testGet()
     {
-        $manager = new ParametersManager(
+        $manager = new PairStorage(
             $this->manager
         );
 
         // This item must exist in db.
-        $parameter_value = $manager->get('name0');
+        $pair_value = $manager->get('name0');
 
-        $this->assertEquals('will not be here', $parameter_value);
+        $this->assertEquals('will not be here', $pair_value);
 
         // This item is not existing.
-        $parameter_value = $manager->get('name13');
+        $pair_value = $manager->get('name13');
 
-        $this->assertEquals(null, $parameter_value);
+        $this->assertEquals(null, $pair_value);
     }
 
     /**
@@ -119,7 +119,7 @@ class ParametersManagerTest extends WebTestCase
 
         // There is something wrong with ElasticsearchTestCase method getDataArray,
         // if we don't create in here all test data, it's not existing when test is run.
-        $content = new Parameter();
+        $content = new Pair();
         $content->setId('name0');
         $content->value = serialize('will not be here');
 
@@ -128,20 +128,20 @@ class ParametersManagerTest extends WebTestCase
     }
 
     /**
-     * Creates parameter model.
+     * Creates pair model.
      *
      * @param string $key
      * @param mixed  $value
      *
-     * @return Parameter
+     * @return Pair
      */
-    private function getParameter($key, $value)
+    private function getPair($key, $value)
     {
-        $parameter = new Parameter();
-        $parameter->setId($key);
-        $parameter->value = serialize($value);
-        $parameter->setScore(1.0);
+        $pair = new Pair();
+        $pair->setId($key);
+        $pair->value = serialize($value);
+        $pair->setScore(1.0);
 
-        return $parameter;
+        return $pair;
     }
 }

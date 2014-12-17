@@ -18,9 +18,9 @@ use ONGR\ElasticsearchBundle\Document\DocumentTrait;
 /**
  * Stores key/value settings.
  *
- * @ES\Document(type="parameter")
+ * @ES\Document(type="pair")
  */
-class Parameter implements DocumentInterface
+class Pair implements DocumentInterface
 {
     use DocumentTrait;
 

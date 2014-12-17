@@ -43,7 +43,7 @@ class ONGRAdminExtension extends Extension
         $loader->load('services/twig_extension.yml');
         $loader->load('services/admin_settings.yml');
         $loader->load('services/settings.yml');
-        $loader->load('services/parameters.yml');
+        $loader->load('services/pair_storage.yml');
 
         if (isset($config['admin_user'])) {
             $this->loadAdminSettings($config['admin_user'], $container);

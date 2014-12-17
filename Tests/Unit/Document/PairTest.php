@@ -11,9 +11,9 @@
 
 namespace ONGR\AdminBundle\Tests\Unit\Document;
 
-use ONGR\AdminBundle\Document\Parameter;
+use ONGR\AdminBundle\Document\Pair;
 
-class ParameterTest extends \PHPUnit_Framework_TestCase
+class PairTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Data provider for testJsonSerializable.
@@ -25,12 +25,12 @@ class ParameterTest extends \PHPUnit_Framework_TestCase
         $out = [];
 
         // Case #0.
-        $model0 = new Parameter();
-        $model0->setId('ongr.test.parameter1');
+        $model0 = new Pair();
+        $model0->setId('parameter1');
         $model0->value = json_encode(['a' => 'b', 'c' => 3]);
 
         $expected0 = '{"value":"{\"a\":\"b\",\"c\":3}"'
-            . ',"id":"ongr.test.parameter1","score":null,"parent":null,"ttl":null,"highlight":null}';
+            . ',"id":"parameter1","score":null,"parent":null,"ttl":null,"highlight":null}';
         $out[] = [$model0, $expected0];
 
         return $out;
@@ -39,8 +39,8 @@ class ParameterTest extends \PHPUnit_Framework_TestCase
     /**
      * Checks if jsonSerialize method is working properly.
      *
-     * @param Parameter $model
-     * @param string    $expected
+     * @param Pair   $model
+     * @param string $expected
      *
      * @dataProvider getJsonSerializableData
      */
