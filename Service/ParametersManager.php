@@ -102,7 +102,7 @@ class ParametersManager
             $this->manager->flush();
             $this->manager->refresh();
         } catch (Missing404Exception $exception) {
-            // If parameter wasn't found, wo don't do anything.
+            // If parameter wasn't found, we don't do anything.
         }
     }
 
