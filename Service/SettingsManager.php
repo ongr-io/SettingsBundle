@@ -47,8 +47,6 @@ class SettingsManager
     protected $repo;
 
     /**
-     * Constructor.
-     *
      * @param TranslatorInterface      $translator
      * @param EventDispatcherInterface $eventDispatcher
      * @param Manager                  $manager

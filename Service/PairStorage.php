@@ -18,8 +18,6 @@ use Elasticsearch\Common\Exceptions\Missing404Exception;
 
 /**
  * Responsible for managing pairs actions.
- *
- * @package ONGR\AdminBundle\Service
  */
 class PairStorage
 {
@@ -34,8 +32,6 @@ class PairStorage
     protected $repository;
 
     /**
-     * Constructor.
-     *
      * @param Manager $manager
      */
     public function __construct(
@@ -89,7 +85,7 @@ class PairStorage
     }
 
     /**
-     * Removes a pair.
+     * Removes pair by key.
      *
      * @param string $key
      */
@@ -107,7 +103,7 @@ class PairStorage
     }
 
     /**
-     * Saves pair.
+     * Saves pair object.
      *
      * @param Pair $pair
      */

@@ -16,7 +16,7 @@ use ONGR\ElasticsearchBundle\Document\DocumentInterface;
 use ONGR\ElasticsearchBundle\Document\DocumentTrait;
 
 /**
- * Stores key/value settings.
+ * Represents key / value pair, key is also document id.
  *
  * @ES\Document(type="pair")
  */

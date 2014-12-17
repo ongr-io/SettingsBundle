@@ -15,10 +15,9 @@ use ONGR\AdminBundle\Document\Pair;
 use ONGR\AdminBundle\Service\PairStorage;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 
-class PairStorageTest extends WebTestCase
+class PairStorageTest
 {
     /**
      * @var $ormManagerMock  Manager mock
