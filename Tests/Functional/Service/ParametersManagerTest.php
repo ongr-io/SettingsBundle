@@ -18,9 +18,6 @@ use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\DSL\Query\MatchAllQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-/**
- * Tests for ParameterManager.
- */
 class ParametersManagerTest extends WebTestCase
 {
     /**
