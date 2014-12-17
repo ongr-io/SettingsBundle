@@ -25,6 +25,14 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminSettingsController extends Controller
 {
     /**
+     * @return AdminSettingsManager
+     */
+    protected function getAdminSettingsManager()
+    {
+        return $this->get('ongr_admin.settings.admin_settings_manager');
+    }
+
+    /**
      * Main action for changing settings.
      *
      * @param Request $request
@@ -85,8 +93,8 @@ class AdminSettingsController extends Controller
     /**
      * Creates new Setting.
      *
-     * @param Request $request
-     * @param string  $hash
+     * @param Request $request Request to process, not used here.
+     * @param string  $hash    Base64 encoded setting name.
      *
      * @return JsonResponse
      */
@@ -111,15 +119,7 @@ class AdminSettingsController extends Controller
     }
 
     /**
-     * @return AdminSettingsManager
-     */
-    protected function getAdminSettingsManager()
-    {
-        return $this->get('ongr_admin.settings.admin_settings_manager');
-    }
-
-    /**
-     * Set cookies.
+     * Sets cookie values from settings based on settings map.
      *
      * @param array $settings
      * @param array $settingsMap
