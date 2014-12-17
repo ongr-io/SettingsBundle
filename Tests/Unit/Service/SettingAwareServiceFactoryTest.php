@@ -37,16 +37,16 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
     }
 
     /**
-     * Tests get method on SettingNotFoundException.
+     * Tests get method.
      *
      * @expectedException LogicException
      */
-    public function testGetMethod2()
+    public function testGetMethod()
     {
         $settingsContainer = $this->getMock('ONGR\AdminBundle\Settings\Common\SettingsContainerInterface');
 
         $settingsContainer->expects(
-            $this->at(0)
+            $this->at(1)
         )->method('get')
             ->will($this->throwException(new SettingNotFoundException));
 
@@ -62,8 +62,17 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
         $settingAwareServiceFactory->setLogger($logger);
 
         $callMap = [
+            'guessName' => 'guessName',
+        ];
+
+        $this->assertEquals(
+            $settingAwareServiceFactory,
+            $settingAwareServiceFactory->get($callMap, $settingAwareServiceFactory)
+        );
+
+        $callMap = [
             'key1' => 'SettingNotFoundException',
-            'key2' => 'LogicException',
+            'key2' => null,
         ];
         $settingAwareServiceFactory->get($callMap, $settingAwareServiceFactory);
     }

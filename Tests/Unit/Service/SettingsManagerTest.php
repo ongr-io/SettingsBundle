@@ -113,6 +113,23 @@ class SettingsManagerTest extends ElasticsearchTestCase
     /**
      * Test for remove() .
      */
+    public function testRemove()
+    {
+        $ormManagerMock = $this->getOrmManagerMock();
+        $repositoryMock = $this->getOrmRepositoryMock();
+
+        $ormManagerMock->expects(
+            $this->once()
+        )->method('getRepository')
+            ->willReturn($repositoryMock);
+
+        $settingsManager = $this->getSettingsManager($ormManagerMock);
+        $settingsManager->remove($this->getSettingMock());
+    }
+
+    /**
+     * Test for duplicate() .
+     */
     public function testDuplicate()
     {
         $ormManagerMock = $this->getOrmManagerMock();
@@ -150,7 +167,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     {
         $mock = $this->getMock(
             'ONGR\ElasticsearchBundle\ORM\Repository',
-            ['getBundlesMapping'],
+            ['getBundlesMapping', 'remove'],
             [$this->getOrmManagerMock(), null ]
         );
 
