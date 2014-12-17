@@ -220,7 +220,7 @@ class PairStorageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *  Returns mock of ORM repository.
+     * Returns mock of ORM repository.
      *
      * @return Repository
      */
