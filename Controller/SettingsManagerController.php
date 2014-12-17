@@ -25,14 +25,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class SettingsManagerController extends Controller
 {
     /**
-     * @return SettingsManager
-     */
-    protected function getSettingsManager()
-    {
-        return $this->get('ongr_admin.settings_manager');
-    }
-
-    /**
      * Action for saving/seting setting values.
      *
      * @param Request $request
@@ -148,5 +140,13 @@ class SettingsManagerController extends Controller
         $this->getSettingsManager()->duplicate($setting, $to);
 
         return new Response();
+    }
+
+    /**
+     * @return SettingsManager
+     */
+    protected function getSettingsManager()
+    {
+        return $this->get('ongr_admin.settings_manager');
     }
 }

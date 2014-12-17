@@ -25,14 +25,6 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminSettingsController extends Controller
 {
     /**
-     * @return AdminSettingsManager
-     */
-    protected function getAdminSettingsManager()
-    {
-        return $this->get('ongr_admin.settings.admin_settings_manager');
-    }
-
-    /**
      * Main action for changing settings.
      *
      * @param Request $request
@@ -116,6 +108,14 @@ class AdminSettingsController extends Controller
         }
 
         return new JsonResponse();
+    }
+
+    /**
+     * @return AdminSettingsManager
+     */
+    protected function getAdminSettingsManager()
+    {
+        return $this->get('ongr_admin.settings.admin_settings_manager');
     }
 
     /**
