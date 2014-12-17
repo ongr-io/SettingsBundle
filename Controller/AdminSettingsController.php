@@ -64,7 +64,7 @@ class AdminSettingsController extends Controller
                         $this->generateUrl(
                             'ongr_admin_settings_change',
                             [
-                                'hash' => base64_encode($settingId),
+                                'encodedName' => base64_encode($settingId),
                             ]
                         )
                     ),
