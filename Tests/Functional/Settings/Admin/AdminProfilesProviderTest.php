@@ -24,6 +24,15 @@ class AdminProfilesProviderTest extends WebTestCase
     private $container;
 
     /**
+     * Get Service init.
+     */
+    public function testGetAdminProfilesProvider()
+    {
+        $manager = $this->getServiceContainer()->get('ongr_admin.admin_profiles_provider');
+        $this->assertInstanceOf('ONGR\AdminBundle\Settings\Admin\AdminProfilesProvider', $manager, '');
+    }
+
+    /**
      * Get Container.
      *
      * @return Service container
@@ -35,14 +44,5 @@ class AdminProfilesProviderTest extends WebTestCase
         }
 
         return $this->container;
-    }
-
-    /**
-     * Get Service init.
-     */
-    public function testGetAdminProfilesProvider()
-    {
-        $manager = $this->getServiceContainer()->get('ongr_admin.admin_profiles_provider');
-        $this->assertInstanceOf('ONGR\AdminBundle\Settings\Admin\AdminProfilesProvider', $manager, '');
     }
 }

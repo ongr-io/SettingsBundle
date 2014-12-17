@@ -25,8 +25,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SettingsListController. Is used for managing settings in Admin env.
- *
- * @package ONGR\AdminBundle\Controller
  */
 class SettingsListController extends Controller
 {

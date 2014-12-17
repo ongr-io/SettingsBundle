@@ -22,6 +22,17 @@ class SettingInjectionTest extends ElasticsearchTestCase
     private $expected = 'test1';
 
     /**
+     * Test for settings injection into services.
+     */
+    public function testSettingInjection()
+    {
+        /** @var DummyService $dummyService */
+        $dummyService = $this->getContainer()->get('ongr_admin.dummy_service');
+
+        $this->assertEquals($this->expected, $dummyService->getSetting1());
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function getDataArray()
@@ -40,16 +51,5 @@ class SettingInjectionTest extends ElasticsearchTestCase
                 ],
             ],
         ];
-    }
-
-    /**
-     * Test for settings injection into services.
-     */
-    public function testSettingInjection()
-    {
-        /** @var DummyService $dummyService */
-        $dummyService = $this->getContainer()->get('ongr_admin.dummy_service');
-
-        $this->assertEquals($this->expected, $dummyService->getSetting1());
     }
 }

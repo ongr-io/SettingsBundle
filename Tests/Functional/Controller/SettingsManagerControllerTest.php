@@ -23,27 +23,6 @@ use Symfony\Bundle\FrameworkBundle\Client;
 class SettingsManagerControllerTest extends ElasticsearchTestCase
 {
     /**
-     * {@inheritdoc}
-     */
-    protected function getDataArray()
-    {
-        return [
-            'default' => [
-                'setting' => [
-                    [
-                        '_id' => 'default_name0',
-                        'name' => 'name0',
-                        'profile' => 'default',
-                        'description' => 'this should be updated',
-                        'type' => Setting::TYPE_STRING,
-                        'data' => (object)['value' => 'test1'],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
      * Data provider for testCopyAction.
      *
      * @return array
@@ -154,6 +133,27 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
         // Assert modified value.
         $this->enableDomain($client);
         $this->assertSettingValue($client, 'bar');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getDataArray()
+    {
+        return [
+            'default' => [
+                'setting' => [
+                    [
+                        '_id' => 'default_name0',
+                        'name' => 'name0',
+                        'profile' => 'default',
+                        'description' => 'this should be updated',
+                        'type' => Setting::TYPE_STRING,
+                        'data' => (object)['value' => 'test1'],
+                    ],
+                ],
+            ],
+        ];
     }
 
     /**

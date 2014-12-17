@@ -17,6 +17,15 @@ use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
 class SettingWidgetExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Tests if extension has functions.
+     */
+    public function testFunctions()
+    {
+        $extension = $this->getSettingExtension();
+        $this->assertNotEmpty($extension->getFunctions(), 'Setting extension should have functions.');
+    }
+
+    /**
      * Returns setting extension.
      *
      * @return SettingWidgetExtension
@@ -30,14 +39,5 @@ class SettingWidgetExtensionTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         return new SettingWidgetExtension($manager);
-    }
-
-    /**
-     * Tests if extension has functions.
-     */
-    public function testFunctions()
-    {
-        $extension = $this->getSettingExtension();
-        $this->assertNotEmpty($extension->getFunctions(), 'Setting extension should have functions.');
     }
 }

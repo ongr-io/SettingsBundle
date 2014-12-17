@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class for outputing hidden information.
- *
- * @package ONGR\AdminBundle\Twig
  */
 class HiddenExtension extends \Twig_Extension
 {
@@ -86,6 +84,14 @@ class HiddenExtension extends \Twig_Extension
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'ongr_hidden';
+    }
+
+    /**
      * Modifies data array for easier view rendering.
      *
      * @param array $data Data to modify.
@@ -115,13 +121,5 @@ class HiddenExtension extends \Twig_Extension
         }
 
         return $new;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'ongr_hidden';
     }
 }

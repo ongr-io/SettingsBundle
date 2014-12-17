@@ -65,30 +65,6 @@ class SettingsManagerTest extends WebTestCase
     }
 
     /**
-     * Creates setting model.
-     *
-     * @param string $name
-     * @param string $type
-     * @param mixed  $value
-     * @param string $profile
-     *
-     * @return Setting
-     */
-    private function getSetting($name, $type, $value, $profile = 'default')
-    {
-        $setting = new Setting();
-        $setting->setId($profile . '_' . $name);
-        $setting->name = $name;
-        $setting->description = 'ongr_admin.' . $name;
-        $setting->profile = $profile;
-        $setting->type = $type;
-        $setting->data = ['value' => $value];
-        $setting->setScore(1.0);
-
-        return $setting;
-    }
-
-    /**
      * Tests the method set.
      */
     public function testSetSettings()
@@ -178,5 +154,29 @@ class SettingsManagerTest extends WebTestCase
         $manager->remove($setting);
 
         $manager->get('name0', 'default');
+    }
+
+    /**
+     * Creates setting model.
+     *
+     * @param string $name
+     * @param string $type
+     * @param mixed  $value
+     * @param string $profile
+     *
+     * @return Setting
+     */
+    private function getSetting($name, $type, $value, $profile = 'default')
+    {
+        $setting = new Setting();
+        $setting->setId($profile . '_' . $name);
+        $setting->name = $name;
+        $setting->description = 'ongr_admin.' . $name;
+        $setting->profile = $profile;
+        $setting->type = $type;
+        $setting->data = ['value' => $value];
+        $setting->setScore(1.0);
+
+        return $setting;
     }
 }

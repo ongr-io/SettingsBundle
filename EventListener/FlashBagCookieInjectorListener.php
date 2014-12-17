@@ -33,30 +33,6 @@ class FlashBagCookieInjectorListener
     protected $flashBagService;
 
     /**
-     * @param CookieInterface $flashBagCookie
-     *
-     * @return $this
-     */
-    protected function setFlashBagCookie(CookieInterface $flashBagCookie)
-    {
-        $this->flashBagCookie = $flashBagCookie;
-
-        return $this;
-    }
-
-    /**
-     * @param DirtyFlashBag $flashBagService
-     *
-     * @return $this
-     */
-    protected function setFlashBagService(DirtyFlashBag $flashBagService)
-    {
-        $this->flashBagService = $flashBagService;
-
-        return $this;
-    }
-
-    /**
      * @param DirtyFlashBag   $flashBagService
      * @param CookieInterface $flashBagCookie
      */
@@ -107,5 +83,29 @@ class FlashBagCookieInjectorListener
 
         $response = $event->getResponse();
         $response->headers->setCookie($this->flashBagCookie->toCookie());
+    }
+
+    /**
+     * @param CookieInterface $flashBagCookie
+     *
+     * @return $this
+     */
+    protected function setFlashBagCookie(CookieInterface $flashBagCookie)
+    {
+        $this->flashBagCookie = $flashBagCookie;
+
+        return $this;
+    }
+
+    /**
+     * @param DirtyFlashBag $flashBagService
+     *
+     * @return $this
+     */
+    protected function setFlashBagService(DirtyFlashBag $flashBagService)
+    {
+        $this->flashBagService = $flashBagService;
+
+        return $this;
     }
 }

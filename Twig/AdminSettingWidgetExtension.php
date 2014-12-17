@@ -15,8 +15,6 @@ use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
 
 /**
  * Class SettingExtension to show settings value on twig.
- *
- * @package ONGR\AdminBundle\Twig
  */
 class AdminSettingWidgetExtension extends \Twig_Extension
 {

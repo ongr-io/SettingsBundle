@@ -12,7 +12,7 @@
 namespace ONGR\AdminBundle\EventListener;
 
 use ONGR\CookiesBundle\Cookie\Model\JsonCookie;
-use ONGR\AdminBundle\Utils\ContainerAwareTrait;
+use ONGR\CookiesBundle\DependencyInjection\ContainerAwareTrait;
 use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
