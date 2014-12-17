@@ -50,7 +50,7 @@ class ParametersManager
      *
      * @param string $key
      *
-     * @return Parameter
+     * @return mixed
      */
     public function get($key)
     {

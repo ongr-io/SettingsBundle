@@ -16,7 +16,7 @@ use ONGR\ElasticsearchBundle\Document\DocumentInterface;
 use ONGR\ElasticsearchBundle\Document\DocumentTrait;
 
 /**
- * Stores admin settings.
+ * Stores key/value settings.
  *
  * @ES\Document(type="parameter")
  */
@@ -25,7 +25,7 @@ class Parameter implements DocumentInterface
     use DocumentTrait;
 
     /**
-     * @var string
+     * @var string Serialized stored value.
      *
      * @ES\Property(name="value", type="string", search_analyzer="standard")
      */
