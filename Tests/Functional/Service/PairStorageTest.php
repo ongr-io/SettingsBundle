@@ -108,12 +108,7 @@ class PairStorageTest extends WebTestCase
     {
         parent::setUp();
 
-        static::bootKernel(['environment' => 'test_container_creation']);
-
-        /** @var ContainerInterface container */
-        $this->container = static::$kernel->getContainer();
-        /** @var Manager $manager */
-        $this->manager = $this->container->get('es.manager');
+        $this->manager = $this->getServiceContainer()->get('es.manager');
 
         $this->manager->getConnection()->dropAndCreateIndex();
 
@@ -125,6 +120,20 @@ class PairStorageTest extends WebTestCase
 
         $this->manager->persist($content);
         $this->manager->commit();
+    }
+
+    /**
+     * Returns service container, creates new if it does not exist.
+     *
+     * @return ContainerInterface
+     */
+    protected function getServiceContainer()
+    {
+        if ($this->container === null) {
+            $this->container = self::createClient(['environment' => 'test_container_creation'])->getContainer();
+        }
+
+        return $this->container;
     }
 
     /**
