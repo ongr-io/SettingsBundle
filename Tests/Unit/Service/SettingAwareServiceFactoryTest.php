@@ -16,10 +16,8 @@ use ONGR\AdminBundle\Exception\SettingNotFoundException;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Component\Form\Exception\LogicException;
 
-
 class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
 {
-
     /**
      * Tests guess name settings method.
      */
@@ -67,6 +65,6 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
             'key1' => 'SettingNotFoundException',
             'key2' => 'LogicException',
         ];
-        $this->throwException(new LogicException(), $settingAwareServiceFactory->get($callMap, $settingAwareServiceFactory));
+        $settingAwareServiceFactory->get($callMap, $settingAwareServiceFactory);
     }
 }
