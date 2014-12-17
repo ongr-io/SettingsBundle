@@ -139,8 +139,8 @@ class PairStorageTest extends WebTestCase
         )->method('getRepository')
             ->willReturn($this->repositoryMock);
 
-        $parameterManager = $this->getPairStorage($this->ormManagerMock);
-        $this->assertEquals($par, $parameterManager->set($key, $value));
+        $pairStorage = $this->getPairStorage($this->ormManagerMock);
+        $this->assertEquals($par, $pairStorage->set($key, $value));
     }
 
     /**
