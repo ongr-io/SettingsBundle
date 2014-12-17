@@ -17,10 +17,10 @@ use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 
-class PairStorageTest
+class PairStorageTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var $ormManagerMock  Manager mock
+     * @var $ormManagerMock Manager mock
      */
     private $ormManagerMock;
 
@@ -180,7 +180,7 @@ class PairStorageTest
     }
 
     /**
-     * Test for remove() .
+     * Test for remove().
      */
     public function testRemove()
     {
@@ -236,7 +236,7 @@ class PairStorageTest
     }
 
     /**
-     *  Returns mock of Pair.
+     * Returns mock of Pair.
      *
      * @return Pair
      */
@@ -248,7 +248,7 @@ class PairStorageTest
     }
 
     /**
-     *  Returns mock of PairStorage.
+     * Returns mock of PairStorage.
      *
      * @param object $ormManagerMock
      *
