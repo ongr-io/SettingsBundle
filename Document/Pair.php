@@ -29,7 +29,7 @@ class Pair implements DocumentInterface
      *
      * @ES\Property(name="value", type="string", search_analyzer="standard")
      */
-    public $value;
+    private $value;
 
     /**
      * @return string
