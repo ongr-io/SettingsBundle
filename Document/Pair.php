@@ -30,4 +30,20 @@ class Pair implements DocumentInterface
      * @ES\Property(name="value", type="string", search_analyzer="standard")
      */
     public $value;
+
+    /**
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
 }

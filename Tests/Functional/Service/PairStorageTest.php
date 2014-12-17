@@ -121,7 +121,7 @@ class PairStorageTest extends WebTestCase
         // if we don't create in here all test data, it's not existing when test is run.
         $content = new Pair();
         $content->setId('name0');
-        $content->value = serialize('will not be here');
+        $content->setValue(serialize('will not be here'));
 
         $this->manager->persist($content);
         $this->manager->commit();
@@ -139,7 +139,7 @@ class PairStorageTest extends WebTestCase
     {
         $pair = new Pair();
         $pair->setId($key);
-        $pair->value = serialize($value);
+        $pair->setValue(serialize($value));
         $pair->setScore(1.0);
 
         return $pair;

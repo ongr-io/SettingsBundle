@@ -27,7 +27,7 @@ class PairTest extends \PHPUnit_Framework_TestCase
         // Case #0.
         $model0 = new Pair();
         $model0->setId('parameter1');
-        $model0->value = json_encode(['a' => 'b', 'c' => 3]);
+        $model0->setValue(json_encode(['a' => 'b', 'c' => 3]));
 
         $expected0 = '{"value":"{\"a\":\"b\",\"c\":3}"'
             . ',"id":"parameter1","score":null,"parent":null,"ttl":null,"highlight":null}';

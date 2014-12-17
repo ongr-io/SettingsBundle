@@ -57,7 +57,7 @@ class PairStorage
             $pair->setId($key);
         }
 
-        return unserialize($pair->value);
+        return unserialize($pair->getValue());
     }
 
     /**
@@ -77,7 +77,7 @@ class PairStorage
             $pair->setId($key);
         }
 
-        $pair->value = serialize($value);
+        $pair->setValue(serialize($value));
 
         $this->save($pair);
 

@@ -119,7 +119,7 @@ class PairStorageTest
     {
         $par = new Pair();
         $par->setId($key);
-        $par->value = serialize($value);
+        $par->setValue(serialize($value));
 
         if ($exception) {
             $this->repositoryMock->expects(
@@ -161,7 +161,7 @@ class PairStorageTest
         } else {
             $par = new Pair();
             $par->setId($key);
-            $par->value = serialize($value);
+            $par->setValue(serialize($value));
 
             $this->repositoryMock->expects(
                 $this->once()
@@ -186,7 +186,7 @@ class PairStorageTest
     {
         $par = new Pair();
         $par->setId('demo');
-        $par->value = serialize('demo value');
+        $par->setValue(serialize('demo value'));
 
         $ormManagerMock = $this->getOrmManagerMock();
         $repositoryMock = $this->getOrmRepositoryMock();
