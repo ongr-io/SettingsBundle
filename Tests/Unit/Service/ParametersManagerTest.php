@@ -119,7 +119,7 @@ class ParametersManagerTest extends WebTestCase
     public function testSet($key, $value, $exception)
     {
         $par = new Parameter();
-        $par->setId(ParametersManager::ID_PREFIX . $key);
+        $par->setId($key);
         $par->value = serialize($value);
 
         if ($exception) {
@@ -161,7 +161,7 @@ class ParametersManagerTest extends WebTestCase
                 ->will($this->throwException(new Missing404Exception));
         } else {
             $par = new Parameter();
-            $par->setId(ParametersManager::ID_PREFIX . $key);
+            $par->setId($key);
             $par->value = serialize($value);
 
             $this->repositoryMock->expects(
@@ -186,7 +186,7 @@ class ParametersManagerTest extends WebTestCase
     public function testRemove()
     {
         $par = new Parameter();
-        $par->setId(ParametersManager::ID_PREFIX . 'demo');
+        $par->setId('demo');
         $par->value = serialize('demo value');
 
         $ormManagerMock = $this->getOrmManagerMock();

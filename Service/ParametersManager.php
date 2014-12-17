@@ -24,11 +24,6 @@ use Elasticsearch\Common\Exceptions\Missing404Exception;
 class ParametersManager
 {
     /**
-     * @const Prefix for parameter id.
-     */
-    const ID_PREFIX = 'ongr_parameter.';
-
-    /**
      * @var Manager
      */
     protected $manager;
@@ -60,10 +55,10 @@ class ParametersManager
     public function get($key)
     {
         try {
-            $parameter = $this->repository->find(self::ID_PREFIX . $key);
+            $parameter = $this->repository->find($key);
         } catch (Missing404Exception $exception) {
             $parameter = new Parameter();
-            $parameter->setId(self::ID_PREFIX . $key);
+            $parameter->setId($key);
         }
 
         return unserialize($parameter->value);
@@ -80,10 +75,10 @@ class ParametersManager
     public function set($key, $value)
     {
         try {
-            $parameter = $this->repository->find(self::ID_PREFIX . $key);
+            $parameter = $this->repository->find($key);
         } catch (Missing404Exception $exception) {
             $parameter = new Parameter();
-            $parameter->setId(self::ID_PREFIX . $key);
+            $parameter->setId($key);
         }
 
         $parameter->value = serialize($value);
@@ -101,7 +96,7 @@ class ParametersManager
     public function remove($key)
     {
         try {
-            $parameter = $this->repository->find(self::ID_PREFIX . $key);
+            $parameter = $this->repository->find($key);
 
             $this->repository->remove($parameter->getId());
             $this->manager->flush();

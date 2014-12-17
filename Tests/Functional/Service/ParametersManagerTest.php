@@ -123,7 +123,7 @@ class ParametersManagerTest extends WebTestCase
         // There is something wrong with ElasticsearchTestCase method getDataArray,
         // if we don't create in here all test data, it's not existing when test is run.
         $content = new Parameter();
-        $content->setId(ParametersManager::ID_PREFIX . 'name0');
+        $content->setId('name0');
         $content->value = serialize('will not be here');
 
         $this->manager->persist($content);
@@ -141,7 +141,7 @@ class ParametersManagerTest extends WebTestCase
     private function getParameter($key, $value)
     {
         $parameter = new Parameter();
-        $parameter->setId(ParametersManager::ID_PREFIX . $key);
+        $parameter->setId($key);
         $parameter->value = serialize($value);
         $parameter->setScore(1.0);
 
