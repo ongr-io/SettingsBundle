@@ -13,33 +13,13 @@ namespace ONGR\AdminBundle\Tests\Unit\Service;
 
 use ONGR\AdminBundle\Service\SettingAwareServiceFactory;
 use ONGR\AdminBundle\Exception\SettingNotFoundException;
+use ONGR\AdminBundle\Service\UnderscoreEscaper;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
-use Symfony\Component\Form\Exception\LogicException;
 
 class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
 {
     /**
-     * Tests guess name settings method.
-     */
-    public function testGuessNameMethod()
-    {
-        $mockSettingInterface = $this->getMock('ONGR\AdminBundle\Settings\Common\SettingsContainerInterface');
-        $factory = new SettingAwareServiceFactory($mockSettingInterface);
-
-        $method = new \ReflectionMethod(
-            'ONGR\AdminBundle\Service\SettingAwareServiceFactory',
-            'guessName'
-        );
-        $method->setAccessible(true);
-        $this->assertEquals('setTestClass', $method->invoke($factory, 'testClass'));
-        $this->assertEquals('setTestClass', $method->invoke($factory, 'test class'));
-        $this->assertEquals('setTestClass', $method->invoke($factory, 'test_Class'));
-    }
-
-    /**
      * Tests get method.
-     *
-     * @expectedException LogicException
      */
     public function testGetMethod()
     {
@@ -54,6 +34,17 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
 
         $logger = $this->getMock('Psr\Log\LoggerInterface');
 
+        $callMap = [
+            'escape' => 'escape',
+        ];
+
+        $testObject = new UnderscoreEscaper();
+
+        $this->assertEquals(
+            new UnderscoreEscaper(),
+            $settingAwareServiceFactory->get($callMap, $testObject)
+        );
+
         $logger->expects(
             $this->once()
         )->method('notice')
@@ -61,19 +52,17 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
 
         $settingAwareServiceFactory->setLogger($logger);
 
-        $callMap = [
-            'guessName' => 'guessName',
-        ];
+        $this->setExpectedException('LogicException');
 
-        $this->assertEquals(
-            $settingAwareServiceFactory,
-            $settingAwareServiceFactory->get($callMap, $settingAwareServiceFactory)
-        );
+        /**
+         * key1 index write to logger.
+         * key2 throw logic exception.
+        */
 
         $callMap = [
             'key1' => 'SettingNotFoundException',
             'key2' => null,
         ];
-        $settingAwareServiceFactory->get($callMap, $settingAwareServiceFactory);
+        $settingAwareServiceFactory->get($callMap, $testObject);
     }
 }

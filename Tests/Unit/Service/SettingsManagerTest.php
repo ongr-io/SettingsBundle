@@ -94,7 +94,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     }
 
     /**
-     * Test for save() .
+     * Test for save().
      */
     public function testSave()
     {
@@ -111,24 +111,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     }
 
     /**
-     * Test for remove() .
-     */
-    public function testRemove()
-    {
-        $ormManagerMock = $this->getOrmManagerMock();
-        $repositoryMock = $this->getOrmRepositoryMock();
-
-        $ormManagerMock->expects(
-            $this->once()
-        )->method('getRepository')
-            ->willReturn($repositoryMock);
-
-        $settingsManager = $this->getSettingsManager($ormManagerMock);
-        $settingsManager->remove($this->getSettingMock());
-    }
-
-    /**
-     * Test for duplicate() .
+     * Test for duplicate().
      */
     public function testDuplicate()
     {
