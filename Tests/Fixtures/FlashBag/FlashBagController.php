@@ -12,7 +12,7 @@
 namespace ONGR\AdminBundle\Tests\Fixtures\FlashBag;
 
 use ONGR\AdminBundle\FlashBag\DirtyFlashBag;
-use ONGR\AdminBundle\Utils\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
