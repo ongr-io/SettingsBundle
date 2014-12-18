@@ -15,6 +15,7 @@ use ONGR\AdminBundle\FlashBag\DirtyFlashBag;
 use ONGR\AdminBundle\Service\SettingAwareServiceFactory;
 use ONGR\AdminBundle\Exception\SettingNotFoundException;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
+use stdClass;
 
 class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
 {
@@ -28,7 +29,7 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
      */
     public function setUp()
     {
-        $this->testObject = new DirtyFlashBag();
+        $this->testObject = $this->getMock('stdClass', ['setTestMethod']);
     }
 
     /**
@@ -39,14 +40,12 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
         $settingAwareServiceFactory = new SettingAwareServiceFactory($this->getSettingMock());
 
         $callMap = [
-            'dirty' => null,
-            'setDirty' => 'setDirty',
+            'testMethod' => null,
+            'setTestMethod' => 'setTestMethod',
         ];
 
-        $expectedObject = new DirtyFlashBag();
-        $expectedObject->setDirty();
         $this->assertEquals(
-            $expectedObject,
+            $this->testObject,
             $settingAwareServiceFactory->get($callMap, $this->testObject)
         );
     }
@@ -63,12 +62,12 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
         $logger->expects(
             $this->once()
         )->method('notice')
-            ->with("Setting 'dirty' was not found.");
+            ->with("Setting 'testMethod' was not found.");
 
         $settingAwareServiceFactory->setLogger($logger);
 
         $callMap = [
-            'dirty' => null,
+            'testMethod' => null,
         ];
 
         $settingAwareServiceFactory->get($callMap, $this->testObject);
