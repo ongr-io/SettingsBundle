@@ -1,5 +1,5 @@
 parameters:
-    # Settings manager
+    # Settings manager.
     ongr_admin.settings_manager.class: ONGR\AdminBundle\Service\SettingsManager
 
     ongr_admin.settings_container.class: ONGR\AdminBundle\Settings\Common\SettingsContainer
@@ -30,16 +30,16 @@ services:
         arguments:
             - @ongr_admin.settings_container
         calls:
-            - [setLogger, [@?logger]]
+            - [ setLogger, [ @?logger ] ]
         tags:
             - { name: monolog.logger, channel: admin }
 
     ongr_admin.listener.cookie_profile:
         class: %ongr_admin.listener.cookie_profile.class%
         calls:
-            - [setSettingsContainer, [@ongr_admin.settings_container]]
-            - [setAdminSettingsManager, [@ongr_admin.settings.admin_settings_manager]]
-            - [setManager, [@es.manager]]
+            - [ setSettingsContainer, [ @ongr_admin.settings_container ] ]
+            - [ setAdminSettingsManager, [ @ongr_admin.settings.admin_settings_manager ] ]
+            - [ setManager, [ @es.manager ] ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
