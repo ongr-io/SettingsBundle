@@ -53,11 +53,10 @@ class PairStorage
         try {
             $pair = $this->repository->find($key);
         } catch (Missing404Exception $exception) {
-            $pair = new Pair();
-            $pair->setId($key);
+            return null;
         }
 
-        return unserialize($pair->getValue());
+        return $pair->getValue();
     }
 
     /**
@@ -77,7 +76,7 @@ class PairStorage
             $pair->setId($key);
         }
 
-        $pair->setValue(serialize($value));
+        $pair->setValue($value);
 
         $this->save($pair);
 

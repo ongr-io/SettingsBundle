@@ -117,9 +117,9 @@ class PairStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testSet($key, $value, $exception)
     {
-        $par = new Pair();
-        $par->setId($key);
-        $par->setValue(serialize($value));
+        $pair = new Pair();
+        $pair->setId($key);
+        $pair->setValue($value);
 
         if ($exception) {
             $this->repositoryMock->expects(
@@ -130,7 +130,7 @@ class PairStorageTest extends \PHPUnit_Framework_TestCase
             $this->repositoryMock->expects(
                 $this->once()
             )->method('find')
-                ->willReturn($par);
+                ->willReturn($pair);
         }
 
         $this->ormManagerMock->expects(
@@ -139,7 +139,7 @@ class PairStorageTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->repositoryMock);
 
         $pairStorage = $this->getPairStorage($this->ormManagerMock);
-        $this->assertEquals($par, $pairStorage->set($key, $value));
+        $this->assertEquals($pair, $pairStorage->set($key, $value));
     }
 
     /**
@@ -159,14 +159,14 @@ class PairStorageTest extends \PHPUnit_Framework_TestCase
             )->method('find')
                 ->will($this->throwException(new Missing404Exception));
         } else {
-            $par = new Pair();
-            $par->setId($key);
-            $par->setValue(serialize($value));
+            $pair = new Pair();
+            $pair->setId($key);
+            $pair->setValue($value);
 
             $this->repositoryMock->expects(
                 $this->once()
             )->method('find')
-                ->willReturn($par);
+                ->willReturn($pair);
         }
 
         $this->ormManagerMock->expects(
@@ -184,9 +184,9 @@ class PairStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemove()
     {
-        $par = new Pair();
-        $par->setId('demo');
-        $par->setValue(serialize('demo value'));
+        $pair = new Pair();
+        $pair->setId('demo');
+        $pair->setValue('demo value');
 
         $ormManagerMock = $this->getOrmManagerMock();
         $repositoryMock = $this->getOrmRepositoryMock();
@@ -194,12 +194,25 @@ class PairStorageTest extends \PHPUnit_Framework_TestCase
         $repositoryMock->expects(
             $this->once()
         )->method('find')
-            ->willReturn($par);
+            ->willReturn($pair);
+
+        $repositoryMock->expects(
+            $this->once()
+        )->method('remove')
+            ->with($pair->getId());
 
         $ormManagerMock->expects(
             $this->once()
         )->method('getRepository')
             ->willReturn($repositoryMock);
+
+        $ormManagerMock->expects(
+            $this->once()
+        )->method('flush');
+
+        $ormManagerMock->expects(
+            $this->once()
+        )->method('refresh');
 
         $pairStorage = $this->getPairStorage($ormManagerMock);
         $pairStorage->remove('demo');
