@@ -11,58 +11,108 @@
 
 namespace ONGR\AdminBundle\Tests\Unit\Service;
 
+use ONGR\AdminBundle\FlashBag\DirtyFlashBag;
 use ONGR\AdminBundle\Service\SettingAwareServiceFactory;
 use ONGR\AdminBundle\Exception\SettingNotFoundException;
-use ONGR\AdminBundle\Service\UnderscoreEscaper;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
 class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
 {
     /**
+     * @var $UnderscoreEscaper object for testing.
+     */
+    private $testObject;
+
+    /**
+     * Set Up for test.
+     */
+    public function setUp()
+    {
+        $this->testObject = new DirtyFlashBag();
+    }
+
+    /**
      * Tests get method.
      */
     public function testGetMethod()
     {
-        $settingsContainer = $this->getMock('ONGR\AdminBundle\Settings\Common\SettingsContainerInterface');
-
-        $settingsContainer->expects(
-            $this->at(1)
-        )->method('get')
-            ->will($this->throwException(new SettingNotFoundException));
-
-        $settingAwareServiceFactory = new SettingAwareServiceFactory($settingsContainer);
-
-        $logger = $this->getMock('Psr\Log\LoggerInterface');
+        $settingAwareServiceFactory = new SettingAwareServiceFactory($this->getSettingMock());
 
         $callMap = [
-            'escape' => 'escape',
+            'dirty' => null,
+            'setDirty' => 'setDirty',
         ];
 
-        $testObject = new UnderscoreEscaper();
-
+        $expectedObject = new DirtyFlashBag();
+        $expectedObject->setDirty();
         $this->assertEquals(
-            new UnderscoreEscaper(),
-            $settingAwareServiceFactory->get($callMap, $testObject)
+            $expectedObject,
+            $settingAwareServiceFactory->get($callMap, $this->testObject)
         );
+    }
+
+    /**
+     * Tests get method logger.
+     */
+    public function testGetMethodLogger()
+    {
+        $settingAwareServiceFactory = $this->getSettingAwareServiceFactory();
+
+        $logger = $this->getMock('Psr\Log\LoggerInterface');
 
         $logger->expects(
             $this->once()
         )->method('notice')
-            ->with("Setting 'key1' was not found.");
+            ->with("Setting 'dirty' was not found.");
 
         $settingAwareServiceFactory->setLogger($logger);
 
-        $this->setExpectedException('LogicException');
-
-        /**
-         * key1 index write to logger.
-         * key2 throw logic exception.
-        */
-
         $callMap = [
-            'key1' => 'SettingNotFoundException',
-            'key2' => null,
+            'dirty' => null,
         ];
-        $settingAwareServiceFactory->get($callMap, $testObject);
+
+        $settingAwareServiceFactory->get($callMap, $this->testObject);
+    }
+
+    /**
+     * Tests get method logic exception.
+     *
+     * @expectedException LogicException
+     */
+    public function testGetMethodException()
+    {
+        $settingAwareServiceFactory = new SettingAwareServiceFactory($this->getSettingMock());
+        $callMap = [
+            'key' => null,
+        ];
+
+        $settingAwareServiceFactory->get($callMap, $this->testObject);
+    }
+
+    /**
+     *  Returns mock of Setting.
+     *
+     * @return Setting
+     */
+    protected function getSettingMock()
+    {
+        return $this->getMock('ONGR\AdminBundle\Settings\Common\SettingsContainerInterface');
+    }
+
+    /**
+     *  Returns mock of Setting.
+     *
+     * @return Setting
+     */
+    protected function getSettingAwareServiceFactory()
+    {
+        $settingsContainer = $this->getSettingMock();
+
+        $settingsContainer->expects(
+            $this->at(0)
+        )->method('get')
+            ->will($this->throwException(new SettingNotFoundException));
+
+        return new SettingAwareServiceFactory($settingsContainer);
     }
 }
