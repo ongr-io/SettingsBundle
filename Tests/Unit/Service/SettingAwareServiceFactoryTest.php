@@ -11,11 +11,9 @@
 
 namespace ONGR\AdminBundle\Tests\Unit\Service;
 
-use ONGR\AdminBundle\FlashBag\DirtyFlashBag;
 use ONGR\AdminBundle\Service\SettingAwareServiceFactory;
 use ONGR\AdminBundle\Exception\SettingNotFoundException;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
-use stdClass;
 
 class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
 {
