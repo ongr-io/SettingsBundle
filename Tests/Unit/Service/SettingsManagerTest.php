@@ -94,7 +94,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     }
 
     /**
-     * Test for save() .
+     * Test for save().
      */
     public function testSave()
     {
@@ -111,7 +111,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     }
 
     /**
-     * Test for remove() .
+     * Test for duplicate().
      */
     public function testDuplicate()
     {
@@ -150,7 +150,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     {
         $mock = $this->getMock(
             'ONGR\ElasticsearchBundle\ORM\Repository',
-            ['getBundlesMapping'],
+            ['getBundlesMapping', 'remove'],
             [$this->getOrmManagerMock(), null ]
         );
 
