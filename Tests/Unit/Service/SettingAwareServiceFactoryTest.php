@@ -18,19 +18,6 @@ use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
 {
     /**
-     * @var $UnderscoreEscaper object for testing.
-     */
-    private $testObject;
-
-    /**
-     * Set Up for test.
-     */
-    public function setUp()
-    {
-        $this->testObject = $this->getMock('stdClass', ['setTestMethod']);
-    }
-
-    /**
      * Tests get method.
      */
     public function testGetMethod()
@@ -43,8 +30,8 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
         ];
 
         $this->assertEquals(
-            $this->testObject,
-            $settingAwareServiceFactory->get($callMap, $this->testObject)
+            $this->getTestObject(),
+            $settingAwareServiceFactory->get($callMap, $this->getTestObject())
         );
     }
 
@@ -68,7 +55,7 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
             'testMethod' => null,
         ];
 
-        $settingAwareServiceFactory->get($callMap, $this->testObject);
+        $settingAwareServiceFactory->get($callMap, $this->getTestObject());
     }
 
     /**
@@ -83,7 +70,17 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
             'key' => null,
         ];
 
-        $settingAwareServiceFactory->get($callMap, $this->testObject);
+        $settingAwareServiceFactory->get($callMap, $this->getTestObject());
+    }
+
+    /**
+     *  Returns mock of Setting.
+     *
+     * @return Setting
+     */
+    protected function getTestObject()
+    {
+        return $this->getMock('stdClass', ['setTestMethod']);
     }
 
     /**
