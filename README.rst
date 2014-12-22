@@ -81,10 +81,12 @@ Enabling Sessionless authentication support
 To enable authentication support, please add this to your main ``routing.yml``
 
 .. code-block:: yaml
-
-    _ongr_admin:
-        resource: "@ONGRAdminBundle/Resources/config/routing/auth.yml"
-        prefix: /admin_prefix
+    
+    fos_js_routing:
+        resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    
+    ongr_admin_routing:
+        resource: "@ONGRAdminBundle/Resources/config/routing.yml"
 
 ..
 
