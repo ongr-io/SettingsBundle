@@ -92,7 +92,7 @@ class ManagerAwareSettingProvider implements SettingsProviderInterface
 
         /** @var Setting $setting */
         foreach ($settings as $setting) {
-            $result[$setting->name] = $setting->data['value'];
+            $result[$setting->getName()] = $setting->getData()['value'];
         }
 
         return $result;

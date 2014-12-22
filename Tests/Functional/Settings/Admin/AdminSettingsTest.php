@@ -45,29 +45,29 @@ class AdminSettingsTest extends WebTestCase
         // if we don't create in here all test data, it's not existing when test is run.
         $content = new Setting();
         $content->setId('foo_default');
-        $content->name = 'test';
-        $content->profile = 'default';
-        $content->description = 'Description';
-        $content->type = Setting::TYPE_ARRAY;
-        $content->data = (object)['value' => 'testData'];
+        $content->setName('test');
+        $content->setProfile('default');
+        $content->setDescription('Description');
+        $content->setType(Setting::TYPE_ARRAY);
+        $content->setData((object)['value' => 'testData']);
         $manager->persist($content);
 
         $content = new Setting();
         $content->setId('foo');
-        $content->name = 'test2';
-        $content->profile = 'profile_foo.com';
-        $content->description = 'Description';
-        $content->type = Setting::TYPE_ARRAY;
-        $content->data = (object)['value' => 'testData'];
+        $content->setName('test2');
+        $content->setProfile('profile_foo.com');
+        $content->setDescription('Description');
+        $content->setType(Setting::TYPE_ARRAY);
+        $content->setData((object)['value' => 'testData']);
         $manager->persist($content);
 
         $content = new Setting();
         $content->setId('bar');
-        $content->name = 'test2';
-        $content->profile = 'profile_foo.com';
-        $content->description = 'Description';
-        $content->type = Setting::TYPE_ARRAY;
-        $content->data = (object)['value' => 'testData'];
+        $content->setName('test2');
+        $content->setProfile('profile_foo.com');
+        $content->setDescription('Description');
+        $content->setType(Setting::TYPE_ARRAY);
+        $content->setData((object)['value' => 'testData']);
         $manager->persist($content);
 
         $manager->commit();
