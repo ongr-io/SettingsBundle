@@ -24,7 +24,7 @@ use ONGR\ElasticsearchBundle\DSL\Filter\LimitFilter;
 class ManagerAwareSettingProvider implements SettingsProviderInterface
 {
     /**
-     * @var string specific profile to be used
+     * @var string Specific profile to be used.
      */
     private $profile;
 
@@ -34,7 +34,7 @@ class ManagerAwareSettingProvider implements SettingsProviderInterface
     private $manager;
 
     /**
-     * @var int limit number of results
+     * @var int Limit number of results.
      */
     private $limit;
 

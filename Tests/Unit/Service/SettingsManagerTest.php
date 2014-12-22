@@ -23,12 +23,12 @@ use Symfony\Component\Translation\Translator;
 class SettingsManagerTest extends ElasticsearchTestCase
 {
     /**
-     * @var $ormManagerMock  Manager mock
+     * @var $ormManagerMock  Manager mock.
      */
     private $ormManagerMock;
 
     /**
-     * @var $ormRepositoryMock Repository mock
+     * @var $ormRepositoryMock Repository mock.
      */
     private $repositoryMock;
 
@@ -128,7 +128,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     }
 
     /**
-     *  Returns mock of ORM Manager.
+     * Returns mock of ORM Manager.
      *
      * @return Manager
      */
@@ -142,7 +142,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     }
 
     /**
-     *  Returns mock of ORM repository.
+     * Returns mock of ORM repository.
      *
      * @return Repository
      */
@@ -158,7 +158,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     }
 
     /**
-     *  Returns mock of Setting.
+     *Returns mock of Setting.
      *
      * @return Setting
      */
@@ -170,7 +170,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     }
 
     /**
-     *  Returns mock of SettingsManager.
+     *Returns mock of SettingsManager.
      *
      * @param object $ormManagerMock
      *

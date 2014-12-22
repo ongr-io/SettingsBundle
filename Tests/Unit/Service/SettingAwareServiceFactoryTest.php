@@ -74,7 +74,7 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
     }
 
     /**
-     *  Returns mock of Setting.
+     *Returns mock of Setting.
      *
      * @return Setting
      */
@@ -84,7 +84,7 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
     }
 
     /**
-     *  Returns mock of Setting.
+     *Returns mock of Setting.
      *
      * @return Setting
      */
@@ -94,7 +94,7 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
     }
 
     /**
-     *  Returns mock of Setting.
+     *Returns mock of Setting.
      *
      * @return Setting
      */

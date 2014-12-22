@@ -21,7 +21,7 @@ class HiddenExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param Request $request
-     * 
+     *
      * @return Container
      */
     public function getContainer(Request $request = null)

@@ -20,7 +20,7 @@ class ConfigurationTest extends ElasticsearchTestCase
     /**
      * Data provider for testConfiguration.
      *
-     * @return array
+     * @return array.
      */
     public function configurationData()
     {
@@ -37,7 +37,7 @@ class ConfigurationTest extends ElasticsearchTestCase
             [
                 'connection' => $defaultConnection,
                 'profiles' => ['default'],
-                'index_settings' => []
+                'index_settings' => [],
             ],
         ];
 

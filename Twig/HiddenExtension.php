@@ -51,7 +51,7 @@ class HiddenExtension extends \Twig_Extension
                 [$this, 'generate'],
                 [
                     'needs_environment' => true,
-                    'is_safe' => ['html']
+                    'is_safe' => ['html'],
                 ]
             ),
         ];
