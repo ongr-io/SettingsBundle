@@ -20,6 +20,22 @@ use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 class SettingTest extends ElasticsearchTestCase
 {
     /**
+     * Check if documents are saved correctly and if we can find them by indexed properties.
+     */
+    public function testDocumentsSave()
+    {
+        $repo = $this->getManager()->getRepository('ONGRAdminBundle:Setting');
+
+        /** @var Setting $setting */
+        $setting = $repo->find('testProfile_name0');
+
+        $this->assertEquals('test Description with the analyzer', $setting->getDescription());
+        $this->assertEquals('testProfile', $setting->getProfile());
+        $this->assertEquals(Setting::TYPE_ARRAY, $setting->getType());
+        $this->assertEquals(['value' => 'testData'], $setting->getData());
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function getDataArray()
@@ -38,21 +54,5 @@ class SettingTest extends ElasticsearchTestCase
                 ],
             ],
         ];
-    }
-
-    /**
-     * Check if documents are saved correctly and if we can find them by indexed properties.
-     */
-    public function testDocumentsSave()
-    {
-        $repo = $this->getManager()->getRepository('ONGRAdminBundle:Setting');
-
-        /** @var Setting $setting */
-        $setting = $repo->find('testProfile_name0');
-
-        $this->assertEquals('test Description with the analyzer', $setting->description);
-        $this->assertEquals('testProfile', $setting->profile);
-        $this->assertEquals(Setting::TYPE_ARRAY, $setting->type);
-        $this->assertEquals(['value' => 'testData'], $setting->data);
     }
 }

@@ -5,7 +5,7 @@ AdminBundle
 Provides settings API and admin interface for ONGR projects.
 
 .. image:: https://magnum.travis-ci.com/ongr-io/AdminBundle.svg?token=X35UxnxC4zoxXhsTMzw8&branch=master
-:target: https://magnum.travis-ci.com/ongr-io/AdminBundle
+    :target: https://magnum.travis-ci.com/ongr-io/AdminBundle
 
 It includes:
 
@@ -81,10 +81,13 @@ Enabling Sessionless authentication support
 To enable authentication support, please add this to your main ``routing.yml``
 
 .. code-block:: yaml
-
-    _ongr_admin:
-        resource: "@ONGRAdminBundle/Resources/config/routing/auth.yml"
-        prefix: /admin_prefix
+    
+    fos_js_routing:
+        resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    
+    ongr_admin_routing:
+        resource: "@ONGRAdminBundle/Resources/config/routing.yml"
+        prefix: /admin
 
 ..
 

@@ -5,7 +5,7 @@ ongr_admin_settings_settings:
         _controller: ONGRAdminBundle:AdminSettings:settings
 
 ongr_admin_settings_change:
-    path: /setting/change/{hash}
+    path: /setting/change/{encodedName}
     defaults:
         _controller: ONGRAdminBundle:AdminSettings:changeSetting
         methods: [GET]

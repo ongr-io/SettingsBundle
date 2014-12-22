@@ -38,37 +38,6 @@ class SettingWidgetExtensionTest extends ElasticsearchTestCase
     }
 
     /**
-     * Gets a AdminSettingsManager mock.
-     *
-     * @param bool $authenticated
-     *
-     * @return AdminSettingsManager
-     */
-    protected function getSettingsManagerMock($authenticated)
-    {
-        $settingsManager = $this->getMockBuilder('ONGR\AdminBundle\Settings\Admin\AdminSettingsManager')
-            ->disableOriginalConstructor()
-            ->setMethods(['isAuthenticated'])
-            ->getMock();
-
-        $settingsManager->expects($this->once())->method('isAuthenticated')->willReturn($authenticated);
-
-        return $settingsManager;
-    }
-
-    /**
-     * Returns mock of sessionless token.
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function getTokenMock()
-    {
-        return $this->getMockBuilder('ONGR\\AdminBundle\\Security\\Authentication\\Token\\SessionlessToken')
-            ->disableOriginalConstructor()
-            ->getMock();
-    }
-
-    /**
      * Data provider for testShowSetting.
      *
      * @return array[]
@@ -161,5 +130,36 @@ HEREDOC;
         $extension->setSettingsContainer($settingContainer);
 
         $this->assertNull($extension->getAdminSetting('test'));
+    }
+
+    /**
+     * Gets a AdminSettingsManager mock.
+     *
+     * @param bool $authenticated
+     *
+     * @return AdminSettingsManager
+     */
+    protected function getSettingsManagerMock($authenticated)
+    {
+        $settingsManager = $this->getMockBuilder('ONGR\AdminBundle\Settings\Admin\AdminSettingsManager')
+            ->disableOriginalConstructor()
+            ->setMethods(['isAuthenticated'])
+            ->getMock();
+
+        $settingsManager->expects($this->once())->method('isAuthenticated')->willReturn($authenticated);
+
+        return $settingsManager;
+    }
+
+    /**
+     * Returns mock of sessionless token.
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getTokenMock()
+    {
+        return $this->getMockBuilder('ONGR\\AdminBundle\\Security\\Authentication\\Token\\SessionlessToken')
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 }

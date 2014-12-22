@@ -18,57 +18,6 @@ use Stash\Interfaces\PoolInterface;
 class SettingsContainerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @param bool  $miss
-     * @param array $settings
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject|PoolInterface
-     */
-    private function getPool($miss = true, $settings = [])
-    {
-        $itemMock = $this->getMock('Stash\Interfaces\ItemInterface');
-        $itemMock
-            ->expects($this->once())
-            ->method('isMiss')
-            ->will($this->returnValue($miss));
-
-        if (!$miss) {
-            $itemMock
-                ->expects($this->once())
-                ->method('get')
-                ->will($this->returnValue(json_encode($settings)));
-        }
-
-        $poolMock = $this->getMock('Stash\Interfaces\PoolInterface');
-        $poolMock
-            ->expects($this->once())
-            ->method('getItem')
-            ->will($this->returnValue($itemMock));
-
-        return $poolMock;
-    }
-
-    /**
-     * @param string $domain
-     * @param array  $settings
-     *
-     * @return SettingsProviderInterface
-     */
-    private function getProvider($domain, $settings)
-    {
-        $providerMock = $this->getMock('ONGR\AdminBundle\Settings\Common\Provider\SettingsProviderInterface');
-        $providerMock
-            ->expects($this->once())
-            ->method('getProfile')
-            ->will($this->returnValue($domain));
-        $providerMock
-            ->expects($this->once())
-            ->method('getSettings')
-            ->will($this->returnValue($settings));
-
-        return $providerMock;
-    }
-
-    /**
      * Data provider for testGetProviders.
      *
      * @return array
@@ -153,5 +102,56 @@ class SettingsContainerTest extends \PHPUnit_Framework_TestCase
         $container = new SettingsContainer($this->getMock('\Stash\Interfaces\PoolInterface'));
         $container->setProfiles(['foo']);
         $this->assertEquals(['foo'], $container->getProfiles());
+    }
+
+    /**
+     * @param bool  $miss
+     * @param array $settings
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|PoolInterface
+     */
+    private function getPool($miss = true, $settings = [])
+    {
+        $itemMock = $this->getMock('Stash\Interfaces\ItemInterface');
+        $itemMock
+            ->expects($this->once())
+            ->method('isMiss')
+            ->will($this->returnValue($miss));
+
+        if (!$miss) {
+            $itemMock
+                ->expects($this->once())
+                ->method('get')
+                ->will($this->returnValue(json_encode($settings)));
+        }
+
+        $poolMock = $this->getMock('Stash\Interfaces\PoolInterface');
+        $poolMock
+            ->expects($this->once())
+            ->method('getItem')
+            ->will($this->returnValue($itemMock));
+
+        return $poolMock;
+    }
+
+    /**
+     * @param string $domain
+     * @param array  $settings
+     *
+     * @return SettingsProviderInterface
+     */
+    private function getProvider($domain, $settings)
+    {
+        $providerMock = $this->getMock('ONGR\AdminBundle\Settings\Common\Provider\SettingsProviderInterface');
+        $providerMock
+            ->expects($this->once())
+            ->method('getProfile')
+            ->will($this->returnValue($domain));
+        $providerMock
+            ->expects($this->once())
+            ->method('getSettings')
+            ->will($this->returnValue($settings));
+
+        return $providerMock;
     }
 }

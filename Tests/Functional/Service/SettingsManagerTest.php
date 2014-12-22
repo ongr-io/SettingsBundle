@@ -54,38 +54,14 @@ class SettingsManagerTest extends WebTestCase
         // if we don't create in here all test data, it's not existing when test is run.
         $content = new Setting();
         $content->setId('default_name0');
-        $content->name = 'name0';
-        $content->profile = 'default';
-        $content->description = 'this should be updated';
-        $content->type = Setting::TYPE_STRING;
-        $content->data = (object)['value' => 'test1'];
+        $content->setName('name0');
+        $content->setProfile('default');
+        $content->setDescription('this should be updated');
+        $content->setType(Setting::TYPE_STRING);
+        $content->setData((object)['value' => 'test1']);
         $this->manager->persist($content);
 
         $this->manager->commit();
-    }
-
-    /**
-     * Creates setting model.
-     *
-     * @param string $name
-     * @param string $type
-     * @param mixed  $value
-     * @param string $profile
-     *
-     * @return Setting
-     */
-    private function getSetting($name, $type, $value, $profile = 'default')
-    {
-        $setting = new Setting();
-        $setting->setId($profile . '_' . $name);
-        $setting->name = $name;
-        $setting->description = 'ongr_admin.' . $name;
-        $setting->profile = $profile;
-        $setting->type = $type;
-        $setting->data = ['value' => $value];
-        $setting->setScore(1.0);
-
-        return $setting;
     }
 
     /**
@@ -134,7 +110,7 @@ class SettingsManagerTest extends WebTestCase
 
         $settingToCopy = $manager->get('name0', 'default');
         $settingToCopy->setScore(1.0);
-        $settingToCopy->name = 'SettingModel';
+        $settingToCopy->setName('SettingModel');
 
         $manager->duplicate($settingToCopy, 'newDomain');
 
@@ -147,8 +123,8 @@ class SettingsManagerTest extends WebTestCase
 
         $expectedCreated = clone $settingToCopy;
         $expectedCreated->setId('newDomain_SettingModel');
-        $expectedCreated->profile = 'newDomain';
-        $settingToCopy->name = 'name0';
+        $expectedCreated->setProfile('newDomain');
+        $settingToCopy->setName('name0');
 
         $actual = iterator_to_array($documents);
         $expected = [$settingToCopy, $expectedCreated];
@@ -178,5 +154,29 @@ class SettingsManagerTest extends WebTestCase
         $manager->remove($setting);
 
         $manager->get('name0', 'default');
+    }
+
+    /**
+     * Creates setting model.
+     *
+     * @param string $name
+     * @param string $type
+     * @param mixed  $value
+     * @param string $profile
+     *
+     * @return Setting
+     */
+    private function getSetting($name, $type, $value, $profile = 'default')
+    {
+        $setting = new Setting();
+        $setting->setId($profile . '_' . $name);
+        $setting->setName($name);
+        $setting->setDescription('ongr_admin.' . $name);
+        $setting->setProfile($profile);
+        $setting->setType($type);
+        $setting->setData(['value' => $value]);
+        $setting->setScore(1.0);
+
+        return $setting;
     }
 }

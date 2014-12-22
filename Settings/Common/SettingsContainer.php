@@ -100,37 +100,6 @@ class SettingsContainer implements SettingsContainerInterface
     }
 
     /**
-     * Returns settings cache item.
-     *
-     * @return ItemInterface
-     */
-    protected function getCache()
-    {
-        return $this->pool->getItem('ongr_admin.settings_cache', join($this->profiles, ','));
-    }
-
-    /**
-     * Returns setting value.
-     *
-     * @param string $setting
-     * @param bool   $throwException
-     *
-     * @return mixed
-     *
-     * @throws SettingNotFoundException
-     */
-    protected function getSetting($setting, $throwException = true)
-    {
-        if (array_key_exists($setting, $this->settings)) {
-            return $this->settings[$setting];
-        } elseif ($throwException) {
-            throw new SettingNotFoundException("Setting '{$setting}' does not exist.");
-        }
-
-        return null;
-    }
-
-    /**
      * Handles setting change event.
      *
      * @param SettingChangeEvent $event
@@ -164,5 +133,36 @@ class SettingsContainer implements SettingsContainerInterface
     public function addProfile($profile)
     {
         $this->profiles[] = $profile;
+    }
+
+    /**
+     * Returns settings cache item.
+     *
+     * @return ItemInterface
+     */
+    protected function getCache()
+    {
+        return $this->pool->getItem('ongr_admin.settings_cache', join($this->profiles, ','));
+    }
+
+    /**
+     * Returns setting value.
+     *
+     * @param string $setting
+     * @param bool   $throwException
+     *
+     * @return mixed
+     *
+     * @throws SettingNotFoundException
+     */
+    protected function getSetting($setting, $throwException = true)
+    {
+        if (array_key_exists($setting, $this->settings)) {
+            return $this->settings[$setting];
+        } elseif ($throwException) {
+            throw new SettingNotFoundException("Setting '{$setting}' does not exist.");
+        }
+
+        return null;
     }
 }

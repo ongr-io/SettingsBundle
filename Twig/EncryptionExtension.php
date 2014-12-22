@@ -13,8 +13,6 @@ namespace ONGR\AdminBundle\Twig;
 
 /**
  * Class for encrypting string with base64.
- *
- * @package ONGR\AdminBundle\Twig
  */
 class EncryptionExtension extends \Twig_Extension
 {

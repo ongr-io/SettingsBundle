@@ -25,14 +25,6 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminSettingsController extends Controller
 {
     /**
-     * @return AdminSettingsManager
-     */
-    protected function getAdminSettingsManager()
-    {
-        return $this->get('ongr_admin.settings.admin_settings_manager');
-    }
-
-    /**
      * Main action for changing settings.
      *
      * @param Request $request
@@ -72,7 +64,7 @@ class AdminSettingsController extends Controller
                         $this->generateUrl(
                             'ongr_admin_settings_change',
                             [
-                                'hash' => base64_encode($settingId),
+                                'encodedName' => base64_encode($settingId),
                             ]
                         )
                     ),
@@ -93,12 +85,12 @@ class AdminSettingsController extends Controller
     /**
      * Creates new Setting.
      *
-     * @param Request $request
-     * @param string  $hash
+     * @param Request $request     Request to process, not used here.
+     * @param string  $encodedName Base64 encoded setting name.
      *
      * @return JsonResponse
      */
-    public function changeSettingAction(Request $request, $hash)
+    public function changeSettingAction(Request $request, $encodedName)
     {
         $manager = $this->getAdminSettingsManager();
 
@@ -106,7 +98,7 @@ class AdminSettingsController extends Controller
             return new JsonResponse(Response::$statusTexts[403], 403);
         }
 
-        $name = base64_decode($hash);
+        $name = base64_decode($encodedName);
         $settings = $manager->getSettings();
 
         if (array_key_exists($name, $settings)) {
@@ -119,7 +111,15 @@ class AdminSettingsController extends Controller
     }
 
     /**
-     * Set cookies.
+     * @return AdminSettingsManager
+     */
+    protected function getAdminSettingsManager()
+    {
+        return $this->get('ongr_admin.settings.admin_settings_manager');
+    }
+
+    /**
+     * Sets cookie values from settings based on settings map.
      *
      * @param array $settings
      * @param array $settingsMap
