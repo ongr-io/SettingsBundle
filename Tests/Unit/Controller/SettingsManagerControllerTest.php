@@ -101,7 +101,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(new Setting()));
 
         $setting = new Setting();
-        $setting->data['value'] = 'foobaz';
+        $setting->setData(['value' => 'foobaz']);
 
         $manager
             ->expects($this->once())

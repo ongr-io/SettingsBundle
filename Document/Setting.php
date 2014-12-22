@@ -11,6 +11,7 @@
 
 namespace ONGR\AdminBundle\Document;
 
+use JsonSerializable;
 use ONGR\ElasticsearchBundle\Annotation as ES;
 use ONGR\ElasticsearchBundle\Document\DocumentInterface;
 use ONGR\ElasticsearchBundle\Document\DocumentTrait;
@@ -20,7 +21,7 @@ use ONGR\ElasticsearchBundle\Document\DocumentTrait;
  *
  * @ES\Document(type="setting")
  */
-class Setting implements DocumentInterface
+class Setting implements DocumentInterface, JsonSerializable
 {
     use DocumentTrait;
 
@@ -49,33 +50,154 @@ class Setting implements DocumentInterface
      *
      * @ES\Property(name="name", type="string", search_analyzer="standard")
      */
-    public $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ES\Property(name="description", type="string", search_analyzer="standard")
      */
-    public $description;
+    protected $description;
 
     /**
      * @var string
      *
      * @ES\Property(name="profile", type="string", search_analyzer="standard")
      */
-    public $profile;
+    protected $profile;
 
     /**
      * @var string
      *
      * @ES\Property(name="type", type="string", search_analyzer="standard")
      */
-    public $type;
+    protected $type;
 
     /**
      * @var string
      *
      * @ES\Property(name="data", type="string", search_analyzer="standard")
      */
-    public $data;
+    protected $data;
+
+    /**
+     * Get data.
+     *
+     * @return string
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * Set data.
+     *
+     * @param string $data
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * Get type.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set type.
+     *
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get profile.
+     *
+     * @return string
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    /**
+     * Set profile.
+     *
+     * @param string $profile
+     */
+    public function setProfile($profile)
+    {
+        $this->profile = $profile;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set description.
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set name.
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON.
+     *
+     * @return data which can be serialized by <b>json_encode</b>,
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'profile' => $this->getProfile(),
+            'type' => $this->getType(),
+            'data' => $this->getData(),
+            'id' => $this->getId(),
+            'score' => $this->getScore(),
+            'parent' => $this->getParent(),
+            'ttl' => $this->getTtl(),
+            'highlight' => $this->highlight,
+        ];
+    }
 }

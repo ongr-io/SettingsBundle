@@ -88,19 +88,19 @@ class PrepareAdminData extends ElasticsearchTestCase
     {
         // Add some settings.
         $content = new Setting();
-        $content->name = 'Acme1';
-        $content->description = 'Acme1';
-        $content->profile = 'Acme1';
-        $content->type = 'Acme1';
-        $content->data = 'Acme1';
+        $content->setName('Acme1');
+        $content->setDescription('Acme1');
+        $content->setProfile('Acme1');
+        $content->setType('Acme1');
+        $content->setData('Acme1');
         $this->manager->persist($content);
 
         $content = new Setting();
-        $content->name = 'Acme2';
-        $content->description = 'Acme2';
-        $content->profile = 'Acme2';
-        $content->type = 'Acme2';
-        $content->data = 'Acme2';
+        $content->setName('Acme2');
+        $content->setDescription('Acme2');
+        $content->setProfile('Acme2');
+        $content->setType('Acme2');
+        $content->setData('Acme2');
         $this->manager->persist($content);
 
         $this->manager->commit();

@@ -29,10 +29,10 @@ class SettingTest extends ElasticsearchTestCase
         /** @var Setting $setting */
         $setting = $repo->find('testProfile_name0');
 
-        $this->assertEquals('test Description with the analyzer', $setting->description);
-        $this->assertEquals('testProfile', $setting->profile);
-        $this->assertEquals(Setting::TYPE_ARRAY, $setting->type);
-        $this->assertEquals(['value' => 'testData'], $setting->data);
+        $this->assertEquals('test Description with the analyzer', $setting->getDescription());
+        $this->assertEquals('testProfile', $setting->getProfile());
+        $this->assertEquals(Setting::TYPE_ARRAY, $setting->getType());
+        $this->assertEquals(['value' => 'testData'], $setting->getData());
     }
 
     /**

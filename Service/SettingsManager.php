@@ -88,11 +88,11 @@ class SettingsManager
 
         $setting = new Setting();
         $setting->setId($profile . '_' . $name);
-        $setting->name = $name;
-        $setting->description = 'ongr_admin.' . $this->translator->trans($name);
-        $setting->data = (object)['value' => $value];
-        $setting->type = $type;
-        $setting->profile = $profile;
+        $setting->setName($name);
+        $setting->setDescription('ongr_admin.' . $this->translator->trans($name));
+        $setting->setData((object)['value' => $value]);
+        $setting->setType($type);
+        $setting->setProfile($profile);
 
         $this->manager->persist($setting);
         $this->manager->commit();
@@ -140,8 +140,8 @@ class SettingsManager
     {
         $newSetting = clone $setting;
 
-        $newSetting->setId($newProfile . '_' . $setting->name);
-        $newSetting->profile = $newProfile;
+        $newSetting->setId($newProfile . '_' . $setting->getName());
+        $newSetting->setProfile($newProfile);
 
         $this->save($newSetting);
     }
@@ -186,12 +186,12 @@ class SettingsManager
     {
         $setting = new Setting();
         $setting->setId($profile . '_' . $name);
-        $setting->name = $name;
-        $setting->profile = $profile;
-        $setting->type = $type;
+        $setting->setName($name);
+        $setting->setProfile($profile);
+        $setting->setType($type);
 
         if ($type == 'array') {
-            $setting->data['value'] = [];
+            $setting->setData(['value' => null]);
         }
 
         return $setting;
