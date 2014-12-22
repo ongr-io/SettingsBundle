@@ -87,6 +87,7 @@ To enable authentication support, please add this to your main ``routing.yml``
     
     ongr_admin_routing:
         resource: "@ONGRAdminBundle/Resources/config/routing.yml"
+        prefix: /admin
 
 ..
 
