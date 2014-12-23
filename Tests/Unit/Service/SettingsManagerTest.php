@@ -170,7 +170,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     }
 
     /**
-     *Returns mock of SettingsManager.
+     * Returns mock of SettingsManager.
      *
      * @param object $ormManagerMock
      *
