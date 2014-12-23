@@ -27,17 +27,17 @@ class ImagePathExtension extends \Twig_Extension
     const NO_PIC_FILE = '/etc/nopic.jpg';
 
     /**
-     * @var string CDN URL
+     * @var string CDN URL.
      */
     protected $cdnUrl;
 
     /**
-     * @var array Image presets config
+     * @var array Image presets config.
      */
     protected $config;
 
     /**
-     * @var string Image cache prefix
+     * @var string Image cache prefix.
      */
     protected $prefix;
 

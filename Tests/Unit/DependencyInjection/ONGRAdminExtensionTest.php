@@ -30,16 +30,16 @@ class ONGRAdminExtensionTest extends \PHPUnit_Framework_TestCase
                     'test_category1' => [
                         'name' => 'test_name1',
                         'description' => 'test_desc1',
-                    ]
+                    ],
                 ],
                 'settings' => [
                     'test_category1' => [
                         'name' => 'test_name2',
                         'description' => 'test_desc2',
                         'category' => 'test_category1',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
 
         $extension = new ONGRAdminExtension();

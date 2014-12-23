@@ -17,7 +17,7 @@ use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 class SettingInjectionTest extends ElasticsearchTestCase
 {
     /**
-     * @var Value to be returned.
+     * @var string Value to be returned.
      */
     private $expected = 'test1';
 

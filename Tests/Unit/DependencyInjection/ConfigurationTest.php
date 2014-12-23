@@ -37,7 +37,7 @@ class ConfigurationTest extends ElasticsearchTestCase
             [
                 'connection' => $defaultConnection,
                 'profiles' => ['default'],
-                'index_settings' => []
+                'index_settings' => [],
             ],
         ];
 
