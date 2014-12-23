@@ -20,7 +20,7 @@ class ConfigurationTest extends ElasticsearchTestCase
     /**
      * Data provider for testConfiguration.
      *
-     * @return array.
+     * @return array
      */
     public function configurationData()
     {
