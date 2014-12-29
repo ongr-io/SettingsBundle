@@ -84,7 +84,7 @@ class SettingWidgetExtension extends \Twig_Extension
                 [$this, 'showSetting'],
                 [
                     'needs_environment' => true,
-                    'is_safe' => ['html']
+                    'is_safe' => ['html'],
                 ]
             ),
             new \Twig_SimpleFunction('ongr_show_setting_value', [$this, 'getAdminSetting']),
