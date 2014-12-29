@@ -17,17 +17,17 @@ use ONGR\AdminBundle\Twig\ImagePathExtension;
 class ImagePathExtensionTest extends WebTestCase
 {
     /**
-     * @var string Cdn url
+     * @var string Cdn url.
      */
     protected $cdnUrl = 'http://ongr.dev';
 
     /**
-     * @var string Prefixes
+     * @var string Prefixes.
      */
     protected $prefix = '/cdn';
 
     /**
-     * @var array Presets config
+     * @var array Presets config.
      */
     protected $config = [
         'presets' => [
