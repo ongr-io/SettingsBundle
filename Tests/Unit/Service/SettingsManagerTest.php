@@ -158,7 +158,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     }
 
     /**
-     * Returns mock of Setting.
+     *Returns mock of Setting.
      *
      * @return Setting
      */

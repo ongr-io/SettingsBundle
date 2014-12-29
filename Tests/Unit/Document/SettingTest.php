@@ -27,8 +27,8 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         // Case #0.
         $model0 = new Setting();
         $model0->setId('s1');
-        $model0->type = Setting::TYPE_STRING;
-        $model0->profile = 'default';
+        $model0->setType(Setting::TYPE_STRING);
+        $model0->setProfile('default');
 
         $expected0 = '{"name":null,"description":null,"profile":"default","type":"string",'
             . '"data":null,"id":"s1","score":null,"parent":null,"ttl":null,"highlight":null}';
