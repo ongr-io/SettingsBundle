@@ -39,7 +39,7 @@ class AdminProfilesProvider
     public function onKernelRequest(GetResponseEvent $event)
     {
         $routeName = $event->getRequest()->get('_route');
-        if ($routeName != 'ongr_admin_settings_settings') {
+        if ($routeName != 'ongr_admin_admins_settings') {
             return;
         }
 

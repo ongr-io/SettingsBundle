@@ -46,17 +46,19 @@ class SessionlessToken extends AbstractToken
      * @param int    $expirationTime
      * @param string $ipAddress
      * @param string $signature
+	 * @param array  $roles
      */
-    public function __construct($user, $expirationTime, $ipAddress, $signature)
+    public function __construct($user, $expirationTime, $ipAddress, $signature, array $roles = [])
     {
-        parent::__construct([]);
+        parent::__construct($roles);
 
         $this->setUser($user);
         $this->expirationTime = $expirationTime;
         $this->ipAddress = $ipAddress;
         $this->signature = $signature;
+		$this->setAuthenticated(count($roles) > 0);
 
-        parent::setAuthenticated(false);
+        parent::setAuthenticated(true);
     }
 
     /**

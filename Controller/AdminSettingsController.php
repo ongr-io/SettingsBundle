@@ -35,9 +35,6 @@ class AdminSettingsController extends Controller
     public function settingsAction(Request $request)
     {
         $manager = $this->getAdminSettingsManager();
-        if (!$manager->isAuthenticated()) {
-            return $this->redirect($this->generateUrl('ongr_admin_sessionless_login'));
-        }
 
         // Handle form.
         $settingsData = $manager->getSettings();
@@ -62,7 +59,7 @@ class AdminSettingsController extends Controller
                 [
                     'link' => $request->getUriForPath(
                         $this->generateUrl(
-                            'ongr_admin_settings_change',
+                            'ongr_admin_admins_settings_change',
                             [
                                 'encodedName' => base64_encode($settingId),
                             ]

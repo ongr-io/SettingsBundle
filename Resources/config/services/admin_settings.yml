@@ -52,7 +52,7 @@ services:
     ongr_admin.settings.admin_settings_manager:
         class: %ongr_admin.settings.admin_settings_manager.class%
         arguments:
-            - @ongr_admin.authentication.sessionless_security_context
+            - @security.context
             - @ongr_admin.settings.settings_structure
 
     # Admin profiles provider

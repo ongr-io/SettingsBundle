@@ -18,7 +18,9 @@
                         <p>You are already logged in.</p>
                     </div>
                     <div class="list-group">
-                        <a href="{{ path('ongr_admin_settings_settings') }}" class="list-group-item">Settings</a>
+                        <a href="{{ path('ongr_admin_admins_settings') }}" class="list-group-item">Admin Settings</a>
+                        <a href="{{ path('ongr_admin_homepage') }}" class="list-group-item">Common Settings</a>
+                        <br/><br/>
                         <a href="{{ path('ongr_admin_sessionless_logout') }}" class="list-group-item">Logout</a>
                     </div>
                     {% else %}

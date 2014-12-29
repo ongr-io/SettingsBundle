@@ -99,7 +99,7 @@ class AdminSettingsManager
      */
     public function isAuthenticated()
     {
-        return $this->securityContext->isGranted([]);
+        return $this->securityContext->isGranted('ROLE_ADMIN');
     }
 
     /**
