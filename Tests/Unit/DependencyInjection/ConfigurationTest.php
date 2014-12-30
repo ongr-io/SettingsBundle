@@ -12,10 +12,9 @@
 namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection;
 
 use ONGR\AdminBundle\DependencyInjection\Configuration;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Component\Config\Definition\Processor;
 
-class ConfigurationTest extends ElasticsearchTestCase
+class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Data provider for testConfiguration.
