@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace ONGR\AdminBundle\Tests\Unit\EventListener;
 
 use ONGR\AdminBundle\EventListener\ProfileRequestListener;

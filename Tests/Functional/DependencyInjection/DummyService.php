@@ -12,7 +12,7 @@
 namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection;
 
 /**
- * Dummy service for integration test.
+ * Dummy service for functional test.
  */
 class DummyService
 {
