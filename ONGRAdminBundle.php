@@ -37,7 +37,7 @@ class ONGRAdminBundle extends Bundle
         $container->addCompilerPass(new SettingsModifierPass());
         $container->addCompilerPass(new SettingAwareFactoryPass());
 
-		$extension = $container->getExtension('security');
-		$extension->addSecurityListenerFactory(new SessionlessAuthenticationFactory());
+        $extension = $container->getExtension('security');
+        $extension->addSecurityListenerFactory(new SessionlessAuthenticationFactory());
     }
 }

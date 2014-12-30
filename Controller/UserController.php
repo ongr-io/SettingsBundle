@@ -48,13 +48,13 @@ class UserController extends Controller
             $username = $loginData['username'];
             $password = $loginData['password'];
 
-			$ipAddress = $request->getClientIp();
-			$cookieValue = $this->getAuthCookieService()->create($username, $password, $ipAddress);
+            $ipAddress = $request->getClientIp();
+            $cookieValue = $this->getAuthCookieService()->create($username, $password, $ipAddress);
 
-			$cookie = $this->getAuthenticationCookie();
-			$cookie->setValue($cookieValue);
+            $cookie = $this->getAuthenticationCookie();
+            $cookie->setValue($cookieValue);
 
-			return $redirectResponse;
+            return $redirectResponse;
         }
 
         // Render.

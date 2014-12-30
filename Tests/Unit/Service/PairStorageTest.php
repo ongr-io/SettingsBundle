@@ -20,12 +20,12 @@ use Elasticsearch\Common\Exceptions\Missing404Exception;
 class PairStorageTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var $ormManagerMock Manager mock
+     * @var $ormManagerMock Manager mock.
      */
     private $ormManagerMock;
 
     /**
-     * @var $ormRepositoryMock Repository mock
+     * @var $ormRepositoryMock Repository mock.
      */
     private $repositoryMock;
 

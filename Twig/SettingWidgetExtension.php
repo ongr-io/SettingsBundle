@@ -29,12 +29,12 @@ class SettingWidgetExtension extends \Twig_Extension
     const NAME = 'admin_extension';
 
     /**
-     * @var AdminSettingsManager
+     * @var AdminSettingsManager.
      */
     protected $adminSettingsManager;
 
     /**
-     * @var SettingsContainerInterface
+     * @var SettingsContainerInterface.
      */
     protected $settingContainer;
 
@@ -84,7 +84,7 @@ class SettingWidgetExtension extends \Twig_Extension
                 [$this, 'showSetting'],
                 [
                     'needs_environment' => true,
-                    'is_safe' => ['html']
+                    'is_safe' => ['html'],
                 ]
             ),
             new \Twig_SimpleFunction('ongr_show_setting_value', [$this, 'getAdminSetting']),

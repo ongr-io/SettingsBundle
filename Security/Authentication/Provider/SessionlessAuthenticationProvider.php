@@ -18,7 +18,6 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-
 /**
  * Class responsible for authenticating or rejecting session-less security token.
  */
@@ -34,10 +33,10 @@ class SessionlessAuthenticationProvider implements AuthenticationProviderInterfa
      */
     private $generator;
 
-	/**
-	 * @param SessionlessSignatureGenerator $generator
-	 * @param UserProviderInterface         $usersProvider
-	 */
+    /**
+     * @param SessionlessSignatureGenerator $generator
+     * @param UserProviderInterface         $usersProvider
+     */
     public function __construct($generator, $usersProvider)
     {
         $this->generator = $generator;
@@ -53,20 +52,19 @@ class SessionlessAuthenticationProvider implements AuthenticationProviderInterfa
         $signature = $this->generateSignature($token);
 
         if ($token->getExpirationTime() >= time() && $signature === $token->getSignature()) {
+            $user = $this->usersProvider->loadUserByUsername($token->getUsername());
 
-			$user = $this->usersProvider->loadUserByUsername($token->getUsername());
+            // Prepares new token, that represents authenticated user.
+            $authenticatedToken = new SessionlessToken(
+                $token->getUsername(),
+                $token->getExpirationTime(),
+                $token->getIpAddress(),
+                $token->getSignature(),
+                $user->getRoles()
+            );
 
-			//Prepares new token, that represents authenticated user
-			$authenticatedToken = new SessionlessToken(
-					$token->getUsername(),
-					$token->getExpirationTime(),
-					$token->getIpAddress(),
-					$token->getSignature(),
-					$user->getRoles()
-			);
-
-			$authenticatedToken->setAuthenticated(true);
-			$authenticatedToken->setUser($user);
+            $authenticatedToken->setAuthenticated(true);
+            $authenticatedToken->setUser($user);
 
             return $authenticatedToken;
         }
@@ -92,8 +90,7 @@ class SessionlessAuthenticationProvider implements AuthenticationProviderInterfa
      */
     public function matchUsernameAndPassword($username, $password)
     {
-
-		$user =  $this->getUser($username);
+        $user = $this->getUser($username);
 
         if (!$user) {
             return false;
@@ -107,40 +104,36 @@ class SessionlessAuthenticationProvider implements AuthenticationProviderInterfa
         return true;
     }
 
-	/**
-	 * Generates user signature.
-	 *
-	 * @param SessionlessToken $token
-	 *
-	 * @return string
-	 */
-	private function generateSignature(SessionlessToken $token)
-	{
-		$user = $this->getUser($token->getUsername());
+    /**
+     * Generates user signature.
+     *
+     * @param SessionlessToken $token
+     *
+     * @return string
+     */
+    private function generateSignature(SessionlessToken $token)
+    {
+        $user = $this->getUser($token->getUsername());
 
-		return $this->generator->generate(
-			$token->getUsername(),
-			$user->getPassword(),
-			(string)$token->getExpirationTime(),
-			$token->getIpAddress()
-		);
-	}
+        return $this->generator->generate(
+            $token->getUsername(),
+            $user->getPassword(),
+            (string)$token->getExpirationTime(),
+            $token->getIpAddress()
+        );
+    }
 
-	/**
-	 * User object getter with exception catcher.
-	 *
-	 * @param $username
-	 *
-	 * @return object
-	 */
-	private function getUser($username)
-	{
-		try {
-			$user = $this->usersProvider->loadUserByUsername($username);
-		} catch (Exception $e) {
+    /**
+     * User object getter with exception catcher.
+     *
+     * @param string $username
+     *
+     * @return object
+     */
+    private function getUser($username)
+    {
+        $user = $this->usersProvider->loadUserByUsername($username);
 
-		}
-
-		return $user;
-	}
+        return $user;
+    }
 }

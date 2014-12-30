@@ -17,7 +17,7 @@ namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection;
 class DummyService
 {
     /**
-     * @var String to store setting.
+     * @var string String to store setting.
      */
     protected $setting;
 
