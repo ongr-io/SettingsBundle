@@ -36,7 +36,7 @@ class AdminSettingsManagerTest extends WebTestCase
     {
         $out = [];
 
-        // Case #0 Tests are settings inserted and loaded from cookies.
+        // Case #0 Tests, are settings inserted and loaded from cookies.
         $out[] = [
             'data' => $this->getMockArray(),
             'add' => [],
@@ -44,7 +44,7 @@ class AdminSettingsManagerTest extends WebTestCase
             'expected' => $this->getMockArray(),
         ];
 
-        // Case #1 Tests are settings added (merged) and loaded from cookies.
+        // Case #1 Tests, are settings added (merged) and loaded from cookies.
         $out[] = [
             'data' => $this->getMockArray(),
             'add' => [ 'Key 2' => 'Test 2' ],
@@ -52,7 +52,7 @@ class AdminSettingsManagerTest extends WebTestCase
             'expected' => $this->getMockArray() + [ 'Key 2' => 'Test 2' ],
         ];
 
-        // Case #2 Tests are settings inserted and loaded from form.
+        // Case #2 Tests, are settings inserted and loaded from form.
         $out[] = [
             'data' => [],
             'add' => [],

@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Settings\Common;
+namespace ONGR\AdminBundle\Tests\Functional\Settings\Admin;
 
 use ONGR\AdminBundle\Document\Setting;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use ONGR\AdminBundle\Tests\Functional\CookieTestHelper;
+use ONGR\AdminBundle\Tests\Fixtures\Security\LoginTestHelper;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use Symfony\Bundle\FrameworkBundle\Client;
 
@@ -36,8 +36,11 @@ class AdminSettingsTest extends WebTestCase
 
         static::bootKernel(['environment' => 'test_container_creation']);
 
-        /** @var Client $client */
-        $this->client = static::$kernel->getContainer()->get('test.client');
+        // Log in.
+        $client = self::createClient();
+        $loginHelper = new LoginTestHelper($client);
+        $this->client = $loginHelper->loginAction('test', 'test');
+
         /** @var Manager $manager */
         $manager = static::$kernel->getContainer()->get('es.manager');
 
@@ -75,12 +78,11 @@ class AdminSettingsTest extends WebTestCase
 
     /**
      * When user is logged in, he should see admin settings and profile checkboxes.
+     *
+     * @runInSeparateProcess
      */
     public function testSettingsDisplayed()
     {
-        // Set authentication cookie.
-        CookieTestHelper::setAuthenticationCookie($this->client);
-
         // Retrieve content.
         $crawler = $this->client->request('GET', '/admin/settings');
 
@@ -95,32 +97,6 @@ class AdminSettingsTest extends WebTestCase
         $this->assertCount(1, $profile, 'Profile foo checkbox must exist');
 
         $categories = $crawler->filter('.category');
-        $this->assertCount(2, $categories);
-    }
-
-    /**
-     * When user is logged in, and he selects profile, then settings container must receive that choice.
-     */
-    public function testSettingsSelected()
-    {
-        // Set authentication cookie.
-        CookieTestHelper::setAuthenticationCookie($this->client);
-
-        // Retrieve content.
-        $crawler = $this->client->request('GET', '/admin/settings');
-
-        // Submit domain selection.
-        $buttonNode = $crawler->selectButton('settings_submit');
-        $form = $buttonNode->form();
-        /** @noinspection PhpUndefinedMethodInspection */
-        $form['settings[ongr_admin_profile_profile_foo-2e-com]']->tick();
-        $this->client->submit($form);
-
-        // Load any url and check that user selected domains are loaded.
-        $this->client->request('GET', '/admin/setting/name0/edit');
-        $settingsContainer = $this->client->getContainer()->get('ongr_admin.settings_container');
-
-        $selectedDomains = $settingsContainer->getProfiles();
-        $this->assertEquals(['default', 'profile_foo.com'], $selectedDomains);
+        $this->assertCount(4, $categories);
     }
 }

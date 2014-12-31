@@ -26,6 +26,9 @@ class AppKernel extends Kernel
     {
         return [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
 
@@ -33,7 +36,7 @@ class AppKernel extends Kernel
 
             new ONGR\ElasticsearchBundle\ONGRElasticsearchBundle(),
             new Tedivm\StashBundle\TedivmStashBundle(),
-            
+
             new ONGR\CookiesBundle\ONGRCookiesBundle(),
             new ONGR\AdminBundle\ONGRAdminBundle(),
         ];

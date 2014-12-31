@@ -44,6 +44,7 @@ Then register it in ``AppKernel.php``:
         {
             return [
             // ...
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Tedivm\StashBundle\TedivmStashBundle(),
             new ONGR\CookiesBundle\ONGRCookiesBundle(),

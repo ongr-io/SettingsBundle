@@ -12,6 +12,7 @@
 namespace ONGR\AdminBundle\Tests\Functional\Settings;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use ONGR\AdminBundle\Tests\Fixtures\Security\LoginTestHelper;
 
 class AuthenticationTest extends WebTestCase
 {
@@ -20,11 +21,17 @@ class AuthenticationTest extends WebTestCase
      *
      * No index has been created in this test, so there will be an uncaught exception, if any queries were executed.
      *
+     * @runInSeparateProcess
      * @see \ONGR\AdminBundle\Settings\Admin\AdminProfilesProvider::getSettings
      */
     public function testRequest()
     {
         $client = self::createClient();
-        $client->request('GET', '/admin/login');
+        $loginHelper = new LoginTestHelper($client);
+        $client = $loginHelper->loginAction('test', 'test');
+        $response = $client->getResponse();
+
+        $this->assertContains('already logged in', $response->getContent());
+        $this->assertContains('Common Settings', $response->getContent());
     }
 }

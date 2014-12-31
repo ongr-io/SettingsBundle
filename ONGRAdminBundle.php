@@ -17,7 +17,6 @@ use ONGR\AdminBundle\DependencyInjection\Compiler\SettingsModifierPass;
 use ONGR\AdminBundle\DependencyInjection\Compiler\SettingAwareFactoryPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 use ONGR\AdminBundle\DependencyInjection\Security\SessionlessAuthenticationFactory;
 
 /**

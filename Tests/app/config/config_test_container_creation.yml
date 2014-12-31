@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters_test_container_creation.yml }
+    - { resource: security.yml }
 
 # Framework Configuration
 framework:
@@ -37,10 +38,8 @@ monolog:
 stash:
     caches:
         default:
-            drivers: [ Memcache ]
-            Memcache:
-                servers:
-                    - { server: 127.0.0.1, port: 11211, weight: 1 }
+            drivers: [ FileSystem ]
+            FileSystem: ~
 
 #Elasticsearch Bundle
 ongr_elasticsearch:

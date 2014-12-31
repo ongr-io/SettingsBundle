@@ -44,6 +44,7 @@ Then register it in ``AppKernel.php``:
         {
             return [
             // ...
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Tedivm\StashBundle\TedivmStashBundle(),
             new ONGR\CookiesBundle\ONGRCookiesBundle(),
@@ -81,10 +82,13 @@ Enabling Sessionless authentication support
 To enable authentication support, please add this to your main ``routing.yml``
 
 .. code-block:: yaml
-
-    _ongr_admin:
-        resource: "@ONGRAdminBundle/Resources/config/routing/auth.yml"
-        prefix: /admin_prefix
+    
+    fos_js_routing:
+        resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    
+    ongr_admin_routing:
+        resource: "@ONGRAdminBundle/Resources/config/routing.yml"
+        prefix: /admin
 
 ..
 
@@ -122,7 +126,7 @@ Bundles usage
 - `Environment variables usage </Resources/doc/env_variable.rst>`_
 
 .. toctree::
-    :maxdepth: 1
-        :glob:
+:maxdepth: 1
+            :glob:
 
-        *
+            *
