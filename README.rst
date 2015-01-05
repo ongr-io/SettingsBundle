@@ -115,20 +115,6 @@ Values can change in several places. Eg. IP address is dependent on the network,
 
 * Cookie **can be stolen** if sent over *http://*, so do not trust it's security absolutely.
 
-Enabling Stash cache
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To enable stash cache, please add this to your main ``settings.yml``
-
-.. code-block:: yaml
-
-   stash:
-   caches:
-       default:
-           drivers: [ FileSystem ]
-           FileSystem: ~
-
-..
 
 ===============
 Bundles usage
