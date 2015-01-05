@@ -83,7 +83,7 @@ class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Returns manager instance with injected connection if does not exist creates new one.
+     * Returns mock of ORM manager.
      *
      * @return Manager
      */

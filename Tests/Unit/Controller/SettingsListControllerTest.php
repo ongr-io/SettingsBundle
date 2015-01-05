@@ -90,7 +90,7 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Returns mock of ORM Manager.
+     * Returns mock of Document Iterator.
      *
      * @return Manager
      */
