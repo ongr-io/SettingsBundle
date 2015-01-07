@@ -37,7 +37,7 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
 
-        $container->set('es.manager', $this->getManager());
+        $container->set('es.manager', $this->getManagerWhitRepositoryMock());
         $container->set('templating', $this->getTemplateEngine());
         $container->set('router', $this->getMock('Symfony\\Component\\Routing\\RouterInterface'));
 
@@ -53,11 +53,9 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
      *
      * @return Manager
      */
-    protected function getManager()
+    protected function getManagerWhitRepositoryMock()
     {
-        $managerMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\ORM\Manager')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $managerMock = $this->getManagerMock();
 
         $repositoryMock = $this->getOrmRepositoryMock();
         $managerMock->expects(
@@ -78,7 +76,7 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
         $mock = $this->getMock(
             'ONGR\ElasticsearchBundle\ORM\Repository',
             ['getBundlesMapping', 'find', 'remove', 'execute'],
-            [$this->getOrmManagerMock(), ['ONGRAdminBundle:Setting'] ]
+            [$this->getManagerMock(), ['ONGRAdminBundle:Setting'] ]
         );
 
         $mock->expects(
@@ -108,7 +106,7 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
      *
      * @return Manager
      */
-    protected function getOrmManagerMock()
+    protected function getManagerMock()
     {
         return $this->getMock(
             'ONGR\ElasticsearchBundle\ORM\Manager',

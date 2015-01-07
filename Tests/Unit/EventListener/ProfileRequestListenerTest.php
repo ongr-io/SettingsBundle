@@ -48,7 +48,7 @@ class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
     public function testOnKernelRequest($userSettings, $expectedProfiles)
     {
         // Get settings container.
-        $manager = $this->getManager();
+        $manager = $this->getManagerMock();
 
         // Mock settings container.
         $settingsContainer = $this
@@ -87,7 +87,7 @@ class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
      *
      * @return Manager
      */
-    protected function getManager()
+    protected function getManagerMock()
     {
         $managerMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\ORM\Manager')
             ->disableOriginalConstructor()
