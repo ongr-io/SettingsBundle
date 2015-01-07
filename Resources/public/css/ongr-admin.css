@@ -13,6 +13,11 @@
 .inline-edit.active div {
     display: table;
 }
+
 .no-margin-bottom {
     margin-bottom: 0px;
+}
+
+.word-break-all {
+    word-break: break-all;
 }

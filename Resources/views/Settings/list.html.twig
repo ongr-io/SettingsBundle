@@ -23,8 +23,8 @@
                             <td>{{ row.name }}</td>
                             <td>{{ row.description }}</td>
                             <td>{{ row.type }}</td>
-                            <td width="35%">
-                                <div ng-switch="row.type" class="container" style="word-break:break-all">
+                            <td class="col-xs-4">
+                                <div ng-switch="row.type" class="container word-break-all" style="">
                                     <div ng-switch-when="boolean">
                                         <div class="btn-group btn-group-sm">
                                             <label class="btn btn-default" ng-class="{ 'btn-primary' : row.data.value }" ng-model="row.data.value" btn-radio="true" ng-click="saveStatus($event, row)" uncheckable>On</label>
@@ -37,7 +37,7 @@
                                 </div>
                             </td>
 
-                            <td width="25%">
+                            <td class="col-xs-3">
                                 <a href="{{ editLink(row) }}" class="btn btn-primary btn-xs">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </a>
