@@ -78,8 +78,6 @@ class AdminSettingsTest extends WebTestCase
 
     /**
      * When user is logged in, he should see admin settings and profile checkboxes.
-     *
-     * @runInSeparateProcess
      */
     public function testSettingsDisplayed()
     {
@@ -98,5 +96,28 @@ class AdminSettingsTest extends WebTestCase
 
         $categories = $crawler->filter('.category');
         $this->assertCount(4, $categories);
+    }
+
+    /**
+     * When user is logged in, and he selects profile, then settings container must receive that choice.
+     */
+    public function testSettingsSelected()
+    {
+        // Retrieve content.
+        $crawler = $this->client->request('GET', '/admin/settings');
+
+        // Submit domain selection.
+        $buttonNode = $crawler->selectButton('settings_submit');
+        $form = $buttonNode->form();
+        /** @noinspection PhpUndefinedMethodInspection */
+        $form['settings[ongr_admin_profile_profile_foo-2e-com]']->tick();
+        $this->client->submit($form);
+
+        // Load any url and check that user selected domains are loaded.
+        $this->client->request('GET', '/admin/setting/name0/edit');
+        $settingsContainer = $this->client->getContainer()->get('ongr_admin.settings_container');
+
+        $selectedDomains = $settingsContainer->getProfiles();
+        $this->assertEquals(['default', 'test1', 'test2', 'meh', 'profile_foo.com'], $selectedDomains);
     }
 }

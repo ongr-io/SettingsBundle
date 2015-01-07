@@ -10,6 +10,7 @@
  */
 
 namespace ONGR\AdminBundle\Tests\Functional\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use ONGR\AdminBundle\Tests\Fixtures\Security\LoginTestHelper;
 use ONGR\AdminBundle\Tests\Functional\PrepareAdminData;
@@ -43,8 +44,6 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
 
     /**
      * Test settings page ability to set values to cookie.
-     *
-     * @runInSeparateProcess
      */
     public function testSettingsAction()
     {
@@ -60,7 +59,6 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
         /** @var array $categories */
         $categories = $client->getContainer()->getParameter('ongr_admin.settings.categories');
         $content = $client->getResponse()->getContent();
-
 
         // Print $content.
         foreach ($categories as $category) {
@@ -121,8 +119,6 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
 
     /**
      * Settings pages should not be allowed to access non-authorized users, redirect should be initiated.
-     *
-     * @runInSeparateProcess
      */
     public function testActionsWhenNotLoggedInNoRedirect()
     {
@@ -138,13 +134,12 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
 
     /**
      * Settings pages should not be allowed to access non-authorized users, user should be redirected this time.
-     *
-     * @runInSeparateProcess
      */
     public function testActionsWhenNotLoggedInRedirectToLogin()
     {
         $client = $this->client->getClient();
         $client->followRedirects(true);
+        $client->request('GET', '/admin/logout');
 
         // Visit settings page.
         $client->request('GET', '/admin/settings');

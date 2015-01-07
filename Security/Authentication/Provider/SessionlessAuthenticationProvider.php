@@ -49,24 +49,25 @@ class SessionlessAuthenticationProvider implements AuthenticationProviderInterfa
     public function authenticate(TokenInterface $token)
     {
         /** @var SessionlessToken $token */
-        $signature = $this->generateSignature($token);
+        $signature = $token->getSignature($token);
+        $user = $this->usersProvider->loadUserByUsername($token->getUsername());
 
-        if ($token->getExpirationTime() >= time() && $signature === $token->getSignature()) {
-            $user = $this->usersProvider->loadUserByUsername($token->getUsername());
+        // Prepares new token, that represents authenticated user.
+        $regeneratedToken = new SessionlessToken(
+            $token->getUsername(),
+            $token->getExpirationTime(),
+            $token->getIpAddress(),
+            $this->generateSignature($token),
+            $user->getRoles()
+        );
 
-            // Prepares new token, that represents authenticated user.
-            $authenticatedToken = new SessionlessToken(
-                $token->getUsername(),
-                $token->getExpirationTime(),
-                $token->getIpAddress(),
-                $token->getSignature(),
-                $user->getRoles()
-            );
+        if ($token->getExpirationTime() >= time() && $signature === $regeneratedToken->getSignature()) {
+            $regeneratedToken->setAuthenticated(true);
+            $regeneratedToken->setUser($user);
 
-            $authenticatedToken->setAuthenticated(true);
-            $authenticatedToken->setUser($user);
-
-            return $authenticatedToken;
+            return $regeneratedToken;
+        } else {
+            $regeneratedToken->setAuthenticated(false);
         }
 
         throw new AuthenticationException('The Sessionless authentication failed.');

@@ -14,7 +14,6 @@ namespace ONGR\AdminBundle\Controller;
 use ONGR\CookiesBundle\Cookie\Model\JsonCookie;
 use ONGR\AdminBundle\Form\Type\LoginType;
 use ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService;
-use ONGR\AdminBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider;
 use ONGR\AdminBundle\Security\Authentication\Token\SessionlessToken;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,7 +76,9 @@ class UserController extends Controller
     ) {
         $cookie = $this->getAuthenticationCookie();
         $cookie->setClear(true);
+
         $response = $this->redirect($this->generateUrl('ongr_admin_sessionless_login'));
+
         $this->get('security.context')->setToken(null);
         $this->get('request')->getSession()->invalidate();
 

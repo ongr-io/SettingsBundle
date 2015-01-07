@@ -22,7 +22,8 @@ framework:
             ssl: [%cdn_url_ssl%]
     default_locale:  "%locale%"
     trusted_proxies: ~
-    session:         ~
+    session:
+        storage_id: session.storage.mock_file
     test: ~
 
 monolog:

@@ -3,20 +3,22 @@ security:
         sessionless_authentication_secured:
             pattern:   .*
             anonymous: ~
-            sessionless_authentication: true
+            ongr_sessionless_authentication: true
 
             form_login:
                 login_path: ongr_admin_sessionless_login #path where login form resides
-                check_path: login_check      #default Authentication provider
 
             logout:
-                path:   /logout
+                path:   /admin/logout
                 target: /
+                delete_cookies:
+                    ongr_admin_user_auth: { path: null, domain: null } #will delete authentication cookie
 
     access_control:
         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/.* , roles: ROLE_ADMIN }
+
 
     providers:
         foo_chain_provider:
@@ -26,8 +28,7 @@ security:
         in_memory:
             memory:
                 users:
-                    boo_user: { password: boo_password, roles: 'ROLE_ADMIN' }
-                    foo_user: { password: foo_password, roles: 'ROLE_ADMIN' }
+                    foo_user:    { password: foo_password, roles: 'ROLE_ADMIN' }
 
         test_provider:
             memory:

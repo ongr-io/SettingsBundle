@@ -19,9 +19,14 @@ use Symfony\Bundle\FrameworkBundle\Client;
 class LoginTestHelper
 {
     /**
+     * @var Client
+     */
+    protected $client;
+
+    /**
      * @param Client $client
      */
-    public function __construct($client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
@@ -32,7 +37,7 @@ class LoginTestHelper
      * @param string $username
      * @param string $password
      *
-     * @return mixed $client
+     * @return Client $client
      */
     public function loginAction($username = 'test', $password = 'test')
     {
@@ -41,6 +46,7 @@ class LoginTestHelper
 
         $crawler = $client->request('GET', '/admin/login');
         $buttonNode = $crawler->selectButton('login_submit');
+
         $form = $buttonNode->form();
         $form['login[username]'] = $username;
         $form['login[password]'] = $password;
@@ -49,6 +55,27 @@ class LoginTestHelper
         return $client;
     }
 
+    /**
+     * Performs logout action and returns same client after log in.
+     *
+     * @param Client $client
+     *
+     * @return Client
+     */
+    public function logoutAction(Client $client)
+    {
+        $crawler = $client->request('GET', '/admin/login');
+        $link = $crawler->filter('a:contains("Logout")')->link();
+        $client->click($link);
+
+        return $client;
+    }
+
+    /**
+     * Get Client.
+     *
+     * @return Client
+     */
     public function getClient()
     {
         return $this->client;

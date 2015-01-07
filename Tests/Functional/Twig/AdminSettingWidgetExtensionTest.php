@@ -12,6 +12,7 @@
 namespace ONGR\AdminBundle\Tests\Functional\Twig;
 
 use ONGR\AdminBundle\Tests\Functional\CookieTestHelper;
+use ONGR\AdminBundle\Tests\Fixtures\Security\LoginTestHelper;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -40,6 +41,7 @@ class AdminSettingWidgetExtensionTest extends ElasticsearchTestCase
 
         $this->client = self::createClient();
         $this->twig = $this->client->getContainer()->get('twig');
+        $this->loginHelper = new LoginTestHelper($this->client);
     }
 
     /**
@@ -88,7 +90,7 @@ class AdminSettingWidgetExtensionTest extends ElasticsearchTestCase
         $authorizedCommand = true
     ) {
         if ($shouldAuthorize) {
-            CookieTestHelper::setAuthenticationCookie($this->client);
+            $this->client = $this->loginHelper->loginAction('test', 'test');
         }
 
         CookieTestHelper::setSettingsCookie($this->client, $cookieSettings);

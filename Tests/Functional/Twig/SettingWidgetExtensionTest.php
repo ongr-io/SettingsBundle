@@ -80,7 +80,7 @@ HEREDOC;
     public function testShowSetting($expectedOutput, $settingName, $isAuthenticated, $type = null)
     {
         $container = self::createClient()->getContainer();
-        $securityContext = $container->get('ongr_admin.authentication.sessionless_security_context');
+        $securityContext = $container->get('security.context');
         $securityContext->setToken($this->getTokenMock());
         $settingsManager = $container->get('ongr_admin.settings.admin_settings_manager');
         $settingsManager->setSettingsFromForm(['ongr_admin_live_settings' => true]);

@@ -11,7 +11,6 @@
 
 namespace ONGR\AdminBundle\Tests\Functional\Controller;
 
-use ONGR\AdminBundle\Document\Setting;
 use ONGR\AdminBundle\Settings\Common\Provider\ManagerAwareSettingProvider;
 use ONGR\AdminBundle\Settings\Common\SettingsContainer;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
@@ -29,14 +28,21 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
     private $client;
 
     /**
+     * @var LoginTestHelper.
+     */
+    private $loginHelper;
+
+    /**
      * {@inheritdoc}
      */
     public function setUp()
     {
         parent::setUp();
 
-        $lh = new LoginTestHelper(self::createClient());
-        $this->client = $lh->loginAction();
+        $this->loginHelper = new LoginTestHelper(static::createClient());
+        $this->client = $this->loginHelper->loginAction();
+
+        $this->container = $this->client->getContainer();
     }
 
     /**
@@ -47,18 +53,38 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
     public function copyActionData()
     {
         // Case #0 non existing profile, existing item passed.
-        //$out[] = [500, '/admin/setting/name0/copy/foo/newProfile'];
+        $out[] = [500, '/admin/setting/name0/copy/foo/newProfile'];
 
         // Case #1 existing profile set, existing item passed.
         $out[] = [200, '/admin/setting/name0/copy/default/newProfile'];
 
         // Case #2 non-existent profile and item passed.
-        //$out[] = [500, '/admin/setting/foo/copy/foo/newProfile'];
+        $out[] = [500, '/admin/setting/foo/copy/foo/newProfile'];
 
         // Case #3 existent profile, non-existing item passed.
-        //$out[] = [500, '/admin/setting/foo/copy/default/newProfile'];
+        $out[] = [500, '/admin/setting/foo/copy/default/newProfile'];
 
         return $out;
+    }
+
+    /**
+     * Create setting.
+     */
+    public function createSetting()
+    {
+        $requestContent = json_encode(['setting' => ['data' => ['value' => 'name0']]]);
+        $this->client->request('POST', '/admin/setting/ng/name0/edit/default', [], [], [], $requestContent);
+    }
+
+    /**
+     * Test for createAction().
+     */
+    public function testCreateSetting()
+    {
+        $requestContent = json_encode(['setting' => ['data' => ['value' => 'foo']]]);
+        $this->client->request('POST', '/admin/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
+        $response = $this->client->getResponse();
+        $this->assertTrue($response->isOk());
     }
 
     /**
@@ -69,133 +95,128 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
      *
      * @dataProvider copyActionData()
      */
-    public function testCopyAction($status, $url)
+    public function testCopyActionLogedIn($status, $url)
     {
+        $this->createSetting();
         $this->client->request('GET', $url);
         $this->assertEquals($status, $this->client->getResponse()->getStatusCode());
     }
 
-//    /**
-//     * Test for editAction().
-//     *
-//     * @runInSeparateProcess
-//     */
-//    public function testEditAction()
-//    {
-//        $this->client->request('GET', '/admin/setting/name0/edit');
-//        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-//    }
+    /**
+     * Test for copyAction after logged Out.
+     *
+     * @param int    $status
+     * @param string $url
+     *
+     * @dataProvider copyActionData()
+     */
+    public function testCopyActionLogedOut($status, $url)
+    {
+        $this->createSetting();
+        $this->client = $this->loginHelper->logoutAction($this->client);
+        $this->client->request('GET', $url);
+        $this->assertSame('/admin/login', $this->client->getRequest()->getRequestUri());
+    }
 
-//    /**
-//     * Data provider for testRemoveAction().
-//     *
-//     * @return array
-//     */
-//    public function removeActionData()
-//    {
-//        // Case #0 remove existing settings, check if default domain is set.
-//        $out[] = ['/admin/setting/name0/remove', 200];
-//
-//        // Case #1 remove existing setting with domain set.
-//        $out[] = ['/admin/setting/name0/remove/default', 200];
-//
-//        // Case #2 remove non-existing setting.
-//        $out[] = ['/admin/setting/non-existent/remove', 500];
-//
-//        return $out;
-//    }
-//
-//    /**
-//     * Test for removeAction().
-//     *
-//     * @param string $url
-//     * @param string $expectedStatusCode
-//     *
-//     * @dataProvider removeActionData()
-//     */
-//
-//    public function testRemoveAction($url, $expectedStatusCode)
-//    {
-//        $this->client->request('DELETE', $url);
-//        $this->assertEquals($expectedStatusCode, $this->client->getResponse()->getStatusCode());
-//    }
-//
-//    /**
-//     * Test ngEditAction and ensure cached value is cleared.
-//     */
-//    public function testCacheClearAfterModify()
-//    {
-//        $client = $this->client;
-//
-//        // Create setting.
-//        $requestContent = json_encode(['setting' => ['data' => ['value' => 'foo']]]);
-//        $client->request('POST', '/admin/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
-//        $response = $client->getResponse();
-//        $this->assertTrue($response->isOk());
-//
-//        // Assert value.
-//        $this->enableDomain($client);
-//        $this->assertSettingValue($client, 'foo');
-//
-//        // Modify.
-//        $requestContent = json_encode(['setting' => ['data' => ['value' => 'bar']]]);
-//        $client->request('POST', '/admin/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
-//        $response = $client->getResponse();
-//        $this->assertTrue($response->isOk());
-//
-//        // Assert modified value.
-//        $this->enableDomain($client);
-//        $this->assertSettingValue($client, 'bar');
-//    }
-//
-//    /**
-//     * {@inheritdoc}
-//     */
-//    protected function getDataArray()
-//    {
-//        return [
-//            'default' => [
-//                'setting' => [
-//                    [
-//                        '_id' => 'default_name0',
-//                        'name' => 'name0',
-//                        'profile' => 'default',
-//                        'description' => 'this should be updated',
-//                        'type' => Setting::TYPE_STRING,
-//                        'data' => (object)['value' => 'test1'],
-//                    ],
-//                ],
-//            ],
-//        ];
-//    }
-//
-//    /**
-//     * Assert value has been set for custom domain_foo.
-//     *
-//     * @param Client $client
-//     * @param string $expectedValue
-//     */
-//    protected function assertSettingValue(Client $client, $expectedValue)
-//    {
-//        $settingsContainer = $client->getContainer()->get('ongr_admin.settings_container');
-//        $value = $settingsContainer->get('setting_foo');
-//        $this->assertSame($expectedValue, $value);
-//    }
-//
-//    /**
-//     * Add domain_foo so that the setting can be read.
-//     *
-//     * @param Client $client
-//     */
-//    protected function enableDomain(Client $client)
-//    {
-//        $container = $client->getContainer();
-//        /** @var SettingsContainer $settingsContainer */
-//        $settingsContainer = $container->get('ongr_admin.settings_container');
-//        $settingsContainer->setProfiles(['domain_foo']);
-//
-//        /** @var ManagerAwareSettingProvider $provider */
-//        $provider = $container->get('ongr_admin.dummy_profile_provider');
-//        $settingsContainer->addProvider($provider);
-//    }
+    /**
+     * Test for editAction().
+     */
+    public function testEditAction()
+    {
+        $this->createSetting();
+        $this->client->request('GET', '/admin/setting/name0/edit');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Data provider for testRemoveAction().
+     *
+     * @return array
+     */
+    public function removeActionData()
+    {
+        // Case #0 remove existing settings, check if default domain is set.
+        $out[] = ['/admin/setting/name0/remove', 200];
+
+        // Case #1 remove existing setting with domain set.
+        $out[] = ['/admin/setting/name0/remove/default', 200];
+
+        // Case #2 remove non-existing setting.
+        $out[] = ['/admin/setting/non-existent/remove', 500];
+
+        return $out;
+    }
+
+    /**
+     * Test for removeAction().
+     *
+     * @param string $url
+     * @param string $expectedStatusCode
+     *
+     * @dataProvider removeActionData()
+     */
+    public function testRemoveAction($url, $expectedStatusCode)
+    {
+        $this->createSetting();
+        $this->client->request('DELETE', $url);
+        $this->assertEquals($expectedStatusCode, $this->client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Test ngEditAction and ensure cached value is cleared.
+     */
+    public function testCacheClearAfterModify()
+    {
+        $client = $this->client;
+
+        // Create setting.
+        $requestContent = json_encode(['setting' => ['data' => ['value' => 'foo']]]);
+        $client->request('POST', '/admin/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
+        $response = $client->getResponse();
+        $this->assertTrue($response->isOk());
+
+        // Assert value.
+        $this->enableDomain($client);
+        $this->assertSettingValue($client, 'foo');
+
+        // Modify.
+        $requestContent = json_encode(['setting' => ['data' => ['value' => 'bar']]]);
+        $client->request('POST', '/admin/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
+        $response = $client->getResponse();
+        $this->assertTrue($response->isOk());
+
+        // Assert modified value.
+        $this->enableDomain($client);
+        $this->assertSettingValue($client, 'bar');
+    }
+
+    /**
+     * Assert value has been set.
+     *
+     * @param Client $client
+     * @param string $expectedValue
+     */
+    protected function assertSettingValue(Client $client, $expectedValue)
+    {
+        $settingsContainer = $client->getContainer()->get('ongr_admin.settings_container');
+        $value = $settingsContainer->get('setting_foo');
+        $this->assertSame($expectedValue, $value);
+    }
+
+    /**
+     * Add domain_foo so that the setting can be read.
+     *
+     * @param Client $client
+     */
+    protected function enableDomain(Client $client)
+    {
+        $container = $client->getContainer();
+        /** @var SettingsContainer $settingsContainer */
+        $settingsContainer = $container->get('ongr_admin.settings_container');
+        $settingsContainer->setProfiles(['domain_foo']);
+
+        /** @var ManagerAwareSettingProvider $provider */
+        $provider = $container->get('ongr_admin.dummy_profile_provider');
+        $settingsContainer->addProvider($provider);
+    }
 }

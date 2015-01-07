@@ -21,7 +21,6 @@ class AuthenticationTest extends WebTestCase
      *
      * No index has been created in this test, so there will be an uncaught exception, if any queries were executed.
      *
-     * @runInSeparateProcess
      * @see \ONGR\AdminBundle\Settings\Admin\AdminProfilesProvider::getSettings
      */
     public function testRequest()
