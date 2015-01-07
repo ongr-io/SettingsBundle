@@ -42,8 +42,6 @@ class AdminProfilesProvider
         if ($routeName === 'ongr_admin_settings_settings' || $routeName === 'ongr_admin_settings_change') {
             $this->settingsStructure->extractSettings($this, 'getSettings');
         }
-
-        return;
     }
 
     /**

@@ -95,8 +95,8 @@ class AdminSettingsController extends Controller
         $manager = $this->getAdminSettingsManager();
 
         $name = base64_decode($encodedName);
-        $settingsStructure = $manager->getSettingsMap();
 
+        $settingsStructure = $manager->getSettingsMap();
         if (array_key_exists($name, $settingsStructure)) {
             $settings = $manager->getSettings();
             if (array_key_exists($name, $settings)) {
@@ -107,9 +107,11 @@ class AdminSettingsController extends Controller
 
             $manager->setSettingsFromCookie($settings);
             $this->attachCookies($manager->getSettings(), $manager->getSettingsMap());
-        }
 
-        return new JsonResponse();
+            return new JsonResponse();
+        } else {
+            return new JsonResponse(Response::$statusTexts[403], 403);
+        }
     }
 
     /**
