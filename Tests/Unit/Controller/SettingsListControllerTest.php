@@ -37,7 +37,7 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
 
-        $container->set('es.manager', $this->getManagerWhitRepositoryMock());
+        $container->set('es.manager', $this->getManagerWithRepositoryMock());
         $container->set('templating', $this->getTemplateEngine());
         $container->set('router', $this->getMock('Symfony\\Component\\Routing\\RouterInterface'));
 
