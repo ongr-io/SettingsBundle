@@ -13,9 +13,8 @@ namespace ONGR\AdminBundle\Tests\Unit\Service;
 
 use ONGR\AdminBundle\Service\SettingAwareServiceFactory;
 use ONGR\AdminBundle\Exception\SettingNotFoundException;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
-class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
+class SettingAwareServiceFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests get method.
