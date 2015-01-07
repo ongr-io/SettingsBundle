@@ -13,7 +13,8 @@ namespace ONGR\AdminBundle\Tests\Functional\Settings\Admin;
 
 use ONGR\AdminBundle\Tests\Fixtures\Security\LoginTestHelper;
 use ONGR\ElasticsearchBundle\ORM\Manager;
-use Symfony\Bundle\FrameworkBundle\Client;use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Test integration with admin-user feature in admin bundle.
