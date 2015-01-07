@@ -53,7 +53,7 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
      *
      * @return Manager
      */
-    protected function getManagerWhitRepositoryMock()
+    protected function getManagerWithRepositoryMock()
     {
         $managerMock = $this->getManagerMock();
 
