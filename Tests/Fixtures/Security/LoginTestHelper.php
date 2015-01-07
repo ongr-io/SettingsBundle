@@ -56,7 +56,7 @@ class LoginTestHelper
     }
 
     /**
-     * Performs logout action and returns same client after log in.
+     * Performs logout action and returns same client after log out.
      *
      * @param Client $client
      *

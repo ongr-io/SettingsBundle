@@ -57,8 +57,6 @@ class SessionlessToken extends AbstractToken
         $this->ipAddress = $ipAddress;
         $this->signature = $signature;
         $this->setAuthenticated(count($roles) > 0);
-
-        parent::setAuthenticated(true);
     }
 
     /**
