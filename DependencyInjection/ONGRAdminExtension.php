@@ -38,7 +38,7 @@ class ONGRAdminExtension extends Extension
         $container->setParameter('ongr_admin.settings_container.profiles', $config['profiles']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services/auth.yml');
+        $loader->load('services/sessionless_authentication.yml');
         $loader->load('services/flash_bag.yml');
         $loader->load('services/twig_extension.yml');
         $loader->load('services/admin_settings.yml');

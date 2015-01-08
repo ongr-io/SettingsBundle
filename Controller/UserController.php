@@ -64,28 +64,6 @@ class UserController extends Controller
     }
 
     /**
-     * Logout action.
-     *
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function logoutAction(
-        /** @noinspection PhpUnusedParameterInspection */
-        Request $request
-    ) {
-        $cookie = $this->getAuthenticationCookie();
-        $cookie->setClear(true);
-
-        $response = $this->redirect($this->generateUrl('ongr_admin_sessionless_login'));
-
-        $this->get('security.context')->setToken(null);
-        $this->get('request')->getSession()->invalidate();
-
-        return $response;
-    }
-
-    /**
      * @return SessionlessAuthenticationCookieService
      */
     protected function getAuthCookieService()
