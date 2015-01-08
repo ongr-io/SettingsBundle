@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Functional\Settings\Personal;
+namespace ONGR\SettingsBundle\Tests\Functional\Settings\General;
 
 use ONGR\SettingsBundle\Document\Setting;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

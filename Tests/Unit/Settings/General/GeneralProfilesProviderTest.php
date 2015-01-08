@@ -11,7 +11,8 @@
 
 namespace ONGR\SettingsBundle\Tests\Unit\Settings\General;
 
-use ONGR\AdminBundle\Settings\Admin\AdminProfilesProvider;
+use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
+use ONGR\SettingsBundle\Settings\General\GeneralProfilesProvider;
 
 /**
  * Test how AdminProfilesProvider collects General settings from ES.
@@ -23,7 +24,7 @@ class GeneralProfilesProviderTest extends ElasticsearchTestCase
      */
     public function testGetSettings()
     {
-        $manager = new AdminProfilesProvider();
+        $manager = new GeneralProfilesProvider();
         $manager->setProfileManager($this->getProfilesManagerMock());
 
         $expectedArray = [
