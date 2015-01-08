@@ -86,7 +86,7 @@ angular
                 $http({
                     method: "DELETE",
                     url: Routing.generate(
-                        'ongr_admin_setting_remove',
+                        'ongr_settings_setting_remove',
                         {
                             name: setting.name,
                             profile: setting.profile,
@@ -107,7 +107,7 @@ angular
             $scope.saveStatus = function($event, setting) {
                 var status = $event.target.innerHTML;
                 var link = Routing.generate(
-                    'ongr_admin_setting_ng_edit',
+                    'ongr_settings_setting_ng_edit',
                     {
                         name: setting.name,
                         profile: setting.profile,
@@ -131,7 +131,7 @@ angular
              */
             $scope.editLink = function(setting) {
                 return Routing.generate(
-                    'ongr_admin_setting_edit',
+                    'ongr_settings_setting_edit',
                     {
                         name: setting.name,
                         profile: setting.profile

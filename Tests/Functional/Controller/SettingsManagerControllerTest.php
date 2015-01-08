@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Controller;
+namespace ONGR\SettingsBundle\Tests\Functional\Controller;
 
-use ONGR\AdminBundle\Document\Setting;
-use ONGR\AdminBundle\Settings\Common\Provider\ManagerAwareSettingProvider;
-use ONGR\AdminBundle\Settings\Common\SettingsContainer;
+use ONGR\SettingsBundle\Document\Setting;
+use ONGR\SettingsBundle\Settings\Personal\Provider\ManagerAwareSettingProvider;
+use ONGR\SettingsBundle\Settings\Personal\SettingsContainer;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
@@ -164,7 +164,7 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
      */
     protected function assertSettingValue(Client $client, $expectedValue)
     {
-        $settingsContainer = $client->getContainer()->get('ongr_admin.settings_container');
+        $settingsContainer = $client->getContainer()->get('ongr_settings.settings_container');
         $value = $settingsContainer->get('setting_foo');
         $this->assertSame($expectedValue, $value);
     }
@@ -178,11 +178,11 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
     {
         $container = $client->getContainer();
         /** @var SettingsContainer $settingsContainer */
-        $settingsContainer = $container->get('ongr_admin.settings_container');
+        $settingsContainer = $container->get('ongr_settings.settings_container');
         $settingsContainer->setProfiles(['domain_foo']);
 
         /** @var ManagerAwareSettingProvider $provider */
-        $provider = $container->get('ongr_admin.dummy_profile_provider');
+        $provider = $container->get('ongr_settings.dummy_profile_provider');
         $settingsContainer->addProvider($provider);
     }
 }

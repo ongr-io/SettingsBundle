@@ -10,7 +10,7 @@
  */
 
 
-namespace ONGR\AdminBundle\Tests\Functional;
+namespace ONGR\SettingsBundle\Tests\Functional;
 
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,34 +28,35 @@ class ServiceCreationTest extends ElasticsearchTestCase
 
         // Twig config file (services/twig.yml).
         $servicesTwig = [
-            'ongr_admin.twig.image_path_extension' => 'ONGR\AdminBundle\Twig\ImagePathExtension',
-            'ongr_admin.twig.encryption_extension' => 'ONGR\AdminBundle\Twig\EncryptionExtension',
-            'ongr_admin.twig.wrapper_extension' => 'ONGR\AdminBundle\Twig\WrapperExtension',
-            'ongr_admin.twig.hidden_extension' => 'ONGR\AdminBundle\Twig\HiddenExtension',
+            'ongr_settings.twig.image_path_extension' => 'ONGR\SettingsBundle\Twig\ImagePathExtension',
+            'ongr_settings.twig.encryption_extension' => 'ONGR\SettingsBundle\Twig\EncryptionExtension',
+            'ongr_settings.twig.wrapper_extension' => 'ONGR\SettingsBundle\Twig\WrapperExtension',
+            'ongr_settings.twig.hidden_extension' => 'ONGR\SettingsBundle\Twig\HiddenExtension',
         ];
 
         // Settings config file (services/settings.yml).
         $servicesSettings = [
-            'ongr_admin.settings.settings_structure' => 'ONGR\AdminBundle\Settings\Admin\SettingsStructure',
-            'ongr_admin.settings.admin_settings_manager' => 'ONGR\AdminBundle\Settings\Admin\AdminSettingsManager',
+            'ongr_settings.settings.settings_structure' => 'ONGR\SettingsBundle\Settings\General\SettingsStructure',
+            'ongr_settings.settings.general_settings_manager' =>
+                'ONGR\SettingsBundle\Settings\General\GeneralSettingsManager',
         ];
 
         // Authentication config file (services/auth.yml).
         $servicesAuth = [
-            'ongr_admin.authentication.authentication_cookie_service' =>
-                'ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService',
+            'ongr_settings.authentication.authentication_cookie_service' =>
+                'ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService',
 
-            'ongr_admin.authentication.sessionless_authentication_provider' =>
-                'ONGR\AdminBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider',
+            'ongr_settings.authentication.sessionless_authentication_provider' =>
+                'ONGR\SettingsBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider',
 
-            'ongr_admin.authentication.signature_generator' =>
-                'ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessSignatureGenerator',
+            'ongr_settings.authentication.signature_generator' =>
+                'ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessSignatureGenerator',
 
-            'ongr_admin.authentication.sessionless_security_context' =>
-                'ONGR\AdminBundle\Security\Core\SessionlessSecurityContext',
+            'ongr_settings.authentication.sessionless_security_context' =>
+                'ONGR\SettingsBundle\Security\Core\SessionlessSecurityContext',
 
-            'ongr_admin.authentication.sessionless_cookie_listener' =>
-                'ONGR\AdminBundle\EventListener\Security\SessionlessCookieListener',
+            'ongr_settings.authentication.sessionless_cookie_listener' =>
+                'ONGR\SettingsBundle\EventListener\Security\SessionlessCookieListener',
         ];
 
         $services = array_merge($servicesTwig, $servicesSettings, $servicesAuth);

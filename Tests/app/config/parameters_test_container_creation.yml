@@ -15,10 +15,10 @@ parameters:
     cdn_url: 'http:%cdn_base_url%'
     cdn_url_ssl: 'https:%cdn_base_url%'
 
-    ongr_admin.environment_variables_pass_test_param: unchanged_param
+    ongr_settings.environment_variables_pass_test_param: unchanged_param
 
-    ongr_admin.authentication.users:
+    ongr_settings.authentication.users:
         foo_user:
             password: 'foo_password'
 
-    ongr_admin.authentication.secret: O0EKwvq8Sv30O3ImKdXT7aT
+    ongr_settings.authentication.secret: O0EKwvq8Sv30O3ImKdXT7aT

@@ -92,4 +92,4 @@ ongr_elasticsearch:
         default:
             connection: default
             mappings:
-              - ONGRAdminBundle
+              - ONGRSettingsBundle

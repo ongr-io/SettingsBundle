@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\Service;
+namespace ONGR\SettingsBundle\Tests\Unit\Service;
 
-use ONGR\AdminBundle\Document\Setting;
-use ONGR\AdminBundle\Service\SettingsManager;
+use ONGR\SettingsBundle\Document\Setting;
+use ONGR\SettingsBundle\Service\SettingsManager;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
@@ -165,7 +165,7 @@ class SettingsManagerTest extends ElasticsearchTestCase
     protected function getSettingMock()
     {
         return $this->getMock(
-            'ONGR\AdminBundle\Document\Setting'
+            'ONGR\SettingsBundle\Document\Setting'
         );
     }
 

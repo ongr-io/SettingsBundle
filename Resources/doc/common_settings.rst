@@ -16,8 +16,8 @@ To enable this functionality, You simply need to add routes to `routing.yml`:
     fos_js_routing:
         resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
-    ongr_admin:
-        resource: "@ONGRAdminBundle/Resources/config/routing.yml"
+    ongr_settings:
+        resource: "@ONGRSettingsBundle/Resources/config/routing.yml"
         prefix:   /settings/
 
 ..
@@ -53,16 +53,16 @@ To see this button you need to log in as Admin and enable "live settings". After
 Injecting Settings to Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Injecting settings we made as simple as it can be. To inject setting you only need to create setter method and add `ongr_admin.setting_aware`` tag to service declaration:
+Injecting settings we made as simple as it can be. To inject setting you only need to create setter method and add `ongr_settings.setting_aware`` tag to service declaration:
 
 .. code-block:: yaml
 
     services:
-        ongr_admin.demo_service:
-            class: %ongr_admin.demo_service.class%
+        ongr_settings.demo_service:
+            class: %ongr_settings.demo_service.class%
             tags:
                 # This is an example how ongr-admin can be used
-                - { name: 'ongr_admin.setting_aware', setting: 'count_per_page' }
+                - { name: 'ongr_settings.setting_aware', setting: 'count_per_page' }
 
 ..
 
@@ -95,7 +95,7 @@ Setting aware
 
 Sets service values from admin. Service must have a setter.
 
-- ``ongr_admin.setting_aware``
+- ``ongr_settings.setting_aware``
 - Parameters
     - ``setting`` - specify setting name set in admin
     - ``method`` - setter method name (optional)
@@ -112,13 +112,13 @@ Example YAML configuration:
         my_bundle.service:
             class: %my_bundle.service.class%
             tags:
-             - { name: ongr_admin.setting_aware, setting: my_setting, method: setMySetting}
+             - { name: ongr_settings.setting_aware, setting: my_setting, method: setMySetting}
 
 ..
 
 
 More about
 ~~~~~~~
-- `Admin settings usage </Resources/doc/admin_settings.rst>`_
+- `Admin settings usage </Resources/doc/general_settings.rst>`_
 - `Flash bag usage </Resources/doc/flash_bag.rst>`_
 - `Environment variables usage </Resources/doc/env_variable.rst>`_

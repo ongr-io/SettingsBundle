@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\Service;
+namespace ONGR\SettingsBundle\Tests\Unit\Service;
 
-use ONGR\AdminBundle\Document\Pair;
-use ONGR\AdminBundle\Service\PairStorage;
+use ONGR\SettingsBundle\Document\Pair;
+use ONGR\SettingsBundle\Service\PairStorage;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
@@ -256,7 +256,7 @@ class PairStorageTest extends \PHPUnit_Framework_TestCase
     protected function getPairMock()
     {
         return $this->getMock(
-            'ONGR\AdminBundle\Document\Pair'
+            'ONGR\SettingsBundle\Document\Pair'
         );
     }
 

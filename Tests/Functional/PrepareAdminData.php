@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional;
+namespace ONGR\SettingsBundle\Tests\Functional;
 
-use ONGR\AdminBundle\Document\Setting;
+use ONGR\SettingsBundle\Document\Setting;
 use ONGR\ElasticsearchBundle\Command\IndexCreateCommand;
 use ONGR\ElasticsearchBundle\Command\TypeUpdateCommand;
 use ONGR\ElasticsearchBundle\Client\Connection;
@@ -22,7 +22,7 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- *  Prepares data for functional Admin testing.
+ *  Prepares data for functional General testing.
  */
 class PrepareAdminData extends ElasticsearchTestCase
 {
@@ -73,7 +73,7 @@ class PrepareAdminData extends ElasticsearchTestCase
         $indexName = $this->extractIndexName($commandTester);
 
         $this->connection->setIndexName($indexName);
-        $repo = $this->manager->getRepository('ONGRAdminBundle:Setting');
+        $repo = $this->manager->getRepository('ONGRSettingsBundle:Setting');
 
         $search = $repo
             ->createSearch()

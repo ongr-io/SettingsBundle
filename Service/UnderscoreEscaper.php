@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Service;
+namespace ONGR\SettingsBundle\Service;
 
 /**
  * Handles string escaping and unescaping.

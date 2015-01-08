@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\EventListener;
+namespace ONGR\SettingsBundle\EventListener;
 
 use ONGR\CookiesBundle\Cookie\Model\JsonCookie;
 use ONGR\CookiesBundle\DependencyInjection\ContainerAwareTrait;
-use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
+use ONGR\SettingsBundle\Settings\General\GeneralSettingsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
@@ -25,9 +25,9 @@ class SettingsCookieListener
     use ContainerAwareTrait;
 
     /**
-     * @var AdminSettingsManager
+     * @var GeneralSettingsManager
      */
-    protected $adminSettingsManager;
+    protected $generalSettingsManager;
 
     /**
      * {@inheritdoc}
@@ -36,7 +36,7 @@ class SettingsCookieListener
         /** @noinspection PhpUnusedParameterInspection */
         GetResponseEvent $event
     ) {
-        $settingsMap = $this->adminSettingsManager->getSettingsMap();
+        $settingsMap = $this->generalSettingsManager->getSettingsMap();
         $cookiesServiceNames = array_map(
             function ($setting) {
                 return $setting['cookie'];
@@ -49,16 +49,16 @@ class SettingsCookieListener
             /** @var JsonCookie $cookie */
             $cookie = $this->container->get($cookieServiceName, ContainerInterface::NULL_ON_INVALID_REFERENCE);
             if ($cookie !== null && $cookie->getValue() !== null) {
-                $this->adminSettingsManager->addSettingsFromCookie($cookie->getValue());
+                $this->generalSettingsManager->addSettingsFromCookie($cookie->getValue());
             }
         }
     }
 
     /**
-     * @param \ONGR\AdminBundle\Settings\Admin\AdminSettingsManager $adminSettingsManager
+     * @param \ONGR\SettingsBundle\Settings\General\GeneralSettingsManager $generalSettingsManager
      */
-    public function setAdminSettingsManager($adminSettingsManager)
+    public function setGeneralSettingsManager($generalSettingsManager)
     {
-        $this->adminSettingsManager = $adminSettingsManager;
+        $this->generalSettingsManager = $generalSettingsManager;
     }
 }

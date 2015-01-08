@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection;
+namespace ONGR\SettingsBundle\Tests\Functional\DependencyInjection;
 
-use ONGR\AdminBundle\Document\Setting;
+use ONGR\SettingsBundle\Document\Setting;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
 class SettingInjectionTest extends ElasticsearchTestCase
@@ -27,7 +27,7 @@ class SettingInjectionTest extends ElasticsearchTestCase
     public function testSettingInjection()
     {
         /** @var DummyService $dummyService */
-        $dummyService = $this->getContainer()->get('ongr_admin.dummy_service');
+        $dummyService = $this->getContainer()->get('ongr_settings.dummy_service');
 
         $this->assertEquals($this->expected, $dummyService->getSetting1());
     }

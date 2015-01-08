@@ -43,6 +43,6 @@
         "ongr/oxid-bundle": "Allows to transfer shop data from OXID to ONGR"
     },
     "autoload": {
-        "psr-4": { "ONGR\\AdminBundle\\": "" }
+        "psr-4": { "ONGR\\SettingsBundle\\": "" }
     }
 }

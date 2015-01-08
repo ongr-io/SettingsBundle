@@ -11,7 +11,7 @@
 
 namespace ONGR\UtilsBundle\Tests\Functional\Twig;
 
-use ONGR\AdminBundle\Twig\EncryptionExtension;
+use ONGR\SettingsBundle\Twig\EncryptionExtension;
 
 /**
  * Provides tests for content extention.

@@ -1,4 +1,4 @@
-{% extends "ONGRAdminBundle::plain_bootstrap_base.html.twig" %}
+{% extends "ONGRSettingsBundle::plain_bootstrap_base.html.twig" %}
 
 {% block title %}User login{% endblock %}
 
@@ -18,8 +18,8 @@
                         <p>You are already logged in.</p>
                     </div>
                     <div class="list-group">
-                        <a href="{{ path('ongr_admin_settings_settings') }}" class="list-group-item">Settings</a>
-                        <a href="{{ path('ongr_admin_sessionless_logout') }}" class="list-group-item">Logout</a>
+                        <a href="{{ path('ongr_settings_settings_settings') }}" class="list-group-item">Settings</a>
+                        <a href="{{ path('ongr_settings_sessionless_logout') }}" class="list-group-item">Logout</a>
                     </div>
                     {% else %}
                         <div class="panel-body">

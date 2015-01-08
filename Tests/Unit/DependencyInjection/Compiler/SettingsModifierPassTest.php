@@ -11,7 +11,7 @@
 
 namespace ONGR\Functional\Tests\Functional\DependencyInjection\Compiler;
 
-use ONGR\AdminBundle\DependencyInjection\Compiler\SettingsModifierPass;
+use ONGR\SettingsBundle\DependencyInjection\Compiler\SettingsModifierPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class SettingsModifierPassTest extends \PHPUnit_Framework_TestCase
@@ -54,7 +54,7 @@ class SettingsModifierPassTest extends \PHPUnit_Framework_TestCase
         $container
             ->expects($this->once())
             ->method('findTaggedServiceIds')
-            ->with('ongr_admin.admin_profiles_provider')
+            ->with('ongr_settings.admin_profiles_provider')
             ->willReturn(
                 [
                     'service_id' => [$tagAttributes],

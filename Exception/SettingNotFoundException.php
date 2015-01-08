@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Exception;
+namespace ONGR\SettingsBundle\Exception;
 
 /**
  * Exception thrown when setting is not found in SettingsContainer.

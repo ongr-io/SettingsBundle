@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection;
+namespace ONGR\SettingsBundle\Tests\Functional\DependencyInjection;
 
-use ONGR\AdminBundle\DependencyInjection\Configuration;
+use ONGR\SettingsBundle\DependencyInjection\Configuration;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Component\Config\Definition\Processor;
 

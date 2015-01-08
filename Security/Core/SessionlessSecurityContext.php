@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Security\Core;
+namespace ONGR\SettingsBundle\Security\Core;
 
-use ONGR\AdminBundle\Security\Authentication\Token\SessionlessToken;
+use ONGR\SettingsBundle\Security\Authentication\Token\SessionlessToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 

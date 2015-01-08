@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Integration\Controller;
+namespace ONGR\SettingsBundle\Tests\Integration\Controller;
 
-use ONGR\AdminBundle\Tests\Functional\CookieTestHelper;
+use ONGR\SettingsBundle\Tests\Functional\CookieTestHelper;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -85,7 +85,7 @@ class UserControllerTest extends WebTestCase
             // Assert correct cookie has been set.
             /** @var Cookie $cookie */
             $cookie = $response->headers->getCookies()[0];
-            $this->assertSame('ongr_admin_user_auth', $cookie->getName());
+            $this->assertSame('ongr_settings_user_auth', $cookie->getName());
             $this->assertSame('foo_user', json_decode($cookie->getValue(), true)['username']);
         } else {
             // Assert not a redirect.
@@ -207,7 +207,7 @@ class UserControllerTest extends WebTestCase
         CookieTestHelper::setAuthenticationCookie($this->client);
 
         // Get cookie value.
-        $cookie = $this->client->getCookieJar()->get('ongr_admin_user_auth');
+        $cookie = $this->client->getCookieJar()->get('ongr_settings_user_auth');
         $valueJson = $cookie->getValue();
         $value = json_decode($valueJson, true);
 
@@ -222,7 +222,7 @@ class UserControllerTest extends WebTestCase
     {
         // Set cookie.
         $newCookie = new \Symfony\Component\BrowserKit\Cookie(
-            'ongr_admin_user_auth',
+            'ongr_settings_user_auth',
             json_encode(
                 $cookieValue
             ),

@@ -1,0 +1,11 @@
+#Admin settings
+ongr_settings_settings_settings:
+    path: /settings
+    defaults:
+        _controller: ONGRSettingsBundle:GeneralSettings:settings
+
+ongr_settings_settings_change:
+    path: /setting/change/{encodedName}
+    defaults:
+        _controller: ONGRSettingsBundle:GeneralSettings:changeSetting
+        methods: [GET]

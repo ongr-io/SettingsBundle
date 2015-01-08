@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\DependencyInjection\Compiler;
+namespace ONGR\SettingsBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,9 +25,9 @@ class SettingsModifierPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $collectionService = $container->getDefinition('ongr_admin.settings.settings_structure');
+        $collectionService = $container->getDefinition('ongr_settings.settings.settings_structure');
 
-        $tagName = 'ongr_admin.admin_profiles_provider';
+        $tagName = 'ongr_settings.admin_profiles_provider';
         $taggedDefinitions = $container->findTaggedServiceIds($tagName);
 
         foreach ($taggedDefinitions as $id => $tags) {

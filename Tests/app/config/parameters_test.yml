@@ -15,13 +15,13 @@ parameters:
     cdn_url: 'http:%cdn_base_url%'
     cdn_url_ssl: 'https:%cdn_base_url%'
 
-    ongr_admin.environment_variables_pass_test_param: unchanged_param
+    ongr_settings.environment_variables_pass_test_param: unchanged_param
 
-    ongr_admin.authentication.users:
+    ongr_settings.authentication.users:
         foo_user:
             password: 'foo_password'
 
-    ongr_admin.settings.settings:
+    ongr_settings.settings.settings:
         foo_setting_1:
             name: Foo Setting 1
             category: category_1
@@ -39,4 +39,4 @@ parameters:
             description: 'foo_desc_4'
             cookie: project.cookie.ab_settings
 
-    ongr_admin.authentication.secret: O0EKwvq8Sv30O3ImKdXT7aT
+    ongr_settings.authentication.secret: O0EKwvq8Sv30O3ImKdXT7aT

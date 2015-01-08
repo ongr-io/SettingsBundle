@@ -35,7 +35,7 @@ class AppKernel extends Kernel
             new Tedivm\StashBundle\TedivmStashBundle(),
             
             new ONGR\CookiesBundle\ONGRCookiesBundle(),
-            new ONGR\AdminBundle\ONGRAdminBundle(),
+            new ONGR\SettingsBundle\ONGRSettingsBundle(),
         ];
     }
 

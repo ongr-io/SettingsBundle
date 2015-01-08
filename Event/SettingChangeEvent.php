@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Event;
+namespace ONGR\SettingsBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 

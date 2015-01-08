@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Security\Authentication\Provider;
+namespace ONGR\SettingsBundle\Security\Authentication\Provider;
 
-use ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessSignatureGenerator;
-use ONGR\AdminBundle\Security\Authentication\Token\SessionlessToken;
+use ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessSignatureGenerator;
+use ONGR\SettingsBundle\Security\Authentication\Token\SessionlessToken;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;

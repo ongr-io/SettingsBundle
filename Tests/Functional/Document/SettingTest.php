@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Document;
+namespace ONGR\SettingsBundle\Tests\Functional\Document;
 
-use ONGR\AdminBundle\Document\Setting;
+use ONGR\SettingsBundle\Document\Setting;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
 /**
@@ -24,7 +24,7 @@ class SettingTest extends ElasticsearchTestCase
      */
     public function testDocumentsSave()
     {
-        $repo = $this->getManager()->getRepository('ONGRAdminBundle:Setting');
+        $repo = $this->getManager()->getRepository('ONGRSettingsBundle:Setting');
 
         /** @var Setting $setting */
         $setting = $repo->find('testProfile_name0');

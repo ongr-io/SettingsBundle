@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\Service;
+namespace ONGR\SettingsBundle\Tests\Unit\Service;
 
-use ONGR\AdminBundle\Service\SettingAwareServiceFactory;
-use ONGR\AdminBundle\Exception\SettingNotFoundException;
+use ONGR\SettingsBundle\Service\SettingAwareServiceFactory;
+use ONGR\SettingsBundle\Exception\SettingNotFoundException;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
 class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
@@ -90,7 +90,7 @@ class SettingAwareServiceFactoryTest extends ElasticsearchTestCase
      */
     protected function getSettingMock()
     {
-        return $this->getMock('ONGR\AdminBundle\Settings\Common\SettingsContainerInterface');
+        return $this->getMock('ONGR\SettingsBundle\Settings\Personal\SettingsContainerInterface');
     }
 
     /**

@@ -1,3 +1,3 @@
 ========================
-AdminBundle Installation
+SettingsBundle Installation
 ========================

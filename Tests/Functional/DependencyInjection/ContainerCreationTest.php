@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection;
+namespace ONGR\SettingsBundle\Tests\Functional\DependencyInjection;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -32,8 +32,14 @@ class ContainerCreationTest extends WebTestCase
     public function testAdminUserCategory()
     {
         $container = self::createClient()->getContainer();
-        $this->assertArrayHasKey('ongr_admin_settings', $container->getParameter('ongr_admin.settings.categories'));
-        $this->assertArrayHasKey('ongr_admin_profiles', $container->getParameter('ongr_admin.settings.categories'));
+        $this->assertArrayHasKey(
+            'ongr_settings_settings',
+            $container->getParameter('ongr_settings.settings.categories')
+        );
+        $this->assertArrayHasKey(
+            'ongr_settings_profiles',
+            $container->getParameter('ongr_settings.settings.categories')
+        );
     }
 
     /**
@@ -44,6 +50,9 @@ class ContainerCreationTest extends WebTestCase
         $kernel = self::createClient(['environment' => 'test_container_creation'])->getKernel();
         $container = $kernel->getContainer();
 
-        $this->assertArrayHasKey('ongr_admin_live_settings', $container->getParameter('ongr_admin.settings.settings'));
+        $this->assertArrayHasKey(
+            'ongr_settings_live_settings',
+            $container->getParameter('ongr_settings.settings.settings')
+        );
     }
 }

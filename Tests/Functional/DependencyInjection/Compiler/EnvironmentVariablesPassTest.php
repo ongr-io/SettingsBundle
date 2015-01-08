@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection\Compiler;
+namespace ONGR\SettingsBundle\Tests\Functional\DependencyInjection\Compiler;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -29,17 +29,17 @@ class EnvironmentVariablesPassTest extends WebTestCase
 
         $this->assertEquals(
             'unchanged_param',
-            $container->getParameter('ongr_admin.environment_variables_pass_test_param')
+            $container->getParameter('ongr_settings.environment_variables_pass_test_param')
         );
 
         // Now set an env variable and check if it has changed the default one.
-        $_SERVER['ongr__ongr_admin__environment_variables_pass_test_param'] = 'successful_change';
+        $_SERVER['ongr__ongr_settings__environment_variables_pass_test_param'] = 'successful_change';
         $kernel = self::createClient(['environment' => 'test_alternative'])->getKernel();
         $container = $kernel->getContainer();
 
         $this->assertEquals(
             'successful_change',
-            $container->getParameter('ongr_admin.environment_variables_pass_test_param')
+            $container->getParameter('ongr_settings.environment_variables_pass_test_param')
         );
     }
 }

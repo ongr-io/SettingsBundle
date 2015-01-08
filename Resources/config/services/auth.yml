@@ -1,61 +1,61 @@
 parameters:
     # Authentication cookie service.
-    ongr_admin.authentication.authentication_cookie_service.class: ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService
-    ongr_admin.authentication.authentication_cookie.name: ongr_admin_user_auth
-    ongr_admin.authentication.authentication_cookie.expiration: P1D # 1 day
-    ongr_admin.authentication.authentication_cookie.defaults:
-        expires_interval: %ongr_admin.authentication.authentication_cookie.expiration%
+    ongr_settings.authentication.authentication_cookie_service.class: ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService
+    ongr_settings.authentication.authentication_cookie.name: ongr_settings_user_auth
+    ongr_settings.authentication.authentication_cookie.expiration: P1D # 1 day
+    ongr_settings.authentication.authentication_cookie.defaults:
+        expires_interval: %ongr_settings.authentication.authentication_cookie.expiration%
 
     # Authentication provider.
-    ongr_admin.authentication.sessionless_authentication_provider.class: ONGR\AdminBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider
-    ongr_admin.authentication.users: []
+    ongr_settings.authentication.sessionless_authentication_provider.class: ONGR\SettingsBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider
+    ongr_settings.authentication.users: []
 
     # Signature generator.
-    ongr_admin.authentication.signature_generator.class: ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessSignatureGenerator
-    ongr_admin.authentication.secret: Override%Me
+    ongr_settings.authentication.signature_generator.class: ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessSignatureGenerator
+    ongr_settings.authentication.secret: Override%Me
 
     # Other services.
-    ongr_admin.authentication.sessionless_security_context.class: ONGR\AdminBundle\Security\Core\SessionlessSecurityContext
-    ongr_admin.authentication.sessionless_cookie_listener.class: ONGR\AdminBundle\EventListener\Security\SessionlessCookieListener
+    ongr_settings.authentication.sessionless_security_context.class: ONGR\SettingsBundle\Security\Core\SessionlessSecurityContext
+    ongr_settings.authentication.sessionless_cookie_listener.class: ONGR\SettingsBundle\EventListener\Security\SessionlessCookieListener
 
 services:
-    ongr_admin.authentication.sessionless_security_context:
-        class: %ongr_admin.authentication.sessionless_security_context.class%
+    ongr_settings.authentication.sessionless_security_context:
+        class: %ongr_settings.authentication.sessionless_security_context.class%
 
-    ongr_admin.authentication.sessionless_cookie_listener:
-        class: %ongr_admin.authentication.sessionless_cookie_listener.class%
+    ongr_settings.authentication.sessionless_cookie_listener:
+        class: %ongr_settings.authentication.sessionless_cookie_listener.class%
         arguments:
-            - @ongr_admin.authentication.sessionless_security_context
-            - @ongr_admin.authentication.sessionless_authentication_provider
-            - @ongr_admin.authentication.authentication_cookie_service
+            - @ongr_settings.authentication.sessionless_security_context
+            - @ongr_settings.authentication.sessionless_authentication_provider
+            - @ongr_settings.authentication.authentication_cookie_service
         calls:
-            - [ setAuthCookie, [ @ongr_admin.authentication.authentication_cookie ] ]
+            - [ setAuthCookie, [ @ongr_settings.authentication.authentication_cookie ] ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 128 }
         scope: request
 
-    ongr_admin.authentication.sessionless_authentication_provider:
-        class: %ongr_admin.authentication.sessionless_authentication_provider.class%
+    ongr_settings.authentication.sessionless_authentication_provider:
+        class: %ongr_settings.authentication.sessionless_authentication_provider.class%
         arguments:
-            - @ongr_admin.authentication.signature_generator
-            - %ongr_admin.authentication.users%
-            - %ongr_admin.settings.settings%
+            - @ongr_settings.authentication.signature_generator
+            - %ongr_settings.authentication.users%
+            - %ongr_settings.settings.settings%
 
-    ongr_admin.authentication.signature_generator:
-        class: %ongr_admin.authentication.signature_generator.class%
+    ongr_settings.authentication.signature_generator:
+        class: %ongr_settings.authentication.signature_generator.class%
         arguments:
-            - %ongr_admin.authentication.secret%
+            - %ongr_settings.authentication.secret%
 
-    ongr_admin.authentication.authentication_cookie_service:
-        class: %ongr_admin.authentication.authentication_cookie_service.class%
+    ongr_settings.authentication.authentication_cookie_service:
+        class: %ongr_settings.authentication.authentication_cookie_service.class%
         arguments:
-            - @ongr_admin.authentication.signature_generator
-            - %ongr_admin.authentication.authentication_cookie.expiration%
+            - @ongr_settings.authentication.signature_generator
+            - %ongr_settings.authentication.authentication_cookie.expiration%
 
-    ongr_admin.authentication.authentication_cookie:
+    ongr_settings.authentication.authentication_cookie:
         class: %ongr_cookie.json.class%
-        arguments: [ %ongr_admin.authentication.authentication_cookie.name% ]
+        arguments: [ %ongr_settings.authentication.authentication_cookie.name% ]
         calls:
-            - [ setDefaults, [ %ongr_admin.authentication.authentication_cookie.defaults% ] ]
+            - [ setDefaults, [ %ongr_settings.authentication.authentication_cookie.defaults% ] ]
         tags:
             - { name: ongr_cookie.cookie }

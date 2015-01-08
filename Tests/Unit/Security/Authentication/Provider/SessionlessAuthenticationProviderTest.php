@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Security\Authentication\Provider;
+namespace ONGR\SettingsBundle\Tests\Functional\Security\Authentication\Provider;
 
-use ONGR\AdminBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider;
-use ONGR\AdminBundle\Security\Authentication\Token\SessionlessToken;
+use ONGR\SettingsBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider;
+use ONGR\SettingsBundle\Security\Authentication\Token\SessionlessToken;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 
 class SessionlessAuthenticationProviderTest extends \PHPUnit_Framework_TestCase

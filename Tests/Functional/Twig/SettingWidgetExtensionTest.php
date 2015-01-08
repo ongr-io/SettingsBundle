@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Twig;
+namespace ONGR\SettingsBundle\Tests\Functional\Twig;
 
-use ONGR\AdminBundle\Exception\SettingNotFoundException;
-use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
-use ONGR\AdminBundle\Twig\SettingWidgetExtension;
+use ONGR\SettingsBundle\Exception\SettingNotFoundException;
+use ONGR\SettingsBundle\Settings\General\GeneralSettingsManager;
+use ONGR\SettingsBundle\Twig\SettingWidgetExtension;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
 /**
@@ -28,9 +28,9 @@ class SettingWidgetExtensionTest extends ElasticsearchTestCase
     {
         $container = $this->getContainer();
         /** @var SettingWidgetExtension $extension */
-        $extension = $container->get('ongr_admin.twig.admin_extension');
+        $extension = $container->get('ongr_settings.twig.admin_extension');
         $this->assertInstanceOf(
-            'ONGR\AdminBundle\Twig\SettingWidgetExtension',
+            'ONGR\SettingsBundle\Twig\SettingWidgetExtension',
             $extension,
             'extension has wrong instance.'
         );
@@ -80,10 +80,10 @@ HEREDOC;
     public function testShowSetting($expectedOutput, $settingName, $isAuthenticated, $type = null)
     {
         $container = self::createClient()->getContainer();
-        $securityContext = $container->get('ongr_admin.authentication.sessionless_security_context');
+        $securityContext = $container->get('ongr_settings.authentication.sessionless_security_context');
         $securityContext->setToken($this->getTokenMock());
-        $settingsManager = $container->get('ongr_admin.settings.admin_settings_manager');
-        $settingsManager->setSettingsFromForm(['ongr_admin_live_settings' => true]);
+        $settingsManager = $container->get('ongr_settings.settings.general_settings_manager');
+        $settingsManager->setSettingsFromForm(['ongr_settings_live_settings' => true]);
 
         /** @var \Twig_Environment $twig */
         $twig = $container->get('twig');
@@ -105,7 +105,7 @@ HEREDOC;
     {
         $expectedValue = 'foo-bar';
 
-        $settingContainer = $this->getMock('ONGR\AdminBundle\Settings\Common\SettingsContainerInterface');
+        $settingContainer = $this->getMock('ONGR\SettingsBundle\Settings\Personal\SettingsContainerInterface');
         $settingContainer->expects($this->once())->method('get')->with('test')->willReturn($expectedValue);
 
         $extension = new SettingWidgetExtension(null);
@@ -119,7 +119,7 @@ HEREDOC;
      */
     public function testGetAdminSettingException()
     {
-        $settingContainer = $this->getMock('ONGR\AdminBundle\Settings\Common\SettingsContainerInterface');
+        $settingContainer = $this->getMock('ONGR\SettingsBundle\Settings\Personal\SettingsContainerInterface');
         $settingContainer
             ->expects($this->once())
             ->method('get')
@@ -133,15 +133,15 @@ HEREDOC;
     }
 
     /**
-     * Gets a AdminSettingsManager mock.
+     * Gets a GeneralSettingsManager mock.
      *
      * @param bool $authenticated
      *
-     * @return AdminSettingsManager
+     * @return GeneralSettingsManager
      */
     protected function getSettingsManagerMock($authenticated)
     {
-        $settingsManager = $this->getMockBuilder('ONGR\AdminBundle\Settings\Admin\AdminSettingsManager')
+        $settingsManager = $this->getMockBuilder('ONGR\SettingsBundle\Settings\General\GeneralSettingsManager')
             ->disableOriginalConstructor()
             ->setMethods(['isAuthenticated'])
             ->getMock();
@@ -158,7 +158,7 @@ HEREDOC;
      */
     protected function getTokenMock()
     {
-        return $this->getMockBuilder('ONGR\\AdminBundle\\Security\\Authentication\\Token\\SessionlessToken')
+        return $this->getMockBuilder('ONGR\\SettingsBundle\\Security\\Authentication\\Token\\SessionlessToken')
             ->disableOriginalConstructor()
             ->getMock();
     }

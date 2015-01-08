@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\DependencyInjection\Compiler;
+namespace ONGR\SettingsBundle\Tests\Unit\DependencyInjection\Compiler;
 
-use ONGR\AdminBundle\DependencyInjection\Compiler\SettingAwareFactoryPass;
+use ONGR\SettingsBundle\DependencyInjection\Compiler\SettingAwareFactoryPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -25,19 +25,19 @@ class SettingAwareFactoryPassTest extends \PHPUnit_Framework_TestCase
         $container = new ContainerBuilder();
 
         $definition = new Definition();
-        $definition->addTag('ongr_admin.setting_aware', ['setting' => 'setting_1']);
-        $definition->addTag('ongr_admin.setting_aware', ['setting' => 'setting_2', 'method' => 'setAnother']);
+        $definition->addTag('ongr_settings.setting_aware', ['setting' => 'setting_1']);
+        $definition->addTag('ongr_settings.setting_aware', ['setting' => 'setting_2', 'method' => 'setAnother']);
         $definition->addTag('custom_tag');
-        $container->setDefinition('ongr_admin.fake_service', $definition);
+        $container->setDefinition('ongr_settings.fake_service', $definition);
 
         $pass = new SettingAwareFactoryPass();
         $pass->process($container);
 
-        $this->assertTrue($container->hasDefinition('ongr_admin.fake_service'), 'target service');
-        $this->assertTrue($container->hasDefinition('ongr_admin.fake_service_base'), 'base service');
-        $this->assertTrue($container->getDefinition('ongr_admin.fake_service')->hasTag('custom_tag'), 'custom tag');
+        $this->assertTrue($container->hasDefinition('ongr_settings.fake_service'), 'target service');
+        $this->assertTrue($container->hasDefinition('ongr_settings.fake_service_base'), 'base service');
+        $this->assertTrue($container->getDefinition('ongr_settings.fake_service')->hasTag('custom_tag'), 'custom tag');
 
-        $callMap = $container->getDefinition('ongr_admin.fake_service')->getArgument(0);
+        $callMap = $container->getDefinition('ongr_settings.fake_service')->getArgument(0);
 
         $expectedCallMap = [
             'setting_1' => null,

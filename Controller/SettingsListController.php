@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Controller;
+namespace ONGR\SettingsBundle\Controller;
 
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\FilterManagerBundle\Filters\ViewData;
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class SettingsListController. Is used for managing settings in Admin env.
+ * Class SettingsListController. Is used for managing settings in General env.
  */
 class SettingsListController extends Controller
 {
@@ -38,7 +38,7 @@ class SettingsListController extends Controller
     public function listAction(Request $request)
     {
         return $this->render(
-            'ONGRAdminBundle:Settings:list.html.twig',
+            'ONGRSettingsBundle:Settings:list.html.twig',
             array_merge(
                 $this->getListData($request)
             )
@@ -89,7 +89,7 @@ class SettingsListController extends Controller
         $container->set('profile', $profile);
 
         /** @var FiltersManager $fm */
-        $fm = new FiltersManager($container, $manager->getRepository('ONGRAdminBundle:Setting'));
+        $fm = new FiltersManager($container, $manager->getRepository('ONGRSettingsBundle:Setting'));
         $fmr = $fm->execute($request);
 
         return [

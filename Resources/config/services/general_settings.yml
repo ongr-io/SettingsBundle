@@ -1,0 +1,65 @@
+parameters:
+    # Settings structure service.
+    ongr_settings.settings.settings_structure.class: ONGR\SettingsBundle\Settings\General\SettingsStructure
+    ongr_settings.settings.settings: []
+    ongr_settings.settings.categories: []
+
+    # Cookie service.
+    ongr_settings.settings.settings_cookie_service.class: ONGR\SettingsBundle\Settings\SettingsCookieService
+    ongr_settings.settings.settings_cookie.name: ongr_settings_user_settings
+    ongr_settings.settings.settings_cookie.defaults:
+        expires_interval: P1Y # 1 year.
+
+    # Cookie listener.
+    ongr_settings.settings.settings_cookie_listener.class: ONGR\SettingsBundle\EventListener\SettingsCookieListener
+
+    # General Settings manager service class.
+    ongr_settings.settings.general_settings_manager.class: ONGR\SettingsBundle\Settings\General\GeneralSettingsManager
+
+    # General profiles provider.
+    ongr_settings.admin_profiles_provider.class: ONGR\SettingsBundle\Settings\General\GeneralProfilesProvider
+
+services:
+    ongr_settings.settings.settings_structure:
+        class: %ongr_settings.settings.settings_structure.class%
+        arguments:
+            - %ongr_settings.settings.settings%
+            - %ongr_settings.settings.categories%
+
+    ongr_settings.settings.settings_cookie_service:
+        class: %ongr_settings.settings.settings_cookie_service.class%
+        arguments:
+            - %ongr_settings.settings.settings_cookie.name%
+
+    ongr_settings.settings.settings_cookie_listener:
+        class: %ongr_settings.settings.settings_cookie_listener.class%
+        calls:
+            - [ setGeneralSettingsManager, [ @ongr_settings.settings.general_settings_manager ] ]
+            - [ setContainer, [ @service_container ] ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 6 }
+        scope: request
+
+    ongr_settings.settings.settings_cookie:
+        class: %ongr_cookie.json.class%
+        arguments: [ %ongr_settings.settings.settings_cookie.name% ]
+        calls:
+            - [ setDefaults, [ %ongr_settings.settings.settings_cookie.defaults% ] ]
+        tags:
+            - { name: ongr_cookie.cookie }
+
+    #General settings manager class
+    ongr_settings.settings.general_settings_manager:
+        class: %ongr_settings.settings.general_settings_manager.class%
+        arguments:
+            - @ongr_settings.authentication.sessionless_security_context
+            - @ongr_settings.settings.settings_structure
+
+    # General profiles provider
+    ongr_settings.admin_profiles_provider:
+        class: %ongr_settings.admin_profiles_provider.class%
+        calls:
+            - [ setProfileManager, [ @ongr_settings.profiles_manager ] ]
+            - [ setSettingsStructure, [ @ongr_settings.settings.settings_structure ] ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

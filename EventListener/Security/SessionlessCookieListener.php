@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\EventListener\Security;
+namespace ONGR\SettingsBundle\EventListener\Security;
 
 use ONGR\CookiesBundle\Cookie\Model\JsonCookie;
-use ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService;
-use ONGR\AdminBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider;
-use ONGR\AdminBundle\Security\Authentication\Token\SessionlessToken;
-use ONGR\AdminBundle\Security\Core\SessionlessSecurityContext;
+use ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService;
+use ONGR\SettingsBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider;
+use ONGR\SettingsBundle\Security\Authentication\Token\SessionlessToken;
+use ONGR\SettingsBundle\Security\Core\SessionlessSecurityContext;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -77,7 +77,7 @@ class SessionlessCookieListener
      *
      * @param GetResponseEvent $event
      *
-     * @return bool|\ONGR\AdminBundle\Security\Authentication\Token\SessionlessToken
+     * @return bool|\ONGR\SettingsBundle\Security\Authentication\Token\SessionlessToken
      */
     private function authenticateCookie(GetResponseEvent $event)
     {

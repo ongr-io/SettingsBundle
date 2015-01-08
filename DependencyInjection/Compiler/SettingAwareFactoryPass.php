@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\DependencyInjection\Compiler;
+namespace ONGR\SettingsBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -26,7 +26,7 @@ class SettingAwareFactoryPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definitions = $container->findTaggedServiceIds('ongr_admin.setting_aware');
+        $definitions = $container->findTaggedServiceIds('ongr_settings.setting_aware');
 
         foreach ($definitions as $serviceId => $tags) {
             $definition = $container->getDefinition($serviceId);
@@ -44,10 +44,10 @@ class SettingAwareFactoryPass implements CompilerPassInterface
                 $definition->getClass(),
                 [$callMap, new Reference("{$serviceId}_base")]
             );
-            $proxy->setFactoryService('ongr_admin.setting_aware_service_factory');
+            $proxy->setFactoryService('ongr_settings.setting_aware_service_factory');
             $proxy->setFactoryMethod('get');
 
-            unset($initialTags['ongr_admin.setting_aware']);
+            unset($initialTags['ongr_settings.setting_aware']);
             $proxy->setTags($initialTags);
 
             $container->setDefinition($serviceId, $proxy);

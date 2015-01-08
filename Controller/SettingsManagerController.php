@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Controller;
+namespace ONGR\SettingsBundle\Controller;
 
-use ONGR\AdminBundle\Service\SettingsManager;
+use ONGR\SettingsBundle\Service\SettingsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * SettingsManager controller responsible for CRUD actions from frontend for settings.
  *
- * @package ONGR\AdminBundle\Controller
+ * @package ONGR\SettingsBundle\Controller
  */
 class SettingsManagerController extends Controller
 {
@@ -63,7 +63,7 @@ class SettingsManagerController extends Controller
         $setting = $this->getSettingsManager()->get($name, $profile, false, $request->query->get('type', 'string'));
 
         return $this->render(
-            'ONGRAdminBundle:Settings:edit.html.twig',
+            'ONGRSettingsBundle:Settings:edit.html.twig',
             [
                 'setting' => $setting,
             ]
@@ -147,6 +147,6 @@ class SettingsManagerController extends Controller
      */
     protected function getSettingsManager()
     {
-        return $this->get('ongr_admin.settings_manager');
+        return $this->get('ongr_settings.settings_manager');
     }
 }

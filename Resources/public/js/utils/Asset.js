@@ -20,6 +20,6 @@ angular
             host = location.$$host;
             protocol = location.$$protocol;
 
-            return protocol + '://' + host +'/bundles/ongradmin/js/' + asset;
+            return protocol + '://' + host +'/bundles/ongrsettings/js/' + asset;
         }
     }]);

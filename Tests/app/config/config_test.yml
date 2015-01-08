@@ -92,7 +92,7 @@ ongr_elasticsearch:
         default:
             connection: default
             mappings:
-              - ONGRAdminBundle
+              - ONGRSettingsBundle
 
 services:
     project.cookie_bar:
@@ -109,7 +109,7 @@ services:
             - [setContainer, [@service_container]]
 
     project.controller.flash_bag:
-        class: ONGR\AdminBundle\Tests\Fixtures\FlashBag\FlashBagController
+        class: ONGR\SettingsBundle\Tests\Fixtures\FlashBag\FlashBagController
         calls:
             - [setContainer, [@service_container]]
 
@@ -119,18 +119,18 @@ services:
         tags:
             - { name: ongr_cookie.cookie }
 
-    ongr_admin.dummy_service:
-        class: ONGR\AdminBundle\Tests\Functional\DependencyInjection\DummyService
+    ongr_settings.dummy_service:
+        class: ONGR\SettingsBundle\Tests\Functional\DependencyInjection\DummyService
         tags:
-            - { name: 'ongr_admin.setting_aware', setting: 'setting_1' }
+            - { name: 'ongr_settings.setting_aware', setting: 'setting_1' }
 
-    ongr_admin.dummy_profile_provider:
-        class: %ongr_admin.settings_provider.class%
+    ongr_settings.dummy_profile_provider:
+        class: %ongr_settings.settings_provider.class%
         arguments: [domain_foo]
         calls:
             - [setManager, [@es.manager]]
 
-ongr_admin:
+ongr_settings:
     profiles: [ test1, test2, default, meh ]
     admin_user:
         categories:

@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\Controller;
+namespace ONGR\SettingsBundle\Tests\Unit\Controller;
 
-use ONGR\AdminBundle\Controller\SettingsManagerController;
-use ONGR\AdminBundle\Document\Setting;
+use ONGR\SettingsBundle\Controller\SettingsManagerController;
+use ONGR\SettingsBundle\Document\Setting;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,7 +52,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
     public function testSetSettingAction($name, $value, $status = Response::HTTP_OK)
     {
         $manager = $this
-            ->getMockBuilder('ONGR\AdminBundle\Service\SettingsManager')
+            ->getMockBuilder('ONGR\SettingsBundle\Service\SettingsManager')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -64,7 +64,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
         }
 
         $container = new ContainerBuilder();
-        $container->set('ongr_admin.settings_manager', $manager);
+        $container->set('ongr_settings.settings_manager', $manager);
 
         $controller = new SettingsManagerController();
         $controller->setContainer($container);
@@ -90,7 +90,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(json_encode(['setting' => ['data' => ['value' => 'foobaz']]])));
 
         $manager = $this
-            ->getMockBuilder('ONGR\AdminBundle\Service\SettingsManager')
+            ->getMockBuilder('ONGR\SettingsBundle\Service\SettingsManager')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -109,7 +109,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
             ->with($setting);
 
         $container = new ContainerBuilder();
-        $container->set('ongr_admin.settings_manager', $manager);
+        $container->set('ongr_settings.settings_manager', $manager);
 
         $controller = new SettingsManagerController();
         $controller->setContainer($container);
