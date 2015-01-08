@@ -17,10 +17,6 @@ parameters:
 
     ongr_admin.environment_variables_pass_test_param: unchanged_param
 
-    ongr_admin.authentication.users:
-        foo_user:
-            password: 'foo_password'
-
     ongr_admin.settings.settings:
         foo_setting_1:
             name: Foo Setting 1

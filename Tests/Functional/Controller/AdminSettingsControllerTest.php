@@ -11,7 +11,8 @@
 
 namespace ONGR\AdminBundle\Tests\Functional\Controller;
 
-use ONGR\AdminBundle\Tests\Functional\CookieTestHelper;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use ONGR\AdminBundle\Tests\Fixtures\Security\LoginTestHelper;
 use ONGR\AdminBundle\Tests\Functional\PrepareAdminData;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -37,7 +38,7 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->client = self::createClient();
+        $this->client = new LoginTestHelper(self::createClient());
         $this->elastic = new PrepareAdminData();
     }
 
@@ -49,19 +50,15 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
         $this->elastic->createIndexSetting();
         $this->elastic->insertSettingData();
 
-        $this->client = self::createClient();
-        $this->client->restart();
-
-        // Set authentication cookie.
-        CookieTestHelper::setAuthenticationCookie($this->client);
+        $client = $this->client->loginAction('test', 'test');
 
         // Visit settings page.
-        $crawler = $this->client->request('GET', '/admin/settings');
+        $crawler = $client->request('GET', '/admin/settings');
 
         // Assert categories are rendered.
         /** @var array $categories */
-        $categories = $this->client->getContainer()->getParameter('ongr_admin.settings.categories');
-        $content = $this->client->getResponse()->getContent();
+        $categories = $client->getContainer()->getParameter('ongr_admin.settings.categories');
+        $content = $client->getResponse()->getContent();
 
         // Print $content.
         foreach ($categories as $category) {
@@ -82,20 +79,19 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
         $form['settings[ongr_admin_profile_Acme2]']->tick();
         /** @noinspection PhpUndefinedMethodInspection */
         $form['settings[ongr_admin_profile_Acme1]']->untick();
-
-        $this->client->submit($form);
+        $client->submit($form);
 
         // Assert successful redirect.
         $this->assertStringEndsWith(
-            '/settings',
-            $this->client->getResponse()->headers->get('location'),
+            'settings',
+            $client->getRequest()->getUri(),
             'response must be a correct redirect'
         );
 
         // Assert cookie values updated.
-        $cookieValue = $this->client
+        $cookieValue = $client
             ->getCookieJar()
-            ->get($this->client->getContainer()->getParameter('ongr_admin.settings.settings_cookie.name'))
+            ->get($client->getContainer()->getParameter('ongr_admin.settings.settings_cookie.name'))
             ->getValue();
 
         $expectedValue = [
@@ -108,47 +104,51 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
         $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
 
         // Try to change value through change setting action.
-        $this->client->request('get', '/admin/setting/change/' . base64_encode('foo_setting_1'));
+        $client->request('get', '/admin/setting/change/' . base64_encode('foo_setting_1'));
 
         // Assert cookie values updated.
-        $cookieValue = $this->client
+        $cookieValue = $client
             ->getCookieJar()
-            ->get($this->client->getContainer()->getParameter('ongr_admin.settings.settings_cookie.name'))
+            ->get($client->getContainer()->getParameter('ongr_admin.settings.settings_cookie.name'))
             ->getValue();
         $expectedValue['foo_setting_1'] = false;
         $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
 
         $this->elastic->cleanUp();
-        $this->client->restart();
     }
 
     /**
-     * Data provider for testActionsWhenNotLoggedIn.
-     *
-     * @return array
+     * Settings pages should not be allowed to access non-authorized users, redirect should be initiated.
      */
-    public function getTestActionsWhenNotLoggedInData()
+    public function testActionsWhenNotLoggedInNoRedirect()
     {
-        return [
-            ['/admin/settings', 302],
-            ['/admin/setting/change/new', 403],
-        ];
-    }
+        $client = $this->client->getClient();
+        $client->followRedirects(false);
 
-    /**
-     * Settings pages should not be allowed to access non-authorized users.
-     *
-     * @param string $url
-     * @param int    $status
-     *
-     * @dataProvider getTestActionsWhenNotLoggedInData
-     */
-    public function testActionsWhenNotLoggedIn($url, $status = 200)
-    {
         // Visit settings page.
-        $this->client->request('GET', $url);
+        $client->request('GET', '/admin/settings');
 
         // Assert access is redirected.
-        $this->assertSame($status, $this->client->getResponse()->getStatusCode());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Settings pages should not be allowed to access non-authorized users, user should be redirected this time.
+     */
+    public function testActionsWhenNotLoggedInRedirectToLogin()
+    {
+        $client = $this->client->getClient();
+        $client->followRedirects(true);
+        $client->request('GET', '/admin/logout');
+
+        // Visit settings page.
+        $client->request('GET', '/admin/settings');
+
+        // Assert successful redirect when not loged inn.
+        $this->assertStringEndsWith(
+            'login',
+            $client->getRequest()->getUri(),
+            'response must be a correct redirect'
+        );
     }
 }

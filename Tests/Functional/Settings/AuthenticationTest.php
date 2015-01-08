@@ -12,6 +12,7 @@
 namespace ONGR\AdminBundle\Tests\Functional\Settings;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use ONGR\AdminBundle\Tests\Fixtures\Security\LoginTestHelper;
 
 class AuthenticationTest extends WebTestCase
 {
@@ -25,6 +26,11 @@ class AuthenticationTest extends WebTestCase
     public function testRequest()
     {
         $client = self::createClient();
-        $client->request('GET', '/admin/login');
+        $loginHelper = new LoginTestHelper($client);
+        $client = $loginHelper->loginAction('test', 'test');
+        $response = $client->getResponse();
+
+        $this->assertContains('already logged in', $response->getContent());
+        $this->assertContains('Common Settings', $response->getContent());
     }
 }

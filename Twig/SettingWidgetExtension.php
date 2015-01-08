@@ -29,12 +29,12 @@ class SettingWidgetExtension extends \Twig_Extension
     const NAME = 'admin_extension';
 
     /**
-     * @var AdminSettingsManager
+     * @var AdminSettingsManager.
      */
     protected $adminSettingsManager;
 
     /**
-     * @var SettingsContainerInterface
+     * @var SettingsContainerInterface.
      */
     protected $settingContainer;
 

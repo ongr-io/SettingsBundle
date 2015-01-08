@@ -22,6 +22,11 @@ class AdminSettingsManager
     /**
      * @var string
      */
+    const ROLE_GRANTED = 'ROLE_ADMIN';
+
+    /**
+     * @var string
+     */
     const ROLE_DEFAULT = 'ROLE_SETTINGS_USER';
 
     /**
@@ -99,7 +104,7 @@ class AdminSettingsManager
      */
     public function isAuthenticated()
     {
-        return $this->securityContext->isGranted([]);
+        return $this->securityContext->isGranted(self::ROLE_GRANTED);
     }
 
     /**

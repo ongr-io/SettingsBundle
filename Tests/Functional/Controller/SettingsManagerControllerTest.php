@@ -11,10 +11,10 @@
 
 namespace ONGR\AdminBundle\Tests\Functional\Controller;
 
-use ONGR\AdminBundle\Document\Setting;
 use ONGR\AdminBundle\Settings\Common\Provider\ManagerAwareSettingProvider;
 use ONGR\AdminBundle\Settings\Common\SettingsContainer;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
+use ONGR\AdminBundle\Tests\Fixtures\Security\LoginTestHelper;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
@@ -22,6 +22,29 @@ use Symfony\Bundle\FrameworkBundle\Client;
  */
 class SettingsManagerControllerTest extends ElasticsearchTestCase
 {
+    /**
+     * @var Client.
+     */
+    private $client;
+
+    /**
+     * @var LoginTestHelper.
+     */
+    private $loginHelper;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->loginHelper = new LoginTestHelper(static::createClient());
+        $this->client = $this->loginHelper->loginAction();
+
+        $this->container = $this->client->getContainer();
+    }
+
     /**
      * Data provider for testCopyAction.
      *
@@ -45,6 +68,26 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
     }
 
     /**
+     * Create setting.
+     */
+    public function createSetting()
+    {
+        $requestContent = json_encode(['setting' => ['data' => ['value' => 'name0']]]);
+        $this->client->request('POST', '/admin/setting/ng/name0/edit/default', [], [], [], $requestContent);
+    }
+
+    /**
+     * Test for createAction().
+     */
+    public function testCreateSetting()
+    {
+        $requestContent = json_encode(['setting' => ['data' => ['value' => 'foo']]]);
+        $this->client->request('POST', '/admin/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
+        $response = $this->client->getResponse();
+        $this->assertTrue($response->isOk());
+    }
+
+    /**
      * Test for copyAction.
      *
      * @param int    $status
@@ -52,12 +95,27 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
      *
      * @dataProvider copyActionData()
      */
-    public function testCopyAction($status, $url)
+    public function testCopyActionLogedIn($status, $url)
     {
-        $client = static::createClient();
-        $client->request('GET', $url);
+        $this->createSetting();
+        $this->client->request('GET', $url);
+        $this->assertEquals($status, $this->client->getResponse()->getStatusCode());
+    }
 
-        $this->assertEquals($status, $client->getResponse()->getStatusCode());
+    /**
+     * Test for copyAction after logged Out.
+     *
+     * @param int    $status
+     * @param string $url
+     *
+     * @dataProvider copyActionData()
+     */
+    public function testCopyActionLogedOut($status, $url)
+    {
+        $this->createSetting();
+        $this->client = $this->loginHelper->logoutAction($this->client);
+        $this->client->request('GET', $url);
+        $this->assertSame('/admin/login', $this->client->getRequest()->getRequestUri());
     }
 
     /**
@@ -65,10 +123,9 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
      */
     public function testEditAction()
     {
-        $client = static::createClient();
-        $client->request('GET', '/admin/setting/name0/edit');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->createSetting();
+        $this->client->request('GET', '/admin/setting/name0/edit');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     /**
@@ -98,13 +155,11 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
      *
      * @dataProvider removeActionData()
      */
-
     public function testRemoveAction($url, $expectedStatusCode)
     {
-        $client = static::createClient();
-        $client->request('DELETE', $url);
-
-        $this->assertEquals($expectedStatusCode, $client->getResponse()->getStatusCode());
+        $this->createSetting();
+        $this->client->request('DELETE', $url);
+        $this->assertEquals($expectedStatusCode, $this->client->getResponse()->getStatusCode());
     }
 
     /**
@@ -112,7 +167,7 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
      */
     public function testCacheClearAfterModify()
     {
-        $client = static::createClient();
+        $client = $this->client;
 
         // Create setting.
         $requestContent = json_encode(['setting' => ['data' => ['value' => 'foo']]]);
@@ -136,28 +191,7 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
     }
 
     /**
-     * {@inheritdoc}
-     */
-    protected function getDataArray()
-    {
-        return [
-            'default' => [
-                'setting' => [
-                    [
-                        '_id' => 'default_name0',
-                        'name' => 'name0',
-                        'profile' => 'default',
-                        'description' => 'this should be updated',
-                        'type' => Setting::TYPE_STRING,
-                        'data' => (object)['value' => 'test1'],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * Assert value has been set for custom domain_foo.
+     * Assert value has been set.
      *
      * @param Client $client
      * @param string $expectedValue

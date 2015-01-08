@@ -22,7 +22,7 @@ class ImagePathExtension extends \Twig_Extension
     const NAME = 'image_path_extension';
 
     /**
-     * Image to show if picture name is empty
+     * Image to show if picture name is empty.
      */
     const NO_PIC_FILE = '/etc/nopic.jpg';
 
