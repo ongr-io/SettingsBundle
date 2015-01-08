@@ -87,6 +87,18 @@ Settings Cache
 
 `ongr-admin` uses `StashBundle <https://github.com/tedious/TedivmStashBundle>`_ to cache settings. By default Filesystem cache driver is used. To ensure best performance change it `Memcache` or other fast cache engine.
 
+To enable stash cache, please add this to your main ``config.yml``
+
+.. code-block:: yaml
+
+   stash:
+   caches:
+       default:
+           drivers: [ FileSystem ]
+           FileSystem: ~
+
+..
+
 Tags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

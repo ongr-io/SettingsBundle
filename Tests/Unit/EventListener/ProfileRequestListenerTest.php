@@ -12,9 +12,8 @@
 namespace ONGR\AdminBundle\Tests\Unit\EventListener;
 
 use ONGR\AdminBundle\EventListener\ProfileRequestListener;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
-class ProfileRequestListenerTest extends ElasticsearchTestCase
+class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test cases for testOnKernelRequest.
@@ -49,7 +48,7 @@ class ProfileRequestListenerTest extends ElasticsearchTestCase
     public function testOnKernelRequest($userSettings, $expectedProfiles)
     {
         // Get settings container.
-        $manager = $this->getManager();
+        $manager = $this->getManagerMock();
 
         // Mock settings container.
         $settingsContainer = $this
@@ -81,5 +80,19 @@ class ProfileRequestListenerTest extends ElasticsearchTestCase
             ->getMock();
 
         $listener->onKernelRequest($event);
+    }
+
+    /**
+     * Returns mock of ORM manager.
+     *
+     * @return Manager
+     */
+    protected function getManagerMock()
+    {
+        $managerMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\ORM\Manager')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return $managerMock;
     }
 }
