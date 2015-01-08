@@ -14,7 +14,7 @@ namespace ONGR\SettingsBundle\Tests\Functional\Twig;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use ONGR\SettingsBundle\Twig\ImagePathExtension;
 
-class ImagePathExtensionTest extends WebTestCase
+class ImagePathExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var string Cdn url.

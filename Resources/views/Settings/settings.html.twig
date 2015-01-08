@@ -20,7 +20,11 @@
                                 <div class="category" id="category-{{ category_id }}">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <div class="panel-title">{{ category.name }}</div>
+                                            <div class="panel-title">
+                                                {% if category.name is defined %}
+                                                    {{ category.name }}
+                                                {% endif %}
+                                            </div>
                                             {% if category.description is defined %}
                                                 <span class="help-block">{{ category.description }}</span>
                                             {% endif %}

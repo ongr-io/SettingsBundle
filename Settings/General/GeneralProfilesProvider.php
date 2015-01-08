@@ -39,11 +39,9 @@ class GeneralProfilesProvider
     public function onKernelRequest(GetResponseEvent $event)
     {
         $routeName = $event->getRequest()->get('_route');
-        if ($routeName != 'ongr_settings_settings_settings') {
-            return;
+        if ($routeName === 'ongr_admin_settings_settings' || $routeName === 'ongr_admin_settings_change') {
+            $this->settingsStructure->extractSettings($this, 'getSettings');
         }
-
-        $this->settingsStructure->extractSettings($this, 'getSettings');
     }
 
     /**

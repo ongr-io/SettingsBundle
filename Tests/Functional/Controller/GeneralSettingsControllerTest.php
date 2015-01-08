@@ -115,7 +115,7 @@ class GeneralSettingsControllerTest extends ElasticsearchTestCase
             ->getCookieJar()
             ->get($this->client->getContainer()->getParameter('ongr_settings.settings.settings_cookie.name'))
             ->getValue();
-        $expectedValue['foo_setting_1'] = true;
+        $expectedValue['foo_setting_1'] = false;
         $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
 
         $this->elastic->cleanUp();

@@ -15,12 +15,11 @@ use ONGR\SettingsBundle\Document\Setting;
 use ONGR\SettingsBundle\Service\SettingsManager;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\Translator;
 
-class SettingsManagerTest extends ElasticsearchTestCase
+class SettingsManagerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var $ormManagerMock  Manager mock.
