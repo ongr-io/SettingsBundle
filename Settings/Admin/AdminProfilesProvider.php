@@ -39,7 +39,7 @@ class AdminProfilesProvider
     public function onKernelRequest(GetResponseEvent $event)
     {
         $routeName = $event->getRequest()->get('_route');
-        if ($routeName === 'ongr_admin_settings_settings' || $routeName === 'ongr_admin_settings_change') {
+        if ($routeName === 'ongr_admin_personal_settings' || $routeName === 'ongr_admin_personal_settings_change') {
             $this->settingsStructure->extractSettings($this, 'getSettings');
         }
     }

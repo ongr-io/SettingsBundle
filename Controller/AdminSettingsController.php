@@ -59,7 +59,7 @@ class AdminSettingsController extends Controller
                 [
                     'link' => $request->getUriForPath(
                         $this->generateUrl(
-                            'ongr_admin_admins_settings_change',
+                            'ongr_admin_personal_settings_change',
                             [
                                 'encodedName' => base64_encode($settingId),
                             ]

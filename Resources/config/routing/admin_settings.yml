@@ -1,10 +1,10 @@
 #Admin settings
-ongr_admin_admins_settings:
+ongr_admin_personal_settings:
     path: /settings
     defaults:
         _controller: ONGRAdminBundle:AdminSettings:settings
 
-ongr_admin_admins_settings_change:
+ongr_admin_personal_settings_change:
     path: /setting/change/{encodedName}
     defaults:
         _controller: ONGRAdminBundle:AdminSettings:changeSetting
