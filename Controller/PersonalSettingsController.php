@@ -59,7 +59,7 @@ class PersonalSettingsController extends Controller
                 [
                     'link' => $request->getUriForPath(
                         $this->generateUrl(
-                            'ongr_settings_settings_change',
+                            'ongr_settings_personal_settings_change',
                             [
                                 'encodedName' => base64_encode($settingId),
                             ]
@@ -116,7 +116,7 @@ class PersonalSettingsController extends Controller
      */
     protected function getPersonalSettingsManager()
     {
-        return $this->get('ongr_settings.settings.general_settings_manager');
+        return $this->get('ongr_settings.settings.personal_settings_manager');
     }
 
     /**

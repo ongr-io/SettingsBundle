@@ -9,8 +9,8 @@ Provides settings API and settings interface for ONGR projects.
 
 It includes:
 
-- `Admin functionality </Resources/doc/general_settings.rst>`_
-- `Common functionality </Resources/doc/common_settings.rst>`_
+- `Personal functionality </Resources/doc/personal_settings.rst>`_
+- `General functionality </Resources/doc/general_settings.rst>`_
 - `Flash functionality </Resources/doc/flash_bag.rst>`_
 - `Environment functionality </Resources/doc/env_variable.rst>`_
 
@@ -120,8 +120,8 @@ Values can change in several places. Eg. IP address is dependent on the network,
 Bundles usage
 ===============
 
-- `Admin settings usage </Resources/doc/general_settings.rst>`_
-- `Common settings usage </Resources/doc/common_settings.rst>`_
+- `Personal functionality </Resources/doc/personal_settings.rst>`_
+- `General functionality </Resources/doc/general_settings.rst>`_
 - `Flash bag usage </Resources/doc/flash_bag.rst>`_
 - `Environment variables usage </Resources/doc/env_variable.rst>`_
 

@@ -47,6 +47,7 @@ class UserController extends Controller
             $cookieValue = $this->getAuthCookieService()->create($username, $password, $ipAddress);
             $cookie = $this->getAuthenticationCookie();
             $cookie->setValue($cookieValue);
+
             return $redirectResponse;
         }
         // Render.
@@ -55,6 +56,7 @@ class UserController extends Controller
             ['form' => $form->createView(), 'is_logged_in' => $alreadyLoggedIn]
         );
     }
+
     /**
      * Logout action.
      *
@@ -71,8 +73,10 @@ class UserController extends Controller
         $response = $this->redirect($this->generateUrl('ongr_settings_sessionless_login'));
         $this->get('security.context')->setToken(null);
         $this->get('request')->getSession()->invalidate();
+
         return $response;
     }
+
     /**
      * @return SessionlessAuthenticationCookieService
      */
@@ -81,8 +85,10 @@ class UserController extends Controller
         $this->authCookieService = $this->get(
             'ongr_settings.authentication.authentication_cookie_service'
         );
+
         return $this->authCookieService;
     }
+
     /**
      * @return SessionlessSecurityContext
      */
@@ -90,6 +96,7 @@ class UserController extends Controller
     {
         return $this->get('security.context');
     }
+
     /**
      * @return JsonCookie
      */

@@ -1,6 +1,6 @@
 {
     "name": "ongr/settings-bundle",
-    "description": "Admin interface and settings API for ONGR platform projects",
+    "description": "Settings interface and settings API for ONGR platform projects",
     "type": "symfony-bundle",
     "homepage": "http://ongr.io",
     "license": "MIT",
