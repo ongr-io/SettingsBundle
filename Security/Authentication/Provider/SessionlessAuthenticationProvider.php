@@ -82,30 +82,6 @@ class SessionlessAuthenticationProvider implements AuthenticationProviderInterfa
     }
 
     /**
-     * Check that username matches given password form settings array.
-     *
-     * @param string $username
-     * @param string $password
-     *
-     * @return bool
-     */
-    public function matchUsernameAndPassword($username, $password)
-    {
-        $user = $this->getUser($username);
-
-        if (!$user) {
-            return false;
-        }
-
-        $dbPassword = $user->getPassword();
-        if (!isset( $dbPassword ) || $dbPassword !== $password) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Generates user signature.
      *
      * @param SessionlessToken $token

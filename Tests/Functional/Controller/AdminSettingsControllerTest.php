@@ -11,7 +11,6 @@
 
 namespace ONGR\AdminBundle\Tests\Functional\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use ONGR\AdminBundle\Tests\Fixtures\Security\LoginTestHelper;
 use ONGR\AdminBundle\Tests\Functional\PrepareAdminData;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
@@ -104,15 +103,20 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
         $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
 
         // Try to change value through change setting action.
-        $client->request('get', '/admin/setting/change/' . base64_encode('foo_setting_1'));
+        $data[0] = ['foo_setting_1', false];
+        $data[1] = ['foo_setting_non_existent', false ];
 
-        // Assert cookie values updated.
-        $cookieValue = $client
-            ->getCookieJar()
-            ->get($client->getContainer()->getParameter('ongr_admin.settings.settings_cookie.name'))
-            ->getValue();
-        $expectedValue['foo_setting_1'] = false;
-        $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
+        foreach ($data as $case) {
+            $client->request('get', '/admin/setting/change/' . base64_encode($case[0]));
+
+            // Assert cookie values updated.
+            $cookieValue = $client
+                ->getCookieJar()
+                ->get($client->getContainer()->getParameter('ongr_admin.settings.settings_cookie.name'))
+                ->getValue();
+            $expectedValue['foo_setting_1'] = false;
+            $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
+        }
 
         $this->elastic->cleanUp();
     }
@@ -144,7 +148,7 @@ class AdminSettingsControllerTest extends ElasticsearchTestCase
         // Visit settings page.
         $client->request('GET', '/admin/settings');
 
-        // Assert successful redirect when not loged inn.
+        // Assert successful redirect when not logged in.
         $this->assertStringEndsWith(
             'login',
             $client->getRequest()->getUri(),

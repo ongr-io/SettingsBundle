@@ -88,7 +88,8 @@ class AdminSettingsManager
      */
     public function getSettingEnabled($settingName, $mustAuthorize = true)
     {
-        if ($mustAuthorize && !$this->isAuthenticated()) {
+        $mustAuthorizeBool = $mustAuthorize === 'true' ? true : false;
+        if ($mustAuthorizeBool && !$this->isAuthenticated()) {
             return false;
         }
 

@@ -33,6 +33,11 @@ class AdminSettingWidgetExtensionTest extends ElasticsearchTestCase
     private $client;
 
     /**
+     * @var LoginTestHelper
+     */
+    private $loginHelper;
+
+    /**
      * {@inheritdoc}
      */
     public function setUp()
@@ -95,22 +100,10 @@ class AdminSettingWidgetExtensionTest extends ElasticsearchTestCase
 
         CookieTestHelper::setSettingsCookie($this->client, $cookieSettings);
 
-        // Run all listeners. A hack.
-        try {
-            $this->client->request('GET', '/');
-        } catch (NotFoundHttpException $e) {
-            // Not needed.
-        }
+        // Call controller with params to generate twig.
+        $authorizedCommandStr = ($authorizedCommand) ? 'true' : 'false';
+        $this->client->request('GET', "/test/twig/$testSettingName/$authorizedCommandStr");
 
-        $template = "{% if ongr_setting_enabled('$testSettingName'" .
-            ($authorizedCommand ? '' : ', false') .
-            ') %}foo_true{% else %}foo_false{% endif %}';
-
-        $loader = $this->twig->getLoader();
-        $this->twig->setLoader(new \Twig_Loader_String());
-        $renderedResult = $this->twig->render($template);
-        $this->twig->setLoader($loader);
-
-        $this->assertEquals($expectedResult ? 'foo_true' : 'foo_false', $renderedResult);
+        $this->assertContains($expectedResult ? 'foo_true' : 'foo_false', $this->client->getResponse()->getContent());
     }
 }
