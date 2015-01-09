@@ -116,7 +116,7 @@ class PrepareAdminData extends ElasticsearchTestCase
         $commandToTest = $this->app->find('es:type:update');
         $commandTester = new CommandTester($commandToTest);
 
-        $result = $commandTester->execute(
+        $commandTester->execute(
             [
                 'command' => $commandToTest->getName(),
                 '--force' => true,

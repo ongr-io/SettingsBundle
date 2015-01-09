@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Unit\Settings\General;
+namespace ONGR\SettingsBundle\Tests\Unit\Settings\Personal;
 
-use ONGR\SettingsBundle\Settings\General\SettingsStructure;
+use ONGR\SettingsBundle\Settings\Personal\SettingsStructure;
 
 class SettingsStructureTest extends \PHPUnit_Framework_TestCase
 {

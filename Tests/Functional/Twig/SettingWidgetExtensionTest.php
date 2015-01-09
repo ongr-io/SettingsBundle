@@ -12,7 +12,7 @@
 namespace ONGR\SettingsBundle\Tests\Functional\Twig;
 
 use ONGR\SettingsBundle\Exception\SettingNotFoundException;
-use ONGR\SettingsBundle\Settings\General\GeneralSettingsManager;
+use ONGR\SettingsBundle\Settings\Admin\AdminSettingsManager;
 use ONGR\SettingsBundle\Twig\SettingWidgetExtension;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
@@ -82,7 +82,7 @@ HEREDOC;
         $container = self::createClient()->getContainer();
         $securityContext = $container->get('ongr_settings.authentication.sessionless_security_context');
         $securityContext->setToken($this->getTokenMock());
-        $settingsManager = $container->get('ongr_settings.settings.general_settings_manager');
+        $settingsManager = $container->get('ongr_settings.settings.personal_settings_manager');
         $settingsManager->setSettingsFromForm(['ongr_settings_live_settings' => true]);
 
         /** @var \Twig_Environment $twig */
@@ -105,7 +105,7 @@ HEREDOC;
     {
         $expectedValue = 'foo-bar';
 
-        $settingContainer = $this->getMock('ONGR\SettingsBundle\Settings\Personal\SettingsContainerInterface');
+        $settingContainer = $this->getMock('ONGR\SettingsBundle\Settings\Common\SettingsContainerInterface');
         $settingContainer->expects($this->once())->method('get')->with('test')->willReturn($expectedValue);
 
         $extension = new SettingWidgetExtension(null);
@@ -119,7 +119,7 @@ HEREDOC;
      */
     public function testGetAdminSettingException()
     {
-        $settingContainer = $this->getMock('ONGR\SettingsBundle\Settings\Personal\SettingsContainerInterface');
+        $settingContainer = $this->getMock('ONGR\SettingsBundle\Settings\Common\SettingsContainerInterface');
         $settingContainer
             ->expects($this->once())
             ->method('get')
@@ -133,15 +133,15 @@ HEREDOC;
     }
 
     /**
-     * Gets a GeneralSettingsManager mock.
+     * Gets a AdminSettingsManager mock.
      *
      * @param bool $authenticated
      *
-     * @return GeneralSettingsManager
+     * @return AdminSettingsManager
      */
     protected function getSettingsManagerMock($authenticated)
     {
-        $settingsManager = $this->getMockBuilder('ONGR\SettingsBundle\Settings\General\GeneralSettingsManager')
+        $settingsManager = $this->getMockBuilder('ONGR\SettingsBundle\Settings\Admin\AdminSettingsManager')
             ->disableOriginalConstructor()
             ->setMethods(['isAuthenticated'])
             ->getMock();

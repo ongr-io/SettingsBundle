@@ -12,8 +12,8 @@
 namespace ONGR\SettingsBundle\Twig;
 
 use ONGR\SettingsBundle\Exception\SettingNotFoundException;
-use ONGR\SettingsBundle\Settings\Personal\SettingsContainerInterface;
-use ONGR\SettingsBundle\Settings\General\GeneralSettingsManager;
+use ONGR\SettingsBundle\Settings\General\SettingsContainerInterface;
+use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 use Psr\Log\LoggerAwareTrait;
 
 /**
@@ -29,12 +29,12 @@ class SettingWidgetExtension extends \Twig_Extension
     const NAME = 'admin_extension';
 
     /**
-     * @var GeneralSettingsManager
+     * @var PersonalSettingsManager
      */
-    protected $generalSettingsManager;
+    protected $personalSettingsManager;
 
     /**
-     * @var SettingsContainerInterface
+     * @var SettingsContainerInterface.
      */
     protected $settingContainer;
 
@@ -46,14 +46,14 @@ class SettingWidgetExtension extends \Twig_Extension
     /**
      * Constructor.
      *
-     * @param GeneralSettingsManager $generalSettingsManager
-     * @param string                 $template
+     * @param PersonalSettingsManager $personalSettingsManager
+     * @param string                  $template
      */
     public function __construct(
-        $generalSettingsManager,
+        $personalSettingsManager,
         $template = 'ONGRSettingsBundle:Controls:edit_setting.html.twig'
     ) {
-        $this->generalSettingsManager = $generalSettingsManager;
+        $this->personalSettingsManager = $personalSettingsManager;
         $this->template = $template;
     }
 
@@ -104,7 +104,7 @@ class SettingWidgetExtension extends \Twig_Extension
      */
     public function showSetting($environment, $settingName, $type = 'string')
     {
-        if (!$this->generalSettingsManager->isAuthenticated()) {
+        if (!$this->personalSettingsManager->isAuthenticated()) {
             return '';
         }
 

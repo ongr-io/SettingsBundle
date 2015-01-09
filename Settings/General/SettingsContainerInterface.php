@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Settings\Personal;
+namespace ONGR\SettingsBundle\Settings\General;
 
-use ONGR\SettingsBundle\Settings\Personal\Provider\SettingsProviderInterface;
+use ONGR\SettingsBundle\Settings\General\Provider\SettingsProviderInterface;
 
 /**
  * This interface provides structure for settings container.

@@ -157,7 +157,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *Returns mock of Setting.
+     * Returns mock of Setting.
      *
      * @return Setting
      */

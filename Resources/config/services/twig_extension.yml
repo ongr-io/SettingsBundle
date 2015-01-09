@@ -3,7 +3,7 @@ parameters:
     ongr_settings.twig.admin_extension.class: ONGR\SettingsBundle\Twig\SettingWidgetExtension
 
     #General settings widget extension
-    ongr_settings.twig.setting_extension.class: ONGR\SettingsBundle\Twig\GeneralSettingWidgetExtension
+    ongr_settings.twig.setting_extension.class: ONGR\SettingsBundle\Twig\PersonalSettingWidgetExtension
 
     # Encryption extension
     ongr_settings.twig.encryption_extension.class: ONGR\SettingsBundle\Twig\EncryptionExtension

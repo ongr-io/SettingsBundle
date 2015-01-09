@@ -8,39 +8,15 @@ parameters:
 
     # Authentication provider.
     ongr_settings.authentication.sessionless_authentication_provider.class: ONGR\SettingsBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider
-    ongr_settings.authentication.users: []
 
     # Signature generator.
     ongr_settings.authentication.signature_generator.class: ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessSignatureGenerator
     ongr_settings.authentication.secret: Override%Me
 
-    # Other services.
-    ongr_settings.authentication.sessionless_security_context.class: ONGR\SettingsBundle\Security\Core\SessionlessSecurityContext
-    ongr_settings.authentication.sessionless_cookie_listener.class: ONGR\SettingsBundle\EventListener\Security\SessionlessCookieListener
+    # Firewall listener.
+    ongr_settings.authentication.firewall.listener.class: ONGR\SettingsBundle\Security\Authentication\Firewall\SessionlessAuthenticationListener
 
 services:
-    ongr_settings.authentication.sessionless_security_context:
-        class: %ongr_settings.authentication.sessionless_security_context.class%
-
-    ongr_settings.authentication.sessionless_cookie_listener:
-        class: %ongr_settings.authentication.sessionless_cookie_listener.class%
-        arguments:
-            - @ongr_settings.authentication.sessionless_security_context
-            - @ongr_settings.authentication.sessionless_authentication_provider
-            - @ongr_settings.authentication.authentication_cookie_service
-        calls:
-            - [ setAuthCookie, [ @ongr_settings.authentication.authentication_cookie ] ]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 128 }
-        scope: request
-
-    ongr_settings.authentication.sessionless_authentication_provider:
-        class: %ongr_settings.authentication.sessionless_authentication_provider.class%
-        arguments:
-            - @ongr_settings.authentication.signature_generator
-            - %ongr_settings.authentication.users%
-            - %ongr_settings.settings.settings%
-
     ongr_settings.authentication.signature_generator:
         class: %ongr_settings.authentication.signature_generator.class%
         arguments:
@@ -59,3 +35,17 @@ services:
             - [ setDefaults, [ %ongr_settings.authentication.authentication_cookie.defaults% ] ]
         tags:
             - { name: ongr_cookie.cookie }
+
+    ongr_settings.authentication.sessionless_authentication_provider:
+        class: %ongr_settings.authentication.sessionless_authentication_provider.class%
+        arguments:
+            - @ongr_settings.authentication.signature_generator
+            - ""
+
+    ongr_settings.authentication.firewall.listener:
+        class: %ongr_settings.authentication.firewall.listener.class%
+        arguments:
+            - @security.authentication.manager
+            - @ongr_settings.authentication.authentication_cookie_service
+            - @security.context
+            - @ongr_settings.authentication.authentication_cookie

@@ -9,17 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Settings\General;
+namespace ONGR\SettingsBundle\Settings\Personal;
 
 use ONGR\SettingsBundle\Service\ProfilesManager;
 use ONGR\SettingsBundle\Service\UnderscoreEscaper;
-use ONGR\SettingsBundle\Settings\General\SettingsStructure;
+use ONGR\SettingsBundle\Settings\Personal\SettingsStructure;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
  * Responsible for collecting all settings' profiles from ES.
  */
-class GeneralProfilesProvider
+class PersonalProfilesProvider
 {
     /**
      * @var ProfilesManager
@@ -39,7 +39,9 @@ class GeneralProfilesProvider
     public function onKernelRequest(GetResponseEvent $event)
     {
         $routeName = $event->getRequest()->get('_route');
-        if ($routeName === 'ongr_admin_settings_settings' || $routeName === 'ongr_admin_settings_change') {
+        if ($routeName === 'ongr_settings_personal_settings'
+            || $routeName === 'ongr_settings_personal_settings_change'
+        ) {
             $this->settingsStructure->extractSettings($this, 'getSettings');
         }
     }

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Settings\General;
+namespace ONGR\SettingsBundle\Settings\Personal;
 
 /**
  * Manages settings structure that is displayed for the user.

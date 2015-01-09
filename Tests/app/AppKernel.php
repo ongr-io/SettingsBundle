@@ -26,14 +26,16 @@ class AppKernel extends Kernel
     {
         return [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
-
+            
             new \FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-
             new ONGR\ElasticsearchBundle\ONGRElasticsearchBundle(),
             new Tedivm\StashBundle\TedivmStashBundle(),
-            
+
+            new ONGR\PagerBundle\ONGRPagerBundle(),
             new ONGR\CookiesBundle\ONGRCookiesBundle(),
             new ONGR\SettingsBundle\ONGRSettingsBundle(),
         ];

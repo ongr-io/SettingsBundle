@@ -36,9 +36,9 @@ class ServiceCreationTest extends ElasticsearchTestCase
 
         // Settings config file (services/settings.yml).
         $servicesSettings = [
-            'ongr_settings.settings.settings_structure' => 'ONGR\SettingsBundle\Settings\General\SettingsStructure',
-            'ongr_settings.settings.general_settings_manager' =>
-                'ONGR\SettingsBundle\Settings\General\GeneralSettingsManager',
+            'ongr_settings.settings.settings_structure' => 'ONGR\SettingsBundle\Settings\Personal\SettingsStructure',
+            'ongr_settings.settings.personal_settings_manager' =>
+                'ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager',
         ];
 
         // Authentication config file (services/auth.yml).

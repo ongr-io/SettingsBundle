@@ -16,7 +16,6 @@ use ONGR\SettingsBundle\Form\Type\LoginType;
 use ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService;
 use ONGR\SettingsBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider;
 use ONGR\SettingsBundle\Security\Authentication\Token\SessionlessToken;
-use ONGR\SettingsBundle\Security\Core\SessionlessSecurityContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -40,8 +39,8 @@ class UserController extends Controller
         // Handle form.
         $loginData = [];
         $form = $this->createForm(new LoginType(), $loginData);
-
         $form->handleRequest($request);
+
         if ($form->isValid()) {
             $redirectResponse = $this->redirect($this->generateUrl('ongr_settings_sessionless_login'));
             $loginData = $form->getData();
@@ -49,15 +48,13 @@ class UserController extends Controller
             $username = $loginData['username'];
             $password = $loginData['password'];
 
-            if ($this->getAuthProvider()->matchUsernameAndPassword($username, $password)) {
-                $ipAddress = $request->getClientIp();
-                $cookieValue = $this->getAuthCookieService()->create($username, $password, $ipAddress);
+            $ipAddress = $request->getClientIp();
+            $cookieValue = $this->getAuthCookieService()->create($username, $password, $ipAddress);
 
-                $cookie = $this->getAuthenticationCookie();
-                $cookie->setValue($cookieValue);
+            $cookie = $this->getAuthenticationCookie();
+            $cookie->setValue($cookieValue);
 
-                return $redirectResponse;
-            }
+            return $redirectResponse;
         }
 
         // Render.
@@ -81,6 +78,9 @@ class UserController extends Controller
         $cookie = $this->getAuthenticationCookie();
         $cookie->setClear(true);
         $response = $this->redirect($this->generateUrl('ongr_settings_sessionless_login'));
+
+        $this->get('security.context')->setToken(null);
+        $this->get('request')->getSession()->invalidate();
 
         return $response;
     }

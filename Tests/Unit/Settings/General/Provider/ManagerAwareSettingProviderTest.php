@@ -11,7 +11,7 @@
 
 namespace ONGR\SettingsBundle\Tests\Unit\Settings\Provider;
 
-use ONGR\SettingsBundle\Settings\Personal\Provider\ManagerAwareSettingProvider;
+use ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider;
 
 /**
  * Tests for ManagerAwareSettingProvider.

@@ -9,22 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Unit\Settings\General;
+namespace ONGR\SettingsBundle\Tests\Unit\Settings\Personal;
 
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
-use ONGR\SettingsBundle\Settings\General\GeneralProfilesProvider;
+use ONGR\SettingsBundle\Settings\Personal\PersonalProfilesProvider;
 
 /**
- * Test how AdminProfilesProvider collects General settings from ES.
+ * Test how PersonalProfilesProvider collects General settings from ES.
  */
-class GeneralProfilesProviderTest extends ElasticsearchTestCase
+class PersonalProfilesProviderTest extends ElasticsearchTestCase
 {
     /**
      * Test method getSettings.
      */
     public function testGetSettings()
     {
-        $manager = new GeneralProfilesProvider();
+        $manager = new PersonalProfilesProvider();
         $manager->setProfileManager($this->getProfilesManagerMock());
 
         $expectedArray = [
@@ -56,7 +56,7 @@ class GeneralProfilesProviderTest extends ElasticsearchTestCase
     protected function getProfilesManagerMock()
     {
         $profileSettingsProvider = $this->getMock(
-            'ONGR\AdminBundle\Service\ProfilesManager',
+            'ONGR\SettingsBundle\Service\ProfilesManager',
             ['getProfiles'],
             [],
             '',

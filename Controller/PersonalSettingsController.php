@@ -13,7 +13,7 @@ namespace ONGR\SettingsBundle\Controller;
 
 use ONGR\CookiesBundle\Cookie\Model\CookieInterface;
 use ONGR\SettingsBundle\Form\Type\SettingsType;
-use ONGR\SettingsBundle\Settings\General\GeneralSettingsManager;
+use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Controller for managing General (private) settings.
  */
-class GeneralSettingsController extends Controller
+class PersonalSettingsController extends Controller
 {
     /**
      * Main action for changing settings.
@@ -34,10 +34,7 @@ class GeneralSettingsController extends Controller
      */
     public function settingsAction(Request $request)
     {
-        $manager = $this->getGeneralSettingsManager();
-        if (!$manager->isAuthenticated()) {
-            return $this->redirect($this->generateUrl('ongr_settings_sessionless_login'));
-        }
+        $manager = $this->getPersonalSettingsManager();
 
         // Handle form.
         $settingsData = $manager->getSettings();
@@ -92,7 +89,7 @@ class GeneralSettingsController extends Controller
      */
     public function changeSettingAction(Request $request, $encodedName)
     {
-        $manager = $this->getGeneralSettingsManager();
+        $manager = $this->getPersonalSettingsManager();
 
         $name = base64_decode($encodedName);
 
@@ -115,9 +112,9 @@ class GeneralSettingsController extends Controller
     }
 
     /**
-     * @return GeneralSettingsManager
+     * @return PersonalSettingsManager
      */
-    protected function getGeneralSettingsManager()
+    protected function getPersonalSettingsManager()
     {
         return $this->get('ongr_settings.settings.general_settings_manager');
     }

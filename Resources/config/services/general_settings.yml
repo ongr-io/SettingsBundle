@@ -1,6 +1,6 @@
 parameters:
     # Settings structure service.
-    ongr_settings.settings.settings_structure.class: ONGR\SettingsBundle\Settings\General\SettingsStructure
+    ongr_settings.settings.settings_structure.class: ONGR\SettingsBundle\Settings\Personal\SettingsStructure
     ongr_settings.settings.settings: []
     ongr_settings.settings.categories: []
 
@@ -14,10 +14,10 @@ parameters:
     ongr_settings.settings.settings_cookie_listener.class: ONGR\SettingsBundle\EventListener\SettingsCookieListener
 
     # General Settings manager service class.
-    ongr_settings.settings.general_settings_manager.class: ONGR\SettingsBundle\Settings\General\GeneralSettingsManager
+    ongr_settings.settings.general_settings_manager.class: ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager
 
     # General profiles provider.
-    ongr_settings.admin_profiles_provider.class: ONGR\SettingsBundle\Settings\General\GeneralProfilesProvider
+    ongr_settings.admin_profiles_provider.class: ONGR\SettingsBundle\Settings\Personal\PersonalProfilesProvider
 
 services:
     ongr_settings.settings.settings_structure:
@@ -34,7 +34,7 @@ services:
     ongr_settings.settings.settings_cookie_listener:
         class: %ongr_settings.settings.settings_cookie_listener.class%
         calls:
-            - [ setGeneralSettingsManager, [ @ongr_settings.settings.general_settings_manager ] ]
+            - [ setPersonalSettingsManager, [ @ongr_settings.settings.general_settings_manager ] ]
             - [ setContainer, [ @service_container ] ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 6 }

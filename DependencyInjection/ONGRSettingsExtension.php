@@ -46,10 +46,10 @@ class ONGRSettingsExtension extends Extension
         $loader->load('services/pair_storage.yml');
 
         if (isset($config['admin_user'])) {
-            $this->loadGeneralSettings($config['admin_user'], $container);
+            $this->loadPersonalSettings($config['admin_user'], $container);
         }
 
-        $this->injectGeneralSettings($container);
+        $this->injectPersonalSettings($container);
     }
 
     /**
@@ -58,7 +58,7 @@ class ONGRSettingsExtension extends Extension
      * @param array            $config
      * @param ContainerBuilder $containerBuilder
      */
-    protected function loadGeneralSettings($config, ContainerBuilder $containerBuilder)
+    protected function loadPersonalSettings($config, ContainerBuilder $containerBuilder)
     {
         $containerBuilder->setParameter('ongr_settings.settings.categories', $config['categories']);
         $containerBuilder->setParameter('ongr_settings.settings.settings', $config['settings']);
@@ -69,7 +69,7 @@ class ONGRSettingsExtension extends Extension
      *
      * @param ContainerBuilder $container
      */
-    protected function injectGeneralSettings(ContainerBuilder $container)
+    protected function injectPersonalSettings(ContainerBuilder $container)
     {
         // Add category for ONGR Settings settings.
         $categories = $container->getParameter('ongr_settings.settings.categories');

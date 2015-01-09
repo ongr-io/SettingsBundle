@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Functional\Settings\General;
+namespace ONGR\SettingsBundle\Tests\Functional\Settings\Personal;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Test how GeneralProfilesProvider collects General settings from ES.
+ * Test how PersonalProfilesProvider collects General settings from ES.
  */
-class GeneralProfilesProviderTest extends WebTestCase
+class PersonalProfilesProviderTest extends WebTestCase
 {
     /**
      * @var Container.
@@ -29,7 +29,7 @@ class GeneralProfilesProviderTest extends WebTestCase
     public function testGetAdminProfilesProvider()
     {
         $manager = $this->getServiceContainer()->get('ongr_settings.admin_profiles_provider');
-        $this->assertInstanceOf('ONGR\SettingsBundle\Settings\General\GeneralProfilesProvider', $manager, '');
+        $this->assertInstanceOf('ONGR\SettingsBundle\Settings\Personal\PersonalProfilesProvider', $manager, '');
     }
 
     /**

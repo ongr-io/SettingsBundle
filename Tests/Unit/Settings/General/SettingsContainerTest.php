@@ -11,8 +11,8 @@
 
 namespace ONGR\SettingsBundle\Tests\Unit\Settings;
 
-use ONGR\SettingsBundle\Settings\Personal\SettingsContainer;
-use ONGR\SettingsBundle\Settings\Personal\Provider\SettingsProviderInterface;
+use ONGR\SettingsBundle\Settings\General\SettingsContainer;
+use ONGR\SettingsBundle\Settings\General\Provider\SettingsProviderInterface;
 use Stash\Interfaces\PoolInterface;
 
 class SettingsContainerTest extends \PHPUnit_Framework_TestCase
@@ -142,7 +142,7 @@ class SettingsContainerTest extends \PHPUnit_Framework_TestCase
      */
     private function getProvider($domain, $settings)
     {
-        $providerMock = $this->getMock('ONGR\SettingsBundle\Settings\Personal\Provider\SettingsProviderInterface');
+        $providerMock = $this->getMock('ONGR\SettingsBundle\Settings\General\Provider\SettingsProviderInterface');
         $providerMock
             ->expects($this->once())
             ->method('getProfile')

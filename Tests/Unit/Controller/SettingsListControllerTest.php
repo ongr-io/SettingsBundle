@@ -76,7 +76,7 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
         $mock = $this->getMock(
             'ONGR\ElasticsearchBundle\ORM\Repository',
             ['getBundlesMapping', 'find', 'remove', 'execute'],
-            [$this->getManagerMock(), ['ONGRAdminBundle:Setting'] ]
+            [$this->getManagerMock(), ['ONGRSettingsBundle:Setting'] ]
         );
 
         $mock->expects(

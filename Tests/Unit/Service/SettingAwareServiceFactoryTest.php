@@ -90,7 +90,7 @@ class SettingAwareServiceFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function getSettingMock()
     {
-        return $this->getMock('ONGR\SettingsBundle\Settings\Personal\SettingsContainerInterface');
+        return $this->getMock('ONGR\SettingsBundle\Settings\General\SettingsContainerInterface');
     }
 
     /**

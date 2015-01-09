@@ -12,11 +12,11 @@
 namespace ONGR\SettingsBundle\EventListener;
 
 use ONGR\SettingsBundle\Service\UnderscoreEscaper;
-use ONGR\SettingsBundle\Settings\Personal\Provider\ManagerAwareSettingProvider;
+use ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider;
 use ONGR\ElasticsearchBundle\ORM\Manager;
-use ONGR\SettingsBundle\Settings\Personal\SettingsContainer;
+use ONGR\SettingsBundle\Settings\General\SettingsContainer;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use ONGR\SettingsBundle\Settings\General\GeneralSettingsManager;
+use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 
 /**
  * Listens for request event and sets selected profiles from admin-user cookie to SettingsContainer.
@@ -24,7 +24,7 @@ use ONGR\SettingsBundle\Settings\General\GeneralSettingsManager;
 class ProfileRequestListener
 {
     /**
-     * @var GeneralSettingsManager
+     * @var PersonalSettingsManager
      */
     protected $generalSettingsManager;
 
@@ -60,15 +60,15 @@ class ProfileRequestListener
     }
 
     /**
-     * @param \ONGR\SettingsBundle\Settings\General\GeneralSettingsManager $generalSettingsManager
+     * @param \ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager $generalSettingsManager
      */
-    public function setGeneralSettingsManager($generalSettingsManager)
+    public function setPersonalSettingsManager($generalSettingsManager)
     {
         $this->generalSettingsManager = $generalSettingsManager;
     }
 
     /**
-     * @param \ONGR\SettingsBundle\Settings\Personal\SettingsContainer $settingsContainer
+     * @param \ONGR\SettingsBundle\Settings\General\SettingsContainer $settingsContainer
      */
     public function setSettingsContainer($settingsContainer)
     {

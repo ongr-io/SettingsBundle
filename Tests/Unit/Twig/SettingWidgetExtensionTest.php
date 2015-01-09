@@ -12,7 +12,7 @@
 namespace ONGR\SettingsBundle\Tests\Unit\Twig;
 
 use ONGR\SettingsBundle\Twig\SettingWidgetExtension;
-use ONGR\SettingsBundle\Settings\General\GeneralSettingsManager;
+use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 
 class SettingWidgetExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,9 +32,9 @@ class SettingWidgetExtensionTest extends \PHPUnit_Framework_TestCase
      */
     protected function getSettingExtension()
     {
-        /** @var GeneralSettingsManager $manager */
+        /** @var PersonalSettingsManager $manager */
         $manager = $this
-            ->getMockBuilder('ONGR\SettingsBundle\Settings\General\GeneralSettingsManager')
+            ->getMockBuilder('ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager')
             ->disableOriginalConstructor()
             ->getMock();
 

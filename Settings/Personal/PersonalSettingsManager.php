@@ -9,16 +9,21 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Settings\General;
+namespace ONGR\SettingsBundle\Settings\Personal;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
-use ONGR\SettingsBundle\Settings\General\SettingsStructure;
+use ONGR\SettingsBundle\Settings\Personal\SettingsStructure;
 
 /**
  * Service responsible as a gateway to user settings.
  */
-class GeneralSettingsManager
+class PersonalSettingsManager
 {
+    /**
+     * @var string
+     */
+    const ROLE_GRANTED = 'ROLE_ADMIN';
+
     /**
      * @var string
      */
@@ -99,7 +104,7 @@ class GeneralSettingsManager
      */
     public function isAuthenticated()
     {
-        return $this->securityContext->isGranted([]);
+        return $this->securityContext->isGranted(self::ROLE_GRANTED);
     }
 
     /**

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Settings\Personal\Provider;
+namespace ONGR\SettingsBundle\Settings\General\Provider;
 
 use ONGR\SettingsBundle\Document\Setting;
 use ONGR\FilterManagerBundle\Filters\ViewData;

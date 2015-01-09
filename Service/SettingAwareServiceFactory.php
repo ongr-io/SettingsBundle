@@ -12,7 +12,7 @@
 namespace ONGR\SettingsBundle\Service;
 
 use ONGR\SettingsBundle\Exception\SettingNotFoundException;
-use ONGR\SettingsBundle\Settings\Personal\SettingsContainerInterface;
+use ONGR\SettingsBundle\Settings\General\SettingsContainerInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Process\Exception\LogicException;

@@ -11,12 +11,12 @@
 
 namespace ONGR\SettingsBundle\Twig;
 
-use ONGR\SettingsBundle\Settings\General\GeneralSettingsManager;
+use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 
 /**
  * Class SettingExtension to show settings value on twig.
  */
-class GeneralSettingWidgetExtension extends \Twig_Extension
+class PersonalSettingWidgetExtension extends \Twig_Extension
 {
     /**
      * Extension name
@@ -24,16 +24,16 @@ class GeneralSettingWidgetExtension extends \Twig_Extension
     const NAME = 'setting_extension';
 
     /**
-     * @var GeneralSettingsManager
+     * @var PersonalSettingsManager
      */
-    private $generalSettingsManager;
+    private $porsonallSettingsManager;
 
     /**
-     * @param GeneralSettingsManager $GeneralSettingsManager
+     * @param PersonalSettingsManager $PersonalSettingsManager
      */
-    public function __construct($GeneralSettingsManager)
+    public function __construct($PersonalSettingsManager)
     {
-        $this->generalSettingsManager = $GeneralSettingsManager;
+        $this->porsonallSettingsManager = $PersonalSettingsManager;
     }
 
     /**
@@ -64,6 +64,6 @@ class GeneralSettingWidgetExtension extends \Twig_Extension
      */
     public function getSettingEnabled($settingName, $mustAuthorize = true)
     {
-        return $this->generalSettingsManager->getSettingEnabled($settingName, $mustAuthorize);
+        return $this->porsonallSettingsManager->getSettingEnabled($settingName, $mustAuthorize);
     }
 }

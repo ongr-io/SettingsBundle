@@ -11,16 +11,16 @@
 
 namespace ONGR\SettingsBundle\Tests\Unit\Settings;
 
-use ONGR\SettingsBundle\Settings\General\GeneralSettingsManager;
+use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 
-class GeneralSettingsManagerTest extends \PHPUnit_Framework_TestCase
+class PersonalSettingsManagerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test setSettingsFromCookie method.
      */
     public function testSetSettingsFromCookie()
     {
-        $manager = new GeneralSettingsManager(null, null);
+        $manager = new PersonalSettingsManager(null, null);
         $manager->setSettingsFromCookie(['foo']);
         $this->assertEquals(['foo'], $manager->getSettings());
     }

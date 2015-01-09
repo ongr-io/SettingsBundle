@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Settings\Personal\Provider;
+namespace ONGR\SettingsBundle\Settings\General\Provider;
 
 /**
  * This interface provides all app settings.

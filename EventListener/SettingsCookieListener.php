@@ -13,7 +13,7 @@ namespace ONGR\SettingsBundle\EventListener;
 
 use ONGR\CookiesBundle\Cookie\Model\JsonCookie;
 use ONGR\CookiesBundle\DependencyInjection\ContainerAwareTrait;
-use ONGR\SettingsBundle\Settings\General\GeneralSettingsManager;
+use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
@@ -25,7 +25,7 @@ class SettingsCookieListener
     use ContainerAwareTrait;
 
     /**
-     * @var GeneralSettingsManager
+     * @var PersonalSettingsManager
      */
     protected $generalSettingsManager;
 
@@ -55,9 +55,9 @@ class SettingsCookieListener
     }
 
     /**
-     * @param \ONGR\SettingsBundle\Settings\General\GeneralSettingsManager $generalSettingsManager
+     * @param \ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager $generalSettingsManager
      */
-    public function setGeneralSettingsManager($generalSettingsManager)
+    public function setPersonalSettingsManager($generalSettingsManager)
     {
         $this->generalSettingsManager = $generalSettingsManager;
     }

@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Functional\Settings\Personal;
+namespace ONGR\SettingsBundle\Tests\Functional\Settings\General;
 
 use ONGR\SettingsBundle\Document\Setting;
-use ONGR\SettingsBundle\Settings\Personal\Provider\ManagerAwareSettingProvider;
-use ONGR\SettingsBundle\Settings\Personal\SettingsContainer;
+use ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider;
+use ONGR\SettingsBundle\Settings\General\SettingsContainer;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Stash\Pool;
 

@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Client;
 /**
  * Test integration with admin-user feature in admin bundle.
  */
-class GeneralSettingsTest extends WebTestCase
+class PersonalSettingsTest extends WebTestCase
 {
     /**
      * @var Client
