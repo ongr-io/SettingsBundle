@@ -29,7 +29,7 @@ class ContainerCreationTest extends WebTestCase
     /**
      * Checks if admin using category was injected.
      */
-    public function testAdminUserCategory()
+    public function testPersonalUserCategory()
     {
         $container = self::createClient()->getContainer();
         $this->assertArrayHasKey(
@@ -45,7 +45,7 @@ class ContainerCreationTest extends WebTestCase
     /**
      * Checks if admin using settings were injected.
      */
-    public function testAdminUserSettings()
+    public function testPersonalUserSettings()
     {
         $kernel = self::createClient(['environment' => 'test_container_creation'])->getKernel();
         $container = $kernel->getContainer();

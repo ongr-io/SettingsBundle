@@ -13,7 +13,7 @@ namespace ONGR\SettingsBundle\Tests\Functional\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
-use ONGR\SettingsBundle\Tests\Functional\PrepareAdminData;
+use ONGR\SettingsBundle\Tests\Functional\PreparePersonalData;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Client;
 class PersonalSettingsControllerTest extends ElasticsearchTestCase
 {
     /**
-     * @var PrepareAdminData Elastic helper and index.
+     * @var PreparePersonalData Elastic helper and index.
      */
     private $elastic;
 
@@ -39,7 +39,7 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
     {
         parent::setUp();
         $this->client = new LoginTestHelper(self::createClient());
-        $this->elastic = new PrepareAdminData();
+        $this->elastic = new PreparePersonalData();
     }
 
     /**
@@ -53,7 +53,7 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
         $client = $this->client->loginAction('test', 'test');
 
         // Visit settings page.
-        $crawler = $client->request('GET', '/admin/settings');
+        $crawler = $client->request('GET', '/settings/settings');
 
         // Assert categories are rendered.
         /** @var array $categories */
@@ -104,7 +104,7 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
         $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
 
         // Try to change value through change setting action.
-        $client->request('get', '/admin/setting/change/' . base64_encode('foo_setting_1'));
+        $client->request('get', '/settings/setting/change/' . base64_encode('foo_setting_1'));
 
         // Assert cookie values updated.
         $cookieValue = $client
@@ -126,7 +126,7 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
         $client->followRedirects(false);
 
         // Visit settings page.
-        $client->request('GET', '/admin/settings');
+        $client->request('GET', '/settings/settings');
 
         // Assert access is redirected.
         $this->assertSame(302, $client->getResponse()->getStatusCode());
@@ -139,10 +139,10 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
     {
         $client = $this->client->getClient();
         $client->followRedirects(true);
-        $client->request('GET', '/admin/logout');
+        $client->request('GET', '/settings/logout');
 
         // Visit settings page.
-        $client->request('GET', '/admin/settings');
+        $client->request('GET', '/settings/settings');
 
         // Assert successful redirect when not loged inn.
         $this->assertStringEndsWith(

@@ -24,7 +24,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 /**
  *  Prepares data for functional General testing.
  */
-class PrepareAdminData extends ElasticsearchTestCase
+class PreparePersonalData extends ElasticsearchTestCase
 {
     /**
      * @var Connection

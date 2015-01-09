@@ -22,7 +22,7 @@ class ONGRSettingsExtensionTest extends \PHPUnit_Framework_TestCase
     /**
      * Test if admin user parameters are being loaded.
      */
-    public function testAdminUser()
+    public function testPersonalUser()
     {
         $config = [
             'admin_user' => [

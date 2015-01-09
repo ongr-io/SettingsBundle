@@ -13,11 +13,11 @@ parameters:
     # Cookie listener.
     ongr_settings.settings.settings_cookie_listener.class: ONGR\SettingsBundle\EventListener\SettingsCookieListener
 
-    # General Settings manager service class.
-    ongr_settings.settings.general_settings_manager.class: ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager
+    # Personal Settings manager service class.
+    ongr_settings.settings.personal_settings_manager.class: ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager
 
-    # General profiles provider.
-    ongr_settings.admin_profiles_provider.class: ONGR\SettingsBundle\Settings\Personal\PersonalProfilesProvider
+    # Personal profiles provider.
+    ongr_settings.personal_profiles_provider.class: ONGR\SettingsBundle\Settings\Personal\PersonalProfilesProvider
 
 services:
     ongr_settings.settings.settings_structure:
@@ -34,7 +34,7 @@ services:
     ongr_settings.settings.settings_cookie_listener:
         class: %ongr_settings.settings.settings_cookie_listener.class%
         calls:
-            - [ setPersonalSettingsManager, [ @ongr_settings.settings.general_settings_manager ] ]
+            - [ setPersonalSettingsManager, [ @ongr_settings.settings.personal_settings_manager ] ]
             - [ setContainer, [ @service_container ] ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 6 }
@@ -48,16 +48,16 @@ services:
         tags:
             - { name: ongr_cookie.cookie }
 
-    #General settings manager class
-    ongr_settings.settings.general_settings_manager:
-        class: %ongr_settings.settings.general_settings_manager.class%
-        arguments:
-            - @ongr_settings.authentication.sessionless_security_context
-            - @ongr_settings.settings.settings_structure
+    # Personal settings manager class
+    ongr_settings.settings.personal_settings_manager:
+            class: %ongr_settings.settings.personal_settings_manager.class%
+            arguments:
+                - @security.context
+                - @ongr_settings.settings.settings_structure
 
-    # General profiles provider
-    ongr_settings.admin_profiles_provider:
-        class: %ongr_settings.admin_profiles_provider.class%
+    # Personal profiles provider
+    ongr_settings.personal_profiles_provider:
+        class: %ongr_settings.personal_profiles_provider.class%
         calls:
             - [ setProfileManager, [ @ongr_settings.profiles_manager ] ]
             - [ setSettingsStructure, [ @ongr_settings.settings.settings_structure ] ]

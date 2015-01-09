@@ -26,9 +26,9 @@ class PersonalProfilesProviderTest extends WebTestCase
     /**
      * Get Service init.
      */
-    public function testGetAdminProfilesProvider()
+    public function testGetPersonalProfilesProvider()
     {
-        $manager = $this->getServiceContainer()->get('ongr_settings.admin_profiles_provider');
+        $manager = $this->getServiceContainer()->get('ongr_settings.personal_profiles_provider');
         $this->assertInstanceOf('ONGR\SettingsBundle\Settings\Personal\PersonalProfilesProvider', $manager, '');
     }
 

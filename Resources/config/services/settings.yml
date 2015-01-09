@@ -38,7 +38,7 @@ services:
         class: %ongr_settings.listener.cookie_profile.class%
         calls:
             - [ setSettingsContainer, [ @ongr_settings.settings_container ] ]
-            - [ setPersonalSettingsManager, [ @ongr_settings.settings.general_settings_manager ] ]
+            - [ setPersonalSettingsManager, [ @ongr_settings.settings.personal_settings_manager ] ]
             - [ setManager, [ @es.manager ] ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

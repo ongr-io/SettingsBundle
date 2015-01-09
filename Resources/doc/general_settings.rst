@@ -1,5 +1,5 @@
 ==================================================
-Enabling and using Common settings functionality
+Enabling and using General settings functionality
 ==================================================
 
 Introduction
@@ -61,7 +61,7 @@ Injecting settings we made as simple as it can be. To inject setting you only ne
         ongr_settings.demo_service:
             class: %ongr_settings.demo_service.class%
             tags:
-                # This is an example how ongr-admin can be used
+                # This is an example how ongr-settings can be used
                 - { name: 'ongr_settings.setting_aware', setting: 'count_per_page' }
 
 ..
@@ -69,23 +69,23 @@ Injecting settings we made as simple as it can be. To inject setting you only ne
 What happens in background? Actual service will be replaced with proxy service using service factory. Factory service gets actual service as parameter and on demand injects tagged settings.
 
 
-   Note: ``ongr-admin`` tries to guess setter name by transforming setting name to camel case. If you want to specify custom setter name, add tag attribute `method`.
+   Note: ``ongr-settings`` tries to guess setter name by transforming setting name to camel case. If you want to specify custom setter name, add tag attribute `method`.
 
 Getting Setting in Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can easily access setting value in any template using ``admin_setting`` function. Example:
+You can easily access setting value in any template using ``personal_setting`` function. Example:
 
 .. code-block:: html
 
-    <p>Default items count per page: {{ admin_setting('count_per_page') }}</p>
+    <p>Default items count per page: {{ personal_setting('count_per_page') }}</p>
 
 ..
 
 Settings Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`ongr-admin` uses `StashBundle <https://github.com/tedious/TedivmStashBundle>`_ to cache settings. By default Filesystem cache driver is used. To ensure best performance change it `Memcache` or other fast cache engine.
+`ongr-settings` uses `StashBundle <https://github.com/tedious/TedivmStashBundle>`_ to cache settings. By default Filesystem cache driver is used. To ensure best performance change it `Memcache` or other fast cache engine.
 
 To enable stash cache, please add this to your main ``config.yml``
 
@@ -105,11 +105,11 @@ Tags
 Setting aware
 --------------
 
-Sets service values from admin. Service must have a setter.
+Sets service values from personal. Service must have a setter.
 
 - ``ongr_settings.setting_aware``
 - Parameters
-    - ``setting`` - specify setting name set in admin
+    - ``setting`` - specify setting name set in personal
     - ``method`` - setter method name (optional)
 
 
@@ -131,6 +131,6 @@ Example YAML configuration:
 
 More about
 ~~~~~~~
-- `Admin settings usage </Resources/doc/general_settings.rst>`_
+- `Personal settings usage </Resources/doc/general_settings.rst>`_
 - `Flash bag usage </Resources/doc/flash_bag.rst>`_
 - `Environment variables usage </Resources/doc/env_variable.rst>`_

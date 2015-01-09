@@ -2,7 +2,7 @@
 SettingsBundle
 ===========
 
-Provides settings API and admin interface for ONGR projects.
+Provides settings API and settings interface for ONGR projects.
 
 .. image:: https://magnum.travis-ci.com/ongr-io/SettingsBundle.svg?token=X35UxnxC4zoxXhsTMzw8&branch=master
     :target: https://magnum.travis-ci.com/ongr-io/SettingsBundle
@@ -88,7 +88,7 @@ To enable authentication support, please add this to your main ``routing.yml``
     
     ongr_settings_routing:
         resource: "@ONGRSettingsBundle/Resources/config/routing.yml"
-        prefix: /admin
+        prefix: /settings
 
 ..
 

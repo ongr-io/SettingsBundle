@@ -54,7 +54,7 @@ class SettingsModifierPassTest extends \PHPUnit_Framework_TestCase
         $container
             ->expects($this->once())
             ->method('findTaggedServiceIds')
-            ->with('ongr_settings.admin_profiles_provider')
+            ->with('ongr_settings.personal_profiles_provider')
             ->willReturn(
                 [
                     'service_id' => [$tagAttributes],

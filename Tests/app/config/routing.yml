@@ -20,7 +20,7 @@ project_flash_bag:
 
 ongr_settings_routing:
     resource: "@ONGRSettingsBundle/Resources/config/routing.yml"
-    prefix: /admin
+    prefix: /settings
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

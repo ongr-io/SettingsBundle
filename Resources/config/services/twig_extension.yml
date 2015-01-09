@@ -1,6 +1,6 @@
 parameters:
     #Application settings widget extension
-    ongr_settings.twig.admin_extension.class: ONGR\SettingsBundle\Twig\SettingWidgetExtension
+    ongr_settings.twig.setting_extension.class: ONGR\SettingsBundle\Twig\SettingWidgetExtension
 
     #General settings widget extension
     ongr_settings.twig.setting_extension.class: ONGR\SettingsBundle\Twig\PersonalSettingWidgetExtension
@@ -22,10 +22,10 @@ parameters:
     ongr_settings.twig.wrapper_extension.class: ONGR\SettingsBundle\Twig\WrapperExtension
 
 services:
-    ongr_settings.twig.admin_extension:
-        class: %ongr_settings.twig.admin_extension.class%
+    ongr_settings.twig.setting_extension:
+        class: %ongr_settings.twig.setting_extension.class%
         arguments:
-            - @ongr_settings.settings.general_settings_manager
+            - @ongr_settings.settings.personal_settings_manager
         calls:
             - [ setSettingsContainer, [ @ongr_settings.settings_container ] ]
             - [ setLogger, [ @?logger ] ]
@@ -36,7 +36,7 @@ services:
     ongr_settings.twig.setting_extension:
         class: %ongr_settings.twig.setting_extension.class%
         arguments:
-            - @ongr_settings.settings.general_settings_manager
+            - @ongr_settings.settings.personal_settings_manager
         tags:
             - { name: "twig.extension" }
 

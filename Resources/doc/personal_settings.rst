@@ -1,5 +1,5 @@
 ======================================
-Enabling and using Admin settings functionality
+Enabling and using Personal settings functionality
 ======================================
 
 

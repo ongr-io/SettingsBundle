@@ -129,7 +129,7 @@ class UserControllerTest extends WebTestCase
         }
 
         // Visit logout page.
-        $client->request('GET', '/admin/logout');
+        $client->request('GET', '/settings/logout');
 
         // Assert successful redirect.
         $this->assertSame('/', $client->getRequest()->getRequestUri());
@@ -143,7 +143,7 @@ class UserControllerTest extends WebTestCase
         $client = $this->loginHelper->loginAction('test', 'test');
 
         // Visit login page.
-        $crawler = $client->request('GET', '/admin/login');
+        $crawler = $client->request('GET', '/settings/login');
 
         // Assert content contains message.
         $response = $client->getResponse();
@@ -183,7 +183,7 @@ class UserControllerTest extends WebTestCase
         CookieTestHelper::setAuthenticationCookie($this->client, time() - 360 * 24 * 3600);
 
         // Visit login page.
-        $crawler = $this->client->request('GET', '/admin/login');
+        $crawler = $this->client->request('GET', '/settings/login');
 
         // Assert there is a form.
         $buttonNode = $crawler->selectButton('login_submit');
@@ -225,7 +225,7 @@ class UserControllerTest extends WebTestCase
         $this->client->getCookieJar()->set($newCookie);
 
         // Visit login page.
-        $crawler = $this->client->request('GET', '/admin/login');
+        $crawler = $this->client->request('GET', '/settings/login');
 
         // Assert there is a form.
         $buttonNode = $crawler->selectButton('login_submit');

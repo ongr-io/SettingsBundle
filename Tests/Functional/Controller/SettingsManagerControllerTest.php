@@ -53,16 +53,16 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
     public function copyActionData()
     {
         // Case #0 non existing profile, existing item passed.
-        $out[] = [500, '/admin/setting/name0/copy/foo/newProfile'];
+        $out[] = [500, '/settings/setting/name0/copy/foo/newProfile'];
 
         // Case #1 existing profile set, existing item passed.
-        $out[] = [200, '/admin/setting/name0/copy/default/newProfile'];
+        $out[] = [200, '/settings/setting/name0/copy/default/newProfile'];
 
         // Case #2 non-existent profile and item passed.
-        $out[] = [500, '/admin/setting/foo/copy/foo/newProfile'];
+        $out[] = [500, '/settings/setting/foo/copy/foo/newProfile'];
 
         // Case #3 existent profile, non-existing item passed.
-        $out[] = [500, '/admin/setting/foo/copy/default/newProfile'];
+        $out[] = [500, '/settings/setting/foo/copy/default/newProfile'];
 
         return $out;
     }
@@ -73,7 +73,7 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
     public function createSetting()
     {
         $requestContent = json_encode(['setting' => ['data' => ['value' => 'name0']]]);
-        $this->client->request('POST', '/admin/setting/ng/name0/edit/default', [], [], [], $requestContent);
+        $this->client->request('POST', '/settings/setting/ng/name0/edit/default', [], [], [], $requestContent);
     }
 
     /**
@@ -82,7 +82,7 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
     public function testCreateSetting()
     {
         $requestContent = json_encode(['setting' => ['data' => ['value' => 'foo']]]);
-        $this->client->request('POST', '/admin/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
+        $this->client->request('POST', '/settings/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
         $response = $this->client->getResponse();
         $this->assertTrue($response->isOk());
     }
@@ -115,7 +115,7 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
         $this->createSetting();
         $this->client = $this->loginHelper->logoutAction($this->client);
         $this->client->request('GET', $url);
-        $this->assertSame('/admin/login', $this->client->getRequest()->getRequestUri());
+        $this->assertSame('/settings/login', $this->client->getRequest()->getRequestUri());
     }
 
     /**
@@ -124,7 +124,7 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
     public function testEditAction()
     {
         $this->createSetting();
-        $this->client->request('GET', '/admin/setting/name0/edit');
+        $this->client->request('GET', '/settings/setting/name0/edit');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
@@ -136,13 +136,13 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
     public function removeActionData()
     {
         // Case #0 remove existing settings, check if default domain is set.
-        $out[] = ['/admin/setting/name0/remove', 200];
+        $out[] = ['/settings/setting/name0/remove', 200];
 
         // Case #1 remove existing setting with domain set.
-        $out[] = ['/admin/setting/name0/remove/default', 200];
+        $out[] = ['/settings/setting/name0/remove/default', 200];
 
         // Case #2 remove non-existing setting.
-        $out[] = ['/admin/setting/non-existent/remove', 500];
+        $out[] = ['/settings/setting/non-existent/remove', 500];
 
         return $out;
     }
@@ -171,7 +171,7 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
 
         // Create setting.
         $requestContent = json_encode(['setting' => ['data' => ['value' => 'foo']]]);
-        $client->request('POST', '/admin/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
+        $client->request('POST', '/settings/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
         $response = $client->getResponse();
         $this->assertTrue($response->isOk());
 
@@ -181,7 +181,7 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
 
         // Modify.
         $requestContent = json_encode(['setting' => ['data' => ['value' => 'bar']]]);
-        $client->request('POST', '/admin/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
+        $client->request('POST', '/settings/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
         $response = $client->getResponse();
         $this->assertTrue($response->isOk());
 

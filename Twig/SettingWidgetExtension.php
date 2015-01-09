@@ -26,7 +26,7 @@ class SettingWidgetExtension extends \Twig_Extension
     /**
      * Extension name
      */
-    const NAME = 'admin_extension';
+    const NAME = 'setting_extension';
 
     /**
      * @var PersonalSettingsManager
@@ -124,7 +124,7 @@ class SettingWidgetExtension extends \Twig_Extension
      *
      * @return array|string
      */
-    public function getAdminSetting($name)
+    public function getPersonalSetting($name)
     {
         try {
             return $this->settingContainer->get($name);

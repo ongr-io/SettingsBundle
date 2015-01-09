@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Functional\Settings\General;
+namespace ONGR\SettingsBundle\Tests\Functional\Settings\Personal;
 
 use ONGR\SettingsBundle\Document\Setting;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -82,7 +82,7 @@ class PersonalSettingsTest extends WebTestCase
         CookieTestHelper::setAuthenticationCookie($this->client);
 
         // Retrieve content.
-        $crawler = $this->client->request('GET', '/admin/settings');
+        $crawler = $this->client->request('GET', '/settings/settings');
 
         // Asserts.
         $settingsDescription = $crawler->filter('#settings_ongr_settings_live_settings');
@@ -107,7 +107,7 @@ class PersonalSettingsTest extends WebTestCase
         CookieTestHelper::setAuthenticationCookie($this->client);
 
         // Retrieve content.
-        $crawler = $this->client->request('GET', '/admin/settings');
+        $crawler = $this->client->request('GET', '/settings/settings');
 
         // Submit domain selection.
         $buttonNode = $crawler->selectButton('settings_submit');
@@ -117,7 +117,7 @@ class PersonalSettingsTest extends WebTestCase
         $this->client->submit($form);
 
         // Load any url and check that user selected domains are loaded.
-        $this->client->request('GET', '/admin/setting/name0/edit');
+        $this->client->request('GET', '/settings/setting/name0/edit');
         $settingsContainer = $this->client->getContainer()->get('ongr_settings.settings_container');
 
         $selectedDomains = $settingsContainer->getProfiles();

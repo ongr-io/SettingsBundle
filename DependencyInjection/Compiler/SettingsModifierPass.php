@@ -27,7 +27,7 @@ class SettingsModifierPass implements CompilerPassInterface
     {
         $collectionService = $container->getDefinition('ongr_settings.settings.settings_structure');
 
-        $tagName = 'ongr_settings.admin_profiles_provider';
+        $tagName = 'ongr_settings.personal_profiles_provider';
         $taggedDefinitions = $container->findTaggedServiceIds($tagName);
 
         foreach ($taggedDefinitions as $id => $tags) {
