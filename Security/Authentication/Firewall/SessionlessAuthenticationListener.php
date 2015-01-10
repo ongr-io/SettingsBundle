@@ -14,7 +14,7 @@ namespace ONGR\AdminBundle\Security\Authentication\Firewall;
 use ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService;
 use ONGR\AdminBundle\Security\Authentication\Token\SessionlessToken;
 use ONGR\CookiesBundle\Cookie\Model\CookieInterface;
-use ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessSignatureGenerator;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -37,9 +37,9 @@ class SessionlessAuthenticationListener implements ListenerInterface
     protected $authCookieService;
 
     /**
-     * @var SecurityContext
+     * @var TokenStorageInterface
      */
-    protected $securityContext;
+    protected $tokenStorage;
 
     /**
      * @var CookieInterface
@@ -52,12 +52,12 @@ class SessionlessAuthenticationListener implements ListenerInterface
     public function __construct(
         AuthenticationManagerInterface $authenticationManager,
         SessionlessAuthenticationCookieService $authCookieService,
-        SecurityContext $securityContext,
+        TokenStorageInterface $tokenStorage,
         CookieInterface $cookie
     ) {
         $this->authenticationManager = $authenticationManager;
         $this->authCookieService = $authCookieService;
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
         $this->cookie = $cookie;
     }
 
@@ -69,7 +69,7 @@ class SessionlessAuthenticationListener implements ListenerInterface
         $cookieData = $this->cookie->getValue();
 
         if (!$this->authCookieService->validateCookie($cookieData)) {
-            $this->securityContext->setToken(null);
+            $this->tokenStorage->setToken(null);
 
             return false;
         }
@@ -83,10 +83,10 @@ class SessionlessAuthenticationListener implements ListenerInterface
 
         try {
             $regeneratedToken = $this->authenticationManager->authenticate($token);
-            $this->securityContext->setToken($regeneratedToken);
+            $this->tokenStorage->setToken($regeneratedToken);
         } catch (AuthenticationException $e) {
             $this->cookie->setClear(true);
-            $this->securityContext->setToken(null);
+            $this->tokenStorage->setToken(null);
 
             return false;
         }

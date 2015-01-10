@@ -80,7 +80,7 @@ class UserController extends Controller
      */
     protected function getSecurityContext()
     {
-        return $this->get('security.context');
+        return $this->get('security.token_storage');
     }
 
     /**

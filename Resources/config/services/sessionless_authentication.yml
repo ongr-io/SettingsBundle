@@ -47,5 +47,5 @@ services:
         arguments:
             - @security.authentication.manager
             - @ongr_admin.authentication.authentication_cookie_service
-            - @security.context
+            - @security.token_storage
             - @ongr_admin.authentication.authentication_cookie
