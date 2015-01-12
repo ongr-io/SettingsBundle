@@ -24,17 +24,16 @@ class TestController extends Controller
      *
      * @param Request $request
      *
-     * @param string  $setting_name
-     * @param string  $need_auth
+     * @param string  $settingName
+     * @param string  $needAuth
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function testAction(Request $request, $setting_name, $need_auth)
+    public function testAction(Request $request, $settingName, $needAuth)
     {
-        // Render.
         return $this->render(
             'AcmeTestBundle:Test:test.html.twig',
-            ['setting_name' => $setting_name, 'need_auth' => $need_auth]
+            ['setting_name' => $settingName, 'need_auth' => $needAuth]
         );
     }
 }
