@@ -23,11 +23,6 @@ use Symfony\Bundle\FrameworkBundle\Client;
 class PersonalSettingsControllerTest extends ElasticsearchTestCase
 {
     /**
-     * @var PreparePersonalData Elastic helper and index.
-     */
-    private $elastic;
-
-    /**
      * @var Client.
      */
     private $client;
@@ -39,7 +34,6 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
     {
         parent::setUp();
         $this->client = new LoginTestHelper(static::createClient());
-        $this->elastic = new PreparePersonalData();
     }
 
     /**
@@ -47,9 +41,6 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
      */
     public function testSettingsAction()
     {
-        $this->elastic->createIndexSetting();
-        $this->elastic->insertSettingData();
-
         $client = $this->client->loginAction('test', 'test');
 
         // Visit settings page.
@@ -121,8 +112,6 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
 
             $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
         }
-
-        $this->elastic->cleanUp();
     }
 
     /**
@@ -158,5 +147,32 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
             $client->getRequest()->getUri(),
             'response must be a correct redirect'
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getDataArray()
+    {
+        return [
+            'default' => [
+                'setting' => [
+                    [
+                        'name' => 'Acme1',
+                        'profile' => 'Acme1',
+                        'description' => 'Acme1',
+                        'type' => 'Acme1',
+                        'data' => 'Acme1',
+                    ],
+                    [
+                        'name' => 'Acme2',
+                        'profile' => 'Acme2',
+                        'description' => 'Acme2',
+                        'type' => 'Acme2',
+                        'data' => 'Acme2',
+                    ],
+                ],
+            ],
+        ];
     }
 }
