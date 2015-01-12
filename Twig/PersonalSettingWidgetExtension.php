@@ -29,11 +29,11 @@ class PersonalSettingWidgetExtension extends \Twig_Extension
     private $porsonallSettingsManager;
 
     /**
-     * @param PersonalSettingsManager $PersonalSettingsManager
+     * @param PersonalSettingsManager $personalSettingsManager
      */
-    public function __construct($PersonalSettingsManager)
+    public function __construct($personalSettingsManager)
     {
-        $this->porsonallSettingsManager = $PersonalSettingsManager;
+        $this->porsonallSettingsManager = $personalSettingsManager;
     }
 
     /**

@@ -1,4 +1,4 @@
-#Admin settings
+#Personal settings
 ongr_settings_personal_settings:
     path: /settings
     defaults:

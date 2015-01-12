@@ -64,16 +64,16 @@ class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
         }
 
         // Mock users manager.
-        $PersonalSettingsManager = $this
+        $personalSettingsManager = $this
             ->getMockBuilder('\ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager')
             ->disableOriginalConstructor()
             ->getMock();
-        $PersonalSettingsManager->expects($this->once())->method('getSettings')->willReturn($userSettings);
+        $personalSettingsManager->expects($this->once())->method('getSettings')->willReturn($userSettings);
 
         // Test.
         $listener = new ProfileRequestListener();
         $listener->setSettingsContainer($settingsContainer);
-        $listener->setPersonalSettingsManager($PersonalSettingsManager);
+        $listener->setPersonalSettingsManager($personalSettingsManager);
         $listener->setManager($manager);
         $event = $this
             ->getMockBuilder('\Symfony\Component\HttpKernel\Event\GetResponseEvent')
