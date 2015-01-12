@@ -49,19 +49,19 @@ class SettingWidgetExtensionTest extends ElasticsearchTestCase
         $out[] = [$expectedOutput, 'test', false];
 
         // Case #1 default type (string).
-        $expectedOutput = <<<HEREDOC
+        $expectedOutput = <<<NOWDOC
 <a href="http://localhost/admin/setting/test/edit?type=string" class="btn btn-default pull-right" title="Edit test">
     <span class="glyphicon glyphicon-wrench"></span>
 </a>
-HEREDOC;
+NOWDOC;
         $out[] = [$expectedOutput, 'test', true];
 
         // Case #2 custom type (array).
-        $expectedOutput = <<<HEREDOC
+        $expectedOutput = <<<NOWDOC
 <a href="http://localhost/admin/setting/test/edit?type=array" class="btn btn-default pull-right" title="Edit test">
     <span class="glyphicon glyphicon-wrench"></span>
 </a>
-HEREDOC;
+NOWDOC;
         $out[] = [$expectedOutput, 'test', true, 'array'];
 
         return $out;
