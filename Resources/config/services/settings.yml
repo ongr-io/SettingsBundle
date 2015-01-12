@@ -1,49 +1,49 @@
 parameters:
     # Settings manager.
-    ongr_admin.settings_manager.class: ONGR\AdminBundle\Service\SettingsManager
+    ongr_settings.settings_manager.class: ONGR\SettingsBundle\Service\SettingsManager
 
-    ongr_admin.settings_container.class: ONGR\AdminBundle\Settings\Common\SettingsContainer
-    ongr_admin.setting_aware_service_factory.class: ONGR\AdminBundle\Service\SettingAwareServiceFactory
-    ongr_admin.listener.cookie_profile.class: ONGR\AdminBundle\EventListener\ProfileRequestListener
-    ongr_admin.profiles_manager.class: ONGR\AdminBundle\Service\ProfilesManager
+    ongr_settings.settings_container.class: ONGR\SettingsBundle\Settings\General\SettingsContainer
+    ongr_settings.setting_aware_service_factory.class: ONGR\SettingsBundle\Service\SettingAwareServiceFactory
+    ongr_settings.listener.cookie_profile.class: ONGR\SettingsBundle\EventListener\ProfileRequestListener
+    ongr_settings.profiles_manager.class: ONGR\SettingsBundle\Service\ProfilesManager
 
-    ongr_admin.settings_provider.class: ONGR\AdminBundle\Settings\Common\Provider\ManagerAwareSettingProvider
+    ongr_settings.settings_provider.class: ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider
 
 services:
-    ongr_admin.settings_manager:
-        class: %ongr_admin.settings_manager.class%
+    ongr_settings.settings_manager:
+        class: %ongr_settings.settings_manager.class%
         arguments:
             - @translator
             - @event_dispatcher
             - @es.manager
 
-    ongr_admin.settings_container:
-        class: %ongr_admin.settings_container.class%
+    ongr_settings.settings_container:
+        class: %ongr_settings.settings_container.class%
         arguments:
             - @stash
-            - %ongr_admin.settings_container.profiles%
+            - %ongr_settings.settings_container.profiles%
         tags:
-            - { name: kernel.event_listener, event: ongr_admin.setting_change, method: onSettingChange }
+            - { name: kernel.event_listener, event: ongr_settings.setting_change, method: onSettingChange }
 
-    ongr_admin.setting_aware_service_factory:
-        class: %ongr_admin.setting_aware_service_factory.class%
+    ongr_settings.setting_aware_service_factory:
+        class: %ongr_settings.setting_aware_service_factory.class%
         arguments:
-            - @ongr_admin.settings_container
+            - @ongr_settings.settings_container
         calls:
             - [ setLogger, [ @?logger ] ]
         tags:
             - { name: monolog.logger, channel: admin }
 
-    ongr_admin.listener.cookie_profile:
-        class: %ongr_admin.listener.cookie_profile.class%
+    ongr_settings.listener.cookie_profile:
+        class: %ongr_settings.listener.cookie_profile.class%
         calls:
-            - [ setSettingsContainer, [ @ongr_admin.settings_container ] ]
-            - [ setAdminSettingsManager, [ @ongr_admin.settings.admin_settings_manager ] ]
+            - [ setSettingsContainer, [ @ongr_settings.settings_container ] ]
+            - [ setPersonalSettingsManager, [ @ongr_settings.settings.personal_settings_manager ] ]
             - [ setManager, [ @es.manager ] ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
-    ongr_admin.profiles_manager:
-        class: %ongr_admin.profiles_manager.class%
+    ongr_settings.profiles_manager:
+        class: %ongr_settings.profiles_manager.class%
         arguments:
             - @es.manager

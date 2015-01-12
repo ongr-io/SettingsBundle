@@ -3,17 +3,17 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{% block title -%}{{ "ONGR Admin"|trans }}{%- endblock %}</title>
+        <title>{% block title -%}{{ "ONGR Settings"|trans }}{%- endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block stylesheets %}
             <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css" rel="stylesheet">
-            <link href="{{ asset('bundles/ongradmin/css/ongr-admin.css') }}" type="text/css" rel="stylesheet">
+            <link href="{{ asset('bundles/ongrsettings/css/ongr-settings.css') }}" type="text/css" rel="stylesheet">
         {% endblock %}
     </head>
     <body {% block body_attributes %}ng-app="ongr"{% endblock %}>
         {% block content %}
             <div class="wrapper" {% block wrapper_attributes %}{% endblock %}>
-                {% block navigation %}{% include 'ONGRAdminBundle:Settings:inc/navigation.html.twig' %}{% endblock %}
+                {% block navigation %}{% include 'ONGRSettingsBundle:Settings:inc/navigation.html.twig' %}{% endblock %}
                 {% block main %}{% endblock %}
             </div>
         {% endblock %}
@@ -24,8 +24,8 @@
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
             <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
             {% block admin_javascripts %}
-                <script src="{{ asset('bundles/ongradmin/js/directive/YamlDirective.js') }}"></script>
-                <script src="{{ asset('bundles/ongradmin/js/service/SettingService.js') }}"></script>
+                <script src="{{ asset('bundles/ongrsettings/js/directive/YamlDirective.js') }}"></script>
+                <script src="{{ asset('bundles/ongrsettings/js/service/SettingService.js') }}"></script>
             {% endblock %}
         {% endblock %}
     </body>

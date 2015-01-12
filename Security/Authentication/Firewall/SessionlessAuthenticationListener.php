@@ -9,12 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Security\Authentication\Firewall;
+namespace ONGR\SettingsBundle\Security\Authentication\Firewall;
 
-use ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService;
-use ONGR\AdminBundle\Security\Authentication\Token\SessionlessToken;
+use ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService;
+use ONGR\SettingsBundle\Security\Authentication\Token\SessionlessToken;
 use ONGR\CookiesBundle\Cookie\Model\CookieInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessSignatureGenerator;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;

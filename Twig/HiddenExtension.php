@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Twig;
+namespace ONGR\SettingsBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,7 +78,7 @@ class HiddenExtension extends \Twig_Extension
         }
 
         return $environment->render(
-            'ONGRAdminBundle:Utils:hidden.html.twig',
+            'ONGRSettingsBundle:Utils:hidden.html.twig',
             ['data' => $this->modify($data)]
         );
     }

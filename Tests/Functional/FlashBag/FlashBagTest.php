@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\FlashBag;
+namespace ONGR\SettingsBundle\Tests\Functional\FlashBag;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Document;
+namespace ONGR\SettingsBundle\Document;
 
 use JsonSerializable;
 use ONGR\ElasticsearchBundle\Annotation as ES;

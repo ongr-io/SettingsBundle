@@ -1,8 +1,8 @@
 parameters:
-    ongr_admin.pair_storage.class: ONGR\AdminBundle\Service\PairStorage
+    ongr_settings.pair_storage.class: ONGR\SettingsBundle\Service\PairStorage
 
 services:
-    ongr_admin.pair_storage:
-        class: %ongr_admin.pair_storage.class%
+    ongr_settings.pair_storage:
+        class: %ongr_settings.pair_storage.class%
         arguments:
             - @es.manager

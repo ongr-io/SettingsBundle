@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection;
+namespace ONGR\SettingsBundle\Tests\Functional\DependencyInjection;
 
 /**
  * Dummy service for functional test.

@@ -37,8 +37,8 @@ class AppKernel extends Kernel
 
             new ONGR\PagerBundle\ONGRPagerBundle(),
             new ONGR\CookiesBundle\ONGRCookiesBundle(),
-            new ONGR\AdminBundle\ONGRAdminBundle(),
-            new ONGR\AdminBundle\Tests\Fixtures\Acme\TestBundle\AcmeTestBundle(),
+            new ONGR\SettingsBundle\Tests\Fixtures\Acme\TestBundle\AcmeTestBundle(),
+            new ONGR\SettingsBundle\ONGRSettingsBundle(),
         ];
     }
 

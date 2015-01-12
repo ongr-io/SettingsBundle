@@ -33,7 +33,7 @@ angular
              * @param newProfile string
              */
             $scope.copy = function(newProfile) {
-                requestUrl = Routing.generate('ongr_admin_setting_copy', {
+                requestUrl = Routing.generate('ongr_settings_setting_copy', {
                     name: $scope.setting.name,
                     from: $scope.setting.profile,
                     to: newProfile

@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\Service;
+namespace ONGR\SettingsBundle\Tests\Unit\Service;
 
-use ONGR\AdminBundle\Document\Setting;
-use ONGR\AdminBundle\Service\SettingsManager;
+use ONGR\SettingsBundle\Document\Setting;
+use ONGR\SettingsBundle\Service\SettingsManager;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
@@ -164,7 +164,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
     protected function getSettingMock()
     {
         return $this->getMock(
-            'ONGR\AdminBundle\Document\Setting'
+            'ONGR\SettingsBundle\Document\Setting'
         );
     }
 

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\FlashBag;
+namespace ONGR\SettingsBundle\Tests\Unit\FlashBag;
 
-use ONGR\AdminBundle\FlashBag\DirtyFlashBag;
+use ONGR\SettingsBundle\FlashBag\DirtyFlashBag;
 
 class FlashBagServiceTest extends \PHPUnit_Framework_TestCase
 {

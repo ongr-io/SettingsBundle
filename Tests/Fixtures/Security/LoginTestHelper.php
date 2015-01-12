@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Fixtures\Security;
+namespace ONGR\SettingsBundle\Tests\Fixtures\Security;
 
 use Symfony\Bundle\FrameworkBundle\Client;
 
@@ -44,7 +44,7 @@ class LoginTestHelper
         $client = $this->getClient();
         $client->followRedirects();
 
-        $crawler = $client->request('GET', '/admin/login');
+        $crawler = $client->request('GET', '/settings/login');
         $buttonNode = $crawler->selectButton('login_submit');
 
         $form = $buttonNode->form();
@@ -64,7 +64,7 @@ class LoginTestHelper
      */
     public function logoutAction(Client $client)
     {
-        $crawler = $client->request('GET', '/admin/login');
+        $crawler = $client->request('GET', '/settings/login');
         $link = $crawler->filter('a:contains("Logout")')->link();
         $client->click($link);
 

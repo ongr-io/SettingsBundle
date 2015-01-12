@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Security\Authentication\Token;
+namespace ONGR\SettingsBundle\Security\Authentication\Token;
 
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 

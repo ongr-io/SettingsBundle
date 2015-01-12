@@ -11,6 +11,6 @@ Note that unlike Symfony environment variables, we override parameters after eve
 
 More about
 ~~~~~~~~~
-- `Admin settings usage </Resources/doc/admin_settings.rst>`_
-- `Common settings usage </Resources/doc/common_settings.rst>`_
+- `Personal functionality </Resources/doc/personal_settings.rst>`_
+- `General functionality </Resources/doc/general_settings.rst>`_
 - `Flash bag usage </Resources/doc/flash_bag.rst>`_

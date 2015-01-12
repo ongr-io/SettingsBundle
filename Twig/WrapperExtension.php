@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Twig;
+namespace ONGR\SettingsBundle\Twig;
 
 /**
  * Class WrapperExtension.

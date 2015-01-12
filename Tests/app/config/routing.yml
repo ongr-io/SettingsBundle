@@ -8,9 +8,9 @@ twig_test:
     defaults:
         _controller: AcmeTestBundle:Test:test
 
-ongr_admin_routing:
-    resource: "@ONGRAdminBundle/Resources/config/routing.yml"
-    prefix: /admin
+ongr_settings_routing:
+    resource: "@ONGRSettingsBundle/Resources/config/routing.yml"
+    prefix: /settings
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

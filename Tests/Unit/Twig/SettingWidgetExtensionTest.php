@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\Twig;
+namespace ONGR\SettingsBundle\Tests\Unit\Twig;
 
-use ONGR\AdminBundle\Twig\SettingWidgetExtension;
-use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
+use ONGR\SettingsBundle\Twig\SettingWidgetExtension;
+use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 
 class SettingWidgetExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,9 +32,9 @@ class SettingWidgetExtensionTest extends \PHPUnit_Framework_TestCase
      */
     protected function getSettingExtension()
     {
-        /** @var AdminSettingsManager $manager */
+        /** @var PersonalSettingsManager $manager */
         $manager = $this
-            ->getMockBuilder('ONGR\AdminBundle\Settings\Admin\AdminSettingsManager')
+            ->getMockBuilder('ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager')
             ->disableOriginalConstructor()
             ->getMock();
 

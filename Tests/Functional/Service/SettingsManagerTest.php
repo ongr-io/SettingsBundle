@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Service;
+namespace ONGR\SettingsBundle\Tests\Functional\Service;
 
-use ONGR\AdminBundle\Document\Setting;
-use ONGR\AdminBundle\Service\SettingsManager;
+use ONGR\SettingsBundle\Document\Setting;
+use ONGR\SettingsBundle\Service\SettingsManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\DSL\Query\MatchAllQuery;
@@ -80,7 +80,7 @@ class SettingsManagerTest extends WebTestCase
         $setting1 = $this->getSetting('name0', Setting::TYPE_STRING, 'test1', 'default');
         $setting2 = $this->getSetting('name1', Setting::TYPE_STRING, 'test13', 'not-default');
 
-        $repo = $this->manager->getRepository('ONGRAdminBundle:Setting');
+        $repo = $this->manager->getRepository('ONGRSettingsBundle:Setting');
 
         $search = $repo
             ->createSearch()
@@ -114,7 +114,7 @@ class SettingsManagerTest extends WebTestCase
 
         $manager->duplicate($settingToCopy, 'newDomain');
 
-        $repo = $this->manager->getRepository('ONGRAdminBundle:Setting');
+        $repo = $this->manager->getRepository('ONGRSettingsBundle:Setting');
 
         $search = $repo
             ->createSearch()
@@ -149,7 +149,7 @@ class SettingsManagerTest extends WebTestCase
         );
         $setting = $manager->get('name0', 'default');
 
-        $this->assertInstanceOf('ONGR\AdminBundle\Document\Setting', $setting);
+        $this->assertInstanceOf('ONGR\SettingsBundle\Document\Setting', $setting);
 
         $manager->remove($setting);
 
@@ -171,7 +171,7 @@ class SettingsManagerTest extends WebTestCase
         $setting = new Setting();
         $setting->setId($profile . '_' . $name);
         $setting->setName($name);
-        $setting->setDescription('ongr_admin.' . $name);
+        $setting->setDescription('ongr_settings.' . $name);
         $setting->setProfile($profile);
         $setting->setType($type);
         $setting->setData(['value' => $value]);

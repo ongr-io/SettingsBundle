@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Settings;
+namespace ONGR\SettingsBundle\Tests\Functional\Settings;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use ONGR\AdminBundle\Tests\Fixtures\Security\LoginTestHelper;
+use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
 
 class AuthenticationTest extends WebTestCase
 {
@@ -21,7 +21,7 @@ class AuthenticationTest extends WebTestCase
      *
      * No index has been created in this test, so there will be an uncaught exception, if any queries were executed.
      *
-     * @see \ONGR\AdminBundle\Settings\Admin\AdminProfilesProvider::getSettings
+     * @see \ONGR\SettingsBundle\Settings\Personal\PersonalProfilesProvider::getSettings
      */
     public function testRequest()
     {

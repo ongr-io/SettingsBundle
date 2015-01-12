@@ -11,7 +11,7 @@
 
 namespace ONGR\UtilsBundle\Tests\Functional\Twig;
 
-use ONGR\AdminBundle\Twig\HiddenExtension;
+use ONGR\SettingsBundle\Twig\HiddenExtension;
 use Symfony\Component\DependencyInjection\Scope;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\Container;
@@ -62,7 +62,7 @@ class HiddenExtensionTest extends \PHPUnit_Framework_TestCase
     public function getTestGenerateData()
     {
         $data = [];
-        $template = 'ONGRAdminBundle:Utils:hidden.html.twig';
+        $template = 'ONGRSettingsBundle:Utils:hidden.html.twig';
 
         // Case 0: dont check request.
         $data0 = [

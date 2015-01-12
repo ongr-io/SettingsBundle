@@ -1,4 +1,4 @@
-{% extends 'ONGRAdminBundle::layout.html.twig' %}
+{% extends 'ONGRSettingsBundle::layout.html.twig' %}
 
 {% block body_attributes %}ng-app="ongr.edit"{% endblock %}
 {% block wrapper_attributes %}ng-controller="edit"{% endblock %}
@@ -77,7 +77,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-6">
                     <button ng-click="settingService.addSetting()" type="submit" class="btn btn-primary">Save</button>
-                    <a class="btn btn-danger" href="{{ path('ongr_admin_settings_list', { 'profile': setting.profile }) }}">Close</a>
+                    <a class="btn btn-danger" href="{{ path('ongr_settings_settings_list', { 'profile': setting.profile }) }}">Close</a>
                 </div>
             </div>
 
@@ -94,7 +94,7 @@
     <script type="text/javascript">
         var setting = {{ setting|json_encode|raw }};
     </script>
-    <script src="{{ asset('bundles/ongradmin/js/controller/EditController.js') }}"></script>
-    <script src="{{ asset('bundles/ongradmin/js/app-edit.js') }}"></script>
+    <script src="{{ asset('bundles/ONGRSettings/js/controller/EditController.js') }}"></script>
+    <script src="{{ asset('bundles/ONGRSettings/js/app-edit.js') }}"></script>
     {{ parent() }}
 {% endblock %}

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Service;
+namespace ONGR\SettingsBundle\Service;
 
 use ONGR\ElasticsearchBundle\DSL\Aggregation\TermsAggregation;
 use ONGR\ElasticsearchBundle\ORM\Repository;
@@ -42,7 +42,7 @@ class ProfilesManager
      */
     public function getProfiles()
     {
-        $repo = $this->manager->getRepository('ONGRAdminBundle:Setting');
+        $repo = $this->manager->getRepository('ONGRSettingsBundle:Setting');
 
         // Create aggregated profiles list from all available settings.
         $aggregation = new TermsAggregation('profile_agg');

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Security\Authentication\Cookie;
+namespace ONGR\SettingsBundle\Security\Authentication\Cookie;
 
 /**
  * Service for signing data with secret key.

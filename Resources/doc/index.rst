@@ -1,17 +1,17 @@
 ===========
-AdminBundle
+SettingsBundle
 ===========
 
 Provides settings API and admin interface for ONGR projects.
 
-.. image:: https://magnum.travis-ci.com/ongr-io/AdminBundle.svg?token=X35UxnxC4zoxXhsTMzw8&branch=master
-:target: https://magnum.travis-ci.com/ongr-io/AdminBundle
+.. image:: https://magnum.travis-ci.com/ongr-io/SettingsBundle.svg?token=X35UxnxC4zoxXhsTMzw8&branch=master
+:target: https://magnum.travis-ci.com/ongr-io/SettingsBundle
 
 It includes:
 
 - `Sessionless cookie authentication </Resources/doc/ongr_sessionless_authentication.rst>`_
-- `Admin settings </Resources/doc/admin_settings.rst>`_
-- `Common settings </Resources/doc/common_settings.rst>`_
+- `Personal settings </Resources/doc/personal_settings.rst>`_
+- `General settings </Resources/doc/general_settings.rst>`_
 - `Flash settings </Resources/doc/flash_bag.rst>`_
 - `Environment settings </Resources/doc/env_variable.rst>`_
 
@@ -27,11 +27,11 @@ Depends on:
 Enabling and setting it up
 =================================
 
-``AdminBundle`` requires minimal efforts to get it working. Firstly, install package using Composer:
+``SettingsBundle`` requires minimal efforts to get it working. Firstly, install package using Composer:
 
 .. code-block:: bash
 
-    composer require ongr-io/AdminBundle 0.1.*
+    composer require ongr-io/SettingsBundle 0.1.*
 
 ..
 
@@ -49,7 +49,7 @@ Then register it in ``AppKernel.php``:
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Tedivm\StashBundle\TedivmStashBundle(),
             new ONGR\CookiesBundle\ONGRCookiesBundle(),
-            new ONGR\AdminBundle\ONGRAdminBundle(),
+            new ONGR\SettingsBundle\ONGRSettingsBundle(),
             );
         }
 
@@ -63,7 +63,7 @@ If You had defined mappings for your system, you should add
 
 .. code-block:: yaml
 
-    - ONGRAdminBundle
+    - ONGRSettingsBundle
 
 ..
 
@@ -87,9 +87,9 @@ To enable authentication support, first add this to your main ``routing.yml``
     fos_js_routing:
         resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
     
-    ongr_admin_routing:
-        resource: "@ONGRAdminBundle/Resources/config/routing.yml"
-        prefix: /admin_prefix
+    ongr_settings_routing:
+        resource: "@ONGRSettingsBundle/Resources/config/routing.yml"
+        prefix: /settings_prefix
 
 ..
 
@@ -106,16 +106,16 @@ All other settings (eg.: user providers) are configurable accordingly to symfony
                 anonymous: ~
                 ongr_sessionless_authentication: true
                 form_login:
-                    login_path: ongr_admin_sessionless_login #path where login form resides
+                    login_path: ongr_settings_sessionless_login #path where login form resides
                     check_path: login_check      #default Authentication provider
                     failure_path: /  #on failure
                 logout:
-                    path:   ongr_admin_sessionless_logout
+                    path:   ongr_settings_sessionless_logout
                     target: /
         access_control:
-            - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/admin/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/admin/.* , roles: ROLE_ADMIN }
+            - { path: ^/settings_prefix/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/settings_prefix/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/settings_prefix/.* , roles: ROLE_ADMIN }
 
         providers:
             foo_chain_provider:
@@ -135,7 +135,7 @@ All other settings (eg.: user providers) are configurable accordingly to symfony
 
 ..
 
-Login page is at ``/admin_prefix/login``. There is also a logout page at ``/admin_prefix/logout``.
+Login page is at ``/settings_prefix/login``. There is also a logout page at ``/settings_prefix/logout``.
 
 Using these settings you can configure as much firewalls as you want in your whole project.
 
@@ -153,8 +153,8 @@ Bundles functionalities usage
 ==============================
 
 - `Sessionless cookie authentication </Resources/doc/ongr_sessionless_authentication.rst>`_
-- `Admin settings usage </Resources/doc/admin_settings.rst>`_
-- `Common settings usage </Resources/doc/common_settings.rst>`_
+- `Personal settings usage </Resources/doc/personal_settings.rst>`_
+- `General settings usage </Resources/doc/general_settings.rst>`_
 - `Flash bag usage </Resources/doc/flash_bag.rst>`_
 - `Environment variables usage </Resources/doc/env_variable.rst>`_
 

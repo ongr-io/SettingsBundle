@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Fixtures\FlashBag;
+namespace ONGR\SettingsBundle\Tests\Fixtures\FlashBag;
 
-use ONGR\AdminBundle\FlashBag\DirtyFlashBag;
+use ONGR\SettingsBundle\FlashBag\DirtyFlashBag;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +33,7 @@ class FlashBagController
     public function indexAction(Request $request)
     {
         /** @var DirtyFlashBag $flashBag */
-        $flashBag = $this->container->get('ongr_admin.flash_bag.flash_bag');
+        $flashBag = $this->container->get('ongr_settings.flash_bag.flash_bag');
 
         if ($request->getMethod() == 'POST') {
             $flashBag->add('main', 'posted');

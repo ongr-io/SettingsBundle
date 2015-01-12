@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Service;
+namespace ONGR\SettingsBundle\Service;
 
-use ONGR\AdminBundle\Exception\SettingNotFoundException;
-use ONGR\AdminBundle\Settings\Common\SettingsContainerInterface;
+use ONGR\SettingsBundle\Exception\SettingNotFoundException;
+use ONGR\SettingsBundle\Settings\General\SettingsContainerInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Process\Exception\LogicException;

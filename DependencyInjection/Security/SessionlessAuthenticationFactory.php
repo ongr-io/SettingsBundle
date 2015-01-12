@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\DependencyInjection\Security;
+namespace ONGR\SettingsBundle\DependencyInjection\Security;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -32,16 +32,19 @@ class SessionlessAuthenticationFactory implements SecurityFactoryInterface
         $userProvider,
         $defaultEntryPoint
     ) {
-        $providerId = 'ongr_admin.firewall.provider.sessionless_authentication.' . $id;
+        $providerId = 'ongr_settings.firewall.provider.sessionless_authentication.' . $id;
         $container
                 ->setDefinition(
                     $providerId,
-                    new DefinitionDecorator('ongr_admin.authentication.sessionless_authentication_provider')
+                    new DefinitionDecorator('ongr_settings.authentication.sessionless_authentication_provider')
                 )
                 ->replaceArgument(1, new Reference($userProvider));
 
-        $listenerId = 'ongr_admin.firewall.listener.sessionless_authentication.' . $id;
-        $container->setDefinition($listenerId, new DefinitionDecorator('ongr_admin.authentication.firewall.listener'));
+        $listenerId = 'ongr_settings.firewall.listener.sessionless_authentication.' . $id;
+        $container->setDefinition(
+            $listenerId,
+            new DefinitionDecorator('ongr_settings.authentication.firewall.listener')
+        );
 
         return [$providerId, $listenerId, $defaultEntryPoint];
     }

@@ -9,9 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\EventListener;
+namespace ONGR\SettingsBundle\Tests\Unit\EventListener;
 
-use ONGR\AdminBundle\EventListener\ProfileRequestListener;
+use ONGR\SettingsBundle\EventListener\ProfileRequestListener;
+use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
 class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,10 +28,10 @@ class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
         // Case #0. No profiles selected.
         $cases[] = [[], []];
         // Case #1. One profile selected.
-        $cases[] = [ ['ongr_admin_profile_foo-2e-com' => true], ['foo.com'] ];
+        $cases[] = [ ['ongr_settings_profile_foo-2e-com' => true], ['foo.com'] ];
         // Case #2. One profile unselected.
         $cases[] = [
-            ['ongr_admin_profile_foo-2e-com' => false, 'ongr_admin_profile_bar-2e-com' => true],
+            ['ongr_settings_profile_foo-2e-com' => false, 'ongr_settings_profile_bar-2e-com' => true],
             ['bar.com'],
         ];
 
@@ -52,7 +53,7 @@ class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
 
         // Mock settings container.
         $settingsContainer = $this
-            ->getMockBuilder('\ONGR\AdminBundle\Settings\Common\SettingsContainer')
+            ->getMockBuilder('\ONGR\SettingsBundle\Settings\General\SettingsContainer')
             ->disableOriginalConstructor()
             ->getMock();
         $i = 0;
@@ -63,16 +64,16 @@ class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
         }
 
         // Mock users manager.
-        $adminSettingsManager = $this
-            ->getMockBuilder('\ONGR\AdminBundle\Settings\Admin\AdminSettingsManager')
+        $personalSettingsManager = $this
+            ->getMockBuilder('\ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager')
             ->disableOriginalConstructor()
             ->getMock();
-        $adminSettingsManager->expects($this->once())->method('getSettings')->willReturn($userSettings);
+        $personalSettingsManager->expects($this->once())->method('getSettings')->willReturn($userSettings);
 
         // Test.
         $listener = new ProfileRequestListener();
         $listener->setSettingsContainer($settingsContainer);
-        $listener->setAdminSettingsManager($adminSettingsManager);
+        $listener->setPersonalSettingsManager($personalSettingsManager);
         $listener->setManager($manager);
         $event = $this
             ->getMockBuilder('\Symfony\Component\HttpKernel\Event\GetResponseEvent')

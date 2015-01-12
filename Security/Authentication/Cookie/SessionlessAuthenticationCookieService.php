@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Security\Authentication\Cookie;
+namespace ONGR\SettingsBundle\Security\Authentication\Cookie;
 
 use Symfony\Component\HttpFoundation\Cookie;
 

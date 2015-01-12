@@ -1,13 +1,13 @@
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ path('ongr_admin_sessionless_login') }}">ONGR Admin</a>
+            <a class="navbar-brand" href="{{ path('ongr_settings_homepage') }}">ONGR Settings</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             {% block search %}
                 {% if filters.search is defined %}
                     {% set search = filters.search %}
-                    <form class="navbar-form navbar-right" role="search" method="get" action="{{ path('ongr_admin_settings_list', routeParams) }}">
+                    <form class="navbar-form navbar-right" role="search" method="get" action="{{ path('ongr_settings_settings_list', routeParams) }}">
                         <div class="form-group">
                             <input type="text" class="form-control" name="q" value="{% if search is defined %}{{ search.state.value }}{% endif %}" placeholder="{% if search is defined %}{{ search.name | capitalize | trans }}{% else %}Search{% endif %}" autocomplete="off">
                         </div>
@@ -32,7 +32,7 @@
                                     {% if option.default and sort.state.active == false %}
                                         {# Nothing to display #}
                                     {% elseif option.active == false %}
-                                        <li><a href="{{ path('ongr_admin_settings_list', option.urlParameters) }}">{{ option.label }}</a></li>
+                                        <li><a href="{{ path('ongr_settings_settings_list', option.urlParameters) }}">{{ option.label }}</a></li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>
@@ -52,7 +52,7 @@
                                 <ul class="dropdown-menu">
                                     {% for value in filters.profile.choices %}
                                         {% if not value.active %}
-                                            <li><a href="{{ path('ongr_admin_settings_list', value.urlParameters) }}">{{ value.label }}</a></li>
+                                            <li><a href="{{ path('ongr_settings_settings_list', value.urlParameters) }}">{{ value.label }}</a></li>
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
@@ -61,7 +61,7 @@
                 {% endif %}
             {% endblock %}
             {% block buttons %}
-                {% if app.request.attributes.get('_route') != "ongr_admin_setting_edit" %}
+                {% if app.request.attributes.get('_route') != "ongr_settings_setting_edit" %}
                     <div class="nav navbar-nav">
                         <button class="btn btn-default navbar-btn" ng-click="addSetting()" href="#">Add setting</button>
                     </div>
@@ -69,7 +69,7 @@
             {% endblock %}
             {% if not filters is defined %}
                 <div class="nav navbar-nav navbar-right">
-                    <a class="btn btn-default navbar-btn" href="{{ path('ongr_admin_settings_list') }}">{{ 'Settings List'|trans }}</a>
+                    <a class="btn btn-default navbar-btn" href="{{ path('ongr_settings_settings_list') }}">{{ 'Settings List'|trans }}</a>
                 </div>
             {% endif %}
         </div>

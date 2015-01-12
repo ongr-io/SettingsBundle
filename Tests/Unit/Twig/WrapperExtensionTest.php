@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\Twig;
+namespace ONGR\SettingsBundle\Tests\Unit\Twig;
 
-use ONGR\AdminBundle\Twig\WrapperExtension;
+use ONGR\SettingsBundle\Twig\WrapperExtension;
 
 class WrapperExtensionTest extends \PHPUnit_Framework_TestCase
 {
