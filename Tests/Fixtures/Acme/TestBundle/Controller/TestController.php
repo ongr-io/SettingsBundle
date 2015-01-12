@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class TestController extends Controller
 {
     /**
-     * Test action.
+     * Test personal settings action.
      *
      * @param Request $request
      *
@@ -35,13 +35,22 @@ class TestController extends Controller
             'AcmeTestBundle:Test:personal.html.twig',
             ['setting_name' => $settingName, 'need_auth' => $needAuth]
         );
+
     }
 
 
+    /**
+     * Test general settings action.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function testgeneralsettingsAction(Request $request)
     {
         return $this->render(
             'AcmeTestBundle:Test:general.html.twig'
         );
+
     }
 }
