@@ -11,7 +11,6 @@
 
 namespace ONGR\SettingsBundle\Tests\Functional\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
 use ONGR\SettingsBundle\Tests\Functional\PreparePersonalData;
 use ONGR\SettingsBundle\Tests\Functional\PrepareAdminData;
@@ -79,7 +78,9 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
         /** @noinspection PhpUndefinedMethodInspection */
         $form['settings[ongr_settings_profile_Acme2]']->tick();
         /** @noinspection PhpUndefinedMethodInspection */
-        $form['settings[ongr_settings_profile_Acme1]']->untick();
+        $form['settings[ongr_settings_profile_Acme1]']->tick();
+        /** @noinspection PhpUndefinedMethodInspection */
+        $form['settings[ongr_settings_live_settings]']->untick();
         $client->submit($form);
 
         // Assert successful redirect.
@@ -100,7 +101,8 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
             'foo_setting_2' => false,
             'foo_setting_3' => true,
             'ongr_settings_profile_Acme2' => true,
-            'ongr_settings_profile_Acme1' => false,
+            'ongr_settings_profile_Acme1' => true,
+            'ongr_settings_live_settings' => false,
         ];
         $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
 

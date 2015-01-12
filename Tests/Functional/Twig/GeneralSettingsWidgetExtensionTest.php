@@ -13,7 +13,8 @@ namespace ONGR\SettingsBundle\Tests\Functional\Twig;
 
 use ONGR\SettingsBundle\Exception\SettingNotFoundException;
 use ONGR\SettingsBundle\Settings\Personal\AdminSettingsManager;
-use ONGR\SettingsBundle\Twig\SettingWidgetExtension;
+use ONGR\SettingsBundle\Twig\GeneralSettingsWidgetExtension;
+use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
 use ONGR\SettingsBundle\Settings\General\SettingsContainerInterface;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
@@ -23,12 +24,26 @@ use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 class GeneralSettingsWidgetExtensionTest extends ElasticsearchTestCase
 {
     /**
+     * @var Client.
+     */
+    private $client;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->client = new LoginTestHelper(self::createClient());
+    }
+
+    /**
      * Tests if extension is loaded correctly.
      */
     public function testGetExtension()
     {
         $container = $this->getContainer();
-        /** @var SettingWidgetExtension $extension */
+        /** @var GeneralSettingsWidgetExtension $extension */
         $extension = $container->get('ongr_settings.twig.personal_settings_extension');
         $this->assertInstanceOf(
             'ONGR\SettingsBundle\Twig\PersonalSettingWidgetExtension',
@@ -45,9 +60,9 @@ class GeneralSettingsWidgetExtensionTest extends ElasticsearchTestCase
      */
     public function showSettingData()
     {
-//        // Case #0 not authenticated.
-//        $expectedOutput = '';
-//        $out[] = [$expectedOutput, 'test', false];
+        // Case #0 not authenticated.
+        $expectedOutput = '';
+        $out[] = [$expectedOutput, 'test', false];
 
         // Case #1 default type (string).
         $expectedOutput = <<<'NOWDOC'
@@ -87,25 +102,22 @@ NOWDOC;
         $settingsManager = $container->get('ongr_settings.settings.personal_settings_manager');
         $settingsManager->setSettingsFromForm(['ongr_settings_live_settings' => true]);
 
-//        /** @var \Twig_Environment $twig */
-//        $twig = $container->get('twig');
-//        $extension = new SettingWidgetExtension($this->getSettingsManagerMock($isAuthenticated));
-//
-//        if (empty($type)) {
-//            $result = $extension->showSetting($twig, $settingName);
-//        } else {
-//            $result = $extension->showSetting($twig, $settingName, $type);
-//        }
+        // Login.
+        $client = $this->client->loginAction('test', 'test');
 
-        $client = self::createClient();
+        // Visit settings page.
+        $crawler = $client->request('GET', '/settings/settings');
+
+        // Select and submit settings form.
+        $buttonNode = $crawler->selectButton('settings_submit');
+        $form = $buttonNode->form();
+        $form['settings[ongr_settings_live_settings]']->tick();
+        $client->submit($form);
 
         // Call controller with params to generate twig.
         $client->request('GET', '/test/twiggeneral');
 
-        file_put_contents('debug.html', $client->getResponse()->getContent()); //exit;
-        //echo $client->getResponse()->getContent();
-
-        //$this->assertContains($expectedResult ? 'foo_true' : 'foo_false', $this->client->getResponse()->getContent());
+        $this->assertContains('count_per_page', $client->getResponse()->getContent());
     }
 
     /**
@@ -118,7 +130,7 @@ NOWDOC;
         $settingContainer = $this->getMock('ONGR\SettingsBundle\Settings\General\SettingsContainerInterface');
         $settingContainer->expects($this->once())->method('get')->with('test')->willReturn($expectedValue);
 
-        $extension = new SettingWidgetExtension(null);
+        $extension = new GeneralSettingsWidgetExtension(null);
         $extension->setSettingsContainer($settingContainer);
 
         $this->assertEquals($expectedValue, $extension->getPersonalSetting('test'));
@@ -136,7 +148,7 @@ NOWDOC;
             ->with('test')
             ->willThrowException(new SettingNotFoundException());
 
-        $extension = new SettingWidgetExtension(null);
+        $extension = new GeneralSettingsWidgetExtension(null);
         $extension->setSettingsContainer($settingContainer);
 
         $this->assertNull($extension->getPersonalSetting('test'));

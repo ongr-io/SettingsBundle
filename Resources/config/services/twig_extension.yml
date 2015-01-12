@@ -1,6 +1,6 @@
 parameters:
     #General settings widget extension
-    ongr_settings.twig.setting_extension.class: ONGR\SettingsBundle\Twig\SettingWidgetExtension
+    ongr_settings.twig.setting_extension.class: ONGR\SettingsBundle\Twig\GeneralSettingsWidgetExtension
 
     #Personal settings widget extension
     ongr_settings.twig.personal_settings_extension.class: ONGR\SettingsBundle\Twig\PersonalSettingWidgetExtension

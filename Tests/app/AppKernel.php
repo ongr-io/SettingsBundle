@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Kernel;
 class AppKernel extends Kernel
 {
     /**
-     *  {@inheritdoc}
+     * {@inheritdoc}
      *
      * @return array|\Symfony\Component\HttpKernel\Bundle\BundleInterface[]
      */
@@ -30,7 +30,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
-            
+
             new \FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new ONGR\ElasticsearchBundle\ONGRElasticsearchBundle(),
             new Tedivm\StashBundle\TedivmStashBundle(),
