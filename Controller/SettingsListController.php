@@ -78,8 +78,13 @@ class SettingsListController extends Controller
 
         /** @var MatchSearch $search */
         $search = new MatchSearch();
-        $search->setRequestField('q');
-        $search->setField('name');
+        if ($request->query->has('q')) {
+            $queryString = $request->query->get('q');
+            if (!empty($queryString)) {
+                $search->setRequestField('q');
+                $search->setField('name');
+            }
+        }
         $container->set('search', $search);
 
         /** @var SingleTermChoice $profile */
