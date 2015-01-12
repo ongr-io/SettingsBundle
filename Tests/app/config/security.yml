@@ -28,12 +28,12 @@ security:
         in_memory:
             memory:
                 users:
-                    foo_user:    { password: foo_password, roles: 'ROLE_ADMIN' }
+                    foo_user: { password: foo_password, roles: 'ROLE_ADMIN' }
 
         test_provider:
             memory:
                 users:
-                    test:     { password: test, roles: 'ROLE_ADMIN' }
+                    test: { password: test, roles: 'ROLE_ADMIN' }
 
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext

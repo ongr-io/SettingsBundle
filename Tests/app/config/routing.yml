@@ -3,10 +3,15 @@ project_flash_bag:
     defaults:
         _controller: project.controller.flash_bag:indexAction
 
-twig_test:
+twig_test_personal_settings:
     pattern: test/twig/{setting_name}/{need_auth}
     defaults:
-        _controller: AcmeTestBundle:Test:test
+        _controller: AcmeTestBundle:Test:testPersonalSettings
+
+twig_test_general_settings:
+    pattern: test/twiggeneral
+    defaults:
+        _controller: AcmeTestBundle:Test:testgeneralsettings
 
 ongr_settings_routing:
     resource: "@ONGRSettingsBundle/Resources/config/routing.yml"

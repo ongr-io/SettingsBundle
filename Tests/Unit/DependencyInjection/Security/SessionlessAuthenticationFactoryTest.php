@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection;
+namespace ONGR\SettingsBundle\Tests\Functional\DependencyInjection;
 
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
-use ONGR\AdminBundle\DependencyInjection\Security\SessionlessAuthenticationFactory;
+use ONGR\SettingsBundle\DependencyInjection\Security\SessionlessAuthenticationFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 
@@ -27,9 +27,9 @@ class SessionlessAuthenticationFactoryTest extends ElasticsearchTestCase
     public function testFirewallsServices()
     {
         $service = $this->getContainer()
-            ->get('ongr_admin.firewall.listener.sessionless_authentication.sessionless_authentication_secured');
+            ->get('ongr_settings.firewall.listener.sessionless_authentication.sessionless_authentication_secured');
         $this->assertInstanceOf(
-            'ONGR\AdminBundle\Security\Authentication\Firewall\SessionlessAuthenticationListener',
+            'ONGR\SettingsBundle\Security\Authentication\Firewall\SessionlessAuthenticationListener',
             $service
         );
     }
@@ -71,8 +71,8 @@ class SessionlessAuthenticationFactoryTest extends ElasticsearchTestCase
     public function getFirewallsDetails()
     {
         return [
-            'ongr_admin.firewall.provider.sessionless_authentication.test_id',
-            'ongr_admin.firewall.listener.sessionless_authentication.test_id',
+            'ongr_settings.firewall.provider.sessionless_authentication.test_id',
+            'ongr_settings.firewall.listener.sessionless_authentication.test_id',
             'defaultEntryPoint',
         ];
     }

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Fixtures\Acme\TestBundle\Controller;
+namespace ONGR\SettingsBundle\Tests\Fixtures\Acme\TestBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,11 +29,19 @@ class TestController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function testAction(Request $request, $settingName, $needAuth)
+    public function testPersonalSettingsAction(Request $request, $settingName, $needAuth)
     {
         return $this->render(
-            'AcmeTestBundle:Test:test.html.twig',
+            'AcmeTestBundle:Test:personal.html.twig',
             ['setting_name' => $settingName, 'need_auth' => $needAuth]
+        );
+    }
+
+
+    public function testgeneralsettingsAction(Request $request)
+    {
+        return $this->render(
+            'AcmeTestBundle:Test:general.html.twig'
         );
     }
 }

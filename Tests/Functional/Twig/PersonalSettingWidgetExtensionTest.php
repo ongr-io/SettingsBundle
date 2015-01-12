@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Twig;
+namespace ONGR\SettingsBundle\Tests\Functional\Twig;
 
-use ONGR\AdminBundle\Tests\Functional\CookieTestHelper;
-use ONGR\AdminBundle\Tests\Fixtures\Security\LoginTestHelper;
+use ONGR\SettingsBundle\Tests\Functional\CookieTestHelper;
+use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * Tests for testing settings TWIG extension functionality.
  */
-class AdminSettingWidgetExtensionTest extends ElasticsearchTestCase
+class PersonalSettingWidgetExtensionTest extends ElasticsearchTestCase
 {
     /**
      * @var \Twig_Environment
@@ -59,17 +59,17 @@ class AdminSettingWidgetExtensionTest extends ElasticsearchTestCase
         $cases = [];
 
         // Case 0: Normal setting, extension should return value.
-        $cases[] = [['ongr_admin_user_settings' => ['foo_setting' => true]], 'foo_setting', true, true];
+        $cases[] = [['ongr_settings_user_settings' => ['foo_setting' => true]], 'foo_setting', true, true];
         // Case 1: Normal setting (value false). Should return value.
-        $cases[] = [['ongr_admin_user_settings' => ['foo_setting' => false]], 'foo_setting', true, false];
+        $cases[] = [['ongr_settings_user_settings' => ['foo_setting' => false]], 'foo_setting', true, false];
         // Case 2: Setting missing, should return false.
-        $cases[] = [['ongr_admin_user_settings' => ['foo_setting' => true]], 'foo_setting_2', true, false];
+        $cases[] = [['ongr_settings_user_settings' => ['foo_setting' => true]], 'foo_setting_2', true, false];
         // Case 3: Not authorized, normal setting, should return false.
-        $cases[] = [['ongr_admin_user_settings' => ['foo_setting' => true]], 'foo_setting', false, false];
+        $cases[] = [['ongr_settings_user_settings' => ['foo_setting' => true]], 'foo_setting', false, false];
         // Case 4: Not authorized, normal setting (value false), should return false.
-        $cases[] = [['ongr_admin_user_settings' => ['foo_setting' => false]], 'foo_setting', false, false];
+        $cases[] = [['ongr_settings_user_settings' => ['foo_setting' => false]], 'foo_setting', false, false];
         // Case 5: Not authorized, setting missing, should return false.
-        $cases[] = [['ongr_admin_user_settings' => ['foo_setting' => false]], 'foo_setting_2', false, false];
+        $cases[] = [['ongr_settings_user_settings' => ['foo_setting' => false]], 'foo_setting_2', false, false];
         // Case 6: Not authorized, normal setting, should return value when command does not require authorization.
         $cases[] = [['ongr_ab_settings' => ['foo_setting_4' => true]], 'foo_setting_4', false, true, false];
 
@@ -102,7 +102,7 @@ class AdminSettingWidgetExtensionTest extends ElasticsearchTestCase
 
         // Call controller with params to generate twig.
         $authorizedCommandStr = ($authorizedCommand) ? 'true' : 'false';
-        $this->client->request('GET', "/test/twig/$testSettingName/$authorizedCommandStr");
+        $this->client->request('GET', "/test/twigGeneral/$testSettingName/$authorizedCommandStr");
 
         $this->assertContains($expectedResult ? 'foo_true' : 'foo_false', $this->client->getResponse()->getContent());
     }

@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\Controller;
+namespace ONGR\SettingsBundle\Tests\Unit\Controller;
 
-use ONGR\AdminBundle\Controller\AdminSettingsController;
-use ONGR\AdminBundle\Settings\Admin\SettingsStructure;
-use ONGR\AdminBundle\Settings\SettingsCookieService;
+use ONGR\SettingsBundle\Controller\PersonalSettingsController;
+use ONGR\SettingsBundle\Settings\Personal\SettingsStructure;
+use ONGR\SettingsBundle\Settings\SettingsCookieService;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminSettingsControllerTest extends \PHPUnit_Framework_TestCase
+class PersonalSettingsControllerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Data provider for testSetSettingAction.
@@ -35,12 +35,12 @@ class AdminSettingsControllerTest extends \PHPUnit_Framework_TestCase
                 'encoded_testA' => [
                     'name' => 'test_name',
                     'category' => 'test_category',
-                    'cookie' => 'ongr_admin.settings.settings_cookie',
+                    'cookie' => 'ongr_settings.settings.settings_cookie',
                 ],
                 'encoded_test' => [
                     'name' => 'test_name',
                     'category' => 'test_category',
-                    'cookie' => 'ongr_admin.settings.settings_cookie',
+                    'cookie' => 'ongr_settings.settings.settings_cookie',
                 ],
             ],
             true,
@@ -52,7 +52,7 @@ class AdminSettingsControllerTest extends \PHPUnit_Framework_TestCase
                 'encoded_test' => [
                     'name' => 'test_name',
                     'category' => 'test_category',
-                    'cookie' => 'ongr_admin.settings.settings_cookie',
+                    'cookie' => 'ongr_settings.settings.settings_cookie',
                 ],
             ],
             false,
@@ -73,10 +73,10 @@ class AdminSettingsControllerTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
 
-        $container->set('ongr_admin.settings.admin_settings_manager', $this->getManagerMock($testData));
-        $container->set('ongr_admin.settings.settings_cookie', $this->getCookiesServiceMock());
+        $container->set('ongr_settings.settings.personal_settings_manager', $this->getManagerMock($testData));
+        $container->set('ongr_settings.settings.settings_cookie', $this->getCookiesServiceMock());
 
-        $controller = new AdminSettingsController();
+        $controller = new PersonalSettingsController();
         $controller->setContainer($container);
         $response = $controller->changeSettingAction(new Request(), base64_encode('encoded_testA'));
 
@@ -101,7 +101,7 @@ class AdminSettingsControllerTest extends \PHPUnit_Framework_TestCase
     {
         $securityContextInterfaceMock = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
         $settingsStructure = $this->getMock(
-            'ONGR\AdminBundle\Settings\Admin\SettingsStructure',
+            'ONGR\SettingsBundle\Settings\Personal\SettingsStructure',
             [],
             [
                 [
@@ -114,7 +114,7 @@ class AdminSettingsControllerTest extends \PHPUnit_Framework_TestCase
         );
 
         $mock = $this->getMock(
-            'ONGR\AdminBundle\Settings\Admin\AdminSettingsManager',
+            'ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager',
             [],
             [$securityContextInterfaceMock, $settingsStructure]
         );
@@ -129,7 +129,7 @@ class AdminSettingsControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function getCookiesServiceMock()
     {
-        $mock = $this->getMock('ONGR\AdminBundle\Settings\SettingsCookieService', ['setValue']);
+        $mock = $this->getMock('ONGR\SettingsBundle\Settings\SettingsCookieService', ['setValue']);
 
         return $mock;
     }
