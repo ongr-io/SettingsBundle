@@ -11,7 +11,7 @@
 
 namespace ONGR\SettingsBundle\Tests\Unit\Service;
 
-use ONGR\SettingsBundle\Service\SettingAwareServiceFactory;
+use ONGR\SettingsBundle\Settings\General\SettingAwareServiceFactory;
 use ONGR\SettingsBundle\Exception\SettingNotFoundException;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 

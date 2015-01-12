@@ -11,7 +11,7 @@
 
 namespace ONGR\SettingsBundle\Tests\Unit\Service;
 
-use ONGR\SettingsBundle\Service\UnderscoreEscaper;
+use ONGR\SettingsBundle\Settings\Personal\UnderscoreEscaper;
 
 class UnderscoreEscaperTest extends \PHPUnit_Framework_TestCase
 {

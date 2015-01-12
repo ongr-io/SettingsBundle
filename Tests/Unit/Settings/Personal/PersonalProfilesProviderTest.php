@@ -56,7 +56,7 @@ class PersonalProfilesProviderTest extends ElasticsearchTestCase
     protected function getProfilesManagerMock()
     {
         $profileSettingsProvider = $this->getMock(
-            'ONGR\SettingsBundle\Service\ProfilesManager',
+            'ONGR\SettingsBundle\Settings\Personal\ProfilesManager',
             ['getProfiles'],
             [],
             '',

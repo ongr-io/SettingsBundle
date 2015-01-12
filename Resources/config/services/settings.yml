@@ -1,11 +1,11 @@
 parameters:
     # Settings manager.
-    ongr_settings.settings_manager.class: ONGR\SettingsBundle\Service\SettingsManager
+    ongr_settings.settings_manager.class: ONGR\SettingsBundle\Settings\General\SettingsManager
 
     ongr_settings.settings_container.class: ONGR\SettingsBundle\Settings\General\SettingsContainer
-    ongr_settings.setting_aware_service_factory.class: ONGR\SettingsBundle\Service\SettingAwareServiceFactory
+    ongr_settings.setting_aware_service_factory.class: ONGR\SettingsBundle\Settings\General\SettingAwareServiceFactory
     ongr_settings.listener.cookie_profile.class: ONGR\SettingsBundle\EventListener\ProfileRequestListener
-    ongr_settings.profiles_manager.class: ONGR\SettingsBundle\Service\ProfilesManager
+    ongr_settings.profiles_manager.class: ONGR\SettingsBundle\Settings\Personal\ProfilesManager
 
     ongr_settings.settings_provider.class: ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider
 

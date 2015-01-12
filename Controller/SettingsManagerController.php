@@ -11,7 +11,7 @@
 
 namespace ONGR\SettingsBundle\Controller;
 
-use ONGR\SettingsBundle\Service\SettingsManager;
+use ONGR\SettingsBundle\Settings\General\SettingsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

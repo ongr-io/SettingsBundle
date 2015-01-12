@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Service;
+namespace ONGR\SettingsBundle\PairStorage;
 
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use ONGR\ElasticsearchBundle\ORM\Manager;

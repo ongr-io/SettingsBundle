@@ -12,7 +12,7 @@
 namespace ONGR\SettingsBundle\Tests\Unit\Service;
 
 use ONGR\SettingsBundle\Document\Pair;
-use ONGR\SettingsBundle\Service\PairStorage;
+use ONGR\SettingsBundle\PairStorage\PairStorage;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use Elasticsearch\Common\Exceptions\Missing404Exception;

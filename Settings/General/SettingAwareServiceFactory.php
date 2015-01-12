@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Service;
+namespace ONGR\SettingsBundle\Settings\General;
 
 use ONGR\SettingsBundle\Exception\SettingNotFoundException;
 use ONGR\SettingsBundle\Settings\General\SettingsContainerInterface;

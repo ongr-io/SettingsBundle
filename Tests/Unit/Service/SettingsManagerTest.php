@@ -12,7 +12,7 @@
 namespace ONGR\SettingsBundle\Tests\Unit\Service;
 
 use ONGR\SettingsBundle\Document\Setting;
-use ONGR\SettingsBundle\Service\SettingsManager;
+use ONGR\SettingsBundle\Settings\General\SettingsManager;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;

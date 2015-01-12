@@ -52,7 +52,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
     public function testSetSettingAction($name, $value, $status = Response::HTTP_OK)
     {
         $manager = $this
-            ->getMockBuilder('ONGR\SettingsBundle\Service\SettingsManager')
+            ->getMockBuilder('ONGR\SettingsBundle\Settings\General\SettingsManager')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -90,7 +90,7 @@ class SettingsManagerControllerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(json_encode(['setting' => ['data' => ['value' => 'foobaz']]])));
 
         $manager = $this
-            ->getMockBuilder('ONGR\SettingsBundle\Service\SettingsManager')
+            ->getMockBuilder('ONGR\SettingsBundle\Settings\General\SettingsManager')
             ->disableOriginalConstructor()
             ->getMock();
 
