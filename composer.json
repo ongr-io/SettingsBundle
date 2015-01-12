@@ -1,6 +1,6 @@
 {
-    "name": "ongr/admin-bundle",
-    "description": "Admin interface and settings API for ONGR platform projects",
+    "name": "ongr/settings-bundle",
+    "description": "Settings interface and settings API for ONGR platform projects",
     "type": "symfony-bundle",
     "homepage": "http://ongr.io",
     "license": "MIT",
@@ -43,6 +43,6 @@
         "ongr/oxid-bundle": "Allows to transfer shop data from OXID to ONGR"
     },
     "autoload": {
-        "psr-4": { "ONGR\\AdminBundle\\": "" }
+        "psr-4": { "ONGR\\SettingsBundle\\": "" }
     }
 }

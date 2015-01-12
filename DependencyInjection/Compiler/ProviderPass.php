@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\DependencyInjection\Compiler;
+namespace ONGR\SettingsBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -31,10 +31,10 @@ class ProviderPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $orderedProfiles = $container->getParameter('ongr_admin.settings_container.profiles');
+        $orderedProfiles = $container->getParameter('ongr_settings.settings_container.profiles');
         $providers = array_flip($orderedProfiles);
 
-        $providerDefinitions = $container->findTaggedServiceIds('ongr_admin.settings_provider');
+        $providerDefinitions = $container->findTaggedServiceIds('ongr_settings.settings_provider');
 
         foreach ($providerDefinitions as $serviceId => $tags) {
             foreach ($tags as $tag) {
@@ -70,7 +70,7 @@ class ProviderPass implements CompilerPassInterface
         );
         $providers = array_reverse($providers);
 
-        $settingsContainer = $container->getDefinition('ongr_admin.settings_container');
+        $settingsContainer = $container->getDefinition('ongr_settings.settings_container');
 
         foreach ($providers as $provider) {
             $settingsContainer->addMethodCall('addProvider', [new Reference($provider['id'])]);
@@ -87,10 +87,10 @@ class ProviderPass implements CompilerPassInterface
      */
     protected function generateProvider(ContainerBuilder $container, $profile)
     {
-        $id = "ongr_admin.dynamic_provider.{$profile}";
-        $provider = new Definition($container->getParameter('ongr_admin.settings_provider.class'), [$profile]);
+        $id = "ongr_settings.dynamic_provider.{$profile}";
+        $provider = new Definition($container->getParameter('ongr_settings.settings_provider.class'), [$profile]);
         $provider->addMethodCall('setManager', [new Reference('es.manager')]);
-        $provider->addTag('ongr_admin.settings_provider', ['profile' => $profile]);
+        $provider->addTag('ongr_settings.settings_provider', ['profile' => $profile]);
         $container->setDefinition($id, $provider);
 
         return $id;

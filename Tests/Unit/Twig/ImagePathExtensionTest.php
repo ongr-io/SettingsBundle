@@ -9,9 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Twig;
+namespace ONGR\SettingsBundle\Tests\Functional\Twig;
 
-use ONGR\AdminBundle\Twig\ImagePathExtension;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use ONGR\SettingsBundle\Twig\ImagePathExtension;
 
 class ImagePathExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -72,7 +73,7 @@ class ImagePathExtensionTest extends \PHPUnit_Framework_TestCase
      * @param string $preset
      * @param string $part
      *
-     * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImagePath()
+     * @covers \ONGR\SettingsBundle\Twig\ImagePathExtension::getImagePath()
      *
      * @dataProvider getTestData
      */
@@ -89,7 +90,7 @@ class ImagePathExtensionTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests get image path exception preset.
      *
-     * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImagePath()
+     * @covers \ONGR\SettingsBundle\Twig\ImagePathExtension::getImagePath()
      *
      * @expectedException \Exception
      * @expectedExceptionMessage preset '__fake_preset__' config not found
@@ -104,7 +105,7 @@ class ImagePathExtensionTest extends \PHPUnit_Framework_TestCase
     /**
      *Tests get image path part.
      *
-     * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImagePath()
+     * @covers \ONGR\SettingsBundle\Twig\ImagePathExtension::getImagePath()
      *
      * @expectedException \Exception
      * @expectedExceptionMessage Part '__fake_part__' was not found
@@ -124,8 +125,8 @@ class ImagePathExtensionTest extends \PHPUnit_Framework_TestCase
      * @param string $preset
      * @param string $part
      *
-     * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImageUrl()
-     * @covers \ONGR\AdminBundle\Twig\ImagePathExtension::getImagePath()
+     * @covers \ONGR\SettingsBundle\Twig\ImagePathExtension::getImageUrl()
+     * @covers \ONGR\SettingsBundle\Twig\ImagePathExtension::getImagePath()
      *
      * @dataProvider getTestData
      */

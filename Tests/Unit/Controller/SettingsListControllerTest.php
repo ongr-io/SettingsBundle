@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\Controller;
+namespace ONGR\SettingsBundle\Tests\Unit\Controller;
 
-use ONGR\AdminBundle\Controller\SettingsListController;
-use ONGR\ElasticsearchBundle\ORM\Manager;
+use ONGR\SettingsBundle\Controller\SettingsListController;
+use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
@@ -76,7 +76,7 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
         $mock = $this->getMock(
             'ONGR\ElasticsearchBundle\ORM\Repository',
             ['getBundlesMapping', 'find', 'remove', 'execute'],
-            [$this->getManagerMock(), ['ONGRAdminBundle:Setting'] ]
+            [$this->getManagerMock(), ['ONGRSettingsBundle:Setting'] ]
         );
 
         $mock->expects(

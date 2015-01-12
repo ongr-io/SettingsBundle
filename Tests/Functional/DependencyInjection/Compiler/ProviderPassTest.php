@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\DependencyInjection\Compiler;
+namespace ONGR\SettingsBundle\Tests\Functional\DependencyInjection\Compiler;
 
-use ONGR\AdminBundle\DependencyInjection\Compiler\ProviderPass;
+use ONGR\SettingsBundle\DependencyInjection\Compiler\ProviderPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -23,25 +23,25 @@ class ProviderPassTest extends \PHPUnit_Framework_TestCase
     public function testProcess()
     {
         $container = new ContainerBuilder();
-        $container->setDefinition('ongr_admin.settings_container', new Definition());
-        $container->setParameter('ongr_admin.settings_container.profiles', ['default', 'custom']);
+        $container->setDefinition('ongr_settings.settings_container', new Definition());
+        $container->setParameter('ongr_settings.settings_container.profiles', ['default', 'custom']);
         $container->setParameter(
-            'ongr_admin.settings_provider.class',
-            'ONGR\\AdminBundle\\Settings\\Common\\Provider\\ManagerAwareSettingProvider.php'
+            'ongr_settings.settings_provider.class',
+            'ONGR\\SettingsBundle\\Settings\\Personal\\Provider\\ManagerAwareSettingProvider.php'
         );
 
         $definition = new Definition();
-        $definition->addTag('ongr_admin.ongr_admin', ['profile' => 'custom']);
-        $container->setDefinition('ongr_admin.custom_settings_provider', $definition);
+        $definition->addTag('ongr_settings.ongr_settings', ['profile' => 'custom']);
+        $container->setDefinition('ongr_settings.custom_settings_provider', $definition);
 
         $definition = new Definition();
-        $definition->addTag('ongr_admin.settings_provider');
-        $container->setDefinition('ongr_admin.unregistered_settings_provider', $definition);
+        $definition->addTag('ongr_settings.settings_provider');
+        $container->setDefinition('ongr_settings.unregistered_settings_provider', $definition);
 
         $pass = new ProviderPass();
         $pass->process($container);
 
-        $methodCalls = $container->getDefinition('ongr_admin.settings_container')->getMethodCalls();
+        $methodCalls = $container->getDefinition('ongr_settings.settings_container')->getMethodCalls();
         $this->assertCount(3, $methodCalls);
     }
 }

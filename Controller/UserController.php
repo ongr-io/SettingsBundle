@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Controller;
+namespace ONGR\SettingsBundle\Controller;
 
 use ONGR\CookiesBundle\Cookie\Model\JsonCookie;
-use ONGR\AdminBundle\Form\Type\LoginType;
-use ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService;
-use ONGR\AdminBundle\Security\Authentication\Token\SessionlessToken;
+use ONGR\SettingsBundle\Form\Type\LoginType;
+use ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService;
+use ONGR\SettingsBundle\Security\Authentication\Token\SessionlessToken;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -34,31 +34,25 @@ class UserController extends Controller
     {
         // Check if already logged in.
         $alreadyLoggedIn = $this->getSecurityContext()->getToken() instanceof SessionlessToken;
-
         // Handle form.
         $loginData = [];
         $form = $this->createForm(new LoginType(), $loginData);
         $form->handleRequest($request);
-
         if ($form->isValid()) {
-            $redirectResponse = $this->redirect($this->generateUrl('ongr_admin_sessionless_login'));
+            $redirectResponse = $this->redirect($this->generateUrl('ongr_settings_sessionless_login'));
             $loginData = $form->getData();
-
             $username = $loginData['username'];
             $password = $loginData['password'];
-
             $ipAddress = $request->getClientIp();
             $cookieValue = $this->getAuthCookieService()->create($username, $password, $ipAddress);
-
             $cookie = $this->getAuthenticationCookie();
             $cookie->setValue($cookieValue);
 
             return $redirectResponse;
         }
-
         // Render.
         return $this->render(
-            'ONGRAdminBundle:User:login.html.twig',
+            'ONGRSettingsBundle:User:login.html.twig',
             ['form' => $form->createView(), 'is_logged_in' => $alreadyLoggedIn]
         );
     }
@@ -76,9 +70,7 @@ class UserController extends Controller
     ) {
         $cookie = $this->getAuthenticationCookie();
         $cookie->setClear(true);
-
-        $response = $this->redirect($this->generateUrl('ongr_admin_sessionless_login'));
-
+        $response = $this->redirect($this->generateUrl('ongr_settings_sessionless_login'));
         $this->get('security.context')->setToken(null);
         $this->get('request')->getSession()->invalidate();
 
@@ -91,7 +83,7 @@ class UserController extends Controller
     protected function getAuthCookieService()
     {
         $this->authCookieService = $this->get(
-            'ongr_admin.authentication.authentication_cookie_service'
+            'ongr_settings.authentication.authentication_cookie_service'
         );
 
         return $this->authCookieService;
@@ -110,6 +102,6 @@ class UserController extends Controller
      */
     protected function getAuthenticationCookie()
     {
-        return $this->get('ongr_admin.authentication.authentication_cookie');
+        return $this->get('ongr_settings.authentication.authentication_cookie');
     }
 }

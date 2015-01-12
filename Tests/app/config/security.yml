@@ -6,18 +6,18 @@ security:
             ongr_sessionless_authentication: true
 
             form_login:
-                login_path: ongr_admin_sessionless_login #path where login form resides
+                login_path: ongr_settings_sessionless_login #path where login form resides
 
             logout:
-                path:   /admin/logout
+                path:   /settings/logout
                 target: /
                 delete_cookies:
-                    ongr_admin_user_auth: { path: null, domain: null } #will delete authentication cookie
+                    ongr_settings_user_auth: { path: null, domain: null } #will delete authentication cookie
 
     access_control:
-        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/.* , roles: ROLE_ADMIN }
+        - { path: ^/settings/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/settings/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/settings/.* , roles: ROLE_ADMIN }
 
 
     providers:

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Security\Authentication\Cookie;
+namespace ONGR\SettingsBundle\Tests\Functional\Security\Authentication\Cookie;
 
-use ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService;
+use ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService;
 
 class SessionlessAuthenticationCookieServiceTest extends \PHPUnit_Framework_TestCase
 {

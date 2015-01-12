@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional;
+namespace ONGR\SettingsBundle\Tests\Functional;
 
-use ONGR\AdminBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService;
+use ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\BrowserKit\Cookie;
 
@@ -31,11 +31,11 @@ class CookieTestHelper
     public static function setAuthenticationCookie(Client $client, $expirationTime = null)
     {
         /** @var SessionlessAuthenticationCookieService $cookieService */
-        $cookieService = $client->getContainer()->get('ongr_admin.authentication.authentication_cookie_service');
+        $cookieService = $client->getContainer()->get('ongr_settings.authentication.authentication_cookie_service');
         $cookieService->setMockTime($expirationTime);
         $value = $cookieService->create('foo_user', 'foo_password', '127.0.0.1');
 
-        $cookie = new Cookie('ongr_admin_user_auth', json_encode($value));
+        $cookie = new Cookie('ongr_settings_user_auth', json_encode($value));
         $client->getCookieJar()->set($cookie);
     }
 

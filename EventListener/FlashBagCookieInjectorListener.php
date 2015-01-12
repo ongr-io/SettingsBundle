@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\EventListener;
+namespace ONGR\SettingsBundle\EventListener;
 
-use ONGR\AdminBundle\Flashbag\DirtyFlashBag;
+use ONGR\SettingsBundle\Flashbag\DirtyFlashBag;
 use ONGR\CookiesBundle\Cookie\Model\CookieInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;

@@ -44,7 +44,7 @@ angular
                 scope.save = function() {
                     element.removeClass('active');
 
-                    requestUrl = Routing.generate('ongr_admin_setting_ng_edit',
+                    requestUrl = Routing.generate('ongr_settings_setting_ng_edit',
                         {
                             name: scope.setting.name,
                             profile: scope.setting.profile

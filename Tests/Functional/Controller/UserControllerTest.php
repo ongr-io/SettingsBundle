@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Controller;
+namespace ONGR\SettingsBundle\Tests\Functional\Controller;
 
-use ONGR\AdminBundle\Tests\Functional\CookieTestHelper;
-use ONGR\AdminBundle\Tests\Fixtures\Security\LoginTestHelper;
+use ONGR\SettingsBundle\Tests\Functional\CookieTestHelper;
+use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -81,8 +81,8 @@ class UserControllerTest extends WebTestCase
 
              // Assert correct cookie has been set.
             /** @var Cookie $cookie */
-            $cookie = $client->getCookieJar()->get('ongr_admin_user_auth');
-            $this->assertSame('ongr_admin_user_auth', $cookie->getName());
+            $cookie = $client->getCookieJar()->get('ongr_settings_user_auth');
+            $this->assertSame('ongr_settings_user_auth', $cookie->getName());
             $this->assertSame('test', json_decode($cookie->getValue(), true)['username']);
         } else {
             // Assert not a redirect.
@@ -118,7 +118,10 @@ class UserControllerTest extends WebTestCase
         $client = $this->loginHelper->loginAction('test', 'test');
         if ($shouldLogin) {
             // Set authentication cookie.
-            $this->assertSame('ongr_admin_user_auth', $client->getCookieJar()->get('ongr_admin_user_auth')->getName());
+            $this->assertSame(
+                'ongr_settings_user_auth',
+                $client->getCookieJar()->get('ongr_settings_user_auth')->getName()
+            );
         } else {
             // Ensure no cookie set.
             $client = $this->loginHelper->logoutAction($client);
@@ -126,7 +129,7 @@ class UserControllerTest extends WebTestCase
         }
 
         // Visit logout page.
-        $client->request('GET', '/admin/logout');
+        $client->request('GET', '/settings/logout');
 
         // Assert successful redirect.
         $this->assertSame('/', $client->getRequest()->getRequestUri());
@@ -140,7 +143,7 @@ class UserControllerTest extends WebTestCase
         $client = $this->loginHelper->loginAction('test', 'test');
 
         // Visit login page.
-        $crawler = $client->request('GET', '/admin/login');
+        $crawler = $client->request('GET', '/settings/login');
 
         // Assert content contains message.
         $response = $client->getResponse();
@@ -180,7 +183,7 @@ class UserControllerTest extends WebTestCase
         CookieTestHelper::setAuthenticationCookie($this->client, time() - 360 * 24 * 3600);
 
         // Visit login page.
-        $crawler = $this->client->request('GET', '/admin/login');
+        $crawler = $this->client->request('GET', '/settings/login');
 
         // Assert there is a form.
         $buttonNode = $crawler->selectButton('login_submit');
@@ -196,7 +199,7 @@ class UserControllerTest extends WebTestCase
         $this->client = $this->loginHelper->loginAction('test', 'test');
 
         // Get cookie value.
-        $cookie = $this->client->getCookieJar()->get('ongr_admin_user_auth');
+        $cookie = $this->client->getCookieJar()->get('ongr_settings_user_auth');
         $valueJson = $cookie->getValue();
         $value = json_decode($valueJson, true);
 
@@ -211,7 +214,7 @@ class UserControllerTest extends WebTestCase
     {
         // Set cookie.
         $newCookie = new \Symfony\Component\BrowserKit\Cookie(
-            'ongr_admin_user_auth',
+            'ongr_settings_user_auth',
             json_encode(
                 $cookieValue
             ),
@@ -222,7 +225,7 @@ class UserControllerTest extends WebTestCase
         $this->client->getCookieJar()->set($newCookie);
 
         // Visit login page.
-        $crawler = $this->client->request('GET', '/admin/login');
+        $crawler = $this->client->request('GET', '/settings/login');
 
         // Assert there is a form.
         $buttonNode = $crawler->selectButton('login_submit');

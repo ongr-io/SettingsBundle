@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\FlashBag;
+namespace ONGR\SettingsBundle\FlashBag;
 
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 

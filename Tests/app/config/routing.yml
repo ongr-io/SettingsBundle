@@ -18,9 +18,9 @@ project_flash_bag:
     defaults:
         _controller: project.controller.flash_bag:indexAction
 
-ongr_admin_routing:
-    resource: "@ONGRAdminBundle/Resources/config/routing.yml"
-    prefix: /admin
+ongr_settings_routing:
+    resource: "@ONGRSettingsBundle/Resources/config/routing.yml"
+    prefix: /settings
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

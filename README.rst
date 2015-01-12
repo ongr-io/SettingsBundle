@@ -1,16 +1,16 @@
 ===========
-AdminBundle
+SettingsBundle
 ===========
 
-Provides settings API and admin interface for ONGR projects.
+Provides settings API and settings interface for ONGR projects.
 
-.. image:: https://magnum.travis-ci.com/ongr-io/AdminBundle.svg?token=X35UxnxC4zoxXhsTMzw8&branch=master
-    :target: https://magnum.travis-ci.com/ongr-io/AdminBundle
+.. image:: https://magnum.travis-ci.com/ongr-io/SettingsBundle.svg?token=X35UxnxC4zoxXhsTMzw8&branch=master
+    :target: https://magnum.travis-ci.com/ongr-io/SettingsBundle
 
 It includes:
 
-- `Admin functionality </Resources/doc/admin_settings.rst>`_
-- `Common functionality </Resources/doc/common_settings.rst>`_
+- `Personal functionality </Resources/doc/personal_settings.rst>`_
+- `General functionality </Resources/doc/general_settings.rst>`_
 - `Flash functionality </Resources/doc/flash_bag.rst>`_
 - `Environment functionality </Resources/doc/env_variable.rst>`_
 
@@ -26,11 +26,11 @@ Depends on:
 Enabling and setting it up
 =================================
 
-``AdminBundle`` requires minimal efforts to get it working. Firstly, install package using Composer:
+``SettingsBundle`` requires minimal efforts to get it working. Firstly, install package using Composer:
 
 .. code-block:: bash
 
-    composer require ongr-io/AdminBundle 0.1.*
+    composer require ongr-io/SettingsBundle 0.1.*
 
 ..
 
@@ -48,7 +48,7 @@ Then register it in ``AppKernel.php``:
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Tedivm\StashBundle\TedivmStashBundle(),
             new ONGR\CookiesBundle\ONGRCookiesBundle(),
-            new ONGR\AdminBundle\ONGRAdminBundle(),
+            new ONGR\SettingsBundle\ONGRSettingsBundle(),
             );
         }
 
@@ -62,7 +62,7 @@ If You had defined mappings for your system, you should add
 
 .. code-block:: yaml
 
-    - ONGRAdminBundle
+    - ONGRSettingsBundle
 
 ..
 
@@ -86,9 +86,9 @@ To enable authentication support, please add this to your main ``routing.yml``
     fos_js_routing:
         resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
     
-    ongr_admin_routing:
-        resource: "@ONGRAdminBundle/Resources/config/routing.yml"
-        prefix: /admin
+    ongr_settings_routing:
+        resource: "@ONGRSettingsBundle/Resources/config/routing.yml"
+        prefix: /settings
 
 ..
 
@@ -97,7 +97,7 @@ Then add some users to you ``config.yml`` parameters section:
 .. code-block:: yaml
 
     parameters:
-        ongr_admin.authentication.users:
+        ongr_settings.authentication.users:
             foo_user:
                 password: 'foo_password'
             foo_user_bar:
@@ -105,7 +105,7 @@ Then add some users to you ``config.yml`` parameters section:
 
 ..
 
-Login page is at ``/admin_prefix/login``. There is also a logout page at ``/admin_prefix/logout``.
+Login page is at ``/settings_prefix/login``. There is also a logout page at ``/settings_prefix/logout``.
 
 Some auth cookie properties:
 
@@ -120,8 +120,8 @@ Values can change in several places. Eg. IP address is dependent on the network,
 Bundles usage
 ===============
 
-- `Admin settings usage </Resources/doc/admin_settings.rst>`_
-- `Common settings usage </Resources/doc/common_settings.rst>`_
+- `Personal functionality </Resources/doc/personal_settings.rst>`_
+- `General functionality </Resources/doc/general_settings.rst>`_
 - `Flash bag usage </Resources/doc/flash_bag.rst>`_
 - `Environment variables usage </Resources/doc/env_variable.rst>`_
 

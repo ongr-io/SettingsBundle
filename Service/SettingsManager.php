@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Service;
+namespace ONGR\SettingsBundle\Service;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use ONGR\ElasticsearchBundle\ORM\Manager;
-use ONGR\AdminBundle\Document\Setting;
-use ONGR\AdminBundle\Event\SettingChangeEvent;
+use ONGR\SettingsBundle\Document\Setting;
+use ONGR\SettingsBundle\Event\SettingChangeEvent;
 use Exception;
 
 /**
@@ -57,7 +57,7 @@ class SettingsManager
         $this->translator = $translator;
         $this->eventDispatcher = $eventDispatcher;
         $this->manager = $manager;
-        $this->repo = $this->manager->getRepository('ONGRAdminBundle:Setting');
+        $this->repo = $this->manager->getRepository('ONGRSettingsBundle:Setting');
     }
 
     /**
@@ -89,7 +89,7 @@ class SettingsManager
         $setting = new Setting();
         $setting->setId($profile . '_' . $name);
         $setting->setName($name);
-        $setting->setDescription('ongr_admin.' . $this->translator->trans($name));
+        $setting->setDescription('ongr_settings.' . $this->translator->trans($name));
         $setting->setData((object)['value' => $value]);
         $setting->setType($type);
         $setting->setProfile($profile);
@@ -98,7 +98,7 @@ class SettingsManager
         $this->manager->commit();
         $this->manager->flush();
 
-        $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('save'));
+        $this->eventDispatcher->dispatch('ongr_settings.setting_change', new SettingChangeEvent('save'));
     }
 
     /**
@@ -113,7 +113,7 @@ class SettingsManager
         $this->manager->flush();
         $this->manager->refresh();
 
-        $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('save'));
+        $this->eventDispatcher->dispatch('ongr_settings.setting_change', new SettingChangeEvent('save'));
     }
 
     /**
@@ -127,7 +127,7 @@ class SettingsManager
         $this->manager->flush();
         $this->manager->refresh();
 
-        $this->eventDispatcher->dispatch('ongr_admin.setting_change', new SettingChangeEvent('delete'));
+        $this->eventDispatcher->dispatch('ongr_settings.setting_change', new SettingChangeEvent('delete'));
     }
 
     /**

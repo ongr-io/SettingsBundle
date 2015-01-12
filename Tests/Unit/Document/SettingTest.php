@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Unit\Document;
+namespace ONGR\SettingsBundle\Tests\Unit\Document;
 
-use ONGR\AdminBundle\Document\Setting;
+use ONGR\SettingsBundle\Document\Setting;
 
 class SettingTest extends \PHPUnit_Framework_TestCase
 {

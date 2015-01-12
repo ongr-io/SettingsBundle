@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Security\Authentication\Token;
+namespace ONGR\SettingsBundle\Tests\Functional\Security\Authentication\Token;
 
-use ONGR\AdminBundle\Security\Authentication\Token\SessionlessToken;
+use ONGR\SettingsBundle\Security\Authentication\Token\SessionlessToken;
 
 class SessionlessTokenTest extends \PHPUnit_Framework_TestCase
 {

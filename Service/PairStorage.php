@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Service;
+namespace ONGR\SettingsBundle\Service;
 
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use ONGR\ElasticsearchBundle\ORM\Manager;
-use ONGR\AdminBundle\Document\Pair;
+use ONGR\SettingsBundle\Document\Pair;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 
 /**
@@ -38,7 +38,7 @@ class PairStorage
         Manager $manager
     ) {
         $this->manager = $manager;
-        $this->repository = $this->manager->getRepository('ONGRAdminBundle:Pair');
+        $this->repository = $this->manager->getRepository('ONGRSettingsBundle:Pair');
     }
 
     /**

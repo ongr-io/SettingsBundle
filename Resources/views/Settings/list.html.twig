@@ -1,4 +1,4 @@
-{% extends 'ONGRAdminBundle::layout.html.twig' %}
+{% extends 'ONGRSettingsBundle::layout.html.twig' %}
 
 {% block body_attributes %}ng-app="ongr.settings"{% endblock %}
 {% block wrapper_attributes %}ng-controller="settings"{% endblock %}
@@ -56,7 +56,7 @@
         {% endverbatim %}
         {% block pager %}
             {% if filters.pager is defined %}
-                <div class="pull-right">{{ paginate(filters.pager.pager, 'ongr_admin_settings_list', filters.pager.urlParameters) }}</div>
+                <div class="pull-right">{{ paginate(filters.pager.pager, 'ongr_settings_settings_list', filters.pager.urlParameters) }}</div>
                 <div class="clearfix"></div>
             {% endif %}
         {% endblock %}
@@ -70,14 +70,14 @@
             profiles = {{ filters.profile.choices|json_encode|raw }},
             currentProfile = '{{ filters.profile.state.value|raw }}';
     </script>
-    <script src="{{ asset('bundles/ongradmin/js/controller/SettingsController.js') }}"></script>
-    <script src="{{ asset('bundles/ongradmin/js/controller/modal/DuplicateModalController.js') }}"></script>
-    <script src="{{ asset('bundles/ongradmin/js/controller/modal/AddSettingModalController.js') }}"></script>
-    <script src="{{ asset('bundles/ongradmin/js/filter/ObjectLimitToFilter.js') }}"></script>
-    <script src="{{ asset('bundles/ongradmin/js/directive/InlineDirective.js') }}"></script>
-    <script src="{{ asset('bundles/ongradmin/js/directive/ReallyClickDirective.js') }}"></script>
-    <script src="{{ asset('bundles/ongradmin/js/directive/CollapseDirective.js') }}"></script>
-    <script src="{{ asset('bundles/ongradmin/js/utils/Asset.js') }}"></script>
-    <script src="{{ asset('bundles/ongradmin/js/app-settings.js') }}"></script>
+    <script src="{{ asset('bundles/ongrsettings/js/controller/SettingsController.js') }}"></script>
+    <script src="{{ asset('bundles/ongrsettings/js/controller/modal/DuplicateModalController.js') }}"></script>
+    <script src="{{ asset('bundles/ongrsettings/js/controller/modal/AddSettingModalController.js') }}"></script>
+    <script src="{{ asset('bundles/ongrsettings/js/filter/ObjectLimitToFilter.js') }}"></script>
+    <script src="{{ asset('bundles/ongrsettings/js/directive/InlineDirective.js') }}"></script>
+    <script src="{{ asset('bundles/ongrsettings/js/directive/ReallyClickDirective.js') }}"></script>
+    <script src="{{ asset('bundles/ongrsettings/js/directive/CollapseDirective.js') }}"></script>
+    <script src="{{ asset('bundles/ongrsettings/js/utils/Asset.js') }}"></script>
+    <script src="{{ asset('bundles/ongrsettings/js/app-settings.js') }}"></script>
     {{ parent() }}
 {% endblock %}

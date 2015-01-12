@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\Tests\Functional\Service;
+namespace ONGR\SettingsBundle\Tests\Functional\Service;
 
-use ONGR\AdminBundle\Document\Pair;
-use ONGR\AdminBundle\Service\PairStorage;
+use ONGR\SettingsBundle\Document\Pair;
+use ONGR\SettingsBundle\Service\PairStorage;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\DSL\Query\MatchAllQuery;
@@ -44,7 +44,7 @@ class PairStorageTest extends WebTestCase
         $pair1 = $this->getPair('name0', 'test1');
         $pair2 = $this->getPair('name1', 'test13');
 
-        $repo = $this->manager->getRepository('ONGRAdminBundle:Pair');
+        $repo = $this->manager->getRepository('ONGRSettingsBundle:Pair');
 
         $search = $repo
             ->createSearch()

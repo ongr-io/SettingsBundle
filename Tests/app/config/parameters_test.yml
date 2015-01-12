@@ -2,12 +2,12 @@ parameters:
     database_driver: pdo_mysql
     database_host: localhost
     database_port: null
-    database_name: ongr-admin-test
+    database_name: ongr-settings-test
     database_user: root
     database_password: root
     database.elastic_search.host: localhost
     database.elastic_search.port: 9200
-    database.elastic_search.index: ongr-admin-test
+    database.elastic_search.index: ongr-settings-test
     secret: 'superdupersecretkey#pleasedonttellitanyone'
     locale: de
     base_url: ~
@@ -15,9 +15,13 @@ parameters:
     cdn_url: 'http:%cdn_base_url%'
     cdn_url_ssl: 'https:%cdn_base_url%'
 
-    ongr_admin.environment_variables_pass_test_param: unchanged_param
+    ongr_settings.environment_variables_pass_test_param: unchanged_param
 
-    ongr_admin.settings.settings:
+    ongr_settings.authentication.users:
+        foo_user:
+            password: 'foo_password'
+
+    ongr_settings.settings.settings:
         foo_setting_1:
             name: Foo Setting 1
             category: category_1
@@ -35,4 +39,4 @@ parameters:
             description: 'foo_desc_4'
             cookie: project.cookie.ab_settings
 
-    ongr_admin.authentication.secret: O0EKwvq8Sv30O3ImKdXT7aT
+    ongr_settings.authentication.secret: O0EKwvq8Sv30O3ImKdXT7aT

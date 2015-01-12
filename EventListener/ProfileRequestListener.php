@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\AdminBundle\EventListener;
+namespace ONGR\SettingsBundle\EventListener;
 
-use ONGR\AdminBundle\Service\UnderscoreEscaper;
-use ONGR\AdminBundle\Settings\Common\Provider\ManagerAwareSettingProvider;
+use ONGR\SettingsBundle\Service\UnderscoreEscaper;
+use ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider;
 use ONGR\ElasticsearchBundle\ORM\Manager;
-use ONGR\AdminBundle\Settings\Common\SettingsContainer;
+use ONGR\SettingsBundle\Settings\General\SettingsContainer;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
+use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 
 /**
  * Listens for request event and sets selected profiles from admin-user cookie to SettingsContainer.
@@ -24,9 +24,9 @@ use ONGR\AdminBundle\Settings\Admin\AdminSettingsManager;
 class ProfileRequestListener
 {
     /**
-     * @var AdminSettingsManager
+     * @var PersonalSettingsManager
      */
-    protected $adminSettingsManager;
+    protected $generalSettingsManager;
 
     /**
      * @var SettingsContainer
@@ -47,9 +47,9 @@ class ProfileRequestListener
         /** @noinspection PhpUnusedParameterInspection */
         GetResponseEvent $event
     ) {
-        $settings = $this->adminSettingsManager->getSettings();
+        $settings = $this->generalSettingsManager->getSettings();
         foreach ($settings as $id => $value) {
-            $prefix = 'ongr_admin_profile_';
+            $prefix = 'ongr_settings_profile_';
             if (strpos($id, $prefix) === 0 && $value === true) {
                 $escapedProfile = mb_substr($id, strlen($prefix), null, 'UTF-8');
                 $profile = UnderscoreEscaper::unescape($escapedProfile);
@@ -60,15 +60,15 @@ class ProfileRequestListener
     }
 
     /**
-     * @param \ONGR\AdminBundle\Settings\Admin\AdminSettingsManager $adminSettingsManager
+     * @param \ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager $generalSettingsManager
      */
-    public function setAdminSettingsManager($adminSettingsManager)
+    public function setPersonalSettingsManager($generalSettingsManager)
     {
-        $this->adminSettingsManager = $adminSettingsManager;
+        $this->generalSettingsManager = $generalSettingsManager;
     }
 
     /**
-     * @param \ONGR\AdminBundle\Settings\Common\SettingsContainer $settingsContainer
+     * @param \ONGR\SettingsBundle\Settings\General\SettingsContainer $settingsContainer
      */
     public function setSettingsContainer($settingsContainer)
     {

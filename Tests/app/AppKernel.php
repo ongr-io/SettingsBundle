@@ -37,7 +37,7 @@ class AppKernel extends Kernel
 
             new ONGR\PagerBundle\ONGRPagerBundle(),
             new ONGR\CookiesBundle\ONGRCookiesBundle(),
-            new ONGR\AdminBundle\ONGRAdminBundle(),
+            new ONGR\SettingsBundle\ONGRSettingsBundle(),
         ];
     }
 
