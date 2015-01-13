@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Unit\Service;
+namespace ONGR\SettingsBundle\Tests\Unit\Settings\General;
 
-use ONGR\SettingsBundle\Service\SettingAwareServiceFactory;
+use ONGR\SettingsBundle\Settings\General\SettingAwareServiceFactory;
 use ONGR\SettingsBundle\Exception\SettingNotFoundException;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 

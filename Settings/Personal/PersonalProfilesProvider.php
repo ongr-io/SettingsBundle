@@ -11,8 +11,8 @@
 
 namespace ONGR\SettingsBundle\Settings\Personal;
 
-use ONGR\SettingsBundle\Service\ProfilesManager;
-use ONGR\SettingsBundle\Service\UnderscoreEscaper;
+use ONGR\SettingsBundle\Settings\Personal\ProfilesManager;
+use ONGR\SettingsBundle\Settings\Personal\UnderscoreEscaper;
 use ONGR\SettingsBundle\Settings\Personal\SettingsStructure;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 

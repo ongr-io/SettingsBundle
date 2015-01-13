@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Functional\Service;
+namespace ONGR\SettingsBundle\Tests\Functional\Settings;
 
 use ONGR\SettingsBundle\Document\Setting;
-use ONGR\SettingsBundle\Service\SettingsManager;
+use ONGR\SettingsBundle\Settings\General\SettingsManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\DSL\Query\MatchAllQuery;

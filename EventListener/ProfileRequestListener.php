@@ -11,7 +11,7 @@
 
 namespace ONGR\SettingsBundle\EventListener;
 
-use ONGR\SettingsBundle\Service\UnderscoreEscaper;
+use ONGR\SettingsBundle\Settings\Personal\UnderscoreEscaper;
 use ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\SettingsBundle\Settings\General\SettingsContainer;

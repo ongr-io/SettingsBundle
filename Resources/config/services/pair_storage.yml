@@ -1,5 +1,5 @@
 parameters:
-    ongr_settings.pair_storage.class: ONGR\SettingsBundle\Service\PairStorage
+    ongr_settings.pair_storage.class: ONGR\SettingsBundle\PairStorage\PairStorage
 
 services:
     ongr_settings.pair_storage:

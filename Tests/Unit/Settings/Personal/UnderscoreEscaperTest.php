@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Unit\Service;
+namespace ONGR\SettingsBundle\Tests\Unit\Settings\Personal;
 
-use ONGR\SettingsBundle\Service\UnderscoreEscaper;
+use ONGR\SettingsBundle\Settings\Personal\UnderscoreEscaper;
 
 class UnderscoreEscaperTest extends \PHPUnit_Framework_TestCase
 {
