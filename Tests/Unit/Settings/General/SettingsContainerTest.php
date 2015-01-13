@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Unit\Settings;
+namespace ONGR\SettingsBundle\Tests\Unit\Settings\General;
 
 use ONGR\SettingsBundle\Settings\General\SettingsContainer;
 use ONGR\SettingsBundle\Settings\General\Provider\SettingsProviderInterface;

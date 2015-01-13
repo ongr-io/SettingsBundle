@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Functional\Service;
+namespace ONGR\SettingsBundle\Tests\Functional\Settings;
 
 use ONGR\SettingsBundle\Document\Setting;
 use ONGR\SettingsBundle\Settings\General\SettingsManager;

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Unit\Service;
+namespace ONGR\SettingsBundle\Tests\Unit\Settings\Personal;
 
 use ONGR\SettingsBundle\Settings\Personal\UnderscoreEscaper;
 

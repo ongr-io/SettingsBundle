@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Functional\Service;
+namespace ONGR\SettingsBundle\Tests\Functional\PairStorage;
 
 use ONGR\SettingsBundle\Document\Pair;
 use ONGR\SettingsBundle\PairStorage\PairStorage;
