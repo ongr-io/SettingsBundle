@@ -5,4 +5,4 @@ ongr_settings_routing_settings:
     resource: "@ONGRSettingsBundle/Resources/config/routing/personal_settings.yml"
 
 ongr_routing_settings:
-    resource: "@ONGRSettingsBundle/Resources/config/routing/settings.yml"
+    resource: "@ONGRSettingsBundle/Resources/config/routing/general_settings.yml"
