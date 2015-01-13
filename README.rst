@@ -116,6 +116,7 @@ Values can change in several places. Eg. IP address is dependent on the network,
 
 * Cookie **can be stolen** if sent over *http://*, so do not trust it's security absolutely.
 
+
 ===============
 Bundles usage
 ===============
