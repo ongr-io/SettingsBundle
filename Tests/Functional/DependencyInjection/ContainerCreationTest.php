@@ -23,7 +23,7 @@ class ContainerCreationTest extends WebTestCase
      */
     public function testCreation()
     {
-        self::createClient()->getContainer();
+        static::createClient()->getContainer();
     }
 
     /**
@@ -31,7 +31,7 @@ class ContainerCreationTest extends WebTestCase
      */
     public function testPersonalUserCategory()
     {
-        $container = self::createClient()->getContainer();
+        $container = static::createClient()->getContainer();
         $this->assertArrayHasKey(
             'ongr_settings_settings',
             $container->getParameter('ongr_settings.settings.categories')
@@ -47,7 +47,7 @@ class ContainerCreationTest extends WebTestCase
      */
     public function testPersonalUserSettings()
     {
-        $kernel = self::createClient(['environment' => 'test_container_creation'])->getKernel();
+        $kernel = static::createClient(['environment' => 'test_container_creation'])->getKernel();
         $container = $kernel->getContainer();
 
         $this->assertArrayHasKey(

@@ -25,11 +25,6 @@ class PersonalSettingsManager
     const ROLE_GRANTED = 'ROLE_ADMIN';
 
     /**
-     * @var string
-     */
-    const ROLE_DEFAULT = 'ROLE_SETTINGS_USER';
-
-    /**
      * @var SecurityContextInterface
      */
     protected $securityContext;

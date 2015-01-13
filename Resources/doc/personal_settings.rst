@@ -39,6 +39,7 @@ And add some settings that are grouped in categories (``config.yml``):
                 category: category_2
                 description: 'foo_desc_3'
                 cookie: project.cookie.alternative_settings # Setting stored in a separate cookie
+                # Service project.cookie.alternative_settings must exist
 
         ongr_settings.settings.categories:
             category_1:

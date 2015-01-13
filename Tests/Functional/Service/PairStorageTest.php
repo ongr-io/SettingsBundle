@@ -130,7 +130,7 @@ class PairStorageTest extends WebTestCase
     protected function getServiceContainer()
     {
         if ($this->container === null) {
-            $this->container = self::createClient(['environment' => 'test_container_creation'])->getContainer();
+            $this->container = static::createClient(['environment' => 'test_container_creation'])->getContainer();
         }
 
         return $this->container;

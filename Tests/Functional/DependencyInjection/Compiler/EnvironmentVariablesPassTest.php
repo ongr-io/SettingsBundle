@@ -24,7 +24,7 @@ class EnvironmentVariablesPassTest extends WebTestCase
     public function testOverriding()
     {
         // First load up the default variables and check if they're set.
-        $kernel = self::createClient()->getKernel();
+        $kernel = static::createClient()->getKernel();
         $container = $kernel->getContainer();
 
         $this->assertEquals(
@@ -34,7 +34,7 @@ class EnvironmentVariablesPassTest extends WebTestCase
 
         // Now set an env variable and check if it has changed the default one.
         $_SERVER['ongr__ongr_settings__environment_variables_pass_test_param'] = 'successful_change';
-        $kernel = self::createClient(['environment' => 'test_alternative'])->getKernel();
+        $kernel = static::createClient(['environment' => 'test_alternative'])->getKernel();
         $container = $kernel->getContainer();
 
         $this->assertEquals(

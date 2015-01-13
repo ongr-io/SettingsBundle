@@ -11,9 +11,9 @@
 
 namespace ONGR\SettingsBundle\Tests\Functional\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
 use ONGR\SettingsBundle\Tests\Functional\PreparePersonalData;
+use ONGR\SettingsBundle\Tests\Functional\PrepareAdminData;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
@@ -38,7 +38,7 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->client = new LoginTestHelper(self::createClient());
+        $this->client = new LoginTestHelper(static::createClient());
         $this->elastic = new PreparePersonalData();
     }
 
@@ -78,7 +78,9 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
         /** @noinspection PhpUndefinedMethodInspection */
         $form['settings[ongr_settings_profile_Acme2]']->tick();
         /** @noinspection PhpUndefinedMethodInspection */
-        $form['settings[ongr_settings_profile_Acme1]']->untick();
+        $form['settings[ongr_settings_profile_Acme1]']->tick();
+        /** @noinspection PhpUndefinedMethodInspection */
+        $form['settings[ongr_settings_live_settings]']->untick();
         $client->submit($form);
 
         // Assert successful redirect.
@@ -99,20 +101,26 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
             'foo_setting_2' => false,
             'foo_setting_3' => true,
             'ongr_settings_profile_Acme2' => true,
-            'ongr_settings_profile_Acme1' => false,
+            'ongr_settings_profile_Acme1' => true,
+            'ongr_settings_live_settings' => false,
         ];
         $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
 
         // Try to change value through change setting action.
-        $client->request('get', '/settings/setting/change/' . base64_encode('foo_setting_1'));
+        $data[0] = ['foo_setting_1', false];
+        $data[1] = ['foo_setting_non_existent', false ];
 
-        // Assert cookie values updated.
-        $cookieValue = $client
-            ->getCookieJar()
-            ->get($client->getContainer()->getParameter('ongr_settings.settings.settings_cookie.name'))
-            ->getValue();
-        $expectedValue['foo_setting_1'] = false;
-        $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
+        foreach ($data as $case) {
+            $client->request('get', '/admin/setting/change/' . base64_encode($case[0]));
+
+            // Assert cookie values updated.
+            $cookieValue = $client
+                ->getCookieJar()
+                ->get($client->getContainer()->getParameter('ongr_settings.settings.settings_cookie.name'))
+                ->getValue();
+
+            $this->assertJsonStringEqualsJsonString(json_encode($expectedValue), $cookieValue);
+        }
 
         $this->elastic->cleanUp();
     }
@@ -144,7 +152,7 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
         // Visit settings page.
         $client->request('GET', '/settings/settings');
 
-        // Assert successful redirect when not loged inn.
+        // Assert successful redirect when not logged in.
         $this->assertStringEndsWith(
             'login',
             $client->getRequest()->getUri(),

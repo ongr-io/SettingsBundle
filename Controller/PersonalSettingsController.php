@@ -128,7 +128,6 @@ class PersonalSettingsController extends Controller
     protected function attachCookies(array $settings, array $settingsMap)
     {
         $cookies = [];
-
         foreach ($settings as $settingId => $setting) {
             $cookieServiceName = $settingsMap[$settingId]['cookie'];
             $cookies[$cookieServiceName][$settingId] = $setting;
