@@ -121,9 +121,9 @@ NOWDOC;
     }
 
     /**
-     * Test for getPersonalSetting().
+     * Test for getPersonalSetting() from general settings container.
      */
-    public function testGetGeneralSetting()
+    public function testGetPersonalSetting()
     {
         $expectedValue = 'foo-bar';
 
@@ -137,9 +137,9 @@ NOWDOC;
     }
 
     /**
-     * Test for getPersonalSetting() in case setting was not found.
+     * Test for getPersonalSetting()  from general settings container in case setting was not found.
      */
-    public function testGetGeneralSettingException()
+    public function testGetPersonalSettingException()
     {
         $settingContainer = $this->getMock('ONGR\SettingsBundle\Settings\General\SettingsContainerInterface');
         $settingContainer
@@ -161,7 +161,7 @@ NOWDOC;
      *
      * @return PersonalSettingsManager
      */
-    protected function getSettingsManagerMock($authenticated)
+    protected function getPersonalSettingsManagerMock($authenticated)
     {
         $settingsManager = $this->getMockBuilder('ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager')
             ->disableOriginalConstructor()
