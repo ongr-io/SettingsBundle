@@ -34,47 +34,33 @@ class UserController extends Controller
     {
         // Check if already logged in.
         $alreadyLoggedIn = $this->getSecurityContext()->getToken() instanceof SessionlessToken;
+
         // Handle form.
         $loginData = [];
         $form = $this->createForm(new LoginType(), $loginData);
         $form->handleRequest($request);
+
         if ($form->isValid()) {
             $redirectResponse = $this->redirect($this->generateUrl('ongr_settings_sessionless_login'));
             $loginData = $form->getData();
+
             $username = $loginData['username'];
             $password = $loginData['password'];
+
             $ipAddress = $request->getClientIp();
             $cookieValue = $this->getAuthCookieService()->create($username, $password, $ipAddress);
+
             $cookie = $this->getAuthenticationCookie();
             $cookie->setValue($cookieValue);
 
             return $redirectResponse;
         }
+
         // Render.
         return $this->render(
             'ONGRSettingsBundle:User:login.html.twig',
             ['form' => $form->createView(), 'is_logged_in' => $alreadyLoggedIn]
         );
-    }
-
-    /**
-     * Logout action.
-     *
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function logoutAction(
-        /** @noinspection PhpUnusedParameterInspection */
-        Request $request
-    ) {
-        $cookie = $this->getAuthenticationCookie();
-        $cookie->setClear(true);
-        $response = $this->redirect($this->generateUrl('ongr_settings_sessionless_login'));
-        $this->get('security.context')->setToken(null);
-        $this->get('request')->getSession()->invalidate();
-
-        return $response;
     }
 
     /**
@@ -94,7 +80,7 @@ class UserController extends Controller
      */
     protected function getSecurityContext()
     {
-        return $this->get('security.context');
+        return $this->get('security.token_storage');
     }
 
     /**

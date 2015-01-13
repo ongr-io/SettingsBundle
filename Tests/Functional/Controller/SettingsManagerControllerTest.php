@@ -33,6 +33,11 @@ class SettingsManagerControllerTest extends ElasticsearchTestCase
     private $loginHelper;
 
     /**
+     * @var Container
+     */
+    private $container;
+
+    /**
      * {@inheritdoc}
      */
     public function setUp()

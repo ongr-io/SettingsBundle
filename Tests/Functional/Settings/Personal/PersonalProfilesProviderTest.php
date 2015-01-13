@@ -40,7 +40,7 @@ class PersonalProfilesProviderTest extends WebTestCase
     protected function getServiceContainer()
     {
         if ($this->container === null) {
-            $this->container = self::createClient()->getContainer();
+            $this->container = static::createClient()->getContainer();
         }
 
         return $this->container;

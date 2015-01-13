@@ -19,7 +19,7 @@ use Psr\Log\LoggerAwareTrait;
 /**
  * Extension for twig, which allows you to show/hide setting edit button depending on authorization.
  */
-class SettingWidgetExtension extends \Twig_Extension
+class GeneralSettingsWidgetExtension extends \Twig_Extension
 {
     use LoggerAwareTrait;
 

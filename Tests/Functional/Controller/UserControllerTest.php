@@ -39,7 +39,7 @@ class UserControllerTest extends WebTestCase
     {
         parent::setUp();
 
-        $this->client = self::createClient();
+        $this->client = static::createClient();
         $this->loginHelper = new LoginTestHelper($this->client);
     }
 

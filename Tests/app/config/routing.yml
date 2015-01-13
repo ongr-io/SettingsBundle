@@ -1,22 +1,17 @@
-project_cookie_read:
-    pattern: cookie/read
-    defaults:
-        _controller: project.controller.cookie:readAction
-
-project_cookie_update:
-    pattern: cookie/update
-    defaults:
-        _controller: project.controller.cookie:updateAction
-
-project_cookie_clear:
-    pattern: cookie/clear
-    defaults:
-        _controller: project.controller.cookie:clearAction
-
 project_flash_bag:
     pattern: flash_bag
     defaults:
         _controller: project.controller.flash_bag:indexAction
+
+twig_test_personal_settings:
+    pattern: test/twig/{setting_name}/{need_auth}
+    defaults:
+        _controller: AcmeTestBundle:Test:testPersonalSettings
+
+twig_test_general_settings:
+    pattern: test/twiggeneral
+    defaults:
+        _controller: AcmeTestBundle:Test:testgeneralsettings
 
 ongr_settings_routing:
     resource: "@ONGRSettingsBundle/Resources/config/routing.yml"
