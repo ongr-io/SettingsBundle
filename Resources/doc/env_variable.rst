@@ -11,6 +11,8 @@ Note that unlike Symfony environment variables, we override parameters after eve
 
 More about
 ~~~~~~~~~
-- `Personal functionality </Resources/doc/personal_settings.rst>`_
-- `General functionality </Resources/doc/general_settings.rst>`_
+
+- `Sessionless authentication usage </Resources/doc/ongr_sessionless_authentication.rst>`_
+- `Personal settings usage </Resources/doc/personal_settings.rst>`_
+- `General settings usage </Resources/doc/general_settings.rst>`_
 - `Flash bag usage </Resources/doc/flash_bag.rst>`_

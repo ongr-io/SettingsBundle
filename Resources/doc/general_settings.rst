@@ -6,23 +6,6 @@ Introduction
 ----------------
 This component provides functionality to configure website in real time.
 
-Enabling
-----------------
-
-To enable this functionality, You simply need to add routes to `routing.yml`:
-
-.. code-block:: yaml
-
-    fos_js_routing:
-        resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
-
-    ongr_settings:
-        resource: "@ONGRSettingsBundle/Resources/config/routing.yml"
-        prefix:   /settings/
-
-..
-
-That's it. Now you should be able to open settings list which should be empty until you add some settings.7
 
 Usage
 --------
@@ -36,7 +19,7 @@ Everywhere you want to have something configurable just render settings button w
 
 .. code-block:: twig
 
-    <div>{{ ongr_show_setting('count_per_page') }}</div>
+    <div>{{ ongr_show_setting_value('count_per_page') }}</div>
 
 ..
 
@@ -44,11 +27,22 @@ By passing second parameter any of **string**, **boolean**, **array** or **objec
 
 .. code-block:: twig
 
-    <div>{{ ongr_show_setting('count_per_page', 'object') }}</div>
+    <div>{{ ongr_show_setting_value('count_per_page', 'object') }}</div>
 
 ..
 
-To see this button you need to log in as Admin and enable "live settings". After this button appears just click on it and you will be redirected to edit page where you can set or update value of the setting.
+
+For easy settings management, its possible to enable setting management UI in front end :
+
+.. code-block:: twig
+
+    <div>{{ ongr_show_setting_widget('count_per_page') }}</div>
+
+..
+
+This will provide you with button link to setting administration screen.
+To see this button you need to log in as Admin and enable "live settings".
+After this button appears just click on it and you will be redirected to edit page where you can set or update value of the setting.
 
 Injecting Settings to Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,11 +68,11 @@ What happens in background? Actual service will be replaced with proxy service u
 Getting Setting in Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can easily access setting value in any template using ``personal_setting`` function. Example:
+You can easily access setting value in any template using ``ongr_show_setting_value`` function. Example:
 
 .. code-block:: html
 
-    <p>Default items count per page: {{ personal_setting('count_per_page') }}</p>
+    <p>Default items count per page: {{ ongr_show_setting_value('count_per_page') }}</p>
 
 ..
 
@@ -87,29 +81,19 @@ Settings Cache
 
 `ongr-settings` uses `StashBundle <https://github.com/tedious/TedivmStashBundle>`_ to cache settings. By default Filesystem cache driver is used. To ensure best performance change it `Memcache` or other fast cache engine.
 
-To enable stash cache, please add this to your main ``config.yml``
-
-.. code-block:: yaml
-
-   stash:
-   caches:
-       default:
-           drivers: [ FileSystem ]
-           FileSystem: ~
-
-..
-
+~~~~~~
 Tags
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
 
+--------------
 Setting aware
 --------------
 
-Sets service values from personal. Service must have a setter.
+Sets service values. Service must have a setter.
 
 - ``ongr_settings.setting_aware``
 - Parameters
-    - ``setting`` - specify setting name set in personal
+    - ``setting`` - specify setting name set in settings
     - ``method`` - setter method name (optional)
 
 
@@ -128,9 +112,11 @@ Example YAML configuration:
 
 ..
 
-
+~~~~~~~~~~~
 More about
-~~~~~~~
-- `Personal settings usage </Resources/doc/general_settings.rst>`_
+~~~~~~~~~~~
+
+- `Sessionless authentication usage </Resources/doc/ongr_sessionless_authentication.rst>`_
+- `Personal settings usage </Resources/doc/personal_settings.rst>`_
 - `Flash bag usage </Resources/doc/flash_bag.rst>`_
 - `Environment variables usage </Resources/doc/env_variable.rst>`_
