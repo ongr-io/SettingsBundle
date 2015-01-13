@@ -1,16 +1,16 @@
-=================================================
+==================================================
 Enabling and using Personal settings functionality
-=================================================
+==================================================
 
 
 Introduction
-----------------
+------------
     Note: This functionality will require You to login using `Sessionless authentication </Resources/doc/ongr_sessionless_authentication.rst>`_.
 
 While using this functionality, settings can be changed per user, from the settings page and the selected values are stored in a separate cookie.
 
 Usage
--------
+-----
 
 Add some settings that are grouped in categories into your ``config.yml``:
 
@@ -83,9 +83,9 @@ Or using a ``UserSettingsManager`` service:
 
 ..
 
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 Settings change API
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 Settings visibility can be toggled when the user visits specific URL generated for that setting. E. g.:
 
@@ -93,9 +93,9 @@ Settings visibility can be toggled when the user visits specific URL generated f
 
 !!! FIX [test THIS]: So it is possible to send such URL to remote user (and if ``ongr_setting_enabled('foo_setting_2', false)`` parameter is set to ``false``) not loged in user will see an enabled setting.
 
-~~~~~~~~~~~
+~~~~~~~~~~
 More about
-~~~~~~~~~~~
+~~~~~~~~~~
 
 - `Sessionless authentication usage </Resources/doc/ongr_sessionless_authentication.rst>`_
 - `General settings usage </Resources/doc/general_settings.rst>`_

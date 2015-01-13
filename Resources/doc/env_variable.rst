@@ -1,6 +1,6 @@
-======================================
+===========================
 Using environment variables
-======================================
+===========================
 
     This functionality is enabled by default.
 
@@ -10,7 +10,7 @@ Double underscores are replaced with a period, as a period is not a valid charac
 Note that unlike Symfony environment variables, we override parameters after everything is loaded i.e. your parameters in configuration files will be overwritten.
 
 More about
-~~~~~~~~~
+~~~~~~~~~~
 
 - `Sessionless authentication usage </Resources/doc/ongr_sessionless_authentication.rst>`_
 - `Personal settings usage </Resources/doc/personal_settings.rst>`_

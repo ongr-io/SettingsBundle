@@ -3,15 +3,15 @@ Enabling and using General settings functionality
 ==================================================
 
 Introduction
-----------------
-This component provides functionality to configure website in real time.
+------------
+This component provides functionality to configure website in real time and provide easily configurable setting management and output.
 
 
 Usage
---------
+-----
 
 Adding Setting
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 Default way to add settings is through edit buttons in front-end.
 
@@ -45,7 +45,7 @@ To see this button you need to log in as Admin and enable "live settings".
 After this button appears just click on it and you will be redirected to edit page where you can set or update value of the setting.
 
 Injecting Settings to Services
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Injecting settings we made as simple as it can be. To inject setting you only need to create setter method and add `ongr_settings.setting_aware`` tag to service declaration:
 
@@ -66,7 +66,7 @@ What happens in background? Actual service will be replaced with proxy service u
    Note: ``ongr-settings`` tries to guess setter name by transforming setting name to camel case. If you want to specify custom setter name, add tag attribute `method`.
 
 Getting Setting in Template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can easily access setting value in any template using ``ongr_show_setting_value`` function. Example:
 
@@ -77,17 +77,17 @@ You can easily access setting value in any template using ``ongr_show_setting_va
 ..
 
 Settings Cache
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 `ongr-settings` uses `StashBundle <https://github.com/tedious/TedivmStashBundle>`_ to cache settings. By default Filesystem cache driver is used. To ensure best performance change it `Memcache` or other fast cache engine.
 
-~~~~~~
+~~~~
 Tags
-~~~~~~
+~~~~
 
---------------
+-------------
 Setting aware
---------------
+-------------
 
 Sets service values. Service must have a setter.
 
@@ -112,9 +112,9 @@ Example YAML configuration:
 
 ..
 
-~~~~~~~~~~~
+~~~~~~~~~~
 More about
-~~~~~~~~~~~
+~~~~~~~~~~
 
 - `Sessionless authentication usage </Resources/doc/ongr_sessionless_authentication.rst>`_
 - `Personal settings usage </Resources/doc/personal_settings.rst>`_

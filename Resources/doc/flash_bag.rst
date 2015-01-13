@@ -1,9 +1,9 @@
-======================================
+===================================
 Enabling and using Cookie flash bag
-======================================
+===================================
 
 Introduction
-----------------
+------------
 
 Flashbag is a service that registers front-end messages for the user. E.g.:
 
@@ -14,12 +14,12 @@ This functionality comes in hand, when it is not possible to use
 because your production environment can't support PHP sessions. Therefore, flash bag that stores messages in a cookie is needed.
 
 Enabling
----------
+--------
 
     This functionality is enabled by default, after SettingsBundle is enabled.
 
 Usage
---------
+-----
 
 ONGR flash_bag service can be accessed and used like this:
 
@@ -58,7 +58,7 @@ ONGR flash_bag service can be accessed and used like this:
 ..
 
 More about
-~~~~~~~
+~~~~~~~~~~
 
 - `Sessionless authentication usage </Resources/doc/ongr_sessionless_authentication.rst>`_
 - `Personal settings usage </Resources/doc/personal_settings.rst>`_

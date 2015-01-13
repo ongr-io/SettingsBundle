@@ -1,24 +1,24 @@
-=================================================
+===========================================================
 Enabling and using Sessionless authentication functionality
-=================================================
+===========================================================
 
-----------------
+------------
 Introduction
-----------------
+------------
 
 ONGR Sessionless authentication is based on cookies.
 As ONGR is created with systems using load balancers in mind, this bundle includes cookie based Sessionless authentication
 and cookie based Flash bag.
-Sessionless authentication can be configured to use symfonys firewall and user providers, including provider chaining.
+Sessionless authentication can be configured to use symfony firewall and user providers, including provider chaining.
 
     Note: Requires symfony 2.6
 
 
-----------------
+--------
 Enabling
-----------------
+--------
 
-Configure, your ``security.yml`` as shown in example.
+Configure your ``security.yml`` as shown in example.
 
 .. code-block:: yaml
 
@@ -60,16 +60,16 @@ Configure, your ``security.yml`` as shown in example.
 ..
 
 You must set ``ongr_sessionless_authentication: true`` so symfony will be able to use ongr_sessionless_authentication.
-All other settings (eg.: user providers) are configurable accordingly `to symfonys documentation <http://symfony.com/doc/current/reference/configuration/security.html>`_.
+All other settings (eg.: user providers) are configurable as described `in symfony documentation <http://symfony.com/doc/current/reference/configuration/security.html>`_.
 
 
     Login form can be reached by ``/settings_prefix/login``.
 
-    Using these settings you can configure as much firewalls as you want in your whole project.
+    Using these settings you can configure as many firewalls as you wish in your whole project.
 
--------
+-----
 Usage
--------
+-----
 
 Login forms example:
 
@@ -99,7 +99,7 @@ Login forms example:
 
 ..
 
-Controller login actions example:
+Controller login action example:
 
 .. code-block:: php
 
@@ -143,19 +143,19 @@ Controller login actions example:
 ..
 
 
-Authentications "session" is stored in cookies. Some of their properties:
+Authentication "session" is stored in cookies. Some of its' properties:
 
 * Login credentials are stored in a signed tamper-proof authentication cookie that is **valid for X hours**.
-* Authentication cookie's signature **contains username**, **IP address**, expiration **timestamp** and **password**. Therefore if any of the values change, then cookie becomes invalid.
+* Authentication cookie's signature **contains username**, **IP address**, expiration **timestamp** and **password**. Therefore if any of the values change, the cookie becomes invalid.
 
 Values can change in several places. Eg. IP address is dependent on the network, password can change in the configuration file and the expiration timestamp or the username can be modified in the cookie itself.
 
 * Cookie **can be stolen** if sent over *http://*, so do not trust it's security absolutely.
 
 
-~~~~~~~~~~~
+~~~~~~~~~~
 More about
-~~~~~~~~~~~
+~~~~~~~~~~
 
 - `Personal settings usage </Resources/doc/personal_settings.rst>`_
 - `General settings usage </Resources/doc/general_settings.rst>`_
