@@ -99,6 +99,18 @@ To enable stash cache, please add this to your main ``config.yml``
 
 ..
 
+To enable stash cache, please add this to your main ``settings.yml``
+
+.. code-block:: yaml
+
+   stash:
+   caches:
+       default:
+           drivers: [ FileSystem ]
+           FileSystem: ~
+
+..
+
 Tags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
