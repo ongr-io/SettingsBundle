@@ -1,9 +1,9 @@
 parameters:
-    #Application settings widget extension
-    ongr_settings.twig.setting_extension.class: ONGR\SettingsBundle\Twig\SettingWidgetExtension
-
     #General settings widget extension
-    ongr_settings.twig.setting_extension.class: ONGR\SettingsBundle\Twig\PersonalSettingWidgetExtension
+    ongr_settings.twig.setting_extension.class: ONGR\SettingsBundle\Twig\GeneralSettingsWidgetExtension
+
+    #Personal settings widget extension
+    ongr_settings.twig.personal_settings_extension.class: ONGR\SettingsBundle\Twig\PersonalSettingWidgetExtension
 
     # Encryption extension
     ongr_settings.twig.encryption_extension.class: ONGR\SettingsBundle\Twig\EncryptionExtension
@@ -33,8 +33,8 @@ services:
             - { name: "twig.extension" }
             - { name: monolog.logger, channel: admin }
 
-    ongr_settings.twig.setting_extension:
-        class: %ongr_settings.twig.setting_extension.class%
+    ongr_settings.twig.personal_settings_extension:
+        class: %ongr_settings.twig.personal_settings_extension.class%
         arguments:
             - @ongr_settings.settings.personal_settings_manager
         tags:

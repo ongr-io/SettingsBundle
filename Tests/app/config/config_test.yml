@@ -152,3 +152,6 @@ ongr_settings:
                 name: Foo Setting 3
                 category: category_2
                 description: 'foo_desc_3'
+            ongr_settings_live_settings:
+                name: Show settings widget in frontend
+                category: category_1

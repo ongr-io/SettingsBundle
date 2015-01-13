@@ -1,5 +1,5 @@
 ongr_routing_authentication:
-    resource: "@ONGRSettingsBundle/Resources/config/routing/auth.yml"
+    resource: "@ONGRSettingsBundle/Resources/config/routing/sessionless_authentication.yml"
 
 ongr_settings_routing_settings:
     resource: "@ONGRSettingsBundle/Resources/config/routing/personal_settings.yml"

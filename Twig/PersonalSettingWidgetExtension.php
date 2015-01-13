@@ -21,7 +21,7 @@ class PersonalSettingWidgetExtension extends \Twig_Extension
     /**
      * Extension name
      */
-    const NAME = 'setting_extension';
+    const NAME = 'personal_settings_extension';
 
     /**
      * @var PersonalSettingsManager
