@@ -6,7 +6,7 @@ SettingsBundle
 Introduction
 =================================
 
-ONGR Settings Bundle  provides settings API and simple user interface for settings management. It's supported by `ONGR <http://ongr.io/>`_ development team.
+ONGR Settings Bundle provides settings API and simple user interface for settings management. It's supported by `ONGR <http://ongr.io/>`_ development team.
 
 As ONGR is created with systems using load balancers in mind, this bundle includes cookie based Sessionless authentication and cookie based Flash bag.
 
