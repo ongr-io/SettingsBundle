@@ -24,7 +24,7 @@ use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 class GeneralSettingsWidgetExtensionTest extends ElasticsearchTestCase
 {
     /**
-     * @var Client.
+     * @var Client
      */
     private $client;
 
@@ -34,7 +34,7 @@ class GeneralSettingsWidgetExtensionTest extends ElasticsearchTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->client = new LoginTestHelper(self::createClient());
+        $this->client = new LoginTestHelper(static::createClient());
     }
 
     /**
@@ -95,7 +95,7 @@ NOWDOC;
      */
     public function testShowSetting($expectedOutput, $settingName, $isAuthenticated, $type = null)
     {
-        $container = self::createClient()->getContainer();
+        $container = static::createClient()->getContainer();
         $securityContext = $container->get('security.token_storage');
         $securityContext->setToken($this->getTokenMock());
 

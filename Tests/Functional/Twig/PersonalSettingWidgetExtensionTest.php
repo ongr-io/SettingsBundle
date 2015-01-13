@@ -44,7 +44,7 @@ class PersonalSettingWidgetExtensionTest extends ElasticsearchTestCase
     {
         parent::setUp();
 
-        $this->client = self::createClient();
+        $this->client = static::createClient();
         $this->twig = $this->client->getContainer()->get('twig');
         $this->loginHelper = new LoginTestHelper($this->client);
     }

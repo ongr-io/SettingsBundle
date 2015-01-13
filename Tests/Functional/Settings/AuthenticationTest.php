@@ -25,7 +25,7 @@ class AuthenticationTest extends WebTestCase
      */
     public function testRequest()
     {
-        $client = self::createClient();
+        $client = static::createClient();
         $loginHelper = new LoginTestHelper($client);
         $client = $loginHelper->loginAction('test', 'test');
         $response = $client->getResponse();

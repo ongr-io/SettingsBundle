@@ -38,7 +38,7 @@ class PersonalSettingsControllerTest extends ElasticsearchTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->client = new LoginTestHelper(self::createClient());
+        $this->client = new LoginTestHelper(static::createClient());
         $this->elastic = new PreparePersonalData();
     }
 
