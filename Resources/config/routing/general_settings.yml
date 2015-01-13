@@ -1,6 +1,6 @@
 #Common settings
 ongr_settings_homepage:
-    pattern:  /
+    pattern:  /general_settings_list
     methods: [GET]
     defaults:
         _controller: ONGRSettingsBundle:SettingsList:list

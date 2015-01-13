@@ -31,6 +31,6 @@ class AuthenticationTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertContains('already logged in', $response->getContent());
-        $this->assertContains('Common Settings', $response->getContent());
+        $this->assertContains('General Settings', $response->getContent());
     }
 }
