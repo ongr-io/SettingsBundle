@@ -35,9 +35,7 @@ class TestController extends Controller
             'AcmeTestBundle:Test:personal.html.twig',
             ['setting_name' => $settingName, 'need_auth' => $needAuth]
         );
-
     }
-
 
     /**
      * Test general settings action.
@@ -51,6 +49,5 @@ class TestController extends Controller
         return $this->render(
             'AcmeTestBundle:Test:general.html.twig'
         );
-
     }
 }
