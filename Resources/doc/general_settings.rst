@@ -32,7 +32,7 @@ By passing second parameter any of **string**, **boolean**, **array** or **objec
 ..
 
 
-For easy settings management, its possible to enable setting management UI in front end :
+For easy settings management it's possible to enable setting management UI in front end:
 
 .. code-block:: twig
 
