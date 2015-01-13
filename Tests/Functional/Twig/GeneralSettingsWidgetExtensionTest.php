@@ -155,25 +155,6 @@ NOWDOC;
     }
 
     /**
-     * Gets a PersonalSettingsManager mock.
-     *
-     * @param bool $authenticated
-     *
-     * @return PersonalSettingsManager
-     */
-    protected function getPersonalSettingsManagerMock($authenticated)
-    {
-        $settingsManager = $this->getMockBuilder('ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager')
-            ->disableOriginalConstructor()
-            ->setMethods(['isAuthenticated'])
-            ->getMock();
-
-        $settingsManager->expects($this->once())->method('isAuthenticated')->willReturn($authenticated);
-
-        return $settingsManager;
-    }
-
-    /**
      * Returns mock of sessionless token.
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
