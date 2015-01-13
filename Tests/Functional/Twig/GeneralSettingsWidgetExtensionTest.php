@@ -12,14 +12,14 @@
 namespace ONGR\SettingsBundle\Tests\Functional\Twig;
 
 use ONGR\SettingsBundle\Exception\SettingNotFoundException;
-use ONGR\SettingsBundle\Settings\Personal\AdminSettingsManager;
+use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 use ONGR\SettingsBundle\Twig\GeneralSettingsWidgetExtension;
 use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
 use ONGR\SettingsBundle\Settings\General\SettingsContainerInterface;
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
 /**
- * Class used to test AdminExtension.
+ * Class used to test GeneralSettingsExtension.
  */
 class GeneralSettingsWidgetExtensionTest extends ElasticsearchTestCase
 {
@@ -121,7 +121,7 @@ NOWDOC;
     }
 
     /**
-     * Test for getAdminSetting().
+     * Test for getPersonalSetting().
      */
     public function testGetGeneralSetting()
     {
@@ -137,7 +137,7 @@ NOWDOC;
     }
 
     /**
-     * Test for getAdminSetting() in case setting was not found.
+     * Test for getPersonalSetting() in case setting was not found.
      */
     public function testGetGeneralSettingException()
     {
@@ -155,11 +155,11 @@ NOWDOC;
     }
 
     /**
-     * Gets a AdminSettingsManager mock.
+     * Gets a PersonalSettingsManager mock.
      *
      * @param bool $authenticated
      *
-     * @return AdminSettingsManager
+     * @return PersonalSettingsManager
      */
     protected function getSettingsManagerMock($authenticated)
     {
