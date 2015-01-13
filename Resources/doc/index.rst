@@ -10,7 +10,7 @@ ONGR Settings Bundle provides settings API and simple user interface for setting
 
 As ONGR is created with systems using load balancers in mind, this bundle includes cookie based Sessionless authentication and cookie based Flash bag.
 
-Using this bundle you can easily create, update and manage your sites settings.
+Using this bundle you can easily create, update and manage your sites' settings.
 
 While using personal settings you can specify which settings can be seen for chosen visitors e.g.: handy for A/B testing.
 
