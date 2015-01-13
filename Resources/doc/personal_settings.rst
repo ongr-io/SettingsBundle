@@ -49,7 +49,7 @@ Categories must have a ``name``. ``description`` is optional.
 Settings menu is visible under ``/settings_prefix/settings``. The user must be logged in to see the page.
 
 Settings can be stored in multiple cookie stating ``cookie`` parameter and providing cookie service.
-More info on usage in `How to work with cookies documentation <https://github.com/ongr-io/CookiesBundle>`_.
+More info on usage can be found in `How to work with cookies documentation <https://github.com/ongr-io/CookiesBundle>`_.
 
 Using Settings UI (Personal settings) you can toggle between their output values in twig.
 
@@ -91,7 +91,7 @@ Settings visibility can be toggled when the user visits specific URL generated f
 
 - `http://example.com/settings_prefix/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe== <http://example.com/settings_prefix/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe==>`_
 
-!!! FIX [test THIS]: So it is possible to send such URL to remote user (and if ``ongr_setting_enabled('foo_setting_2', false)`` parameter is set to ``false``) not loged in user will see an enabled setting.
+!!! FIX [test THIS]: So it is possible to send such URL to remote user (and if ongr_setting_enabled('foo_setting_2', false) parameter is set to false it is possible to send such url to remote unauthorized user, thus enabling the setting by proxy.
 
 ~~~~~~~~~~
 More about

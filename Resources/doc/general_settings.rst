@@ -79,7 +79,9 @@ You can easily access setting value in any template using ``ongr_show_setting_va
 Settings Cache
 ~~~~~~~~~~~~~~
 
-`ongr-settings` uses `StashBundle <https://github.com/tedious/TedivmStashBundle>`_ to cache settings. By default Filesystem cache driver is used. To ensure best performance change it `Memcache` or other fast cache engine.
+`ongr-settings` uses `StashBundle <https://github.com/tedious/TedivmStashBundle>`_ to cache settings.
+By default Filesystem cache driver is used. To ensure best performance change it to `Memcache`
+or other fast cache engine.
 
 ~~~~
 Tags

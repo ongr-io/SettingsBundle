@@ -9,7 +9,7 @@ Flashbag is a service that registers front-end messages for the user. E.g.:
 
     > Your post have been successfully saved!
 
-This functionality comes in hand, when it is not possible to use
+This functionality comes in hand when it is not possible to use
 `default Symfony flash bag <http://symfony.com/doc/current/components/http_foundation/sessions.html#flash-messages>`_ ,
 because your production environment can't support PHP sessions. Therefore, flash bag that stores messages in a cookie is needed.
 
