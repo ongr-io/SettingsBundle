@@ -44,8 +44,10 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
         $controller = new SettingsListController();
 
         $controller->setContainer($container);
-
-        $this->assertArrayHasKey('data', $controller->listAction(new Request()));
+        $requestQuery = ['q' => 'testName'];
+        $result = $controller->listAction(new Request($requestQuery));
+        $this->assertArrayHasKey('data', $result);
+        $this->assertEquals('testName', $result['filters']['search']->getState()->getValue());
     }
 
     /**
