@@ -1,5 +1,5 @@
 {
-    "name": "ongr/admin-bundle",
+    "name": "ongr/settings-bundle",
     "description": "Settings user interface and API for ONGR platform projects",
     "type": "symfony-bundle",
     "homepage": "http://ongr.io",
