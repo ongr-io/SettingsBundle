@@ -1,6 +1,6 @@
 {
-    "name": "ongr/settings-bundle",
-    "description": "Settings interface and settings API for ONGR platform projects",
+    "name": "ongr/admin-bundle",
+    "description": "Settings user interface and API for ONGR platform projects",
     "type": "symfony-bundle",
     "homepage": "http://ongr.io",
     "license": "MIT",
@@ -10,20 +10,10 @@
             "homepage": "http://www.nfq.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:ongr-io/CookiesBundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:ongr-io/FilterManagerBundle.git"
-        }
-    ],
     "require": {
-        "php": ">=5.4",
+        "php": ">=5.3.3",
         "symfony/symfony": "~2.6",
-        "doctrine/orm": "~2.4",
+        "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "symfony/monolog-bundle": "~2.0",
         "ongr/elasticsearch-bundle": ">=0.2,<2",
