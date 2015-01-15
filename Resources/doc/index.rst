@@ -38,7 +38,7 @@ Enabling and setting it up
 
 .. code-block:: bash
 
-    composer require ongr-io/SettingsBundle 0.1.*
+    composer require ongr/settings-bundle dev-master
 
 ..
 
@@ -97,6 +97,15 @@ Next Elastic Search types should be updated, by running a command in console:
 
 ..
 
+Also it's recommended to install projects' assets:
+
+.. code-block:: bash
+
+    app/console assets:install
+
+..
+
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Enabling Sessionless authentication support
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -121,6 +130,12 @@ This bundle depends on:
 - `ONGR/ElasticsearchBundle <https://github.com/ongr-io/ElasticsearchBundle>`_
 - `ONGR/ContentBundle <https://github.com/ongr-io/ContentBundle>`_
 - `ONGR/FilterManagerBundle <https://github.com/ongr-io/FilterManagerBundle>`_
+
+~~~~~~~
+License
+~~~~~~~
+
+This bundle is under the MIT license. Please, see the complete license in the bundle `LICENSE </LICENSE>`_ file.
 
 .. toctree::
     :maxdepth: 1
