@@ -71,7 +71,9 @@ User selected values can be queried easily from TWIG like this:
 Also its possible to access these values without logging in, by setting second parameter to ``false``:
 
 .. code-block:: twig
+
     {% if ongr_setting_enabled('foo_setting_2', false) %}
+
 ..
 
 Or using a ``UserSettingsManager`` service:
@@ -91,7 +93,16 @@ Settings visibility can be toggled when the user visits specific URL generated f
 
 - `http://example.com/settings_prefix/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe== <http://example.com/settings_prefix/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe==>`_
 
-!!! FIX [test THIS]: So it is possible to send such URL to remote user (and if ongr_setting_enabled('foo_setting_2', false) parameter is set to false it is possible to send such url to remote unauthorized user, thus enabling the setting by proxy.
+So it is possible to send such URL to remote user (and if ongr_setting_enabled('foo_setting_2', false) parameter is set to false it is possible to send such url to remote unauthorized user, thus enabling the setting by proxy.
+
+To enable this functionality, you should add entry to your firewall, to enable anonymous access, to one of the controllers:
+
+.. code-block:: yaml
+
+    access_control:
+        - { path: ^/settings_prefix/setting/change/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+..
 
 ~~~~~~~~~~
 More about

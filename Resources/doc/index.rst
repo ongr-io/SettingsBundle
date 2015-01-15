@@ -97,6 +97,15 @@ Next Elastic Search types should be updated, by running a command in console:
 
 ..
 
+Also it's recommended to install projects assets:
+
+.. code-block:: bash
+
+    app/console assets:install
+
+..
+
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Enabling Sessionless authentication support
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
