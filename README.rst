@@ -38,7 +38,7 @@ Enabling and setting it up
 
 .. code-block:: bash
 
-    composer require ongr-io/SettingsBundle 0.1.*
+    composer require ongr/settings-bundle dev-master
 
 ..
 
