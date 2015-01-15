@@ -95,7 +95,7 @@ Settings visibility can be toggled when the user visits specific URL generated f
 
 So it is possible to send such URL to remote user enabling him to toggle between setting values. ``ongr_setting_enabled`` second parameter must be set to false. E.g.: ``ongr_setting_enabled('foo_setting_2', false)``.
 
-To enable this functionality you should add entry to your firewall to enable anonymous access to one of the controllers:
+To enable this functionality you should add an entry to your firewall to enable anonymous access to one of the controllers:
 
 .. code-block:: yaml
 
