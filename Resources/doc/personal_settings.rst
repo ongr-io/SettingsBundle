@@ -89,13 +89,13 @@ Or using a ``UserSettingsManager`` service:
 Settings change API
 ~~~~~~~~~~~~~~~~~~~
 
-Settings visibility can be toggled when the user visits specific URL generated for that setting. E. g.:
+Settings visibility can be toggled when the user visits specific URL generated for that setting. E.g.:
 
 - `http://example.com/settings_prefix/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe== <http://example.com/settings_prefix/settings/change/Nqlx9N1QthIaQ9wJz0GNY79LoYeZUbJC6OuNe==>`_
 
-So it is possible to send such URL to remote user enabling him to toggle between setting. ``ongr_setting_enabled`` second parameter must be set to false. E.g.: ``ongr_setting_enabled('foo_setting_2', false)``.
+So it is possible to send such URL to remote user enabling him to toggle between setting values. ``ongr_setting_enabled`` second parameter must be set to false. E.g.: ``ongr_setting_enabled('foo_setting_2', false)``.
 
-To enable this functionality, you should add entry to your firewall, to enable anonymous access, to one of the controllers:
+To enable this functionality you should add entry to your firewall to enable anonymous access to one of the controllers:
 
 .. code-block:: yaml
 
