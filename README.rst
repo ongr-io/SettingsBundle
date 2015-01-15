@@ -97,7 +97,7 @@ Next Elastic Search types should be updated, by running a command in console:
 
 ..
 
-Also it's recommended to install projects assets:
+Also it's recommended to install projects' assets:
 
 .. code-block:: bash
 
