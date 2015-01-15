@@ -122,6 +122,12 @@ This bundle depends on:
 - `ONGR/ContentBundle <https://github.com/ongr-io/ContentBundle>`_
 - `ONGR/FilterManagerBundle <https://github.com/ongr-io/FilterManagerBundle>`_
 
+~~~~~~~
+License
+~~~~~~~
+
+This bundle is under the MIT license. Please, see the complete license in the bundle `LICENSE </LICENSE>`_ file.
+
 .. toctree::
     :maxdepth: 1
         :glob:
