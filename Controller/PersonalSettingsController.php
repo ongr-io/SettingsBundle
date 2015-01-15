@@ -129,8 +129,11 @@ class PersonalSettingsController extends Controller
     {
         $cookies = [];
         foreach ($settings as $settingId => $setting) {
-            $cookieServiceName = $settingsMap[$settingId]['cookie'];
-            $cookies[$cookieServiceName][$settingId] = $setting;
+            // If array key is not existing because change in settings avoid exception.
+            if (array_key_exists($settingId, $settingsMap)) {
+                $cookieServiceName = $settingsMap[$settingId]['cookie'];
+                $cookies[$cookieServiceName][$settingId] = $setting;
+            }
         }
 
         foreach ($cookies as $cookieServiceName => $cookieSettings) {
