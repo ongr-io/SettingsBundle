@@ -13,12 +13,15 @@ namespace ONGR\SettingsBundle\Tests\Unit\PairStorage;
 
 use ONGR\SettingsBundle\Document\Pair;
 use ONGR\SettingsBundle\PairStorage\PairStorage;
+use ONGR\SettingsBundle\Tests\Fixtures\ElasticSearch\RepositoryTrait;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 
 class PairStorageTest extends \PHPUnit_Framework_TestCase
 {
+    use RepositoryTrait;
+
     /**
      * @var $ormManagerMock Manager mock.
      */
@@ -216,36 +219,6 @@ class PairStorageTest extends \PHPUnit_Framework_TestCase
 
         $pairStorage = $this->getPairStorage($ormManagerMock);
         $pairStorage->remove('demo');
-    }
-
-    /**
-     * Returns mock of ORM Manager.
-     *
-     * @return Manager
-     */
-    protected function getOrmManagerMock()
-    {
-        return $this->getMock(
-            'ONGR\ElasticsearchBundle\ORM\Manager',
-            ['getRepository', 'persist', 'commit', 'flush', 'refresh'],
-            [ null, null, [], [] ]
-        );
-    }
-
-    /**
-     * Returns mock of ORM repository.
-     *
-     * @return Repository
-     */
-    protected function getOrmRepositoryMock()
-    {
-        $mock = $this->getMock(
-            'ONGR\ElasticsearchBundle\ORM\Repository',
-            ['getBundlesMapping', 'find', 'remove'],
-            [$this->getOrmManagerMock(), null ]
-        );
-
-        return $mock;
     }
 
     /**

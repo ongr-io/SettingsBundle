@@ -12,6 +12,7 @@
 namespace ONGR\SettingsBundle\Document;
 
 use ONGR\ElasticsearchBundle\Annotation as ES;
+use ONGR\ElasticsearchBundle\Document\AbstractDocument;
 use ONGR\ElasticsearchBundle\Document\DocumentInterface;
 use ONGR\ElasticsearchBundle\Document\DocumentTrait;
 
@@ -20,10 +21,8 @@ use ONGR\ElasticsearchBundle\Document\DocumentTrait;
  *
  * @ES\Document(type="pair")
  */
-class Pair implements DocumentInterface
+class Pair extends AbstractDocument
 {
-    use DocumentTrait;
-
     /**
      * @var string Serialized stored value.
      *

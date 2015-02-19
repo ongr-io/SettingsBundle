@@ -12,13 +12,15 @@
 namespace ONGR\SettingsBundle\Tests\Unit\Controller;
 
 use ONGR\SettingsBundle\Controller\SettingsListController;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
+use ONGR\SettingsBundle\Tests\Fixtures\ElasticSearch\RepositoryTrait;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
 
 class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
 {
+    use RepositoryTrait;
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|EngineInterface
      */
@@ -57,36 +59,20 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
      */
     protected function getManagerWithRepositoryMock()
     {
-        $managerMock = $this->getManagerMock();
+        $managerMock = $this->getOrmManagerMock();
 
         $repositoryMock = $this->getOrmRepositoryMock();
+        $repositoryMock->expects(
+            $this->once()
+        )->method('execute')
+            ->willReturn($this->getDocumentIteratorMock());
+
         $managerMock->expects(
             $this->once()
         )->method('getRepository')
             ->willReturn($repositoryMock);
 
         return $managerMock;
-    }
-
-    /**
-     * Returns mock of ORM repository.
-     *
-     * @return Repository
-     */
-    protected function getOrmRepositoryMock()
-    {
-        $mock = $this->getMock(
-            'ONGR\ElasticsearchBundle\ORM\Repository',
-            ['getBundlesMapping', 'find', 'remove', 'execute'],
-            [$this->getManagerMock(), ['ONGRSettingsBundle:Setting'] ]
-        );
-
-        $mock->expects(
-            $this->once()
-        )->method('execute')
-            ->willReturn($this->getDocumentIteratorMock());
-
-        return $mock;
     }
 
     /**
@@ -99,20 +85,6 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
         return $this->getMock(
             'ONGR\ElasticsearchBundle\Result\DocumentIterator',
             null,
-            [ null, null, [], [] ]
-        );
-    }
-
-    /**
-     * Returns mock of ORM Manager.
-     *
-     * @return Manager
-     */
-    protected function getManagerMock()
-    {
-        return $this->getMock(
-            'ONGR\ElasticsearchBundle\ORM\Manager',
-            ['getRepository', 'persist', 'commit', 'flush', 'refresh'],
             [ null, null, [], [] ]
         );
     }

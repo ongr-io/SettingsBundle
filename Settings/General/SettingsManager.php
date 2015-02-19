@@ -166,7 +166,6 @@ class SettingsManager
             if ($mustExist == true) {
                 throw $exception;
             }
-
             $setting = $this->createSetting($name, $profile, $type);
         }
 
