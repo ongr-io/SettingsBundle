@@ -94,7 +94,8 @@ class SettingsManagerTest extends WebTestCase
         sort($documents);
         sort($expected);
 
-        $this->assertEquals($expected, $documents);
+        $this->assertEquals($expected[0]->getName(), $documents[0]->getName());
+        $this->assertEquals($expected[1]->getName(), $documents[1]->getName());
     }
 
     /**

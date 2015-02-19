@@ -58,7 +58,8 @@ class PairStorageTest extends WebTestCase
         sort($documents);
         sort($expected);
 
-        $this->assertEquals($expected, $documents);
+        $this->assertEquals($expected[0]->getValue(), $documents[0]->getValue());
+        $this->assertEquals($expected[1]->getValue(), $documents[1]->getValue());
     }
 
     /**

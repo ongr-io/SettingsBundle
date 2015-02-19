@@ -15,12 +15,15 @@ use ONGR\SettingsBundle\Document\Setting;
 use ONGR\SettingsBundle\Settings\General\SettingsManager;
 use ONGR\ElasticsearchBundle\ORM\Manager;
 use ONGR\ElasticsearchBundle\ORM\Repository;
+use ONGR\SettingsBundle\Tests\Fixtures\ElasticSearch\RepositoryTrait;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\Translator;
 
 class SettingsManagerTest extends \PHPUnit_Framework_TestCase
 {
+    use RepositoryTrait;
+
     /**
      * @var $ormManagerMock  Manager mock.
      */
@@ -38,23 +41,6 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
     {
         $this->ormManagerMock = $this->getOrmManagerMock();
         $this->repositoryMock = $this->getOrmRepositoryMock();
-    }
-
-    /**
-     * Tests if exception is being thrown.
-     *
-     * @expectedException \LogicException
-     */
-    public function testLogicException()
-    {
-        $this->ormManagerMock->expects(
-            $this->once()
-        )->method('getRepository')
-        ->willReturn($this->repositoryMock);
-
-        $settingsManager = $this->getSettingsManager($this->ormManagerMock);
-        $testData = $this->getDataSetForSet();
-        $settingsManager->get($testData[0]['name'], $testData[0]['profile']);
     }
 
     /**
@@ -124,36 +110,6 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
 
         $settingsManager = $this->getSettingsManager($ormManagerMock);
         $settingsManager->duplicate($this->getSettingMock(), 'new_profile');
-    }
-
-    /**
-     * Returns mock of ORM Manager.
-     *
-     * @return Manager
-     */
-    protected function getOrmManagerMock()
-    {
-        return $this->getMock(
-            'ONGR\ElasticsearchBundle\ORM\Manager',
-            ['getRepository', 'persist', 'commit', 'flush', 'refresh'],
-            [ null, null, [], [] ]
-        );
-    }
-
-    /**
-     * Returns mock of ORM repository.
-     *
-     * @return Repository
-     */
-    protected function getOrmRepositoryMock()
-    {
-        $mock = $this->getMock(
-            'ONGR\ElasticsearchBundle\ORM\Repository',
-            ['getBundlesMapping', 'remove'],
-            [$this->getOrmManagerMock(), null ]
-        );
-
-        return $mock;
     }
 
     /**
