@@ -19,7 +19,13 @@ angular
         this.getLink = function(asset) {
             host = location.$$host;
             protocol = location.$$protocol;
+            port = location.$$port;
 
-            return protocol + '://' + host +'/bundles/ongrsettings/js/' + asset;
+            url = protocol + '://' + host;
+            if (port) {
+                url += ':' + port;
+            }
+
+            return url +'/bundles/ongrsettings/js/' + asset;
         }
     }]);
