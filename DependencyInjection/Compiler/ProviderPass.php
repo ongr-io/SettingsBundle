@@ -88,8 +88,11 @@ class ProviderPass implements CompilerPassInterface
     protected function generateProvider(ContainerBuilder $container, $profile)
     {
         $id = "ongr_settings.dynamic_provider.{$profile}";
+
+        $manager = $container->getParameter('ongr_settings.connection.manager');
+
         $provider = new Definition($container->getParameter('ongr_settings.settings_provider.class'), [$profile]);
-        $provider->addMethodCall('setManager', [new Reference('es.manager')]);
+        $provider->addMethodCall('setManager', [new Reference($manager)]);
         $provider->addTag('ongr_settings.settings_provider', ['profile' => $profile]);
         $container->setDefinition($id, $provider);
 

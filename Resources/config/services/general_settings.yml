@@ -15,7 +15,7 @@ services:
         arguments:
             - @translator
             - @event_dispatcher
-            - @es.manager
+            - @es.manager.settings
 
     ongr_settings.settings_container:
         class: %ongr_settings.settings_container.class%
@@ -39,11 +39,11 @@ services:
         calls:
             - [ setSettingsContainer, [ @ongr_settings.settings_container ] ]
             - [ setPersonalSettingsManager, [ @ongr_settings.settings.personal_settings_manager ] ]
-            - [ setManager, [ @es.manager ] ]
+            - [ setManager, [ @es.manager.settings ] ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     ongr_settings.profiles_manager:
         class: %ongr_settings.profiles_manager.class%
         arguments:
-            - @es.manager
+            - @es.manager.settings

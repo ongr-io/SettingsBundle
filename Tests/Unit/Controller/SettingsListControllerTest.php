@@ -39,8 +39,11 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
 
-        $container->set('es.manager', $this->getManagerWithRepositoryMock());
+        $container->set('es.manager', $this->getRepositoryMock());
         $container->set('templating', $this->getTemplateEngine());
+
+        $container->setParameter('ongr_settings.connection.repository', 'es.manager');
+
         $container->set('router', $this->getMock('Symfony\\Component\\Routing\\RouterInterface'));
 
         $controller = new SettingsListController();
@@ -73,6 +76,22 @@ class SettingsListControllerTest extends \PHPUnit_Framework_TestCase
             ->willReturn($repositoryMock);
 
         return $managerMock;
+    }
+
+    /**
+     * Returns repository mock.
+     *
+     * @return Manager
+     */
+    protected function getRepositoryMock()
+    {
+        $repositoryMock = $this->getOrmRepositoryMock();
+        $repositoryMock->expects(
+            $this->once()
+        )->method('execute')
+            ->willReturn($this->getDocumentIteratorMock());
+
+        return $repositoryMock;
     }
 
     /**

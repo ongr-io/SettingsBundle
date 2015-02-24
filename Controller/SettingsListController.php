@@ -11,7 +11,7 @@
 
 namespace ONGR\SettingsBundle\Controller;
 
-use ONGR\ElasticsearchBundle\ORM\Manager;
+use ONGR\ElasticsearchBundle\ORM\Repository;
 use ONGR\FilterManagerBundle\Filters\ViewData;
 use ONGR\FilterManagerBundle\Filters\Widget\Choice\SingleTermChoice;
 use ONGR\FilterManagerBundle\Filters\Widget\Pager\Pager;
@@ -54,9 +54,6 @@ class SettingsListController extends Controller
      */
     protected function getListData(Request $request)
     {
-        /** @var Manager $manager */
-        $manager = $this->container->get('es.manager');
-
         /** @var FiltersContainer $container */
         $container = new FiltersContainer();
 
@@ -93,8 +90,12 @@ class SettingsListController extends Controller
         $profile->setField('profile');
         $container->set('profile', $profile);
 
+        $repositoryName = $this->container->getParameter('ongr_settings.connection.repository');
+        /** @var Repository $repository */
+        $repository = $this->get($repositoryName);
+
         /** @var FiltersManager $fm */
-        $fm = new FiltersManager($container, $manager->getRepository('ONGRSettingsBundle:Setting'));
+        $fm = new FiltersManager($container, $repository);
         $fmr = $fm->execute($request);
 
         return [

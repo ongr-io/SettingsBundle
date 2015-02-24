@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Functional\DependencyInjection;
+namespace ONGR\SettingsBundle\Tests\Unit\DependencyInjection\Security;
 
 use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use ONGR\SettingsBundle\DependencyInjection\Security\SessionlessAuthenticationFactory;
