@@ -33,6 +33,8 @@ class ONGRSettingsExtension extends Extension
         $container->setParameter('ongr_settings.connection.index_name', $config['connection']['index_name']);
         $container->setParameter('ongr_settings.connection.port', $config['connection']['port']);
         $container->setParameter('ongr_settings.connection.host', $config['connection']['host']);
+        $container->setParameter('ongr_settings.connection.manager', $config['connection']['manager']);
+        $container->setParameter('ongr_settings.connection.repository', $config['connection']['repository']);
 
         // Set profiles.
         $container->setParameter('ongr_settings.settings_container.profiles', $config['profiles']);
@@ -62,6 +64,17 @@ class ONGRSettingsExtension extends Extension
     {
         $containerBuilder->setParameter('ongr_settings.settings.categories', $config['categories']);
         $containerBuilder->setParameter('ongr_settings.settings.settings', $config['settings']);
+    }
+
+    /**
+     * Sets parameters for settings provider.
+     *
+     * @param array            $config
+     * @param ContainerBuilder $containerBuilder
+     */
+    protected function loadSettingsProvider($config, ContainerBuilder $containerBuilder)
+    {
+        $containerBuilder->setParameter('ongr_settings.settings.categories', $config['categories']);
     }
 
     /**

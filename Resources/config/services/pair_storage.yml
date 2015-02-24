@@ -5,4 +5,4 @@ services:
     ongr_settings.pair_storage:
         class: %ongr_settings.pair_storage.class%
         arguments:
-            - @es.manager
+            - @es.manager.settings

@@ -130,6 +130,37 @@ services:
         calls:
             - [setManager, [@es.manager]]
 
+    ongr_settings.settings_manager:
+        class: %ongr_settings.settings_manager.class%
+        arguments:
+            - @translator
+            - @event_dispatcher
+            - @es.manager
+
+    ongr_settings.listener.cookie_profile:
+        class: %ongr_settings.listener.cookie_profile.class%
+        calls:
+            - [ setSettingsContainer, [ @ongr_settings.settings_container ] ]
+            - [ setPersonalSettingsManager, [ @ongr_settings.settings.personal_settings_manager ] ]
+            - [ setManager, [ @es.manager ] ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    ongr_settings.profiles_manager:
+        class: %ongr_settings.profiles_manager.class%
+        arguments:
+            - @es.manager
+
+    ongr_settings.settings_provider:
+        class: %ongr_settings.profiles_manager.class%
+        arguments:
+            - @es.manager
+
+    ongr_settings.pair_storage:
+        class: %ongr_settings.pair_storage.class%
+        arguments:
+            - @es.manager
+
 ongr_settings:
     profiles: [ test1, test2, default, meh ]
     admin_user:

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Tests\Integration\DependencyInjection\Compiler;
+namespace ONGR\SettingsBundle\Tests\Unit\DependencyInjection\Compiler;
 
 use ONGR\SettingsBundle\DependencyInjection\Compiler\ProviderPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -29,6 +29,7 @@ class ProviderPassTest extends \PHPUnit_Framework_TestCase
             'ongr_settings.settings_provider.class',
             'ONGR\\SettingsBundle\\Settings\\Personal\\Provider\\ManagerAwareSettingProvider'
         );
+        $container->setParameter('ongr_settings.connection.manager', 'es.manager');
 
         $definition = new Definition();
         $definition->addTag('ongr_settings.settings_provider', ['profile' => 'custom', 'priority' => 9]);
