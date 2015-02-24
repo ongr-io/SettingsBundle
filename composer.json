@@ -22,7 +22,7 @@
         "ongr/content-bundle": "~0.1",
         "ongr/cookies-bundle": "~0.1",
         "ongr/filter-manager-bundle": "~0.1",
-        "ongr/pager-bundle": "dev-master"
+        "ongr/pager-bundle": "~0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.2",
