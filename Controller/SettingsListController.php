@@ -11,14 +11,7 @@
 
 namespace ONGR\SettingsBundle\Controller;
 
-use ONGR\ElasticsearchBundle\ORM\Repository;
 use ONGR\FilterManagerBundle\Filters\ViewData;
-use ONGR\FilterManagerBundle\Filters\Widget\Choice\SingleTermChoice;
-use ONGR\FilterManagerBundle\Filters\Widget\Pager\Pager;
-use ONGR\FilterManagerBundle\Filters\Widget\Search\MatchSearch;
-use ONGR\FilterManagerBundle\Filters\Widget\Sort\Sort;
-use ONGR\FilterManagerBundle\Search\FiltersContainer;
-use ONGR\FilterManagerBundle\Search\FiltersManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,49 +47,7 @@ class SettingsListController extends Controller
      */
     protected function getListData(Request $request)
     {
-        /** @var FiltersContainer $container */
-        $container = new FiltersContainer();
-
-        /** @var Pager $pager */
-        $pager = new Pager();
-        $pager->setRequestField('page');
-        $pager->setCountPerPage(15);
-        $container->set('pager', $pager);
-
-        /** @var Sort $sort */
-        $sort = new Sort();
-        $sort->setRequestField('sort');
-        $choices = [
-            'nameAsc' => ['label' => 'Name Asc', 'field' => 'name', 'order' => 'asc', 'default' => true],
-            'nameDesc' => ['label' => 'Name Desc', 'field' => 'name', 'order' => 'desc', 'default' => false],
-        ];
-        $sort->setChoices($choices);
-        $container->set('sort', $sort);
-
-        /** @var MatchSearch $search */
-        $search = new MatchSearch();
-        if ($request->query->has('q')) {
-            $queryString = $request->query->get('q');
-            if (!empty($queryString)) {
-                $search->setRequestField('q');
-                $search->setField('name');
-            }
-        }
-        $container->set('search', $search);
-
-        /** @var SingleTermChoice $profile */
-        $profile = new SingleTermChoice();
-        $profile->setRequestField('profile');
-        $profile->setField('profile');
-        $container->set('profile', $profile);
-
-        $repositoryName = $this->container->getParameter('ongr_settings.connection.repository');
-        /** @var Repository $repository */
-        $repository = $this->get($repositoryName);
-
-        /** @var FiltersManager $fm */
-        $fm = new FiltersManager($container, $repository);
-        $fmr = $fm->execute($request);
+        $fmr = $this->get('ongr_settings.filters_manager')->execute($request);
 
         return [
             'data' => iterator_to_array($fmr->getResult()),

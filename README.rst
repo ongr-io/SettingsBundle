@@ -117,7 +117,7 @@ You should add an entry to your ``config.yml`` you should add an entry:
                 mappings:
                     - ONGRSettingsBundle
 
-...
+..
 
     Using this config, console command below will create an Elasticsearch index called ``settings``
     with 2 shards and 0 replicas, after running the console command mentioned above.
