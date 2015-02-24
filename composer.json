@@ -29,9 +29,6 @@
         "squizlabs/php_codesniffer": "~1.5",
         "ongr/ongr-strict-standard": "~1.0.0-beta"
     },
-    "suggest": {
-        "ongr/oxid-bundle": "Allows to transfer shop data from OXID to ONGR"
-    },
     "autoload": {
         "psr-4": { "ONGR\\SettingsBundle\\": "" }
     }
