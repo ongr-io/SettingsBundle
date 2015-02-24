@@ -11,7 +11,7 @@ As ONGR is created with systems using load balancers in mind, this bundle includ
 and cookie based Flash bag.
 Sessionless authentication can be configured to use symfony firewall and user providers, including provider chaining.
 
-    Note: Requires symfony 2.6
+    Note: Sessionless authentication requires symfony 2.6
 
 
 --------
@@ -48,24 +48,32 @@ Configure your ``security.yml`` as shown in example.
             in_memory:
                 memory:
                     users:
-                        foo_user: { password: foo_password, roles: 'ROLE_ADMIN' }
+                        admin: { password: admin, roles: 'ROLE_ADMIN' }
             test_provider:
                 memory:
                     users:
-                        test_user: { password: test, roles: 'ROLE_ADMIN' }
+                        test_user: { password: test_password, roles: 'ROLE_ADMIN' }
 
         encoders:
             Symfony\Component\Security\Core\User\User: plaintext
 
 ..
 
+If you don't have any security settings, simply copy all security content.
+Else, you need ``firewalls`` and  ``access_control``entries in your ``security.yml``, to be able to enable sessionless authentication.
+
 You must set ``ongr_sessionless_authentication: true`` so symfony will be able to use ongr_sessionless_authentication.
 All other settings (eg.: user providers) are configurable as described `in symfony documentation <http://symfony.com/doc/current/reference/configuration/security.html>`_.
 
 
-    Login form can be reached by ``/settings_prefix/login``.
+    IMPORTANT: Login form can be reached by ``/settings_prefix/login``. As told before ``settings_prefix``
+    should be configured accordingly to your project needs. This can be done in your projects main ``routing.yml`` file,
+    under ``ongr_settings_routing`` entry.
+
 
     Using these settings you can configure as many firewalls as you wish in your whole project.
+
+Now you can try to login to your settings administration screen using http://your-project.url/settings_prefix/login
 
 -----
 Usage
