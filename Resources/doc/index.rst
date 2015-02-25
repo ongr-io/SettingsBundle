@@ -63,7 +63,6 @@ Then register SettingsBundle and it dependant bundles in ``AppKernel.php``:
                 new ONGR\CookiesBundle\ONGRCookiesBundle(),
                 new ONGR\ElasticsearchBundle\ONGRElasticsearchBundle(),
                 new ONGR\SettingsBundle\ONGRSettingsBundle(),
-                new ONGR\PagerBundle\ONGRPagerBundle(),
             ];
         }
 
