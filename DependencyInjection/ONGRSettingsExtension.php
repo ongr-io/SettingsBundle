@@ -35,7 +35,6 @@ class ONGRSettingsExtension extends Extension
         $container->setParameter('ongr_settings.connection.index_name', $config['connection']['index_name']);
         $container->setParameter('ongr_settings.connection.port', $config['connection']['port']);
         $container->setParameter('ongr_settings.connection.host', $config['connection']['host']);
-        $container->setParameter('ongr_settings.connection.manager', $config['connection']['manager']);
         $container->setParameter('ongr_settings.connection.repository', $config['connection']['repository']);
 
         // Set profiles.
@@ -94,7 +93,7 @@ class ONGRSettingsExtension extends Extension
             'ONGR\FilterManagerBundle\Search\FiltersManager',
             [
                 new Reference('ongr_settings.filters_container'),
-                new Reference( $container->getParameter('ongr_settings.connection.repository') ),
+                new Reference($container->getParameter('ongr_settings.connection.repository')),
             ]
         );
         $container->setDefinition('ongr_settings.filters_manager', $definition);

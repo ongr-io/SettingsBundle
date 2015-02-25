@@ -54,40 +54,7 @@ ongr_elasticsearch:
                 number_of_replicas: 0
                 index:
                     refresh_interval: -1
-                analysis:
-                    tokenizer:
-                        pathTokenizer:
-                            type : path_hierarchy
-                            buffer_size: 2024
-                            skip: 0
-                            delimiter: /
-                    filter:
-                        incremental_filter:
-                            type: edge_ngram
-                            min_gram: 1
-                            max_gram: 20
-                    analyzer:
-                        indexAnalyzer:
-                            type: snowball
-                            language: German2
-                            stopwords: "der,die,das,mit,und,für"
-                        searchAnalyzer:
-                            type: snowball
-                            language: German2
-                            stopwords: "der,die,das,mit,und,für"
-                        pathAnalyzer:
-                            type: custom
-                            tokenizer: pathTokenizer
-                        urlAnalyzer:
-                            type: custom
-                            tokenizer: keyword
-                            filter: [lowercase]
-                        incrementalAnalyzer:
-                            type: custom
-                            tokenizer: standard
-                            filter:
-                                - lowercase
-                                - incremental_filter
+
     managers:
         default:
             connection: default
@@ -163,6 +130,8 @@ services:
 
 ongr_settings:
     profiles: [ test1, test2, default, meh ]
+    connection:
+        repository: es.manager.default.setting
     admin_user:
         categories:
             category_1:

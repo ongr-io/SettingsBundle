@@ -16,6 +16,3 @@ parameters:
     cdn_url_ssl: 'https:%cdn_base_url%'
 
     ongr_settings.environment_variables_pass_test_param: unchanged_param
-
-    ongr_settings.connection.manager: es.manager
-    ongr_settings.connection.repository: es.manager.setting

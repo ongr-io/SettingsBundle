@@ -23,5 +23,3 @@ parameters:
 
     ongr_settings.authentication.secret: O0EKwvq8Sv30O3ImKdXT7aT
 
-    ongr_settings.connection.manager: es.manager
-    ongr_settings.connection.repository: es.manager.setting

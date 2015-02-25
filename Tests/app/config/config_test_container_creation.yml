@@ -94,6 +94,10 @@ ongr_elasticsearch:
             mappings:
               - ONGRSettingsBundle
 
+ongr_settings:
+    connection:
+        repository: es.manager.default.setting
+
 services:
     ongr_settings.settings_manager:
         class: %ongr_settings.settings_manager.class%
@@ -125,3 +129,4 @@ services:
         class: %ongr_settings.pair_storage.class%
         arguments:
             - @es.manager
+

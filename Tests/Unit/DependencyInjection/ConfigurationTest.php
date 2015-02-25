@@ -27,7 +27,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'index_name' => 'ongr-settings',
             'host' => '127.0.0.1',
             'port' => 9200,
-            'manager' => 'es.manager.settings',
             'repository' => 'es.manager.settings.setting',
         ];
 
@@ -47,7 +46,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'index_name' => 'ongr-test',
             'host' => '127.5.0.1',
             'port' => 9205,
-            'manager' => 'es.manager.settings',
             'repository' => 'es.manager.settings.setting',
         ];
         $out[] = [

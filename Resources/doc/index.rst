@@ -41,7 +41,7 @@ In your shell enter the following:
 
 .. code-block:: bash
 
-    composer require ongr/SettingsBundle "~0.1"
+    composer require ongr/settings-bundle "~0.1"
 
 ..
 
@@ -62,6 +62,7 @@ Then register SettingsBundle and it dependant bundles in ``AppKernel.php``:
                 new Tedivm\StashBundle\TedivmStashBundle(),
                 new ONGR\CookiesBundle\ONGRCookiesBundle(),
                 new ONGR\ElasticsearchBundle\ONGRElasticsearchBundle(),
+                new ONGR\FilterManagerBundle\ONGRFilterManagerBundle(),
                 new ONGR\SettingsBundle\ONGRSettingsBundle(),
             ];
         }
@@ -120,6 +121,19 @@ You should add an entry to your ``config.yml`` you should add an entry:
 
     Using this config, console command below will create an Elasticsearch index called ``settings``
     with 2 shards and 0 replicas, after running the console command mentioned above.
+
+In case if you wish to use different Elasticsearch connection options, you can configure manager used in SettingsBundle
+with following ``config.yml`` entry:
+
+.. code-block:: yaml
+
+    ongr_settings:
+        connection:
+            repository: es.manager.default.setting
+
+..
+
+This example shows how you can configure settings repository, that is access in manager called ``default``.
 
 Second - new index in Elasticsearch should be created.
 This can be done by running a command in console:

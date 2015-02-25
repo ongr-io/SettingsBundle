@@ -89,13 +89,28 @@ class ProviderPass implements CompilerPassInterface
     {
         $id = "ongr_settings.dynamic_provider.{$profile}";
 
-        $manager = $container->getParameter('ongr_settings.connection.manager');
+        $managerName = $this->getElasticManagerFromRepository($container);
 
         $provider = new Definition($container->getParameter('ongr_settings.settings_provider.class'), [$profile]);
-        $provider->addMethodCall('setManager', [new Reference($manager)]);
+        $provider->addMethodCall('setManager', [new Reference($managerName)]);
         $provider->addTag('ongr_settings.settings_provider', ['profile' => $profile]);
         $container->setDefinition($id, $provider);
 
         return $id;
+    }
+
+    /**
+     * Gets Elasticsearch manager name from repository name.
+     *
+     * @param ContainerBuilder $container
+     *
+     * @return string
+     */
+    private function getElasticManagerFromRepository(ContainerBuilder $container)
+    {
+        $repositoryName = $container->getParameter('ongr_settings.connection.repository');
+        $managerName = substr($repositoryName, 0, strrpos($repositoryName, '.'));
+
+        return $managerName;
     }
 }
