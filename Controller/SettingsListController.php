@@ -47,12 +47,12 @@ class SettingsListController extends Controller
      */
     protected function getListData(Request $request)
     {
-        $fmr = $this->get('ongr_settings.filters_manager')->execute($request);
+        $filterManager = $this->get('ongr_settings.filters_manager')->execute($request);
 
         return [
-            'data' => iterator_to_array($fmr->getResult()),
-            'filters' => $fmr->getFilters(),
-            'routeParams' => $fmr->getUrlParameters(),
+            'data' => iterator_to_array($filterManager->getResult()),
+            'filters' => $filterManager->getFilters(),
+            'routeParams' => $filterManager->getUrlParameters(),
         ];
     }
 }
