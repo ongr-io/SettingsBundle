@@ -20,11 +20,11 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="(settingId, row) in settings">
-                            <td>{{ row.name }}</td>
-                            <td>{{ row.description }}</td>
-                            <td>{{ row.type }}</td>
-                            <td class="col-xs-4">
-                                <div ng-switch="row.type" class="container word-break-all" style="">
+                            <td class=".col-xs-8 .col-md-6">{{ row.name }}</td>
+                            <td class=".col-xs-18 .col-md-8">{{ row.description }}</td>
+                            <td class=".col-xs-6 .col-md-4">{{ row.type }}</td>
+                            <td class=".col-xs-12 .col-md-8">
+                                <div ng-switch="row.type" class="word-break-all">
                                     <div ng-switch-when="boolean">
                                         <div class="btn-group btn-group-sm">
                                             <label class="btn btn-default" ng-class="{ 'btn-primary' : row.data.value }" ng-model="row.data.value" btn-radio="true" ng-click="saveStatus($event, row)" uncheckable>On</label>

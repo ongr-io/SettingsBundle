@@ -12,7 +12,6 @@
 namespace ONGR\SettingsBundle\Tests\Functional\DependencyInjection;
 
 use ONGR\SettingsBundle\DependencyInjection\Configuration;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Component\Config\Definition\Processor;
 
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
@@ -28,6 +27,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'index_name' => 'ongr-settings',
             'host' => '127.0.0.1',
             'port' => 9200,
+            'repository' => 'es.manager.settings.setting',
         ];
 
         // A #0 test default values.
@@ -46,6 +46,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'index_name' => 'ongr-test',
             'host' => '127.5.0.1',
             'port' => 9205,
+            'repository' => 'es.manager.settings.setting',
         ];
         $out[] = [
             ['connection' => $config],

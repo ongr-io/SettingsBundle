@@ -54,40 +54,7 @@ ongr_elasticsearch:
                 number_of_replicas: 0
                 index:
                     refresh_interval: -1
-                analysis:
-                    tokenizer:
-                        pathTokenizer:
-                            type : path_hierarchy
-                            buffer_size: 2024
-                            skip: 0
-                            delimiter: /
-                    filter:
-                        incremental_filter:
-                            type: edge_ngram
-                            min_gram: 1
-                            max_gram: 20
-                    analyzer:
-                        indexAnalyzer:
-                            type: snowball
-                            language: German2
-                            stopwords: "der,die,das,mit,und,für"
-                        searchAnalyzer:
-                            type: snowball
-                            language: German2
-                            stopwords: "der,die,das,mit,und,für"
-                        pathAnalyzer:
-                            type: custom
-                            tokenizer: pathTokenizer
-                        urlAnalyzer:
-                            type: custom
-                            tokenizer: keyword
-                            filter: [lowercase]
-                        incrementalAnalyzer:
-                            type: custom
-                            tokenizer: standard
-                            filter:
-                                - lowercase
-                                - incremental_filter
+
     managers:
         default:
             connection: default
@@ -130,8 +97,41 @@ services:
         calls:
             - [setManager, [@es.manager]]
 
+    ongr_settings.settings_manager:
+        class: %ongr_settings.settings_manager.class%
+        arguments:
+            - @translator
+            - @event_dispatcher
+            - @es.manager
+
+    ongr_settings.listener.cookie_profile:
+        class: %ongr_settings.listener.cookie_profile.class%
+        calls:
+            - [ setSettingsContainer, [ @ongr_settings.settings_container ] ]
+            - [ setPersonalSettingsManager, [ @ongr_settings.settings.personal_settings_manager ] ]
+            - [ setManager, [ @es.manager ] ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    ongr_settings.profiles_manager:
+        class: %ongr_settings.profiles_manager.class%
+        arguments:
+            - @es.manager
+
+    ongr_settings.settings_provider:
+        class: %ongr_settings.profiles_manager.class%
+        arguments:
+            - @es.manager
+
+    ongr_settings.pair_storage:
+        class: %ongr_settings.pair_storage.class%
+        arguments:
+            - @es.manager
+
 ongr_settings:
     profiles: [ test1, test2, default, meh ]
+    connection:
+        repository: es.manager.default.setting
     admin_user:
         categories:
             category_1:

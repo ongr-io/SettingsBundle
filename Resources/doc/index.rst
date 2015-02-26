@@ -41,7 +41,7 @@ In your shell enter the following:
 
 .. code-block:: bash
 
-    composer require ongr/SettingsBundle "~0.1"
+    composer require ongr/settings-bundle "~0.1"
 
 ..
 
@@ -62,8 +62,8 @@ Then register SettingsBundle and it dependant bundles in ``AppKernel.php``:
                 new Tedivm\StashBundle\TedivmStashBundle(),
                 new ONGR\CookiesBundle\ONGRCookiesBundle(),
                 new ONGR\ElasticsearchBundle\ONGRElasticsearchBundle(),
+                new ONGR\FilterManagerBundle\ONGRFilterManagerBundle(),
                 new ONGR\SettingsBundle\ONGRSettingsBundle(),
-                new ONGR\PagerBundle\ONGRPagerBundle(),
             ];
         }
 
@@ -117,53 +117,23 @@ You should add an entry to your ``config.yml`` you should add an entry:
                 mappings:
                     - ONGRSettingsBundle
 
-...
+..
 
     Using this config, console command below will create an Elasticsearch index called ``settings``
     with 2 shards and 0 replicas, after running the console command mentioned above.
 
-If you are planing to use SettingsBundle outside an
-`ongr.io <http://ongr.io/>`_ platform you should also add following configuration to your ``config.yml``:
+In case if you wish to use different Elasticsearch connection options, you can configure manager used in SettingsBundle
+with following ``config.yml`` entry:
 
 .. code-block:: yaml
 
-    parameters:
-        ongr_settings.settings_provider_es_manager: es.manager.settings
-
-    services:
-        ongr_settings.settings_manager:
-            class: %ongr_settings.settings_manager.class%
-            arguments:
-                - @translator
-                - @event_dispatcher
-                - @es.manager.settings
-
-        ongr_settings.listener.cookie_profile:
-            class: %ongr_settings.listener.cookie_profile.class%
-            calls:
-                - [ setSettingsContainer, [ @ongr_settings.settings_container ] ]
-                - [ setPersonalSettingsManager, [ @ongr_settings.settings.personal_settings_manager ] ]
-                - [ setManager, [ @es.manager.settings ] ]
-            tags:
-                - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
-        ongr_settings.profiles_manager:
-            class: %ongr_settings.profiles_manager.class%
-            arguments:
-                - @es.manager.settings
-
-        ongr_settings.settings_provider:
-            class: %ongr_settings.profiles_manager.class%
-            arguments:
-                - @es.manager.settings
-
-        ongr_settings.pair_storage:
-            class: %ongr_settings.pair_storage.class%
-            arguments:
-                - @es.manager.settings
+    ongr_settings:
+        connection:
+            repository: es.manager.default.setting
 
 ..
 
+This example shows how you can configure settings repository, that is access in manager called ``default``.
 
 Second - new index in Elasticsearch should be created.
 This can be done by running a command in console:

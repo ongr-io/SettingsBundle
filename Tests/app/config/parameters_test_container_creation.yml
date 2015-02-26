@@ -22,3 +22,4 @@ parameters:
             password: 'foo_password'
 
     ongr_settings.authentication.secret: O0EKwvq8Sv30O3ImKdXT7aT
+

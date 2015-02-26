@@ -13,7 +13,9 @@ namespace ONGR\SettingsBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -33,6 +35,7 @@ class ONGRSettingsExtension extends Extension
         $container->setParameter('ongr_settings.connection.index_name', $config['connection']['index_name']);
         $container->setParameter('ongr_settings.connection.port', $config['connection']['port']);
         $container->setParameter('ongr_settings.connection.host', $config['connection']['host']);
+        $container->setParameter('ongr_settings.connection.repository', $config['connection']['repository']);
 
         // Set profiles.
         $container->setParameter('ongr_settings.settings_container.profiles', $config['profiles']);
@@ -45,11 +48,15 @@ class ONGRSettingsExtension extends Extension
         $loader->load('services/general_settings.yml');
         $loader->load('services/pair_storage.yml');
 
+        $loader->load('filters_container.yml');
+
         if (isset($config['admin_user'])) {
             $this->loadPersonalSettings($config['admin_user'], $container);
         }
 
         $this->injectPersonalSettings($container);
+
+        $this->setFiltersManager($container);
     }
 
     /**
@@ -62,6 +69,34 @@ class ONGRSettingsExtension extends Extension
     {
         $containerBuilder->setParameter('ongr_settings.settings.categories', $config['categories']);
         $containerBuilder->setParameter('ongr_settings.settings.settings', $config['settings']);
+    }
+
+    /**
+     * Sets parameters for settings provider.
+     *
+     * @param array            $config
+     * @param ContainerBuilder $containerBuilder
+     */
+    protected function loadSettingsProvider($config, ContainerBuilder $containerBuilder)
+    {
+        $containerBuilder->setParameter('ongr_settings.settings.categories', $config['categories']);
+    }
+
+    /**
+     * Sets parameters for filter manager.
+     *
+     * @param ContainerBuilder $container
+     */
+    protected function setFiltersManager(ContainerBuilder $container)
+    {
+        $definition = new Definition(
+            'ONGR\FilterManagerBundle\Search\FiltersManager',
+            [
+                new Reference('ongr_settings.filters_container'),
+                new Reference($container->getParameter('ongr_settings.connection.repository')),
+            ]
+        );
+        $container->setDefinition('ongr_settings.filters_manager', $definition);
     }
 
     /**

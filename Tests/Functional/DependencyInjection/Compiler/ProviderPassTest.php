@@ -29,6 +29,7 @@ class ProviderPassTest extends \PHPUnit_Framework_TestCase
             'ongr_settings.settings_provider.class',
             'ONGR\\SettingsBundle\\Settings\\Personal\\Provider\\ManagerAwareSettingProvider.php'
         );
+        $container->setParameter('ongr_settings.connection.repository', 'es.manager.setting');
 
         $definition = new Definition();
         $definition->addTag('ongr_settings.ongr_settings', ['profile' => 'custom']);
