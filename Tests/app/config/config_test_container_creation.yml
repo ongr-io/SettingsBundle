@@ -124,9 +124,3 @@ services:
         class: %ongr_settings.profiles_manager.class%
         arguments:
             - @es.manager
-
-    ongr_settings.pair_storage:
-        class: %ongr_settings.pair_storage.class%
-        arguments:
-            - @es.manager
-

@@ -46,7 +46,6 @@ class ONGRSettingsExtension extends Extension
         $loader->load('services/twig_extension.yml');
         $loader->load('services/personal_settings.yml');
         $loader->load('services/general_settings.yml');
-        $loader->load('services/pair_storage.yml');
 
         $loader->load('filters_container.yml');
 

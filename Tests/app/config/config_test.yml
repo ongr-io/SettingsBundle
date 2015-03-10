@@ -123,11 +123,6 @@ services:
         arguments:
             - @es.manager
 
-    ongr_settings.pair_storage:
-        class: %ongr_settings.pair_storage.class%
-        arguments:
-            - @es.manager
-
 ongr_settings:
     profiles: [ test1, test2, default, meh ]
     connection:
