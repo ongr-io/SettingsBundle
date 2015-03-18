@@ -11,7 +11,9 @@ As ONGR is created with systems using load balancers in mind, this bundle includ
 and cookie based Flash bag.
 Sessionless authentication can be configured to use symfony firewall and user providers, including provider chaining.
 
-    Note: Sessionless authentication requires symfony 2.6
+.. note::
+
+    Sessionless authentication requires symfony 2.6
 
 
 --------
@@ -66,10 +68,11 @@ You must set ``ongr_sessionless_authentication: true`` so symfony will be able t
 All other settings (eg.: user providers) are configurable as described `in symfony documentation <http://symfony.com/doc/current/reference/configuration/security.html>`_.
 
 
-    IMPORTANT: Login form can be reached by ``/settings_prefix/login``. As told before ``settings_prefix``
+.. important::
+
+    Login form can be reached by ``/settings_prefix/login``. As told before ``settings_prefix``
     should be configured accordingly to your project needs. This can be done in your projects main ``routing.yml`` file,
     under ``ongr_settings_routing`` entry.
-
 
     Using these settings you can configure as many firewalls as you wish in your whole project.
 
