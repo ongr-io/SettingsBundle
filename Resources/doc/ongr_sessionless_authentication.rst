@@ -1,6 +1,6 @@
-===========================================================
-Enabling and using Sessionless authentication functionality
-===========================================================
+==========================
+Sessionless authentication
+==========================
 
 ------------
 Introduction

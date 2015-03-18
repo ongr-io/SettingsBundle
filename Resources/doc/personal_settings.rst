@@ -1,6 +1,6 @@
-==================================================
-Enabling and using Personal settings functionality
-==================================================
+=================
+Personal settings
+=================
 
 
 Introduction
