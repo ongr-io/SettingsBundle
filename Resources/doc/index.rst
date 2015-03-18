@@ -89,7 +89,8 @@ Next, enable access to SettingsBundle by adding this to your main ``routing.yml`
 ..
 
 .. warning::
-    IMPORTANT: ``prefix: /settings_prefix`` should be configured accordingly to your project needs.
+
+    ``prefix: /settings_prefix`` should be configured accordingly to your project needs.
     All SettingsBundle's functionality will reside under this prefix. e.g.: your login link to settings UI would be
     /settings_prefix/login.
 
