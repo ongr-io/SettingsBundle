@@ -1,6 +1,6 @@
-===========================
-Using environment variables
-===========================
+=====================
+Environment variables
+=====================
 
     This functionality is enabled by default.
 
