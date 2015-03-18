@@ -194,6 +194,6 @@ This bundle is under the MIT license. Please, see the complete license in the bu
 
 .. toctree::
     :maxdepth: 1
-        :glob:
+    :glob:
 
-        *
+    *
