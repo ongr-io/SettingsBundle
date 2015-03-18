@@ -2,9 +2,9 @@
 SettingsBundle
 ==============
 
-============
+------------
 Introduction
-============
+------------
 
 ONGR Settings Bundle provides settings API and simple user interface for setting management.
 It's supported by `ONGR <http://ongr.io/>`_ development team.
@@ -32,9 +32,9 @@ Functionality offered by this bundle can be separated into five parts:
 - `Environment variables </Resources/doc/env_variable.rst>`_
 
 
-==========================
+--------------------------
 Enabling and setting it up
-==========================
+--------------------------
 
 SettingsBundle requires minimal efforts to get it working. Firstly, install the package using Composer.
 In your shell enter the following:
@@ -169,9 +169,9 @@ This bundle is thus offering sessionless authentication functionality. You can r
 to enable it
 `here </Resources/doc/ongr_sessionless_authentication.rst>`_.
 
-=====
+-----
 Usage
-=====
+-----
 
 - `Sessionless authentication usage </Resources/doc/ongr_sessionless_authentication.rst>`_
 - `Personal settings usage </Resources/doc/personal_settings.rst>`_
