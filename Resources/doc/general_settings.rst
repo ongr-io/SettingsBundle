@@ -118,7 +118,7 @@ Example YAML configuration:
 More about
 ~~~~~~~~~~
 
-- `Sessionless authentication usage </Resources/doc/ongr_sessionless_authentication.rst>`_
-- `Personal settings usage </Resources/doc/personal_settings.rst>`_
-- `Flash bag usage </Resources/doc/flash_bag.rst>`_
-- `Environment variables usage </Resources/doc/env_variable.rst>`_
+- `Sessionless authentication usage <ongr_sessionless_authentication.rst>`_
+- `Personal settings usage <personal_settings.rst>`_
+- `Flash bag usage <flash_bag.rst>`_
+- `Environment variables usage <env_variable.rst>`_

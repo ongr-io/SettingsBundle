@@ -60,7 +60,7 @@ ONGR flash_bag service can be accessed and used like this:
 More about
 ~~~~~~~~~~
 
-- `Sessionless authentication usage </Resources/doc/ongr_sessionless_authentication.rst>`_
-- `Personal settings usage </Resources/doc/personal_settings.rst>`_
-- `General settings usage </Resources/doc/general_settings.rst>`_
-- `Environment variables usage </Resources/doc/env_variable.rst>`_
+- `Sessionless authentication usage <ongr_sessionless_authentication.rst>`_
+- `Personal settings usage <personal_settings.rst>`_
+- `General settings usage <general_settings.rst>`_
+- `Environment variables usage <env_variable.rst>`_
