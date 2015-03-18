@@ -168,7 +168,7 @@ Values can change in several places. Eg. IP address is dependent on the network,
 More about
 ~~~~~~~~~~
 
-- `Personal settings usage </Resources/doc/personal_settings.rst>`_
-- `General settings usage </Resources/doc/general_settings.rst>`_
-- `Flash bag usage </Resources/doc/flash_bag.rst>`_
-- `Environment variables usage </Resources/doc/env_variable.rst>`_
+- `Personal settings usage <personal_settings.rst>`_
+- `General settings usage <general_settings.rst>`_
+- `Flash bag usage <flash_bag.rst>`_
+- `Environment variables usage <env_variable.rst>`_

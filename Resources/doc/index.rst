@@ -25,11 +25,11 @@ General settings are for easily configurable setting management and output.
 
 Functionality offered by this bundle can be separated into five parts:
 
-- `Sessionless authentication </Resources/doc/ongr_sessionless_authentication.rst>`_
-- `Personal settings </Resources/doc/personal_settings.rst>`_
-- `General settings </Resources/doc/general_settings.rst>`_
-- `Flash settings </Resources/doc/flash_bag.rst>`_
-- `Environment variables </Resources/doc/env_variable.rst>`_
+- `Sessionless authentication <ongr_sessionless_authentication.rst>`_
+- `Personal settings <personal_settings.rst>`_
+- `General settings <general_settings.rst>`_
+- `Flash settings <flash_bag.rst>`_
+- `Environment variables <env_variable.rst>`_
 
 
 --------------------------
@@ -168,17 +168,17 @@ Enabling Sessionless authentication support
 Systems using load balancers cannot use standard symfony authentication (which is based on sessions).
 This bundle is thus offering sessionless authentication functionality. You can read about how it works and how
 to enable it
-`here </Resources/doc/ongr_sessionless_authentication.rst>`_.
+`here <ongr_sessionless_authentication.rst>`_.
 
 -----
 Usage
 -----
 
-- `Sessionless authentication usage </Resources/doc/ongr_sessionless_authentication.rst>`_
-- `Personal settings usage </Resources/doc/personal_settings.rst>`_
-- `General settings usage </Resources/doc/general_settings.rst>`_
-- `Flash bag usage </Resources/doc/flash_bag.rst>`_
-- `Environment variables usage </Resources/doc/env_variable.rst>`_
+- `Sessionless authentication usage <ongr_sessionless_authentication.rst>`_
+- `Personal settings usage <personal_settings.rst>`_
+- `General settings usage <general_settings.rst>`_
+- `Flash bag usage <flash_bag.rst>`_
+- `Environment variables usage <env_variable.rst>`_
 
 This bundle depends on:
 

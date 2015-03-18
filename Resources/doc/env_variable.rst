@@ -12,7 +12,7 @@ Note that unlike Symfony environment variables, we override parameters after eve
 More about
 ~~~~~~~~~~
 
-- `Sessionless authentication usage </Resources/doc/ongr_sessionless_authentication.rst>`_
-- `Personal settings usage </Resources/doc/personal_settings.rst>`_
-- `General settings usage </Resources/doc/general_settings.rst>`_
-- `Flash bag usage </Resources/doc/flash_bag.rst>`_
+- `Sessionless authentication usage <ongr_sessionless_authentication.rst>`_
+- `Personal settings usage <personal_settings.rst>`_
+- `General settings usage <general_settings.rst>`_
+- `Flash bag usage <flash_bag.rst>`_

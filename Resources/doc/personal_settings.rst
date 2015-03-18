@@ -5,7 +5,7 @@ Personal settings
 
 Introduction
 ------------
-    Note: This functionality will require You to login using `Sessionless authentication </Resources/doc/ongr_sessionless_authentication.rst>`_.
+    Note: This functionality will require You to login using `Sessionless authentication <ongr_sessionless_authentication.rst>`_.
 
 While using this functionality, settings can be changed per user, from the settings page and the selected values are stored in a separate cookie.
 
@@ -108,7 +108,7 @@ To enable this functionality you should add an entry to your firewall to enable 
 More about
 ~~~~~~~~~~
 
-- `Sessionless authentication usage </Resources/doc/ongr_sessionless_authentication.rst>`_
-- `General settings usage </Resources/doc/general_settings.rst>`_
-- `Flash bag usage </Resources/doc/flash_bag.rst>`_
-- `Environment variables usage </Resources/doc/env_variable.rst>`_
+- `Sessionless authentication usage <ongr_sessionless_authentication.rst>`_
+- `General settings usage <general_settings.rst>`_
+- `Flash bag usage <flash_bag.rst>`_
+- `Environment variables usage <env_variable.rst>`_
