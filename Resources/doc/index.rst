@@ -18,11 +18,6 @@ While using personal settings you can specify which settings can be seen for cho
 
 General settings are for easily configurable setting management and output.
 
-
-.. image:: https://magnum.travis-ci.com/ongr-io/SettingsBundle.svg?token=X35UxnxC4zoxXhsTMzw8&branch=master
-    :target: https://magnum.travis-ci.com/ongr-io/SettingsBundle
-
-
 Functionality offered by this bundle can be separated into five parts:
 
 - `Sessionless authentication <ongr_sessionless_authentication.rst>`_
@@ -170,31 +165,11 @@ This bundle is thus offering sessionless authentication functionality. You can r
 to enable it
 `here <ongr_sessionless_authentication.rst>`_.
 
------
-Usage
------
-
-- `Sessionless authentication usage <ongr_sessionless_authentication.rst>`_
-- `Personal settings usage <personal_settings.rst>`_
-- `General settings usage <general_settings.rst>`_
-- `Flash bag usage <flash_bag.rst>`_
-- `Environment variables usage <env_variable.rst>`_
-
-This bundle depends on:
+------------
+Dependencies
+------------
 
 - `ONGR/CookiesBundle <https://github.com/ongr-io/CookiesBundle>`_
 - `ONGR/ElasticsearchBundle <https://github.com/ongr-io/ElasticsearchBundle>`_
 - `ONGR/ContentBundle <https://github.com/ongr-io/ContentBundle>`_
 - `ONGR/FilterManagerBundle <https://github.com/ongr-io/FilterManagerBundle>`_
-
-~~~~~~~
-License
-~~~~~~~
-
-This bundle is under the MIT license. Please, see the complete license in the bundle `LICENSE </LICENSE>`_ file.
-
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    *
