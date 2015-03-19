@@ -94,7 +94,7 @@ It will consist of two parts.
 
 
 First - Elasticsearch connection details and mappings, for your settings documents should be defined.
-You should add an entry to your ``config.yml`` you should add an entry:
+You should add an entry to your ``config.yml``:
 
 .. code-block:: yaml
 
@@ -115,21 +115,26 @@ You should add an entry to your ``config.yml`` you should add an entry:
 
 ..
 
-    Using this config, console command below will create an Elasticsearch index called ``settings``
-    with 2 shards and 0 replicas, after running the console command mentioned above.
+    Using this config, ``es:index:create`` console command (mentioned below) will create an Elasticsearch index called ``settings``
+    with 2 shards and 0 replicas.
 
-In case if you wish to use different Elasticsearch connection options, you can configure manager used in SettingsBundle
-with following ``config.yml`` entry:
+.. note::
+    By default the settings bundle will use the ``settings`` index.
+
+..
+
+In case if you wish to use different Elasticsearch connection options, you can override the default manager used in
+SettingsBundle with following ``config.yml`` entry:
 
 .. code-block:: yaml
 
     ongr_settings:
         connection:
-            repository: es.manager.default.setting
+            repository: es.manager.other_manager.setting # SettingsBundle will use the "other_manager" manager.
 
 ..
 
-This example shows how you can configure settings repository, that is access in manager called ``default``.
+
 
 Second - new index in Elasticsearch should be created.
 This can be done by running a command in console:
@@ -140,13 +145,22 @@ This can be done by running a command in console:
 
 ..
 
-    NOTE: We strongly recommend to have a separate index for your settings (as in example above) so your "working"
+.. note::
+
+    We strongly recommend to have a separate index for your settings (as in example above) so your "working"
     data won't mix up with settings.
+..
+
+.. note::
+
+    If you have chosen to use a different manager (i.e. not ``settings``), it you should change the console command
+    accordingly (e.g. ``app/console es:index:create --manager myManager``).
+..
 
 More information about Elasticsearch configuration can be found in our ElasticsearchBundle
 `documentation <http://ongr.readthedocs.org/en/latest/components/ElasticsearchBundle/index.html>`_.
 
-Also it's recommended to install projects' assets:
+While you're at it, install the projects' assets as well:
 
 .. code-block:: bash
 
