@@ -31,7 +31,7 @@ This bundle is independant from ONGR platform and can be used in your project on
 Documentation
 =============
 
-Documentation for ONGRSettingsBundle can be found in `ongr.readthedocs.org <http://ongr.readthedocs.org/en/latest/components/SettingsBundle/index.html>`_
+Documentation for ONGRSettingsBundle can be found in `ONGR Documentation <http://ongr.readthedocs.org/en/latest/components/SettingsBundle/index.html>`_
 
 ~~~~~~~
 License
