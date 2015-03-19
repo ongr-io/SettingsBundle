@@ -183,7 +183,7 @@ class Setting implements DocumentInterface, JsonSerializable
     /**
      * Specify data which should be serialized to JSON.
      *
-     * @return data which can be serialized by <b>json_encode</b>,
+     * @return mixed Data which can be serialized by json_encode.
      */
     public function jsonSerialize()
     {
