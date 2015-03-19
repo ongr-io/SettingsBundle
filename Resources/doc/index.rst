@@ -165,3 +165,11 @@ This bundle is thus offering sessionless authentication functionality. You can r
 to enable it
 `here <ongr_sessionless_authentication.rst>`_.
 
+------------
+Dependencies
+------------
+
+- `ONGR/CookiesBundle <https://github.com/ongr-io/CookiesBundle>`_
+- `ONGR/ElasticsearchBundle <https://github.com/ongr-io/ElasticsearchBundle>`_
+- `ONGR/ContentBundle <https://github.com/ongr-io/ContentBundle>`_
+- `ONGR/FilterManagerBundle <https://github.com/ongr-io/FilterManagerBundle>`_
