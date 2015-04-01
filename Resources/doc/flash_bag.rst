@@ -39,23 +39,19 @@ ONGR flash_bag service can be accessed and used like this:
                     'success',
                     'Your post have been successfully saved!'
                 );
+
+                return new JsonResponse();
             }
 
-            return ['flash_bag' => $flashBag];
+            $flashes = $flashBag->all();
+
+            return new JsonResponse($flashes);
         }
     }
 
 ..
 
-.. code-block:: twig
-
-    {% for message in flash_bag.get('success') %}
-        <div class="alert alert-success" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-
-..
+Example above returns empty JsonResponse if POST method is used and response with all saved messages otherwise.
 
 More about
 ~~~~~~~~~~
