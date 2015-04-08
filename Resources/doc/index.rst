@@ -98,6 +98,11 @@ You should add an entry to your ``config.yml``:
 
 .. code-block:: yaml
 
+    # Doctrine Configuration
+    doctrine:
+        dbal:
+            server_version: "5.6"
+
     ongr_elasticsearch:
         connections:
             settings:

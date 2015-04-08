@@ -56,7 +56,7 @@
         {% endverbatim %}
         {% block pager %}
             {% if filters.pager is defined %}
-                <div class="pull-right">{{ paginate(filters.pager.pager, 'ongr_settings_settings_list', filters.pager.urlParameters) }}</div>
+                <div class="pull-right">{{ ongr_paginate(filters.pager.pager, 'ongr_settings_settings_list', filters.pager.urlParameters) }}</div>
                 <div class="clearfix"></div>
             {% endif %}
         {% endblock %}
