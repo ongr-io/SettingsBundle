@@ -79,7 +79,7 @@ class ManagerAwareSettingProvider implements SettingsProviderInterface
         // Create query.
         $search = $repo->createSearch();
 
-        $match = new MatchQuery($this->getProfile(), 'profile');
+        $match = new MatchQuery('profile', $this->getProfile());
         $search->addQuery($match);
 
         $limit = new LimitFilter($this->getLimit());
