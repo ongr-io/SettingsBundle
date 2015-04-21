@@ -78,7 +78,7 @@ class DirtyFlashBag extends FlashBag
      * {@inheritdoc}
      *
      * @param string $type
-     * @param array $default
+     * @param array  $default
      */
     public function get($type, array $default = [])
     {
@@ -113,7 +113,7 @@ class DirtyFlashBag extends FlashBag
      * {@inheritdoc}
      *
      * @param string $type
-     * @param array $messages
+     * @param array  $messages
      */
     public function set($type, $messages)
     {

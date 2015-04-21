@@ -87,7 +87,7 @@ class WrapperExtension extends \Twig_Extension
     /**
      * Returns the name of the extension.
      *
-     * @return string The extension name
+     * @return string The extension name.
      */
     public function getName()
     {

@@ -37,7 +37,7 @@ class LoginTestHelper
      * @param string $username
      * @param string $password
      *
-     * @return Client $client
+     * @return Client
      */
     public function loginAction($username = 'test', $password = 'test')
     {

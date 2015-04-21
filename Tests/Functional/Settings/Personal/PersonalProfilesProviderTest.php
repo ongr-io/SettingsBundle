@@ -35,7 +35,7 @@ class PersonalProfilesProviderTest extends WebTestCase
     /**
      * Get Container.
      *
-     * @return Service container
+     * @return Service Service container.
      */
     protected function getServiceContainer()
     {

@@ -31,7 +31,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         ];
 
         // A #0 test default values.
-
         $out[] = [
             [],
             [
