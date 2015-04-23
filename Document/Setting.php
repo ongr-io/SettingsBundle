@@ -48,35 +48,35 @@ class Setting implements DocumentInterface, JsonSerializable
     /**
      * @var string
      *
-     * @ES\Property(name="name", type="string", search_analyzer="standard")
+     * @ES\Property(name="name", type="string", searchAnalyzer="standard")
      */
     protected $name;
 
     /**
      * @var string
      *
-     * @ES\Property(name="description", type="string", search_analyzer="standard")
+     * @ES\Property(name="description", type="string", searchAnalyzer="standard")
      */
     protected $description;
 
     /**
      * @var string
      *
-     * @ES\Property(name="profile", type="string", search_analyzer="standard")
+     * @ES\Property(name="profile", type="string", searchAnalyzer="standard")
      */
     protected $profile;
 
     /**
      * @var string
      *
-     * @ES\Property(name="type", type="string", search_analyzer="standard")
+     * @ES\Property(name="type", type="string", searchAnalyzer="standard")
      */
     protected $type;
 
     /**
      * @var string
      *
-     * @ES\Property(name="data", type="string", search_analyzer="standard")
+     * @ES\Property(name="data", type="string", searchAnalyzer="standard")
      */
     protected $data;
 
