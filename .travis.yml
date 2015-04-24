@@ -15,4 +15,4 @@ before_script:
   - composer update --prefer-dist
 script:
   - vendor/bin/phpunit
-  - vendor/bin/phpcs -p --standard=$TRAVIS_BUILD_DIR/vendor/ongr/ongr-strict-standard/Ongr --ignore=vendor/,Tests/app/,Resources/public/ ./
+  - vendor/bin/phpcs -p --standard=vendor/ongr/ongr-strict-standard/Ongr --ignore=vendor/,Tests/app/,Resources/public/ ./
