@@ -139,7 +139,7 @@ class SettingsManagerTest extends WebTestCase
     /**
      * Public function test removing a setting.
      *
-     * @expectedException \Elasticsearch\Common\Exceptions\Missing404Exception
+     * @expectedException \UnexpectedValueException
      */
     public function testRemove()
     {

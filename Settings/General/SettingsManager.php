@@ -110,8 +110,6 @@ class SettingsManager
     {
         $this->manager->persist($setting);
         $this->manager->commit();
-        $this->manager->flush();
-        $this->manager->refresh();
 
         $this->eventDispatcher->dispatch('ongr_settings.setting_change', new SettingChangeEvent('save'));
     }
@@ -154,17 +152,16 @@ class SettingsManager
      * @param bool   $mustExist
      * @param string $type
      *
-     * @throws Exception
+     * @throws \UnexpectedValueException
      *
      * @return Setting
      */
     public function get($name, $profile = 'default', $mustExist = true, $type = 'string')
     {
-        try {
-            $setting = $this->repo->find($profile . '_' . $name);
-        } catch (Exception $exception) {
+        $setting = $this->repo->find($profile . '_' . $name);
+        if ($setting === null) {
             if ($mustExist == true) {
-                throw $exception;
+                throw new \UnexpectedValueException();
             }
             $setting = $this->createSetting($name, $profile, $type);
         }
