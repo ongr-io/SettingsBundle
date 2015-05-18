@@ -11,7 +11,6 @@
 
 namespace ONGR\SettingsBundle\Tests\Functional\Twig;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use ONGR\SettingsBundle\Twig\ImagePathExtension;
 
 class ImagePathExtensionTest extends \PHPUnit_Framework_TestCase
@@ -103,7 +102,7 @@ class ImagePathExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *Tests get image path part.
+     * Tests get image path part.
      *
      * @covers \ONGR\SettingsBundle\Twig\ImagePathExtension::getImagePath()
      *
