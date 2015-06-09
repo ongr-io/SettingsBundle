@@ -20,11 +20,18 @@ General settings are for easily configurable setting management and output.
 
 Functionality offered by this bundle can be separated into five parts:
 
-- `Sessionless authentication <ongr_sessionless_authentication.rst>`_
-- `Personal settings <personal_settings.rst>`_
-- `General settings <general_settings.rst>`_
-- `Flash settings <flash_bag.rst>`_
-- `Environment variables <env_variable.rst>`_
+.. toctree::
+    :maxdepth: 1
+    :titlesonly:
+
+    Sessionless authentication <ongr_sessionless_authentication>
+    Personal settings <personal_settings>
+    General settings <general_settings>
+    Flash settings <flash_bag>
+    Environment variables <env_variable>
+
+..
+
 
 
 --------------------------
