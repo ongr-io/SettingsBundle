@@ -18,7 +18,7 @@
         "symfony/monolog-bundle": "~2.0",
         "tedivm/stash-bundle": "0.4.*",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
-        "ongr/elasticsearch-bundle": ">=0.2,<2",
+        "ongr/elasticsearch-bundle": "~0.9",
         "ongr/content-bundle": "~0.1",
         "ongr/cookies-bundle": "~0.1",
         "ongr/filter-manager-bundle": "~0.1"
