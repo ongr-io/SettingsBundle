@@ -20,11 +20,18 @@ General settings are for easily configurable setting management and output.
 
 Functionality offered by this bundle can be separated into five parts:
 
-- `Sessionless authentication <ongr_sessionless_authentication.rst>`_
-- `Personal settings <personal_settings.rst>`_
-- `General settings <general_settings.rst>`_
-- `Flash settings <flash_bag.rst>`_
-- `Environment variables <env_variable.rst>`_
+.. toctree::
+    :maxdepth: 1
+    :titlesonly:
+
+    Sessionless authentication <ongr_sessionless_authentication>
+    Personal settings <personal_settings>
+    General settings <general_settings>
+    Flash settings <flash_bag>
+    Environment variables <env_variable>
+
+..
+
 
 
 --------------------------
@@ -120,11 +127,11 @@ You should add an entry to your ``config.yml``:
 
 ..
 
-    Using this config, ``es:index:create`` console command (mentioned below) will create an Elasticsearch index called ``settings``
+    Using this config, ``ongr:es:index:create --manager=settings`` console command (mentioned below) will create an Elasticsearch index called ``settings``
     with 2 shards and 0 replicas.
 
 .. note::
-    By default the settings bundle will use the ``settings`` index.
+    By default the settings bundle will use the ``es.manager.settings.setting`` repository.
 
 ..
 
@@ -146,7 +153,7 @@ This can be done by running a command in console:
 
 .. code-block:: bash
 
-    app/console es:index:create --manager settings
+    app/console ongr:es:index:create --manager=settings
 
 ..
 
@@ -159,7 +166,7 @@ This can be done by running a command in console:
 .. note::
 
     If you have chosen to use a different manager (i.e. not ``settings``), it you should change the console command
-    accordingly (e.g. ``app/console es:index:create --manager myManager``).
+    accordingly (e.g. ``app/console ongr:es:index:create --manager=myManager``).
 ..
 
 More information about Elasticsearch configuration can be found in our ElasticsearchBundle
