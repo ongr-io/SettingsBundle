@@ -1,3 +1,4 @@
+sudo: false
 language: php
 php:
   - 5.4
@@ -7,9 +8,6 @@ env:
   - SYMFONY="2.6.*"
 services:
   - elasticsearch
-install:
-  - "echo 'script.disable_dynamic: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml"
-  - sudo service elasticsearch restart
 before_script:
   - echo "extension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer update --prefer-dist
