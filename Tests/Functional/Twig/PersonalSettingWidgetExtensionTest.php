@@ -11,16 +11,16 @@
 
 namespace ONGR\SettingsBundle\Tests\Functional\Twig;
 
+use ONGR\ElasticsearchBundle\Test\AbstractElasticsearchTestCase;
 use ONGR\SettingsBundle\Tests\Functional\CookieTestHelper;
 use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Tests for testing settings TWIG extension functionality.
  */
-class PersonalSettingWidgetExtensionTest extends ElasticsearchTestCase
+class PersonalSettingWidgetExtensionTest extends AbstractElasticsearchTestCase
 {
     /**
      * @var \Twig_Environment

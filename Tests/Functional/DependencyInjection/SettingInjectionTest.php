@@ -11,10 +11,10 @@
 
 namespace ONGR\SettingsBundle\Tests\Functional\DependencyInjection;
 
+use ONGR\ElasticsearchBundle\Test\AbstractElasticsearchTestCase;
 use ONGR\SettingsBundle\Document\Setting;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
-class SettingInjectionTest extends ElasticsearchTestCase
+class SettingInjectionTest extends AbstractElasticsearchTestCase
 {
     /**
      * @var string Value to be returned.
@@ -26,6 +26,8 @@ class SettingInjectionTest extends ElasticsearchTestCase
      */
     public function testSettingInjection()
     {
+        $this->getManager();
+
         /** @var DummyService $dummyService */
         $dummyService = $this->getContainer()->get('ongr_settings.dummy_service');
 

@@ -11,13 +11,13 @@
 
 namespace ONGR\SettingsBundle\Tests\Functional\Settings\General;
 
+use ONGR\ElasticsearchBundle\Test\AbstractElasticsearchTestCase;
 use ONGR\SettingsBundle\Document\Setting;
 use ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider;
 use ONGR\SettingsBundle\Settings\General\SettingsContainer;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use Stash\Pool;
 
-class SettingsContainerTest extends ElasticsearchTestCase
+class SettingsContainerTest extends AbstractElasticsearchTestCase
 {
     /**
      * {@inheritdoc}
@@ -64,7 +64,7 @@ class SettingsContainerTest extends ElasticsearchTestCase
         $this->assertEquals('test1', $settings);
 
         // Second time it should be loaded from object itself.
-        $this->getManager()->getConnection()->dropIndex();
+        $this->getManager()->dropIndex();
 
         $settings = $settingsContainer->get('test');
         $this->assertEquals('test1', $settings);

@@ -11,17 +11,15 @@
 
 namespace ONGR\SettingsBundle\Tests\Functional\Twig;
 
+use ONGR\ElasticsearchBundle\Test\AbstractElasticsearchTestCase;
 use ONGR\SettingsBundle\Exception\SettingNotFoundException;
-use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 use ONGR\SettingsBundle\Twig\GeneralSettingsWidgetExtension;
 use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
-use ONGR\SettingsBundle\Settings\General\SettingsContainerInterface;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
 /**
  * Class used to test GeneralSettingsExtension.
  */
-class GeneralSettingsWidgetExtensionTest extends ElasticsearchTestCase
+class GeneralSettingsWidgetExtensionTest extends AbstractElasticsearchTestCase
 {
     /**
      * @var Client

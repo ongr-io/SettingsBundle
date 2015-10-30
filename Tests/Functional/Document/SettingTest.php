@@ -11,13 +11,13 @@
 
 namespace ONGR\SettingsBundle\Tests\Functional\Document;
 
+use ONGR\ElasticsearchBundle\Test\AbstractElasticsearchTestCase;
 use ONGR\SettingsBundle\Document\Setting;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 
 /**
  * Tests for setting model.
  */
-class SettingTest extends ElasticsearchTestCase
+class SettingTest extends AbstractElasticsearchTestCase
 {
     /**
      * Check if documents are saved correctly and if we can find them by indexed properties.

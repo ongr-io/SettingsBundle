@@ -11,13 +11,13 @@
 
 namespace ONGR\SettingsBundle\Tests\Unit\Settings\Personal;
 
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
+use ONGR\ElasticsearchBundle\Test\AbstractElasticsearchTestCase;
 use ONGR\SettingsBundle\Settings\Personal\PersonalProfilesProvider;
 
 /**
  * Test how PersonalProfilesProvider collects General settings from ES.
  */
-class PersonalProfilesProviderTest extends ElasticsearchTestCase
+class PersonalProfilesProviderTest extends AbstractElasticsearchTestCase
 {
     /**
      * Test method getSettings.

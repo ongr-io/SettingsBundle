@@ -90,7 +90,7 @@ class ProfileRequestListenerTest extends \PHPUnit_Framework_TestCase
      */
     protected function getManagerMock()
     {
-        $managerMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\ORM\Manager')
+        $managerMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\Service\Manager')
             ->disableOriginalConstructor()
             ->getMock();
 

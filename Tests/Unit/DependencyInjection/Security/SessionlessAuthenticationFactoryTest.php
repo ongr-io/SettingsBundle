@@ -11,7 +11,7 @@
 
 namespace ONGR\SettingsBundle\Tests\Unit\DependencyInjection\Security;
 
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
+use ONGR\ElasticsearchBundle\Test\AbstractElasticsearchTestCase;
 use ONGR\SettingsBundle\DependencyInjection\Security\SessionlessAuthenticationFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
@@ -19,7 +19,7 @@ use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 /**
  * This class checks if we are able to create container.
  */
-class SessionlessAuthenticationFactoryTest extends ElasticsearchTestCase
+class SessionlessAuthenticationFactoryTest extends AbstractElasticsearchTestCase
 {
     /**
      * Checks.
