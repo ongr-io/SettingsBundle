@@ -14,7 +14,7 @@ namespace ONGR\SettingsBundle\Tests\Functional\Settings\Personal;
 use ONGR\SettingsBundle\Document\Setting;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use ONGR\SettingsBundle\Tests\Functional\CookieTestHelper;
-use ONGR\ElasticsearchBundle\ORM\Manager;
+use ONGR\ElasticsearchBundle\Service\Manager;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 /**

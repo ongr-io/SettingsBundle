@@ -13,8 +13,8 @@ namespace ONGR\SettingsBundle\Settings\General;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use ONGR\ElasticsearchBundle\ORM\Repository;
-use ONGR\ElasticsearchBundle\ORM\Manager;
+use ONGR\ElasticsearchBundle\Service\Repository;
+use ONGR\ElasticsearchBundle\Service\Manager;
 use ONGR\SettingsBundle\Document\Setting;
 use ONGR\SettingsBundle\Event\SettingChangeEvent;
 use Exception;

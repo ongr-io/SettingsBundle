@@ -11,9 +11,9 @@
 
 namespace ONGR\SettingsBundle\Settings\Personal;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\TermsAggregation;
-use ONGR\ElasticsearchBundle\ORM\Repository;
-use ONGR\ElasticsearchBundle\ORM\Manager;
+use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
+use ONGR\ElasticsearchBundle\Service\Repository;
+use ONGR\ElasticsearchBundle\Service\Manager;
 
 /**
  * Fetches all used profiles from settings type.

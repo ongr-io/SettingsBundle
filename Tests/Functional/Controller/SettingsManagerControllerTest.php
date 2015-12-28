@@ -11,16 +11,16 @@
 
 namespace ONGR\SettingsBundle\Tests\Functional\Controller;
 
+use ONGR\ElasticsearchBundle\Test\AbstractElasticsearchTestCase;
 use ONGR\SettingsBundle\Settings\Common\Provider\ManagerAwareSettingProvider;
 use ONGR\SettingsBundle\Settings\Common\SettingsContainer;
-use ONGR\ElasticsearchBundle\Test\ElasticsearchTestCase;
 use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
  * Tests for SettingsManagerController.
  */
-class SettingsManagerControllerTest extends ElasticsearchTestCase
+class SettingsManagerControllerTest extends AbstractElasticsearchTestCase
 {
     /**
      * @var Client.

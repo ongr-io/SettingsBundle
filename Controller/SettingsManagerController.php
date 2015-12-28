@@ -97,7 +97,7 @@ class SettingsManagerController extends Controller
         $manager = $this->getSettingsManager();
         $model = $manager->get($name, $profile, false, $type);
 
-        $model->data = $content['setting']['data'];
+        $model->setData($content['setting']['data']);
         $manager->save($model);
 
         return new Response();

@@ -13,7 +13,7 @@ namespace ONGR\SettingsBundle\EventListener;
 
 use ONGR\SettingsBundle\Settings\Personal\UnderscoreEscaper;
 use ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider;
-use ONGR\ElasticsearchBundle\ORM\Manager;
+use ONGR\ElasticsearchBundle\Service\Manager;
 use ONGR\SettingsBundle\Settings\General\SettingsContainer;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;

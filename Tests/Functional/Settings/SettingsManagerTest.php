@@ -14,8 +14,8 @@ namespace ONGR\SettingsBundle\Tests\Functional\Settings;
 use ONGR\SettingsBundle\Document\Setting;
 use ONGR\SettingsBundle\Settings\General\SettingsManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use ONGR\ElasticsearchBundle\ORM\Manager;
-use ONGR\ElasticsearchBundle\DSL\Query\MatchAllQuery;
+use ONGR\ElasticsearchBundle\Service\Manager;
+use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -48,7 +48,7 @@ class SettingsManagerTest extends WebTestCase
         /** @var Manager $manager */
         $this->manager = $this->container->get('es.manager');
 
-        $this->manager->getConnection()->dropAndCreateIndex();
+        $this->manager->dropAndCreateIndex();
 
         // There is something wrong with ElasticsearchTestCase method getDataArray,
         // if we don't create in here all test data, it's not existing when test is run.

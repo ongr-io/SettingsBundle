@@ -13,10 +13,10 @@ namespace ONGR\SettingsBundle\Settings\General\Provider;
 
 use ONGR\SettingsBundle\Document\Setting;
 use ONGR\FilterManagerBundle\Filters\ViewData;
-use ONGR\ElasticsearchBundle\ORM\Manager;
-use ONGR\ElasticsearchBundle\ORM\Repository;
-use ONGR\ElasticsearchBundle\DSL\Query\MatchQuery;
-use ONGR\ElasticsearchBundle\DSL\Filter\LimitFilter;
+use ONGR\ElasticsearchBundle\Service\Manager;
+use ONGR\ElasticsearchBundle\Service\Repository;
+use ONGR\ElasticsearchDSL\Query\MatchQuery;
+use ONGR\ElasticsearchDSL\Filter\LimitFilter;
 
 /**
  * Provider which uses session model to get settings from database using profile.

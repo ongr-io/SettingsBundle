@@ -13,18 +13,16 @@ namespace ONGR\SettingsBundle\Document;
 
 use JsonSerializable;
 use ONGR\ElasticsearchBundle\Annotation as ES;
+use ONGR\ElasticsearchBundle\Document\AbstractDocument;
 use ONGR\ElasticsearchBundle\Document\DocumentInterface;
-use ONGR\ElasticsearchBundle\Document\DocumentTrait;
 
 /**
  * Stores admin settings.
  *
  * @ES\Document(type="setting")
  */
-class Setting implements DocumentInterface, JsonSerializable
+class Setting extends AbstractDocument implements JsonSerializable
 {
-    use DocumentTrait;
-
     /**
      * @const TYPE_STRING setting model of string type
      */
@@ -48,35 +46,35 @@ class Setting implements DocumentInterface, JsonSerializable
     /**
      * @var string
      *
-     * @ES\Property(name="name", type="string", searchAnalyzer="standard")
+     * @ES\Property(name="name", type="string", options={"searchAnalyzer"="standard"})
      */
     protected $name;
 
     /**
      * @var string
      *
-     * @ES\Property(name="description", type="string", searchAnalyzer="standard")
+     * @ES\Property(name="description", type="string", options={"searchAnalyzer"="standard"})
      */
     protected $description;
 
     /**
      * @var string
      *
-     * @ES\Property(name="profile", type="string", searchAnalyzer="standard")
+     * @ES\Property(name="profile", type="string", options={"searchAnalyzer"="standard"})
      */
     protected $profile;
 
     /**
      * @var string
      *
-     * @ES\Property(name="type", type="string", searchAnalyzer="standard")
+     * @ES\Property(name="type", type="string", options={"searchAnalyzer"="standard"})
      */
     protected $type;
 
     /**
      * @var string
      *
-     * @ES\Property(name="data", type="string", searchAnalyzer="standard")
+     * @ES\Property(name="data", type="string", options={"searchAnalyzer"="standard"})
      */
     protected $data;
 
@@ -197,7 +195,6 @@ class Setting implements DocumentInterface, JsonSerializable
             'score' => $this->getScore(),
             'parent' => $this->getParent(),
             'ttl' => $this->getTtl(),
-            'highlight' => $this->highlight,
         ];
     }
 }

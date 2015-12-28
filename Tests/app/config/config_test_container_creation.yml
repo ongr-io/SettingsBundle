@@ -47,7 +47,7 @@ ongr_elasticsearch:
     connections:
         default:
             hosts:
-                - { host: 127.0.0.1:9200 }
+                - 127.0.0.1:9200
             index_name: ongr-settings-test
             settings:
                 number_of_shards: 2
