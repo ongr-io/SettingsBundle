@@ -14,6 +14,12 @@ What's inside:
 This bundle is independent from ONGR platform and can be used in your project on its own with few dependencies.
 
 
+[![Build Status](https://travis-ci.org/ongr-io/SettingsBundle.svg?branch=master)](https://travis-ci.org/ongr-io/SettingsBundle)
+[![Coverage Status](https://coveralls.io/repos/ongr-io/SettingsBundle/badge.svg?branch=master&service=github)](https://coveralls.io/github/ongr-io/SettingsBundle?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/ongr/settings-bundle/v/stable)](https://packagist.org/packages/ongr/settings-bundle)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ongr-io/SettingsBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ongr-io/SettingsBundle/?branch=master)
+
+
 ## Documentation
 
 The online documentation of the bundle is in [Github](Resources/doc/index.md).
