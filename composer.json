@@ -11,24 +11,27 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
-        "symfony/symfony": "~2.6",
-        "doctrine/orm": "~2.2,>=2.2.3",
-        "doctrine/doctrine-bundle": "~1.2",
-        "symfony/monolog-bundle": "~2.0",
-        "tedivm/stash-bundle": "0.4.*",
+        "php": ">=5.5",
+        "symfony/symfony": "~2.7|~3.0",
+        "tedivm/stash-bundle": "~0.4",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
-        "ongr/elasticsearch-bundle": "dev-master",
+        "ongr/elasticsearch-bundle": "~1.0",
         "ongr/cookies-bundle": "~0.1",
-        "ongr/filter-manager-bundle": "dev-master"
+        "ongr/filter-manager-bundle": "~1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.2",
+        "phpunit/phpunit": "~4.4",
         "squizlabs/php_codesniffer": "~2.0",
-        "ongr/ongr-strict-standard": "~2.1",
         "satooshi/php-coveralls": "~1.0"
     },
     "autoload": {
-        "psr-4": { "ONGR\\SettingsBundle\\": "" }
+        "psr-4": { "ONGR\\SettingsBundle\\": "" },
+        "exclude-from-classmap": ["/Tests/"]
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
     }
 }
