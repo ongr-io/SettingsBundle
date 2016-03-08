@@ -26,7 +26,7 @@ class EncryptionExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            'base64Encode' => new \Twig_Filter_Method($this, 'base64EncodeFilter'),
+            'base64Encode' => new \Twig_SimpleFilter('base64Encode', [$this,'base64EncodeFilter'])
         ];
     }
 

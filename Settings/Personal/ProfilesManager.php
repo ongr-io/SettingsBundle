@@ -50,8 +50,13 @@ class ProfilesManager
         // Create query.
         $search = $repo->createSearch()->addAggregation($aggregation)->setFields(['profile']);
         // Process query. Get RESULTS_RAW.
-        $results = $repo->execute($search, Repository::RESULTS_ARRAY);
+        $results = $repo->execute($search);
+        $profiles = [];
 
-        return $results;
+        foreach ($results as $profile) {
+            $profiles[] = ['profile' => $profile->getProfile()[0]];
+        }
+
+        return $profiles;
     }
 }

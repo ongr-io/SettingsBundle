@@ -12,11 +12,10 @@
 namespace ONGR\SettingsBundle\Settings\General\Provider;
 
 use ONGR\SettingsBundle\Document\Setting;
-use ONGR\FilterManagerBundle\Filters\ViewData;
 use ONGR\ElasticsearchBundle\Service\Manager;
 use ONGR\ElasticsearchBundle\Service\Repository;
+use ONGR\ElasticsearchDSL\Query\LimitQuery;
 use ONGR\ElasticsearchDSL\Query\MatchQuery;
-use ONGR\ElasticsearchDSL\Filter\LimitFilter;
 
 /**
  * Provider which uses session model to get settings from database using profile.
@@ -82,7 +81,7 @@ class ManagerAwareSettingProvider implements SettingsProviderInterface
         $match = new MatchQuery('profile', $this->getProfile());
         $search->addQuery($match);
 
-        $limit = new LimitFilter($this->getLimit());
+        $limit = new LimitQuery($this->getLimit());
         $search->addFilter($limit);
 
         // Process query.

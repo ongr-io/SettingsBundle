@@ -13,8 +13,6 @@ namespace ONGR\SettingsBundle\Tests\Functional\Controller;
 
 use ONGR\ElasticsearchBundle\Test\AbstractElasticsearchTestCase;
 use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
-use ONGR\SettingsBundle\Tests\Functional\PreparePersonalData;
-use ONGR\SettingsBundle\Tests\Functional\PrepareAdminData;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
@@ -42,7 +40,6 @@ class PersonalSettingsControllerTest extends AbstractElasticsearchTestCase
     public function testSettingsAction()
     {
         $this->getManager();
-
         /** @var Client $client */
         $client = $this->client->loginAction('test', 'test');
 

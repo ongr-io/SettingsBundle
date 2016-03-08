@@ -13,16 +13,21 @@ namespace ONGR\SettingsBundle\Document;
 
 use JsonSerializable;
 use ONGR\ElasticsearchBundle\Annotation as ES;
-use ONGR\ElasticsearchBundle\Document\AbstractDocument;
-use ONGR\ElasticsearchBundle\Document\DocumentInterface;
 
 /**
  * Stores admin settings.
  *
  * @ES\Document(type="setting")
  */
-class Setting extends AbstractDocument implements JsonSerializable
+class Setting implements JsonSerializable
 {
+    /**
+     * @var string
+     *
+     * @ES\Id()
+     */
+    private $id;
+
     /**
      * @const TYPE_STRING setting model of string type
      */
@@ -46,37 +51,53 @@ class Setting extends AbstractDocument implements JsonSerializable
     /**
      * @var string
      *
-     * @ES\Property(name="name", type="string", options={"searchAnalyzer"="standard"})
+     * @ES\Property(name="name", type="string", options={"analyzer"="standard"})
      */
     protected $name;
 
     /**
      * @var string
      *
-     * @ES\Property(name="description", type="string", options={"searchAnalyzer"="standard"})
+     * @ES\Property(name="description", type="string", options={"analyzer"="standard"})
      */
     protected $description;
 
     /**
      * @var string
      *
-     * @ES\Property(name="profile", type="string", options={"searchAnalyzer"="standard"})
+     * @ES\Property(name="profile", type="string", options={"analyzer"="standard"})
      */
     protected $profile;
 
     /**
      * @var string
      *
-     * @ES\Property(name="type", type="string", options={"searchAnalyzer"="standard"})
+     * @ES\Property(name="type", type="string", options={"analyzer"="standard"})
      */
     protected $type;
 
     /**
      * @var string
      *
-     * @ES\Property(name="data", type="string", options={"searchAnalyzer"="standard"})
+     * @ES\Property(name="data", type="string", options={"analyzer"="standard"})
      */
     protected $data;
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * Get data.
@@ -191,10 +212,7 @@ class Setting extends AbstractDocument implements JsonSerializable
             'profile' => $this->getProfile(),
             'type' => $this->getType(),
             'data' => $this->getData(),
-            'id' => $this->getId(),
-            'score' => $this->getScore(),
-            'parent' => $this->getParent(),
-            'ttl' => $this->getTtl(),
+            'id' => $this->getId()
         ];
     }
 }

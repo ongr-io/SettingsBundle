@@ -31,7 +31,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $model0->setProfile('default');
 
         $expected0 = '{"name":null,"description":null,"profile":"default","type":"string",'
-            . '"data":null,"id":"s1","score":null,"parent":null,"ttl":null}';
+            . '"data":null,"id":"s1"}';
         $out[] = [$model0, $expected0];
 
         return $out;
