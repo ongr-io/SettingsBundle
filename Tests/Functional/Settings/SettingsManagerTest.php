@@ -110,7 +110,6 @@ class SettingsManagerTest extends WebTestCase
         );
 
         $settingToCopy = $manager->get('name0', 'default');
-        $settingToCopy->setScore(1.0);
         $settingToCopy->setName('SettingModel');
 
         $manager->duplicate($settingToCopy, 'newDomain');
@@ -176,7 +175,6 @@ class SettingsManagerTest extends WebTestCase
         $setting->setProfile($profile);
         $setting->setType($type);
         $setting->setData(['value' => $value]);
-        $setting->setScore(1.0);
 
         return $setting;
     }
