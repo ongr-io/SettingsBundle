@@ -98,6 +98,11 @@ class SettingsManagerController extends Controller
         $model = $manager->get($name, $profile, false, $type);
 
         $model->setData($content['setting']['data']);
+
+        if (isset($content['setting']['description'])) {
+            $model->setDescription($content['setting']['description']);
+        }
+
         $manager->save($model);
 
         return new Response();

@@ -212,7 +212,7 @@ class Setting implements JsonSerializable
             'profile' => $this->getProfile(),
             'type' => $this->getType(),
             'data' => $this->getData(),
-            'id' => $this->getId()
+            'id' => $this->getId(),
         ];
     }
 }
