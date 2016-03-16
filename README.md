@@ -125,7 +125,7 @@ Web interface won't work without assets. Install them by using this command in y
 
 ### Step 5: Check how it works
 
-Yes, you can check how it works, but it is NOT ready for production yet. At this moment all settings management is public. **Check [how to secure access to settings](Resources/doc/security.md)**.
+Yes, you can check how it works, but it is NOT ready for production yet. At this moment all settings management is public. **Check [how to secure access to settings](Resources/doc/ongr_sessionless_authentication.md)**.
 
 Visit `/{settings_prefix}/general_settings_list`, where `{settings_prefix}` is a prefix you defined at *Step 3*. You should see admin panel of general settings.
 

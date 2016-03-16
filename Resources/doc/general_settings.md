@@ -14,6 +14,7 @@ General settings can be managed in two ways:
 
 Once setting is created, it can be used in services or templates directly.
 
+
 ### Templates
 
 You can easily access setting value in any template using `ongr_show_setting_value` twig function. It returns the value of setting. If requested setting is not defined, function returns null.
