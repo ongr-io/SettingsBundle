@@ -160,7 +160,7 @@ class SettingsManager
     {
         $setting = $this->repo->find($profile . '_' . $name);
         if ($setting === null) {
-            if ($mustExist == true) {
+            if ($mustExist === true) {
                 throw new \UnexpectedValueException();
             }
             $setting = $this->createSetting($name, $profile, $type);
