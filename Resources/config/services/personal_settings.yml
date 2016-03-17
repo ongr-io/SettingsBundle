@@ -1,38 +1,27 @@
 parameters:
-    # Settings structure service.
-    ongr_settings.settings.settings_structure.class: ONGR\SettingsBundle\Settings\Personal\SettingsStructure
+    # Settings structure service settings
     ongr_settings.settings.settings: []
     ongr_settings.settings.categories: []
 
-    # Cookie service.
-    ongr_settings.settings.settings_cookie_service.class: ONGR\SettingsBundle\Settings\SettingsCookieService
+    # Cookie service settings
     ongr_settings.settings.settings_cookie.name: ongr_settings_user_settings
     ongr_settings.settings.settings_cookie.defaults:
         expires_interval: P1Y # 1 year.
 
-    # Cookie listener.
-    ongr_settings.settings.settings_cookie_listener.class: ONGR\SettingsBundle\EventListener\SettingsCookieListener
-
-    # Personal Settings manager service class.
-    ongr_settings.settings.personal_settings_manager.class: ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager
-
-    # Personal profiles provider.
-    ongr_settings.personal_profiles_provider.class: ONGR\SettingsBundle\Settings\Personal\PersonalProfilesProvider
-
 services:
     ongr_settings.settings.settings_structure:
-        class: %ongr_settings.settings.settings_structure.class%
+        class: ONGR\SettingsBundle\Settings\Personal\SettingsStructure
         arguments:
             - %ongr_settings.settings.settings%
             - %ongr_settings.settings.categories%
 
     ongr_settings.settings.settings_cookie_service:
-        class: %ongr_settings.settings.settings_cookie_service.class%
+        class: ONGR\SettingsBundle\Settings\SettingsCookieService
         arguments:
             - %ongr_settings.settings.settings_cookie.name%
 
     ongr_settings.settings.settings_cookie_listener:
-        class: %ongr_settings.settings.settings_cookie_listener.class%
+        class: ONGR\SettingsBundle\EventListener\SettingsCookieListener
         calls:
             - [ setPersonalSettingsManager, [ @ongr_settings.settings.personal_settings_manager ] ]
             - [ setContainer, [ @service_container ] ]
@@ -41,7 +30,7 @@ services:
         scope: request
 
     ongr_settings.settings.settings_cookie:
-        class: %ongr_cookie.json.class%
+        class: ONGR\CookiesBundle\Cookie\Model\JsonCookie
         arguments: [ %ongr_settings.settings.settings_cookie.name% ]
         calls:
             - [ setDefaults, [ %ongr_settings.settings.settings_cookie.defaults% ] ]
@@ -50,14 +39,14 @@ services:
 
     # Personal settings manager class
     ongr_settings.settings.personal_settings_manager:
-            class: %ongr_settings.settings.personal_settings_manager.class%
+            class: ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager
             arguments:
                 - @security.context
                 - @ongr_settings.settings.settings_structure
 
     # Personal profiles provider
     ongr_settings.personal_profiles_provider:
-        class: %ongr_settings.personal_profiles_provider.class%
+        class: ONGR\SettingsBundle\Settings\Personal\PersonalProfilesProvider
         calls:
             - [ setProfileManager, [ @ongr_settings.profiles_manager ] ]
             - [ setSettingsStructure, [ @ongr_settings.settings.settings_structure ] ]

@@ -1,29 +1,13 @@
 parameters:
-    #General settings widget extension
-    ongr_settings.twig.setting_extension.class: ONGR\SettingsBundle\Twig\GeneralSettingsWidgetExtension
-
-    #Personal settings widget extension
-    ongr_settings.twig.personal_settings_extension.class: ONGR\SettingsBundle\Twig\PersonalSettingWidgetExtension
-
-    # Encryption extension
-    ongr_settings.twig.encryption_extension.class: ONGR\SettingsBundle\Twig\EncryptionExtension
-
-    # Hidden extension
-    ongr_settings.twig.hidden_extension.class: ONGR\SettingsBundle\Twig\HiddenExtension
-
-    # Image path extension
-    ongr_settings.twig.image_path_extension.class: ONGR\SettingsBundle\Twig\ImagePathExtension
+    # Image path extension settings
     ongr_settings.twig.image_path_extension.cdn_url: //cdn.ongr.io
     ongr_settings.twig.image_path_extension.image_presets: ~
     ongr_settings.twig.image_path_extension.image_fields_mapping: ~
     ongr_settings.twig.image_path_extension.images_cache_prefix: /cdn
 
-    # Wrapper extension
-    ongr_settings.twig.wrapper_extension.class: ONGR\SettingsBundle\Twig\WrapperExtension
-
 services:
     ongr_settings.twig.setting_extension:
-        class: %ongr_settings.twig.setting_extension.class%
+        class: ONGR\SettingsBundle\Twig\GeneralSettingsWidgetExtension
         arguments:
             - @ongr_settings.settings.personal_settings_manager
         calls:
@@ -34,26 +18,26 @@ services:
             - { name: monolog.logger, channel: admin }
 
     ongr_settings.twig.personal_settings_extension:
-        class: %ongr_settings.twig.personal_settings_extension.class%
+        class: ONGR\SettingsBundle\Twig\PersonalSettingWidgetExtension
         arguments:
             - @ongr_settings.settings.personal_settings_manager
         tags:
             - { name: "twig.extension" }
 
     ongr_settings.twig.encryption_extension:
-        class: %ongr_settings.twig.encryption_extension.class%
+        class: ONGR\SettingsBundle\Twig\EncryptionExtension
         tags:
             - { name: "twig.extension" }
 
     ongr_settings.twig.hidden_extension:
-            class: %ongr_settings.twig.hidden_extension.class%
+            class: ONGR\SettingsBundle\Twig\HiddenExtension
             arguments:
                 - @service_container
             tags:
                 - { name: 'twig.extension' }
 
     ongr_settings.twig.image_path_extension:
-        class: %ongr_settings.twig.image_path_extension.class%
+        class: ONGR\SettingsBundle\Twig\ImagePathExtension
         tags:
             - { name: 'twig.extension' }
         arguments:
@@ -69,7 +53,7 @@ services:
             - { name: 'twig.extension' }
 
     ongr_settings.twig.wrapper_extension:
-        class: %ongr_settings.twig.wrapper_extension.class%
+        class: ONGR\SettingsBundle\Twig\WrapperExtension
         tags:
             - { name: 'twig.extension' }
 

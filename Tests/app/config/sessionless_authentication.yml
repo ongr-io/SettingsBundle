@@ -1,35 +1,27 @@
 parameters:
-    # Authentication cookie service.
-    ongr_settings.authentication.authentication_cookie_service.class: ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService
+    # Authentication cookie service settings
     ongr_settings.authentication.authentication_cookie.name: ongr_settings_user_auth
     ongr_settings.authentication.authentication_cookie.expiration: P1D # 1 day
     ongr_settings.authentication.authentication_cookie.defaults:
         expires_interval: %ongr_settings.authentication.authentication_cookie.expiration%
 
-    # Authentication provider.
-    ongr_settings.authentication.sessionless_authentication_provider.class: ONGR\SettingsBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider
-
-    # Signature generator.
-    ongr_settings.authentication.signature_generator.class: ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessSignatureGenerator
+    # Signature generator settings
     ongr_settings.authentication.secret: Override%Me
-
-    # Firewall listener.
-    ongr_settings.authentication.firewall.listener.class: ONGR\SettingsBundle\Security\Authentication\Firewall\SessionlessAuthenticationListener
 
 services:
     ongr_settings.authentication.signature_generator:
-        class: %ongr_settings.authentication.signature_generator.class%
+        class: ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessSignatureGenerator
         arguments:
             - %ongr_settings.authentication.secret%
 
     ongr_settings.authentication.authentication_cookie_service:
-        class: %ongr_settings.authentication.authentication_cookie_service.class%
+        class: ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService
         arguments:
             - @ongr_settings.authentication.signature_generator
             - %ongr_settings.authentication.authentication_cookie.expiration%
 
     ongr_settings.authentication.authentication_cookie:
-        class: %ongr_cookie.json.class%
+        class: ONGR\CookiesBundle\Cookie\Model\JsonCookie
         arguments: [ %ongr_settings.authentication.authentication_cookie.name% ]
         calls:
             - [ setDefaults, [ %ongr_settings.authentication.authentication_cookie.defaults% ] ]
@@ -37,13 +29,13 @@ services:
             - { name: ongr_cookie.cookie }
 
     ongr_settings.authentication.sessionless_authentication_provider:
-        class: %ongr_settings.authentication.sessionless_authentication_provider.class%
+        class: ONGR\SettingsBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider
         arguments:
             - @ongr_settings.authentication.signature_generator
             - ""
 
     ongr_settings.authentication.firewall.listener:
-        class: %ongr_settings.authentication.firewall.listener.class%
+        class: ONGR\SettingsBundle\Security\Authentication\Firewall\SessionlessAuthenticationListener
         arguments:
             - @security.authentication.manager
             - @ongr_settings.authentication.authentication_cookie_service

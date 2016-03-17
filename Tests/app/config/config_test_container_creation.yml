@@ -100,14 +100,14 @@ ongr_settings:
 
 services:
     ongr_settings.settings_manager:
-        class: %ongr_settings.settings_manager.class%
+        class: ONGR\SettingsBundle\Settings\General\SettingsManager
         arguments:
             - @translator
             - @event_dispatcher
             - @es.manager
 
     ongr_settings.listener.cookie_profile:
-        class: %ongr_settings.listener.cookie_profile.class%
+        class: ONGR\SettingsBundle\EventListener\ProfileRequestListener
         calls:
             - [ setSettingsContainer, [ @ongr_settings.settings_container ] ]
             - [ setPersonalSettingsManager, [ @ongr_settings.settings.personal_settings_manager ] ]
@@ -116,11 +116,11 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     ongr_settings.profiles_manager:
-        class: %ongr_settings.profiles_manager.class%
+        class: ONGR\SettingsBundle\Settings\Personal\ProfilesManager
         arguments:
             - @es.manager
 
     ongr_settings.settings_provider:
-        class: %ongr_settings.profiles_manager.class%
+        class: ONGR\SettingsBundle\Settings\Personal\ProfilesManager
         arguments:
             - @es.manager
