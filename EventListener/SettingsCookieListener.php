@@ -15,7 +15,6 @@ use ONGR\CookiesBundle\Cookie\Model\JsonCookie;
 use ONGR\CookiesBundle\DependencyInjection\ContainerAwareTrait;
 use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
  * Listener that checks for settings cookie and passes it to user settings manager.
@@ -30,12 +29,10 @@ class SettingsCookieListener
     protected $generalSettingsManager;
 
     /**
-     * {@inheritdoc}
+     * On kernel request
      */
-    public function onKernelRequest(
-        /** @noinspection PhpUnusedParameterInspection */
-        GetResponseEvent $event
-    ) {
+    public function onKernelRequest()
+    {
         $settingsMap = $this->generalSettingsManager->getSettingsMap();
         $cookiesServiceNames = array_map(
             function ($setting) {
@@ -55,7 +52,7 @@ class SettingsCookieListener
     }
 
     /**
-     * @param \ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager $generalSettingsManager
+     * @param PersonalSettingsManager $generalSettingsManager
      */
     public function setPersonalSettingsManager($generalSettingsManager)
     {
