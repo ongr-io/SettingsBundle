@@ -13,6 +13,7 @@ namespace ONGR\SettingsBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Environment variables pass, overrides default variables with environment ones.
@@ -26,7 +27,9 @@ class EnvironmentVariablesPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        foreach ($_SERVER as $key => $value) {
+        $request = Request::createFromGlobals();
+
+        foreach ($request->server as $key => $value) {
             if (0 === strpos($key, 'ongr__')) {
                 $param = strtolower(str_replace('__', '.', substr($key, 6)));
                 $container->setParameter($param, $value);
