@@ -12,7 +12,6 @@
 namespace ONGR\SettingsBundle\Settings\Personal;
 
 use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
-use ONGR\ElasticsearchBundle\Service\Repository;
 use ONGR\ElasticsearchBundle\Service\Manager;
 
 /**

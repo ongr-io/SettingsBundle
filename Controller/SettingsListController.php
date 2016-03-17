@@ -11,7 +11,6 @@
 
 namespace ONGR\SettingsBundle\Controller;
 
-use ONGR\FilterManagerBundle\Filters\ViewData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
