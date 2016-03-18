@@ -10,7 +10,7 @@
 angular
     .module('controller.modal.duplicate', [])
     .controller('duplicate', ['$scope', '$modalInstance', '$http', 'item', 'profiles',
-        function($scope, $modalInstance, $http, item, profiles) {
+        function ($scope, $modalInstance, $http, item, profiles) {
 
             /**
              * @type {}
@@ -32,7 +32,7 @@ angular
              *
              * @param newProfile string
              */
-            $scope.copy = function(newProfile) {
+            $scope.copy = function (newProfile) {
                 requestUrl = Routing.generate('ongr_settings_setting_copy', {
                     name: $scope.setting.name,
                     from: $scope.setting.profile,
@@ -40,7 +40,7 @@ angular
                 });
 
                 $http({ method: "GET", url: requestUrl  })
-                    .success(function(data, status) {
+                    .success(function (data, status) {
                         $modalInstance.close();
                         window.location.reload();
                     });
@@ -49,7 +49,7 @@ angular
             /**
              * closes modal
              */
-            $scope.cancel = function() {
+            $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
         }

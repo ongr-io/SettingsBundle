@@ -10,16 +10,16 @@
 angular
     .module('filter.objLimitTo', [])
     .filter('objLimitTo', [function () {
-        return function(object, limit) {
-            if(Object.keys(object).length < 1){
+        return function (object, limit) {
+            if (Object.keys(object).length < 1) {
                 return [];
             }
 
             var out = new Object,
                 count = 0;
 
-            angular.forEach(object, function(value, key) {
-                if(count >= limit){
+            angular.forEach(object, function (value, key) {
+                if (count >= limit) {
                     return false;
                 }
                 this[key] = value;

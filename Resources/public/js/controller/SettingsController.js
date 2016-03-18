@@ -10,7 +10,7 @@
 angular
     .module('controller.settings', [])
     .controller('settings', ['$scope', '$http', 'DATA', 'profiles', '$modal', 'asset', 'settingsList',
-        function($scope, $http, DATA, profiles, $modal, $asset, settingsList) {
+        function ($scope, $http, DATA, profiles, $modal, $asset, settingsList) {
 
             /**
              * @type {}
@@ -32,20 +32,20 @@ angular
              *
              * @param settingId string
              */
-            $scope.duplicate = function(settingId) {
+            $scope.duplicate = function (settingId) {
                 var modalInstance = $modal.open({
                     templateUrl: $asset.getLink('template/duplicateModal.html'),
                     controller: 'duplicate',
                     resolve: {
-                        item: function() {
+                        item: function () {
                             return {
                                 setting: $scope.settings[settingId]
                             };
                         },
-                        profiles: function() {
+                        profiles: function () {
                             var profileNames = [];
 
-                            angular.forEach($scope.profiles, function(value, key) {
+                            angular.forEach($scope.profiles, function (value, key) {
                                 this.push(value.value);
                             }, profileNames);
 
@@ -58,15 +58,15 @@ angular
             /**
              * Calls new setting modal
              */
-            $scope.addSetting = function() {
+            $scope.addSetting = function () {
                 var modalInstance = $modal.open({
                     templateUrl: $asset.getLink('template/addSettingModal.html'),
                     controller: 'addSetting',
                     resolve: {
-                        profiles: function() {
+                        profiles: function () {
                             var profileNames = [];
 
-                            angular.forEach($scope.profiles, function(value, key) {
+                            angular.forEach($scope.profiles, function (value, key) {
                                 this.push(value.value);
                             }, profileNames);
 
@@ -82,18 +82,18 @@ angular
              * @param $index string
              * @param setting {{}}
              */
-            $scope.remove = function($index, setting) {
+            $scope.remove = function ($index, setting) {
                 $http({
                     method: "DELETE",
                     url: Routing.generate(
                         'ongr_settings_setting_remove',
                         {
                             name: setting.name,
-                            profile: setting.profile,
+                            profile: setting.profile
                         }
                     )
                 }).
-                    success(function(data, status) {
+                    success(function (data, status) {
                         $scope.settings.splice($index, 1);
                     });
             };
@@ -104,7 +104,7 @@ angular
              * @param $event Event
              * @param setting {{}}
              */
-            $scope.saveStatus = function($event, setting) {
+            $scope.saveStatus = function ($event, setting) {
                 var status = $event.target.innerHTML;
                 var link = Routing.generate(
                     'ongr_settings_setting_ng_edit',
@@ -129,7 +129,7 @@ angular
              *
              * @returns string
              */
-            $scope.editLink = function(setting) {
+            $scope.editLink = function (setting) {
                 return Routing.generate(
                     'ongr_settings_setting_edit',
                     {

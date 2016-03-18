@@ -9,14 +9,14 @@
 
 angular
     .module('util.asset', [])
-    .service('asset', ['$location', function(location) {
+    .service('asset', ['$location', function (location) {
 
         /**
          * Returns a link for js asset
          *
          * @param asset string
          */
-        this.getLink = function(asset) {
+        this.getLink = function (asset) {
             host = location.$$host;
             protocol = location.$$protocol;
             port = location.$$port;
