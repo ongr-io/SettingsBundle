@@ -68,10 +68,10 @@ class HiddenExtension extends \Twig_Extension
      */
     public function generate($environment, $data, $checkRequest = false)
     {
-        if ($checkRequest && ($this->request != null)) {
+        if ($checkRequest && ($this->request !== null)) {
             foreach ($data as $name => $value) {
                 $requestVal = $this->request->get($name);
-                if (!isset($requestVal) || empty($requestVal) || ($requestVal != null)) {
+                if (!isset($requestVal) || empty($requestVal) || ($requestVal !== null)) {
                     unset($data[$name]);
                 }
             }
