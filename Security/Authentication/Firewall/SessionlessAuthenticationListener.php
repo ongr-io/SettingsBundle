@@ -15,11 +15,9 @@ use ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessAuthentication
 use ONGR\SettingsBundle\Security\Authentication\Token\SessionlessToken;
 use ONGR\CookiesBundle\Cookie\Model\CookieInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessSignatureGenerator;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 
 /**

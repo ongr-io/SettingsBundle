@@ -17,7 +17,6 @@ use ONGR\ElasticsearchBundle\Service\Repository;
 use ONGR\ElasticsearchBundle\Service\Manager;
 use ONGR\SettingsBundle\Document\Setting;
 use ONGR\SettingsBundle\Event\SettingChangeEvent;
-use Exception;
 
 /**
  * Class SettingsManager responsible for managing settings actions.

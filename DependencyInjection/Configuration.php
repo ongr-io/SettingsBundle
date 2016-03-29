@@ -13,7 +13,6 @@ namespace ONGR\SettingsBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\DependencyInjection\Loader;
 
 /**
  * This is the class that loads and manages bundle configuration.
