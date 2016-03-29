@@ -15,7 +15,6 @@ use ONGR\SettingsBundle\Settings\Personal\UnderscoreEscaper;
 use ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider;
 use ONGR\ElasticsearchBundle\Service\Manager;
 use ONGR\SettingsBundle\Settings\General\SettingsContainer;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 
 /**
@@ -40,13 +39,9 @@ class ProfileRequestListener
 
     /**
      * On kernel request.
-     *
-     * @param GetResponseEvent $event
      */
-    public function onKernelRequest(
-        /** @noinspection PhpUnusedParameterInspection */
-        GetResponseEvent $event
-    ) {
+    public function onKernelRequest()
+    {
         $settings = $this->generalSettingsManager->getSettings();
         foreach ($settings as $id => $value) {
             $prefix = 'ongr_settings_profile_';
@@ -60,7 +55,7 @@ class ProfileRequestListener
     }
 
     /**
-     * @param \ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager $generalSettingsManager
+     * @param PersonalSettingsManager $generalSettingsManager
      */
     public function setPersonalSettingsManager($generalSettingsManager)
     {
@@ -68,7 +63,7 @@ class ProfileRequestListener
     }
 
     /**
-     * @param \ONGR\SettingsBundle\Settings\General\SettingsContainer $settingsContainer
+     * @param SettingsContainer $settingsContainer
      */
     public function setSettingsContainer($settingsContainer)
     {
