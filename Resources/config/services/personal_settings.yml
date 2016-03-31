@@ -23,8 +23,8 @@ services:
     ongr_settings.settings.settings_cookie_listener:
         class: ONGR\SettingsBundle\EventListener\SettingsCookieListener
         calls:
-            - [ setPersonalSettingsManager, [ @ongr_settings.settings.personal_settings_manager ] ]
-            - [ setContainer, [ @service_container ] ]
+            - [ setPersonalSettingsManager, [ "@ongr_settings.settings.personal_settings_manager" ] ]
+            - [ setContainer, [ "@service_container" ] ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 6 }
         scope: request
@@ -41,14 +41,14 @@ services:
     ongr_settings.settings.personal_settings_manager:
             class: ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager
             arguments:
-                - @security.context
-                - @ongr_settings.settings.settings_structure
+                - "@security.authorization_checker"
+                - "@ongr_settings.settings.settings_structure"
 
     # Personal profiles provider
     ongr_settings.personal_profiles_provider:
         class: ONGR\SettingsBundle\Settings\Personal\PersonalProfilesProvider
         calls:
-            - [ setProfileManager, [ @ongr_settings.profiles_manager ] ]
-            - [ setSettingsStructure, [ @ongr_settings.settings.settings_structure ] ]
+            - [ setProfileManager, [ "@ongr_settings.profiles_manager" ] ]
+            - [ setSettingsStructure, [ "@ongr_settings.settings.settings_structure" ] ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

@@ -17,7 +17,7 @@ services:
     ongr_settings.authentication.authentication_cookie_service:
         class: ONGR\SettingsBundle\Security\Authentication\Cookie\SessionlessAuthenticationCookieService
         arguments:
-            - @ongr_settings.authentication.signature_generator
+            - "@ongr_settings.authentication.signature_generator"
             - %ongr_settings.authentication.authentication_cookie.expiration%
 
     ongr_settings.authentication.authentication_cookie:
@@ -31,13 +31,13 @@ services:
     ongr_settings.authentication.sessionless_authentication_provider:
         class: ONGR\SettingsBundle\Security\Authentication\Provider\SessionlessAuthenticationProvider
         arguments:
-            - @ongr_settings.authentication.signature_generator
+            - "@ongr_settings.authentication.signature_generator"
             - ""
 
     ongr_settings.authentication.firewall.listener:
         class: ONGR\SettingsBundle\Security\Authentication\Firewall\SessionlessAuthenticationListener
         arguments:
-            - @security.authentication.manager
-            - @ongr_settings.authentication.authentication_cookie_service
-            - @security.token_storage
-            - @ongr_settings.authentication.authentication_cookie
+            - "@security.authentication.manager"
+            - "@ongr_settings.authentication.authentication_cookie_service"
+            - "@security.token_storage"
+            - "@ongr_settings.authentication.authentication_cookie"

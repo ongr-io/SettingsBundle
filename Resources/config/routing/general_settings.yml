@@ -1,27 +1,27 @@
 #Common settings
 ongr_settings_homepage:
-    pattern:  /general_settings_list
+    path:  /general_settings_list
     methods: [GET]
     defaults:
         _controller: ONGRSettingsBundle:SettingsList:list
         profile: 'default'
 
 ongr_settings_settings_list:
-    pattern:  /list/{profile}
+    path:  /list/{profile}
     methods: [GET]
     defaults:
         _controller: ONGRSettingsBundle:SettingsList:list
         profile: 'default'
 
 ongr_settings_setting_set:
-    pattern:  /setting/set/{name}/{profile}
+    path:  /setting/set/{name}/{profile}
     methods: [POST]
     defaults:
         _controller: ONGRSettingsBundle:SettingsManager:setSetting
         profile: 'default'
 
 ongr_settings_setting_edit:
-    pattern:  /setting/{name}/edit/{profile}
+    path:  /setting/{name}/edit/{profile}
     methods: [GET, POST]
     defaults:
         _controller: ONGRSettingsBundle:SettingsManager:edit
@@ -30,7 +30,7 @@ ongr_settings_setting_edit:
         expose: true
 
 ongr_settings_setting_ng_edit:
-    pattern:  /setting/ng/{name}/edit/{profile}
+    path:  /setting/ng/{name}/edit/{profile}
     methods: [POST]
     defaults:
         _controller: ONGRSettingsBundle:SettingsManager:ngEdit
@@ -39,7 +39,7 @@ ongr_settings_setting_ng_edit:
         expose: true
 
 ongr_settings_setting_remove:
-    pattern:  /setting/{name}/remove/{profile}
+    path:  /setting/{name}/remove/{profile}
     methods: [DELETE]
     defaults:
         _controller: ONGRSettingsBundle:SettingsManager:remove
@@ -48,7 +48,7 @@ ongr_settings_setting_remove:
         expose: true
 
 ongr_settings_setting_copy:
-    pattern:  /setting/{name}/copy/{from}/{to}
+    path:  /setting/{name}/copy/{from}/{to}
     methods: [GET]
     defaults:
         _controller: ONGRSettingsBundle:SettingsManager:copy

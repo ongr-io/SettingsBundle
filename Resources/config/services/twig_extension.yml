@@ -9,10 +9,10 @@ services:
     ongr_settings.twig.setting_extension:
         class: ONGR\SettingsBundle\Twig\GeneralSettingsWidgetExtension
         arguments:
-            - @ongr_settings.settings.personal_settings_manager
+            - "@ongr_settings.settings.personal_settings_manager"
         calls:
-            - [ setSettingsContainer, [ @ongr_settings.settings_container ] ]
-            - [ setLogger, [ @?logger ] ]
+            - [ setSettingsContainer, [ "@ongr_settings.settings_container" ] ]
+            - [ setLogger, [ "@?logger" ] ]
         tags:
             - { name: "twig.extension" }
             - { name: monolog.logger, channel: admin }
@@ -20,7 +20,7 @@ services:
     ongr_settings.twig.personal_settings_extension:
         class: ONGR\SettingsBundle\Twig\PersonalSettingWidgetExtension
         arguments:
-            - @ongr_settings.settings.personal_settings_manager
+            - "@ongr_settings.settings.personal_settings_manager"
         tags:
             - { name: "twig.extension" }
 
@@ -32,7 +32,7 @@ services:
     ongr_settings.twig.hidden_extension:
             class: ONGR\SettingsBundle\Twig\HiddenExtension
             arguments:
-                - @service_container
+                - "@service_container"
             tags:
                 - { name: 'twig.extension' }
 

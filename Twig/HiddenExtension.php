@@ -35,7 +35,7 @@ class HiddenExtension extends \Twig_Extension
     public function __construct($container)
     {
         $this->container = $container;
-        if ($container->isScopeActive('request')) {
+        if ($container->has('request')) {
             $this->request = $container->get('request');
         }
     }
