@@ -1,10 +1,8 @@
 parameters:
-    ongr_settings.filter.pager.class: ONGR\FilterManagerBundle\Filters\Widget\Pager\Pager
     ongr_settings.filter.pager.request_field: page
     ongr_settings.filter.pager.count_per_page: 15
     ongr_settings.filter.pager.max_pages: 99
 
-    ongr_settings.filter.sort.class: ONGR\FilterManagerBundle\Filters\Widget\Sort\Sort
     ongr_settings.filter.sort.request_field: sort
     ongr_settings.filter.sort.choices:
         nameAsc:
@@ -18,45 +16,40 @@ parameters:
             order: "desc"
             default: false
 
-    ongr_settings.filter.match_search.class: ONGR\FilterManagerBundle\Filters\Widget\Search\MatchSearch
     ongr_settings.filter.match_search.request_field: q
     ongr_settings.filter.match_search.field: "name"
 
-    ongr_settings.filter.single_term.class: ONGR\FilterManagerBundle\Filters\Widget\Choice\SingleTermChoice
     ongr_settings.filter.single_term.profile.request_field: profile
     ongr_settings.filter.single_term.profile.field: profile
 
-
-    ongr_settings.filters_container.class: ONGR\FilterManagerBundle\Search\FiltersContainer
-
 services:
     ongr_settings.filter.pager:
-        class: "%ongr_settings.filter.pager.class%"
+        class: ONGR\FilterManagerBundle\Filter\Widget\Pager\Pager
         calls:
             - ["setRequestField", ["%ongr_settings.filter.pager.request_field%"]]
             - ["setCountPerPage", ["%ongr_settings.filter.pager.count_per_page%"]]
             - ["setMaxPages", ["%ongr_settings.filter.pager.max_pages%"]]
 
     ongr_settings.filter.sort:
-        class: "%ongr_settings.filter.sort.class%"
+        class: ONGR\FilterManagerBundle\Filter\Widget\Sort\Sort
         calls:
             - ["setRequestField", ["%ongr_settings.filter.sort.request_field%"]]
             - ["setChoices", ["%ongr_settings.filter.sort.choices%"]]
 
     ongr_settings.filter.match_search:
-        class: "%ongr_settings.filter.match_search.class%"
+        class: ONGR\FilterManagerBundle\Filter\Widget\Search\MatchSearch
         calls:
             - ["setRequestField", ["%ongr_settings.filter.match_search.request_field%"]]
             - ["setField", ["%ongr_settings.filter.match_search.field%"]]
 
     ongr_settings.filter.single_term.profile:
-        class: "%ongr_settings.filter.single_term.class%"
+        class: ONGR\FilterManagerBundle\Filter\Widget\Choice\SingleTermChoice
         calls:
             - ["setRequestField", ["%ongr_settings.filter.single_term.profile.request_field%"]]
             - ["setField", ["%ongr_settings.filter.single_term.profile.field%"]]
 
-    ongr_settings.filters_container:
-        class: "%ongr_settings.filters_container.class%"
+    ongr_settings.filter_container:
+        class: ONGR\FilterManagerBundle\Search\FilterContainer
         calls:
             - ["set", ["pager", "@ongr_settings.filter.pager"]]
             - ["set", ["sort", "@ongr_settings.filter.sort"]]

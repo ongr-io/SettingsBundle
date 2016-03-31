@@ -63,7 +63,7 @@ ongr_elasticsearch:
 
 services:
     project.cookie_bar:
-        class: %ongr_cookie.json.class%
+        class: ONGR\CookiesBundle\Cookie\Model\JsonCookie
         arguments: [ cookie_bar ]
         calls:
             - [setDefaults, [{http_only: false}]]
@@ -81,7 +81,7 @@ services:
             - [setContainer, [@service_container]]
 
     project.cookie.ab_settings:
-        class: %ongr_cookie.json.class%
+        class: ONGR\CookiesBundle\Cookie\Model\JsonCookie
         arguments: [ ongr_ab_settings ]
         tags:
             - { name: ongr_cookie.cookie }
@@ -92,20 +92,20 @@ services:
             - { name: 'ongr_settings.setting_aware', setting: 'setting_1' }
 
     ongr_settings.dummy_profile_provider:
-        class: %ongr_settings.settings_provider.class%
+        class: ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider
         arguments: [domain_foo]
         calls:
             - [setManager, [@es.manager]]
 
     ongr_settings.settings_manager:
-        class: %ongr_settings.settings_manager.class%
+        class: ONGR\SettingsBundle\Settings\General\SettingsManager
         arguments:
             - @translator
             - @event_dispatcher
             - @es.manager
 
     ongr_settings.listener.cookie_profile:
-        class: %ongr_settings.listener.cookie_profile.class%
+        class: ONGR\SettingsBundle\EventListener\ProfileRequestListener
         calls:
             - [ setSettingsContainer, [ @ongr_settings.settings_container ] ]
             - [ setPersonalSettingsManager, [ @ongr_settings.settings.personal_settings_manager ] ]
@@ -114,12 +114,12 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     ongr_settings.profiles_manager:
-        class: %ongr_settings.profiles_manager.class%
+        class: ONGR\SettingsBundle\Settings\Personal\ProfilesManager
         arguments:
             - @es.manager
 
     ongr_settings.settings_provider:
-        class: %ongr_settings.profiles_manager.class%
+        class: ONGR\SettingsBundle\Settings\Personal\ProfilesManager
         arguments:
             - @es.manager
 

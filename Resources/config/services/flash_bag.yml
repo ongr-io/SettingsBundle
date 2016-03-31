@@ -1,20 +1,19 @@
 parameters:
-    ongr_settings.flash_bag.flash_bag.class: ONGR\SettingsBundle\FlashBag\DirtyFlashBag
+    # Flash Bag settings
     ongr_settings.flash_bag.cookie.name: ongr_flash_bag
-    ongr_settings.flash_bag.cookie.injector.class: ONGR\SettingsBundle\EventListener\FlashBagCookieInjectorListener
 
 services:
     ongr_settings.flash_bag.flash_bag:
-        class: %ongr_settings.flash_bag.flash_bag.class%
+        class: ONGR\SettingsBundle\FlashBag\DirtyFlashBag
 
     ongr_settings.flash_bag.cookie:
-        class: %ongr_cookie.json.class%
+        class: ONGR\CookiesBundle\Cookie\Model\JsonCookie
         arguments: [ %ongr_settings.flash_bag.cookie.name% ]
         tags:
             - { name: ongr_cookie.cookie }
 
     ongr_settings.flash_bag.cookie.injector:
-        class: %ongr_settings.flash_bag.cookie.injector.class%
+        class: ONGR\SettingsBundle\EventListener\FlashBagCookieInjectorListener
         arguments: [ @ongr_settings.flash_bag.flash_bag, @ongr_settings.flash_bag.cookie ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 96 }

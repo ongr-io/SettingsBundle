@@ -11,6 +11,7 @@
 
 namespace ONGR\SettingsBundle\DependencyInjection\Compiler;
 
+use ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -91,7 +92,10 @@ class ProviderPass implements CompilerPassInterface
 
         $managerName = $this->getElasticManagerFromRepository($container);
 
-        $provider = new Definition($container->getParameter('ongr_settings.settings_provider.class'), [$profile]);
+        $provider = new Definition(
+            ManagerAwareSettingProvider::CLASS,
+            [$profile]
+        );
         $provider->addMethodCall('setManager', [new Reference($managerName)]);
         $provider->addTag('ongr_settings.settings_provider', ['profile' => $profile]);
         $container->setDefinition($id, $provider);

@@ -47,7 +47,7 @@ class ONGRSettingsExtension extends Extension
         $loader->load('services/personal_settings.yml');
         $loader->load('services/general_settings.yml');
 
-        $loader->load('filters_container.yml');
+        $loader->load('filter_container.yml');
 
         if (isset($config['admin_user'])) {
             $this->loadPersonalSettings($config['admin_user'], $container);
@@ -55,7 +55,7 @@ class ONGRSettingsExtension extends Extension
 
         $this->injectPersonalSettings($container);
 
-        $this->setFiltersManager($container);
+        $this->setFilterManager($container);
     }
 
     /**
@@ -86,16 +86,16 @@ class ONGRSettingsExtension extends Extension
      *
      * @param ContainerBuilder $container
      */
-    protected function setFiltersManager(ContainerBuilder $container)
+    protected function setFilterManager(ContainerBuilder $container)
     {
         $definition = new Definition(
-            'ONGR\FilterManagerBundle\Search\FiltersManager',
+            'ONGR\FilterManagerBundle\Search\FilterManager',
             [
-                new Reference('ongr_settings.filters_container'),
+                new Reference('ongr_settings.filter_container'),
                 new Reference($container->getParameter('ongr_settings.connection.repository')),
             ]
         );
-        $container->setDefinition('ongr_settings.filters_manager', $definition);
+        $container->setDefinition('ongr_settings.filter_manager', $definition);
     }
 
     /**

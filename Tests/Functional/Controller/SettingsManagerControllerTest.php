@@ -82,14 +82,36 @@ class SettingsManagerControllerTest extends AbstractElasticsearchTestCase
     }
 
     /**
-     * Test for createAction().
+     * Data provider for testCreateAction().
+     *
+     * @return array
      */
-    public function testCreateSetting()
+    public function createActionData()
     {
-        $requestContent = json_encode(['setting' => ['data' => ['value' => 'foo']]]);
+        // case #0 create setting with valid request content
+        $out[] = [json_encode(['setting' => ['data' => ['value' => 'foo'], 'description' => 'description0']]), 200];
+
+        // case #1 create setting with blank request content
+        $out[] = [json_encode([]), 400];
+
+        // case #2 create setting with no request content
+        $out[] = [null, 400];
+
+        return $out;
+    }
+
+    /**
+     * Test for createAction().
+     *
+     * @param string $requestContent
+     * @param int    $statusCode
+     *
+     * @dataProvider createActionData()
+     */
+    public function testCreateAction($requestContent, $statusCode)
+    {
         $this->client->request('POST', '/settings/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
-        $response = $this->client->getResponse();
-        $this->assertTrue($response->isOk());
+        $this->assertEquals($statusCode, $this->client->getResponse()->getStatusCode());
     }
 
     /**
