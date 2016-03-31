@@ -12,6 +12,9 @@
 namespace ONGR\SettingsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -42,9 +45,9 @@ class LoginType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username', 'text');
-        $builder->add('password', 'password');
-        $builder->add('submit', 'submit');
+        $builder->add('username', TextType::class);
+        $builder->add('password', PasswordType::class);
+        $builder->add('submit', SubmitType::class);
     }
 
     /**

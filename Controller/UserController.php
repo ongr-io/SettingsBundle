@@ -37,7 +37,7 @@ class UserController extends Controller
 
         // Handle form.
         $loginData = [];
-        $form = $this->createForm(new LoginType(), $loginData);
+        $form = $this->createForm(LoginType::class, $loginData);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
