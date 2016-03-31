@@ -14,7 +14,7 @@ angular
             restrict: "A",
             scope: { setting: "="},
             templateUrl: $asset.getLink('template/inline.html'),
-            link: function(scope, element, attr) {
+            link: function (scope, element, attr) {
 
                 var inputElement = angular.element(element[0].children[1].children[1])[0];
                 element.addClass('inline-edit');
@@ -24,7 +24,7 @@ angular
                 /**
                  * appears input field
                  */
-                scope.edit = function() {
+                scope.edit = function () {
                     scope.oldValue = scope.value;
                     element.addClass('active');
                     inputElement.focus();
@@ -33,7 +33,7 @@ angular
                 /**
                  * closes input field
                  */
-                scope.close = function() {
+                scope.close = function () {
                     scope.value = scope.oldValue;
                     element.removeClass('active');
                 };
@@ -41,10 +41,11 @@ angular
                 /**
                  * saves values with ajax request
                  */
-                scope.save = function() {
+                scope.save = function () {
                     element.removeClass('active');
 
-                    requestUrl = Routing.generate('ongr_settings_setting_ng_edit',
+                    requestUrl = Routing.generate(
+                        'ongr_settings_setting_ng_edit',
                         {
                             name: scope.setting.name,
                             profile: scope.setting.profile
@@ -69,8 +70,8 @@ angular
                  *
                  * @param e Event
                  */
-                scope.keyPress = function(e) {
-                    switch(e.keyCode) {
+                scope.keyPress = function (e) {
+                    switch (e.keyCode) {
                         case 13: //enter
                             scope.save();
                             break;

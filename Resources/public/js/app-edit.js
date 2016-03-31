@@ -15,6 +15,6 @@ angular
         'service.setting'
     ])
     .constant('DATA', setting)
-    .run(['$templateCache', function($templateCache) {
+    .run(['$templateCache', function ($templateCache) {
         $templateCache.put('yaml.textarea', '<textarea id="yaml" class="form-control" cols="30" rows="12"></textarea>');
     }]);

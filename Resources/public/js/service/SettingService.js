@@ -10,7 +10,7 @@
 angular
     .module('service.setting', [])
     .service('settingService', ['$http',
-        function($http) {
+        function ($http) {
 
             /**
              * Setting data holder
@@ -94,7 +94,7 @@ angular
              * @param newType
              * @param oldType
              */
-            this.loadDataFromCache = function(newType, oldType) {
+            this.loadDataFromCache = function (newType, oldType) {
                 this.dataValueCache[oldType] =
                     (oldType == 'object') ? this.getYamlBoxData() : this.setting.data['value'];
                 return this.dataValueCache[newType];
@@ -105,8 +105,7 @@ angular
              *
              * @returns {[]|{}}
              */
-            this.getYamlBoxData = function()
-            {
+            this.getYamlBoxData = function () {
                 var data;
                 var yamlBox = angular.element(document.getElementById('yaml'));
                 if (typeof yamlBox[0] === "undefined") {
@@ -120,7 +119,7 @@ angular
             /**
              * Sets setting data holder values to default
              */
-            this.clearValues = function() {
+            this.clearValues = function () {
                 this.status = 0;
                 this.selectedTypeIndex = 0;
                 this.setting = {
@@ -139,7 +138,7 @@ angular
              *
              * @param data {{}}
              */
-            this.setSetting = function(data) {
+            this.setSetting = function (data) {
                 if (typeof data['data'] === 'undefined') {
                     data['data'] = { value : '' };
                 }
@@ -154,7 +153,7 @@ angular
              *
              * @param settingsList
              */
-            this.setSettingsList = function(settingsList) {
+            this.setSettingsList = function (settingsList) {
                 this.settingsList = settingsList;
             };
 
@@ -163,14 +162,14 @@ angular
              *
              * @param currentProfile
              */
-            this.setCurrentProfile = function(currentProfile) {
+            this.setCurrentProfile = function (currentProfile) {
                 this.currentProfile = currentProfile;
             };
 
             /**
              * Saves new object by sending ajax request
              */
-            this.addSetting = function() {
+            this.addSetting = function () {
 
                 var requestUrl = Routing.generate('ongr_settings_setting_ng_edit', {
                     name: this.setting.name,
@@ -185,7 +184,7 @@ angular
                 this.status = 0;
                 var _this = this;
                 $http({method: "POST", url: requestUrl, data: {setting: this.setting}})
-                    .success(function() {
+                    .success(function () {
                         _this.status = 200;
                         if (_this.settingsList != null) {
                             var newSetting = angular.copy(_this.setting);
@@ -194,7 +193,7 @@ angular
                             }
                         }
                     })
-                    .error(function() {
+                    .error(function () {
                         _this.status = 400;
                     });
             };
@@ -202,7 +201,7 @@ angular
             /**
              * Adds new element to array
              */
-            this.arrayAdd = function() {
+            this.arrayAdd = function () {
 
                 this.setting.data['value'].push("");
 
@@ -213,7 +212,7 @@ angular
              *
              * @param {int} key
              */
-            this.arrayUnset = function(key) {
+            this.arrayUnset = function (key) {
 
                 this.setting.data['value'].splice(key, 1);
 

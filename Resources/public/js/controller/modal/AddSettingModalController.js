@@ -11,8 +11,7 @@ angular
     .module('controller.modal.addSetting', [])
     .controller('addSetting', ['$scope', '$modalInstance', '$http', 'profiles', 'settingService',
         'settingsList', 'currentProfile',
-        function($scope, $modalInstance, $http, profiles, settingService,
-                 settingsList, currentProfile) {
+        function ($scope, $modalInstance, $http, profiles, settingService, settingsList, currentProfile) {
 
             /**
              * @type {[]}
@@ -44,7 +43,7 @@ angular
             /**
              * Closes modal and reload page if settings were added
              */
-            $scope.cancel = function() {
+            $scope.cancel = function () {
                 $modalInstance.close();
             };
         }

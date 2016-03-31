@@ -10,33 +10,32 @@
 
 angular
     .module('directive.yaml', [])
-    .directive('yaml', ['$templateCache', function($templateCache) {
+    .directive('yaml', ['$templateCache', function ($templateCache) {
         return {
             restrict: 'E',
             scope: { yml: "=" },
             replace: true,
             template: $templateCache.get('yaml.textarea'),
-            link: function(scope, element, attrs) {
-                if(scope.yml !== undefined) {
+            link: function (scope, element, attrs) {
+                if (scope.yml !== undefined) {
                     element[0].value = jsyaml.safeDump(scope.yml);
                 }
 
-                element.bind('keyup', function($event) {
+                element.bind('keyup', function ($event) {
                     var yamlStatus = angular.element(document.getElementById('yamlSyntaxStatus'));
                     try {
                         var yamlBox = angular.element(document.getElementById('yaml'));
                         jsyaml.safeLoad(yamlBox[0].value);
                         yamlStatus[0].innerHTML = 'Yaml :: Syntax is correct.';
                         yamlStatus[0].style.color = 'black';
-                    }
-                    catch (err) {
+                    } catch (err) {
                         yamlStatus[0].innerHTML = err.message;
                         yamlStatus[0].style.color = 'red';
                     }
 
                 });
 
-                element.bind('keydown', function($event){
+                element.bind('keydown', function ($event) {
                     switch ($event.keyCode) {
                         case 9:
                             $event.preventDefault();

@@ -10,7 +10,7 @@
 angular
     .module('controller.edit', [])
     .controller('edit', ['$scope', '$http', 'DATA', 'settingService',
-        function($scope, $http, DATA, settingService) {
+        function ($scope, $http, DATA, settingService) {
 
             /**
              * Setting service
@@ -27,11 +27,13 @@ angular
             /**
              * Set current setting type index
              */
-            angular.forEach($scope.settingService.settingTypes,
-                function(value, key) {
+            angular.forEach(
+                $scope.settingService.settingTypes,
+                function (value, key) {
                     if (value['type'] == $scope.settingService.setting.type) {
                         $scope.settingService.selectedTypeIndex = key;
                     }
-                });
+                }
+            );
         }]);
 
