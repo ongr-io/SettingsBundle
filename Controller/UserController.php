@@ -80,7 +80,7 @@ class UserController extends Controller
         $response = $this->redirect($this->generateUrl('ongr_settings_sessionless_login'));
 
         $this->get('security.token_storage')->setToken(null);
-        $this->get('request')->getSession()->invalidate();
+        $request->getSession()->invalidate();
 
         return $response;
     }
