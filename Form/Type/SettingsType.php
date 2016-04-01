@@ -12,8 +12,11 @@
 namespace ONGR\SettingsBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Settings type for changing all configured settings.
@@ -22,11 +25,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class SettingsType extends AbstractType
 {
-    /**
-     * @var array
-     */
-    private $settingsStructure;
-
     /**
      * {@inheritdoc}
      */
@@ -40,11 +38,13 @@ class SettingsType extends AbstractType
     }
 
     /**
-     * @param array $settingsStructure
+     * {@inheritdoc}
      */
-    public function __construct(array $settingsStructure)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->settingsStructure = $settingsStructure;
+        $resolver->setDefaults(array(
+            'settingsStructure' => null,
+        ));
     }
 
     /**
@@ -52,14 +52,15 @@ class SettingsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        foreach ($this->settingsStructure as $settingName => $setting) {
+        $settingsStructure = $options['settingsStructure'];
+        foreach ($settingsStructure as $settingName => $setting) {
             $typeConfiguration = isset($setting['type']) ? $setting['type'] : null;
-            $type = $typeConfiguration ? $typeConfiguration[0] : 'checkbox';
+            $type = $typeConfiguration ? $typeConfiguration[0] : CheckboxType::class;
             $typeOptions = $typeConfiguration ? $typeConfiguration[1] : ['required' => false];
             $builder->add($settingName, $type, $typeOptions);
         }
 
-        $builder->add('submit', 'submit');
+        $builder->add('submit', SubmitType::class);
     }
 
     /**

@@ -39,8 +39,11 @@ class PersonalSettingsController extends Controller
         // Handle form.
         $settingsData = $manager->getSettings();
         $settingsMap = $manager->getSettingsMap();
+        $options = [
+            'settingsStructure' => $settingsMap,
+        ];
 
-        $form = $this->createForm(new SettingsType($settingsMap), $settingsData);
+        $form = $this->createForm(SettingsType::class, $settingsData, $options);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $manager->setSettingsFromForm($form->getData());
