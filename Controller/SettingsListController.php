@@ -46,7 +46,7 @@ class SettingsListController extends Controller
      */
     protected function getListData(Request $request)
     {
-        $filterManager = $this->get('ongr_settings.filters_manager')->execute($request);
+        $filterManager = $this->get('ongr_settings.filter_manager')->handleRequest($request);
 
         return [
             'data' => iterator_to_array($filterManager->getResult()),
