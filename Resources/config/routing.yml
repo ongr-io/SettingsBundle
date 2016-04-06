@@ -1,8 +1,12 @@
-ongr_routing_authentication:
-    resource: "@ONGRSettingsBundle/Resources/config/routing/sessionless_authentication.yml"
-
 ongr_settings_routing_settings:
     resource: "@ONGRSettingsBundle/Resources/config/routing/personal_settings.yml"
 
 ongr_routing_settings:
     resource: "@ONGRSettingsBundle/Resources/config/routing/general_settings.yml"
+
+ongr_settings_settings_list:
+    path:  /{profile}
+    methods: [GET]
+    defaults:
+        _controller: ONGRSettingsBundle:SettingsList:list
+        profile: 'default'
