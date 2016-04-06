@@ -41,8 +41,6 @@ class ONGRSettingsExtension extends Extension
         $container->setParameter('ongr_settings.settings_container.profiles', $config['profiles']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services/sessionless_authentication.yml');
-        $loader->load('services/flash_bag.yml');
         $loader->load('services/twig_extension.yml');
         $loader->load('services/personal_settings.yml');
         $loader->load('services/general_settings.yml');

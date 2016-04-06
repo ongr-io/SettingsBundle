@@ -15,33 +15,10 @@ services:
             - %ongr_settings.settings.settings%
             - %ongr_settings.settings.categories%
 
-    ongr_settings.settings.settings_cookie_service:
-        class: ONGR\SettingsBundle\Settings\SettingsCookieService
-        arguments:
-            - %ongr_settings.settings.settings_cookie.name%
-
-    ongr_settings.settings.settings_cookie_listener:
-        class: ONGR\SettingsBundle\EventListener\SettingsCookieListener
-        calls:
-            - [ setPersonalSettingsManager, [ "@ongr_settings.settings.personal_settings_manager" ] ]
-            - [ setContainer, [ "@service_container" ] ]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 6 }
-        scope: request
-
-    ongr_settings.settings.settings_cookie:
-        class: ONGR\CookiesBundle\Cookie\Model\JsonCookie
-        arguments: [ %ongr_settings.settings.settings_cookie.name% ]
-        calls:
-            - [ setDefaults, [ %ongr_settings.settings.settings_cookie.defaults% ] ]
-        tags:
-            - { name: ongr_cookie.cookie }
-
     # Personal settings manager class
     ongr_settings.settings.personal_settings_manager:
             class: ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager
             arguments:
-                - "@security.authorization_checker"
                 - "@ongr_settings.settings.settings_structure"
 
     # Personal profiles provider

@@ -16,7 +16,6 @@
         "tedivm/stash-bundle": "~0.4",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
         "ongr/elasticsearch-bundle": "~1.0",
-        "ongr/cookies-bundle": "~0.1",
         "ongr/filter-manager-bundle": "~1.0"
     },
     "require-dev": {

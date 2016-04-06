@@ -40,12 +40,10 @@ class PersonalSettingsManager
     protected $userSettings = [];
 
     /**
-     * @param SecurityContextInterface $securityContext
      * @param SettingsStructure        $settingsStructure
      */
-    public function __construct($securityContext, $settingsStructure)
+    public function __construct($settingsStructure)
     {
-        $this->securityContext = $securityContext;
         $this->settingsStructure = $settingsStructure;
     }
 

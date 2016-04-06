@@ -37,6 +37,5 @@ class ONGRSettingsBundle extends Bundle
         $container->addCompilerPass(new SettingAwareFactoryPass());
 
         $extension = $container->getExtension('security');
-        $extension->addSecurityListenerFactory(new SessionlessAuthenticationFactory());
     }
 }
