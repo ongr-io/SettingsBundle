@@ -1,9 +1,0 @@
-ongr_settings_sessionless_login:
-    path: /login
-    defaults:
-        _controller: ONGRSettingsBundle:User:login
-
-ongr_settings_sessionless_logout:
-    path: /logout
-    defaults:
-        _controller: ONGRSettingsBundle:User:logout
