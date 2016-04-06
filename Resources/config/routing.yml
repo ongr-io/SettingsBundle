@@ -4,6 +4,12 @@ ongr_settings_routing_settings:
 ongr_routing_settings:
     resource: "@ONGRSettingsBundle/Resources/config/routing/general_settings.yml"
 
+ongr_settings_settings_add:
+    path: /add_setting
+    methods: [GET]
+    defaults:
+        _controller: ONGRSettingsBundle:SettingsAdd:display
+
 ongr_settings_settings_list:
     path:  /{profile}
     methods: [GET]

@@ -16,30 +16,30 @@
                     </form>
                 {% endif %}
             {% endblock %}
-            {% block sort %}
-                {% if filters.sort is defined %}
-                    {% set sort = filters.sort %}
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                {{ sort.name | capitalize }}
-                                {% for option in sort.choices %}
-                                    {% if option.active or sort.state.active==false and option.default %}: {{ option.label }}{% endif %}
-                                {% endfor %}
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                {% for option in sort.choices %}
-                                    {% if option.default and sort.state.active == false %}
+            {#{% block sort %}#}
+                {#{% if filters.sort is defined %}#}
+                    {#{% set sort = filters.sort %}#}
+                    {#<ul class="nav navbar-nav navbar-right">#}
+                        {#<li class="dropdown">#}
+                            {#<a href="#" class="dropdown-toggle" data-toggle="dropdown">#}
+                                {#{{ sort.name | capitalize }}#}
+                                {#{% for option in sort.choices %}#}
+                                    {#{% if option.active or sort.state.active==false and option.default %}: {{ option.label }}{% endif %}#}
+                                {#{% endfor %}#}
+                                {#<span class="caret"></span>#}
+                            {#</a>#}
+                            {#<ul class="dropdown-menu">#}
+                                {#{% for option in sort.choices %}#}
+                                    {#{% if option.default and sort.state.active == false %}#}
                                         {# Nothing to display #}
-                                    {% elseif option.active == false %}
-                                        <li><a href="{{ path('ongr_settings_settings_list', option.urlParameters) }}">{{ option.label }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                    </ul>
-                {% endif %}
-            {% endblock %}
+                                    {#{% elseif option.active == false %}#}
+                                        {#<li><a href="{{ path('ongr_settings_settings_list', option.urlParameters) }}">{{ option.label }}</a></li>#}
+                                    {#{% endif %}#}
+                                {#{% endfor %}#}
+                            {#</ul>#}
+                    {#</ul>#}
+                {#{% endif %}#}
+            {#{% endblock %}#}
             {% block profile_choice %}
                 {% if filters.profile is defined %}
                     {% set profile = filters.profile.state %}
@@ -64,8 +64,8 @@
             {% block buttons %}
                 {% if app.request.attributes.get('_route') != "ongr_settings_setting_edit" %}
                     <div class="nav navbar-nav">
-                        <button class="btn btn-default navbar-btn" href="#">Add setting</button>
-                        <button class="btn btn-default navbar-btn" href="#">Add profile</button>
+                        <a href="{{ path('ongr_settings_settings_add') }}" class="btn btn-default navbar-btn">Add setting</a>
+                        <a class="btn btn-default navbar-btn" href="#">Add profile</a>
                     </div>
                 {% endif %}
             {% endblock %}
