@@ -1,59 +1,81 @@
 {% extends 'ONGRSettingsBundle::layout.html.twig' %}
 
-{% block body_attributes %}ng-app="ongr.settings"{% endblock %}
-{% block wrapper_attributes %}ng-controller="settings"{% endblock %}
-
+{% block stilesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" type="text/css"/>
+{% endblock %}
 {% block main %}
+    {#{% include 'ONGRSettingsBundle:Settings:inc/addSettingModal.html.twig' %}#}
+    {#{% include 'ONGRSettingsBundle:Settings:inc/duplicateModal.html.twig'%}#}
     <div class="container-fluid">
-        {% verbatim %}
         <div class="row">
             <div class="col-lg-12">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Type</th>
-                            <th>Settings</th>
-                            <th>Actions</th>
-                        </tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                        <th>Settings</th>
+                        <th>Actions</th>
+                    </tr>
                     </thead>
-                    <tbody>
-                        <tr ng-repeat="(settingId, row) in settings">
-                            <td class=".col-xs-8 .col-md-6">{{ row.name }}</td>
-                            <td class=".col-xs-18 .col-md-8">{{ row.description }}</td>
-                            <td class=".col-xs-6 .col-md-4">{{ row.type }}</td>
+                    {% for data in data %}
+                        <tbody>
+                        <tr>
+                            <td class=".col-xs-8 .col-md-6">{{ data.name }}</td>
+                            <td class=".col-xs-18 .col-md-8">{{ data.description }}</td>
+                            <td class=".col-xs-6 .col-md-4">{{ data.type }}</td>
                             <td class=".col-xs-12 .col-md-8">
-                                <div ng-switch="row.type" class="word-break-all">
-                                    <div ng-switch-when="boolean">
-                                        <div class="btn-group btn-group-sm">
-                                            <label class="btn btn-default" ng-class="{ 'btn-primary' : row.data.value }" ng-model="row.data.value" btn-radio="true" ng-click="saveStatus($event, row)" uncheckable>On</label>
-                                            <label class="btn btn-default" ng-class="{ 'btn-primary' : !row.data.value }" ng-model="row.data.value" btn-radio="false" ng-click="saveStatus($event, row)" uncheckable>Off</label>
-                                        </div>
+                                <div class="settings-container">
+                                    <div>
+                                        {% if data.type == 'bool' %}
+                                            <div class="btn-group btn-group-sm">
+                                                <label class="boolean btn btn-default {% if data.data.value == true %}btn-primary{% endif %}" >On</label>
+                                                <label class="boolean btn btn-default {% if data.data.value == false %}btn-primary{% endif %}" >Off</label>
+                                            </div>
+                                        {% elseif data.type == 'string' %}
+                                            <a href="" class="string" rel="{{ data.id }}" onclick="stringUpdateChange(this, event)">{{ data.data.value }}</a>
+                                        {% elseif data.type == 'array' %}
+                                            <div class="array-setting-group">
+                                                <ul class="list-unstyled">
+                                                    {% for element in data.data.value|slice(0,3) %}
+                                                        <li>{{ element }}</li>
+                                                    {% endfor %}
+                                                    {% if data.data.value|length >3 %}
+                                                        <li><a href="#" onclick="arrayHandleList(this, event, '{{ data.data.value|json_encode }}')">more</a></li>
+                                                    {% endif %}
+                                                </ul>
+                                            </div>
+                                        {% elseif data.type == 'object'%}
+                                            <p>{{ data.data.value }}</p>
+                                        {% endif %}
                                     </div>
-                                    <div ng-switch-when="array" collapse collapse-data="row.data.value"></div>
-                                    <div ng-switch-when="object" collapse collapse-data="row.data.value"></div>
-                                    <div ng-switch-default inline setting="row"></div>
                                 </div>
                             </td>
 
                             <td class="col-xs-3">
-                                <a href="{{ editLink(row) }}" class="btn btn-primary btn-xs">
+                                <a href="{{
+                                path('ongr_settings_setting_edit', {'name': data.name, 'profile': data.profile})
+                                }}" class="btn btn-primary btn-xs">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </a>
-                                <a href="#" class="btn btn-primary btn-xs" ng-click="duplicate(settingId)">
+                                <a href="#" class="btn btn-primary btn-xs duplicateTrigger" url="
+                                {#path('ongr_settings_setting_copy', {'name': data.name, 'from': data.profile})#}
+                                " data-toggle="modal" data-target="#duplicateSettingModal" profile="{{ data.profile }}" name="{{ data.name }}">
                                     <span class="glyphicon glyphicon-transfer"></span>
                                 </a>
-                                <a href="#" class="btn btn-danger btn-xs" really-message="Are you sure?" really-click="remove(settingId, row)">
+                                <a href="#" url="{{
+                                path('ongr_settings_setting_remove', {'name': data.name, 'profile': data.profile})
+                                }}" class="btn btn-danger btn-xs setting-remove">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </a>
                             </td>
                         </tr>
-                    </tbody>
+                        </tbody>
+                    {% endfor %}
                 </table>
             </div>
         </div>
-        {% endverbatim %}
         {% block pager %}
             {% if filters.pager is defined %}
                 <div class="pull-right">{{ ongr_paginate(filters.pager.pager, 'ongr_settings_settings_list', filters.pager.urlParameters) }}</div>
@@ -61,23 +83,4 @@
             {% endif %}
         {% endblock %}
     </div>
-{% endblock %}
-
-{% block admin_javascripts %}
-    {% set profile = filters.profile.state.value %}
-    <script type="text/javascript">
-        var setting = {{ data|json_encode|raw }},
-            profiles = {{ filters.profile.choices|json_encode|raw }},
-            currentProfile = '{{ filters.profile.state.value|raw }}';
-    </script>
-    <script src="{{ asset('bundles/ongrsettings/js/controller/SettingsController.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/controller/modal/DuplicateModalController.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/controller/modal/AddSettingModalController.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/filter/ObjectLimitToFilter.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/directive/InlineDirective.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/directive/ReallyClickDirective.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/directive/CollapseDirective.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/utils/Asset.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/app-settings.js') }}"></script>
-    {{ parent() }}
 {% endblock %}
