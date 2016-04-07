@@ -34,7 +34,7 @@
                                                 <label class="boolean btn btn-default {% if data.data.value == false %}btn-primary{% endif %}" >Off</label>
                                             </div>
                                         {% elseif data.type == 'string' %}
-                                            {{ data.data.value }}
+                                            {{ data.data.value|slice(0, 50) }}
                                         {% elseif data.type == 'array' %}
                                             <div class="array-setting-group">
                                                 <ul class="list-unstyled">
@@ -47,7 +47,7 @@
                                                 </ul>
                                             </div>
                                         {% elseif data.type == 'object'%}
-                                            <p>{{ data.data.value }}</p>
+                                            <p>{{ data.data.value|slice(0,50) }}</p>
                                         {% endif %}
                                     </div>
                                 </div>
