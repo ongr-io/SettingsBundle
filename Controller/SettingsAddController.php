@@ -27,8 +27,12 @@ class SettingsAddController extends Controller
      */
     public function displayAction()
     {
+        $profileManager = $this->get('ongr_settings.profiles_manager');
+        $profiles = $profileManager->findAllProfiles();
         return $this->render(
-            'ONGRSettingsBundle:Settings:add.html.twig'
+            'ONGRSettingsBundle:Settings:add.html.twig', [
+                'profiles' => $profiles
+            ]
         );
     }
 }

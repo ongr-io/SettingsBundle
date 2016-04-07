@@ -33,6 +33,6 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     ongr_settings.profiles_manager:
-        class: ONGR\SettingsBundle\Settings\Personal\ProfilesManager
+        class: ONGR\SettingsBundle\Service\ProfileManager
         arguments:
             - "@es.manager.settings"

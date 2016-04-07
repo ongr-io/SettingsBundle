@@ -16,9 +16,9 @@
                 <label for="profile" class="col-sm-2 control-label">Profiles</label>
                 <div class="col-sm-6">
                     <select id="addSettingProfiles" multiple="multiple" name="settingProfile" class="form-control">
-                        {#{% for profile in profiles %}#}
-                            {#<option value="{{ profile.name }}">{{ profile.name }}</option>#}
-                        {#{% endfor %}#}
+                        {% for profile in profiles %}
+                            <option value="{{ profile.name }}">{{ profile.name }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
