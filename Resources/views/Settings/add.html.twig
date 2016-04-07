@@ -5,7 +5,7 @@
         <div class="row">
             <h2 class="col-sm-offset-2 col-sm-6">Add setting</h2>
         </div>
-        <form id="addSettingForm" class="form-horizontal" url="" name="addSettingForm">
+        <form id="addSettingForm" class="form-horizontal" action="{{ path('ongr_settings_setting_set') }}" method="post" name="addSettingForm">
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-6">
@@ -15,7 +15,7 @@
             <div class="form-group">
                 <label for="profile" class="col-sm-2 control-label">Profiles</label>
                 <div class="col-sm-6">
-                    <select id="addSettingProfiles" multiple="multiple" name="settingProfile" class="form-control">
+                    <select id="addSettingProfiles" multiple="multiple" name="settingProfiles[]" class="form-control">
                         {% for profile in profiles %}
                             <option value="{{ profile.name }}">{{ profile.name }}</option>
                         {% endfor %}
@@ -32,21 +32,22 @@
             <div class="form-group">
                 <label for="type" class="col-sm-2 control-label">Type</label>
                 <div class="btn-group col-sm-8" id="addSettingType">
-                    <label class="setting-type btn btn-default btn-primary" rel="setting-default-div">Default</label>
-                    <label class="setting-type btn btn-default" rel="setting-boolean-div">Boolean</label>
-                    <label class="setting-type btn btn-default" rel="setting-array-div">Array</label>
-                    <label class="setting-type btn btn-default" rel="setting-object-div">Object</label>
+                    <label class="setting-type btn btn-default btn-primary" rel="string">Default</label>
+                    <label class="setting-type btn btn-default" rel="bool">Boolean</label>
+                    <label class="setting-type btn btn-default" rel="array">Array</label>
+                    <label class="setting-type btn btn-default" rel="object">Object</label>
+                    <input id="addSettingTypeInput" value="string" name="settingType" class="hidden"/>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="value" class="col-sm-2 control-label">Settings</label>
                 <div class="col-sm-6">
-                    <div class="setting-boolean-div hidden">
+                    <div class="setting-bool-div hidden">
                         <div class="btn-group">
                             <label class="setting-type-boolean btn btn-primary" rel="true">On</label>
                             <label class="setting-type-boolean btn btn-default" rel="false">Off</label>
-                            <input id="addSettingBoolean" type="checkbox" name="setting-boolean" class="hidden" checked="true">
+                            <input id="addSettingBoolean" name="setting-boolean" class="hidden" value="true">
                         </div>
                     </div>
 
@@ -66,10 +67,10 @@
                     </div>
 
                     <div  class="setting-object-div hidden">
-                        <textarea id="addSettingObject" class="form-control ng-isolate-scope" rows="12" cols="30"></textarea>
+                        <textarea id="addSettingObject" name="setting-object" class="form-control ng-isolate-scope" rows="12" cols="30"></textarea>
                     </div>
 
-                    <div class="setting-default-div">
+                    <div class="setting-string-div">
                         <input id="addSettingDefault" name="setting-default" type="text" class="form-control" />
                     </div>
                 </div>
@@ -77,13 +78,16 @@
 
             <div class="form-group no-margin-bottom" id="addSettingMessages">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <p class="alert alert-success no-margin-bottom hidden">Setting created successfully.</p>
-                    <p class="alert alert-danger no-margin-bottom hidden"><strong>Creation failed</strong>. <span class="error-message"></span></p>
+                    <p class="alert alert-success no-margin-bottom
+                        {% if success is not defined %}hidden{% endif %}">Setting created successfully.</p>
+                    <p class="alert alert-danger no-margin-bottom
+                        {% if errors is not defined %}hidden{% endif %}">
+                        <strong>Creation failed</strong>. <span class="error-message">{% if errors is defined %}{{ errors }} {% endif %}</span></p>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-6">
-                    <button class="btn btn-primary" id="submitSetting" onclick="addSetting(event)">Add</button>
+                    <button class="btn btn-primary" type="submit">Add</button>
                     <button class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </div>

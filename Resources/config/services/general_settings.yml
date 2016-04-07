@@ -36,3 +36,6 @@ services:
         class: ONGR\SettingsBundle\Service\ProfileManager
         arguments:
             - "@es.manager.settings"
+
+    ongr_settings.form_validator:
+        class: ONGR\SettingsBundle\Service\FormValidator

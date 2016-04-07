@@ -63,37 +63,26 @@ class SettingsManager
      * Overwrites setting with given name.
      *
      * @param string       $name
+     * @param string       $type
+     * @param string       $description
      * @param string|array $value
-     * @param string       $profile
+     * @param array        $profiles
      *
      * @throws \LogicException
      */
-    public function set($name, $value, $profile = 'default')
+    public function set($name, $type, $description, $value, $profiles)
     {
-        switch (gettype($value)) {
-            case 'boolean':
-                $type = Setting::TYPE_BOOLEAN;
-                break;
-            case 'array':
-                $type = Setting::TYPE_ARRAY;
-                break;
-            case 'object':
-                $type = Setting::TYPE_OBJECT;
-                break;
-            default:
-                $type = Setting::TYPE_STRING;
-                break;
+        foreach ($profiles as $profile) {
+            $setting = new Setting();
+            $setting->setId($profile . '_' . $name);
+            $setting->setName($name);
+            $setting->setDescription($description);
+            $setting->setData((object)['value' => $value]);
+            $setting->setType($type);
+            $setting->setProfile($profile);
+
+            $this->manager->persist($setting);
         }
-
-        $setting = new Setting();
-        $setting->setId($profile . '_' . $name);
-        $setting->setName($name);
-        $setting->setDescription('ongr_settings.' . $this->translator->trans($name));
-        $setting->setData((object)['value' => $value]);
-        $setting->setType($type);
-        $setting->setProfile($profile);
-
-        $this->manager->persist($setting);
         $this->manager->commit();
         $this->manager->flush();
 

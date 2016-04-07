@@ -1,6 +1,6 @@
 #Common settings
 ongr_settings_homepage:
-    path:  /general_settings_list
+    path:  /
     methods: [GET]
     defaults:
         _controller: ONGRSettingsBundle:SettingsList:list
@@ -14,11 +14,10 @@ ongr_settings_settings_list:
         profile: 'default'
 
 ongr_settings_setting_set:
-    path:  /setting/set/{name}/{profile}
+    path:  /setting/set/
     methods: [POST]
     defaults:
         _controller: ONGRSettingsBundle:SettingsManager:setSetting
-        profile: 'default'
 
 ongr_settings_setting_edit:
     path:  /setting/{name}/edit/{profile}
