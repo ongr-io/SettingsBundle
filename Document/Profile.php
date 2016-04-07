@@ -33,14 +33,14 @@ class Profile implements JsonSerializable
      *
      * @ES\Property(name="name", type="string", options={"analyzer"="standard"})
      */
-    protected $name;
+    private $name;
 
     /**
      * @var string
      *
      * @ES\Property(name="description", type="string", options={"analyzer"="standard"})
      */
-    protected $description;
+    private $description;
 
     /**
      * @return string

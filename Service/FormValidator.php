@@ -75,6 +75,35 @@ class FormValidator
 
         return $return;
     }
+
+    /**
+     * Validates profile form
+     *
+     * @param Request $request
+     * @param array   $profiles
+     *
+     * @return array
+     */
+    public function validateProfileForm(Request $request, array $profiles)
+    {
+        $return = [];
+        $return['error'] = '';
+        $return['name'] = $request->request->get('profileName');
+        $return['description'] = $request->request->get('profileDescription');
+
+        if ($return['name'] == '') {
+            $return['error'] = 'You must set a unique name of the profile.';
+            return $return;
+        }
+        foreach ($profiles as $profile) {
+            if ($return['name'] == $profile['name']) {
+                $return['error'] = 'The profile `'.$profile['name'].'` is already set.';
+                return $return;
+            }
+        }
+
+        return $return;
+    }
 }
 
 

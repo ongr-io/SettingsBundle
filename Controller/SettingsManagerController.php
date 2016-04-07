@@ -40,7 +40,7 @@ class SettingsManagerController extends Controller
 
         if ($data['error'] != '') {
             $cache->save('settings_errors', $data['error']);
-            return new RedirectResponse($this->generateUrl('ongr_settings_settings_add'), 301, ['methos: POST']);
+            return new RedirectResponse($this->generateUrl('ongr_settings_settings_add'));
         }
         $manager = $this->getSettingsManager();
 
@@ -54,11 +54,11 @@ class SettingsManagerController extends Controller
             );
         } catch (\Exception $e) {
             $cache->save('settings_errors', $e->getMessage());
-            return new RedirectResponse($this->generateUrl('ongr_settings_settings_add'), 301, ['methos: POST']);
+            return new RedirectResponse($this->generateUrl('ongr_settings_settings_add'));
         }
 
         $cache->save('settings_success', true);
-        return new RedirectResponse($this->generateUrl('ongr_settings_settings_add'), 301, ['methos: POST']);
+        return new RedirectResponse($this->generateUrl('ongr_settings_settings_add'));
     }
 
     /**

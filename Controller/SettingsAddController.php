@@ -27,7 +27,7 @@ class SettingsAddController extends Controller
     public function displayAction()
     {
         $profileManager = $this->get('ongr_settings.profiles_manager');
-        $profiles = $profileManager->findAllProfiles();
+        $profiles = $profileManager->getAllProfiles();
         $params = [];
         $params['profiles'] = $profiles;
         $cache = $this->get('es.cache_engine');
