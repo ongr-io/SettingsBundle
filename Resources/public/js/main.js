@@ -24,9 +24,10 @@ $(document).ready(function(){
         if(!$(this).hasClass('btn-primary')) {
             $(this).toggleClass('btn-primary');
             $(this).siblings().removeClass('btn-primary');
-            var $relElement = $('.'+$(this).attr('rel'));
+            var $relElement = $('.setting-'+$(this).attr('rel')+'-div');
             $relElement.toggleClass('hidden');
             $relElement.siblings().addClass('hidden');
+            $('#addSettingTypeInput').val($(this).attr('rel'));
         }
     });
 
@@ -34,11 +35,7 @@ $(document).ready(function(){
         if(!$(this).hasClass('btn-primary')) {
             $(this).toggleClass('btn-primary');
             $(this).siblings('label').removeClass('btn-primary');
-            if($(this).attr('rel') == 'true') {
-                $(this).siblings('input').prop('checked', true);
-            } else {
-                $(this).siblings('input').prop('checked', false);
-            }
+            $(this).siblings('input').val($(this).attr('rel'));
         }
     });
 
