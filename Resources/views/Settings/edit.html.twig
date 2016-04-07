@@ -1,100 +1,101 @@
 {% extends 'ONGRSettingsBundle::layout.html.twig' %}
 
-{% block body_attributes %}ng-app="ongr.edit"{% endblock %}
-{% block wrapper_attributes %}ng-controller="edit"{% endblock %}
-
 {% block main %}
     <div class="container-fluid">
         <div class="row">
             <h2 class="col-sm-offset-2 col-sm-6">Edit {{ setting.name }}</h2>
         </div>
-        <form class="form-horizontal">
+        <form class="form-horizontal" id="editSettingForm" url="{{ path('ongr_settings_setting_set', ['hjkfb','kjbf']) }}">
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-6">
-                    <input id="name" type="text" ng-model="settingService.setting.name" class="form-control" disabled/>
+                    <input type="text" id="editSettingName" class="form-control" value="{{ setting.name }}" disabled/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="profile" class="col-sm-2 control-label">Profile</label>
                 <div class="col-sm-6">
-                    <input id="profile" type="text" ng-model="settingService.setting.profile" class="form-control" disabled/>
+                    <input type="text" id="editSettingProfiles" class="form-control" value="{{ setting.profile }}" disabled/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="description" class="col-sm-2 control-label">Description</label>
                 <div class="col-sm-6">
-                    <input id="description" type="text" ng-model="settingService.setting.description" class="form-control" />
+                    <input type="text" class="form-control" value="{{ setting.description }}"/>
                 </div>
             </div>
-            {% verbatim %}
             <div class="form-group">
                 <label for="type" class="col-sm-2 control-label">Type</label>
-                <div class="btn-group col-sm-8">
-                    <button type="button" class="btn btn-default"
-                            ng-repeat="item in settingService.settingTypes"
-                            ng-class="{ 'btn-primary': $index == settingService.selectedTypeIndex }"
-                            ng-click="settingService.changeType($index)">
-                        {{ item.name }}
-                    </button>
+                <div class="btn-group col-sm-8" id="editSettingType">
+                    <label class="setting-type btn btn-default
+                        {% if setting.type == 'string' %}btn-primary{% endif %}"
+                           rel="setting-default-div">Default</label>
+                    <label class="setting-type btn btn-default
+                        {% if setting.type == 'bool' %}btn-primary{% endif %}"
+                           rel="setting-boolean-div">Boolean</label>
+                    <label class="setting-type btn btn-default
+                        {% if setting.type == 'array' %}btn-primary{% endif %}"
+                           rel="setting-array-div">Array</label>
+                    <label class="setting-type btn btn-default
+                        {% if setting.type == 'object' %}btn-primary{% endif %}"
+                           rel="setting-object-div">Object</label>
                 </div>
             </div>
             <div class="form-group">
                 <label for="value" class="col-sm-2 control-label">Settings</label>
-                <div ng-switch="settingService.setting.type" class="col-sm-6">
-                    <div ng-switch-when="boolean" href="#">
+                <div class="col-sm-10">
+                    <div class="setting-boolean-div {% if setting.type != 'bool' %}hidden{% endif %}">
                         <div class="btn-group">
-                            <label class="btn btn-default" ng-class="{ 'btn-primary' : settingService.setting.data.value }" ng-model="settingService.setting.data.value" btn-radio="true" uncheckable>On</label>
-                            <label class="btn btn-default" ng-class="{ 'btn-primary' : !settingService.setting.data.value }" ng-model="settingService.setting.data.value" btn-radio="false" uncheckable>Off</label>
+                            <label class="setting-type-boolean btn btn-default
+                                {% if setting.type == 'bool' and setting.data.value == true %}btn-primary{% endif %}" rel="true">On</label>
+                            <label class="setting-type-boolean btn btn-default
+                                {% if setting.type == 'bool' and setting.data.value == false %}btn-primary{% endif %}" rel="false">Off</label>
+                            <input id="editSettingBoolean" type="checkbox" name="setting-boolean" class="hidden"
+                                   {% if setting.type == 'bool' and setting.data.value == true %}checked="true"{% endif %}>
                         </div>
                     </div>
 
-                    <div ng-switch-when="array">
-                        <ul id="array-values" class="list-unstyled">
-                            <li ng-repeat="(key, value) in settingService.setting.data.value track by $index">
-                                <div class="input-group">
-                                    <span class="input-group-addon">{{ key }}</span>
-                                    <input type="text" class="form-control" ng-model="settingService.setting.data.value[key]">
-                                <span class="input-group-btn">
-                                    <button ng-click="settingService.arrayUnset(key)" class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i></button>
-                                </span>
-                                </div>
-                            </li>
+                    <div class="setting-array-div {% if setting.type != 'array' %}hidden{% endif %}">
+                        <ul id="editSettingArray" class="list-unstyled" rel="0">
+                            {% for value in setting.data.value %}
+                                <li>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="setting-array_{{ loop.index0 }}" value="{{ value }}">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-danger" type="button" onclick="addArrayRemoveInput(this)"><i class="glyphicon glyphicon-remove"></i></button>
+                                        </span>
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
 
-                        <button ng-click="settingService.arrayAdd()" class="pull-right btn btn-success"><i class="glyphicon glyphicon-plus"></i></button>
+                        <button class="settings-array-add pull-right btn btn-success"><i class="glyphicon glyphicon-plus"></i></button>
                     </div>
 
-                    <div ng-switch-when="object">
-                        <h5 id="yamlSyntaxStatus">Yaml :: Syntax is correct.</h5>
-                        <yaml yml="settingService.setting.data.value"></yaml>
+                    <div  class="setting-object-div {% if setting.type != 'object' %}hidden{% endif %}">
+                        <textarea id="editSettingObject" class="form-control ng-isolate-scope" rows="12" cols="30"></textarea>
                     </div>
 
-                    <input ng-switch-default id="settings" type="text" ng-model="settingService.setting.data.value" class="form-control" placeholder="enter setting value"/>
+                    <div class="setting-default-div  {% if setting.type != 'string' %}hidden{% endif %}">
+                        <input id="editSettingDefault" name="setting-default" type="text" class="form-control" {% if setting.type == 'string' %}value="{{ setting.data.value }}"{% endif %}/>
+                    </div>
                 </div>
             </div>
-            {% endverbatim %}
+
+            <div class="form-group no-margin-bottom" id="editSettingMessages">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <p class="alert alert-success no-margin-bottom hidden">Setting created successfully.</p>
+                    <p class="alert alert-danger no-margin-bottom hidden"><strong>Creation failed</strong>. <span class="error-message"></span></p>
+                </div>
+            </div>
+
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-6">
-                    <button ng-click="settingService.addSetting()" type="submit" class="btn btn-primary">Save</button>
+                    <button class="btn btn-primary" id="submitSettingForEditing" onclick="addSetting(event, 'edit');">Save</button>
                     <a class="btn btn-danger" href="{{ path('ongr_settings_settings_list', { 'profile': setting.profile }) }}">Close</a>
                 </div>
             </div>
 
-            <div class="col-sm-offset-2 col-sm-6">
-                <p class="alert alert-success" ng-class="{true:'', false:'hidden'}[settingService.status==200]">Setting updated successfuly.</p>
-                <p class="alert alert-danger" ng-class="{true:'', false:'hidden'}[settingService.status==400]">Update failed.</p>
-            </div>
-
         </form>
     </div>
-{% endblock %}
-
-{% block admin_javascripts %}
-    <script type="text/javascript">
-        var setting = {{ setting|json_encode|raw }};
-    </script>
-    <script src="{{ asset('bundles/ongrsettings/js/controller/EditController.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/app-edit.js') }}"></script>
-    {{ parent() }}
 {% endblock %}
