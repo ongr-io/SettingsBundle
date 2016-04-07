@@ -20,6 +20,19 @@ $(document).ready(function(){
         }
     });
 
+    $('.setting-remove').on('click', function(event){
+        event.preventDefault();
+        var url = $(this).attr('url');
+        $this = $(this);
+        $.ajax({
+            url: url,
+            type: "DELETE",
+            success: function () {
+                $this.closest('tr').remove();
+            }
+        });
+    });
+
     $('.setting-type').on('click', function(){
         if(!$(this).hasClass('btn-primary')) {
             $(this).toggleClass('btn-primary');
