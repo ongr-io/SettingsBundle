@@ -71,3 +71,25 @@ $(document).ready(function(){
 function addArrayRemoveInput(el){
     jQuery(el).parent().parent().parent().empty();
 }
+
+function arrayHandleList(el, event, data){
+    event.preventDefault();
+    var $el = jQuery(el);
+    var render = '';
+    var settings = jQuery.parseJSON(data);
+    if($el.html() == 'more'){
+        settings.forEach(function(val){
+            render = render + '<li>' + val + '</li>';
+        });
+        data = data.replace(/(["])/g, '&#34 ');
+        render = render + '<li><a href="#" onclick="arrayHandleList(this, event, \''+data+'\')">less</a></li>';
+        $el.parent().parent().html(render);
+    }else if($el.html() == 'less'){
+        render = render + '<li>' + settings[0] + '</li>';
+        render = render + '<li>' + settings[1] + '</li>';
+        render = render + '<li>' + settings[2] + '</li>';
+        data = data.replace(/(["])/g, '&#34 ');
+        render = render + '<li><a href="#" onclick="arrayHandleList(this, event, \''+data+'\')">more</a></li>';
+        $el.parent().parent().html(render);
+    }
+}
