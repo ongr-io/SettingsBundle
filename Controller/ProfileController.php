@@ -12,12 +12,13 @@
 namespace ONGR\SettingsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SettingsListController. Is used for managing settings in General env.
  */
-class SettingsAddController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Renders add setting form.
@@ -26,10 +27,7 @@ class SettingsAddController extends Controller
      */
     public function displayAction()
     {
-        $profileManager = $this->get('ongr_settings.profiles_manager');
-        $profiles = $profileManager->findAllProfiles();
         $params = [];
-        $params['profiles'] = $profiles;
         $cache = $this->get('es.cache_engine');
         if ($cache->contains('settings_errors')) {
             $params['errors'] = $cache->fetch('settings_errors');
@@ -39,7 +37,18 @@ class SettingsAddController extends Controller
             $cache->delete('settings_success');
         }
         return $this->render(
-            'ONGRSettingsBundle:Settings:add.html.twig', $params
+            'ONGRSettingsBundle:Settings:addProfile.html.twig', $params
         );
+    }
+
+    /**
+     * Action for creating a profile
+     *
+     * @param Request $request
+     */
+    public function createAction(Request $request)
+    {
+        $profileManager = $this->get('ongr_settings.profiles_manager');
+
     }
 }

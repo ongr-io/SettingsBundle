@@ -10,9 +10,21 @@ ongr_settings_settings_add:
     defaults:
         _controller: ONGRSettingsBundle:SettingsAdd:display
 
+ongr_settings_profile_add:
+    path: /add_profile
+    methods: [GET]
+    defaults:
+        _controller: ONGRSettingsBundle:Profile:display
+
 ongr_settings_settings_list:
     path:  /{profile}
     methods: [GET]
     defaults:
         _controller: ONGRSettingsBundle:SettingsList:list
         profile: 'default'
+
+ongr_settings_profile_set:
+    path: /create/profile
+    methods: [POST]
+    defaults:
+        _controller: ONGRSettingsBundle:Profile:create

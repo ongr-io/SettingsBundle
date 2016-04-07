@@ -65,7 +65,7 @@
                 {% if app.request.attributes.get('_route') != "ongr_settings_setting_edit" %}
                     <div class="nav navbar-nav">
                         <a href="{{ path('ongr_settings_settings_add') }}" class="btn btn-default navbar-btn">Add setting</a>
-                        <a class="btn btn-default navbar-btn" href="#">Add profile</a>
+                        <a class="btn btn-default navbar-btn" href="{{ path('ongr_settings_profile_add') }}">Add profile</a>
                     </div>
                 {% endif %}
             {% endblock %}
