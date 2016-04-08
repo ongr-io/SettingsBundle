@@ -20,17 +20,19 @@ $(document).ready(function(){
         }
     });
 
-    $('.setting-remove').on('click', function(event){
-        event.preventDefault();
+    $('.setting-remove').on('click', function(){
         var url = $(this).attr('url');
-        $this = $(this);
+        $(this).attr('id', 'buttonToRemove');
+        $('#deleteModalSubmit').attr('url', url);
+    });
+
+    $('#deleteModalSubmit').on('click', function(){
+        var url = $(this).attr('url');
         $.ajax({
             url: url,
-            type: "DELETE",
-            success: function () {
-                $this.closest('tr').remove();
-            }
+            type: "DELETE"
         });
+        location.reload();
     });
 
     $('.setting-type').on('click', function(){

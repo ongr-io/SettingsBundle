@@ -169,7 +169,12 @@ class SettingsManagerController extends Controller
 
         $this->getSettingsManager()->remove($setting);
 
-        return new Response();
+        return new RedirectResponse(
+            $this->generateUrl(
+                'ongr_settings_settings_list',
+                ['profile' => $profile]
+            )
+        );
     }
 
     /**
