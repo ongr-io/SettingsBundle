@@ -5,23 +5,23 @@
         <div class="row">
             <h2 class="col-sm-offset-2 col-sm-6">Edit {{ setting.name }}</h2>
         </div>
-        <form class="form-horizontal" id="editSettingForm" url="{{ path('ongr_settings_setting_set', ['hjkfb','kjbf']) }}">
+        <form class="form-horizontal" id="editSettingForm" action="{{ path('ongr_settings_setting_update') }}" method="post">
             <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">Name</label>
+                <label for="settingName" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-6">
-                    <input type="text" id="editSettingName" class="form-control" value="{{ setting.name }}" disabled/>
+                    <input type="text" name="settingName" id="editSettingName" class="form-control" value="{{ setting.name }}" readonly/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="profile" class="col-sm-2 control-label">Profile</label>
                 <div class="col-sm-6">
-                    <input type="text" id="editSettingProfiles" class="form-control" value="{{ setting.profile }}" disabled/>
+                    <input type="text" name="settingProfiles" id="editSettingProfiles" class="form-control" value="{{ setting.profile }}" readonly/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="description" class="col-sm-2 control-label">Description</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" value="{{ setting.description }}"/>
+                    <input type="text" class="form-control" name="settingDescription" value="{{ setting.description }}"/>
                 </div>
             </div>
             <div class="form-group">
@@ -29,34 +29,39 @@
                 <div class="btn-group col-sm-8" id="editSettingType">
                     <label class="setting-type btn btn-default
                         {% if setting.type == 'string' %}btn-primary{% endif %}"
-                           rel="setting-default-div">Default</label>
+                           rel="string">Default</label>
                     <label class="setting-type btn btn-default
                         {% if setting.type == 'bool' %}btn-primary{% endif %}"
-                           rel="setting-boolean-div">Boolean</label>
+                           rel="boolean">Boolean</label>
                     <label class="setting-type btn btn-default
                         {% if setting.type == 'array' %}btn-primary{% endif %}"
-                           rel="setting-array-div">Array</label>
+                           rel="array">Array</label>
                     <label class="setting-type btn btn-default
                         {% if setting.type == 'object' %}btn-primary{% endif %}"
-                           rel="setting-object-div">Object</label>
+                           rel="object">Object</label>
+                    <input id="addSettingTypeInput" value="{{ setting.type }}" name="settingType" class="hidden"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="value" class="col-sm-2 control-label">Settings</label>
-                <div class="col-sm-10">
+                <div class="col-sm-6">
                     <div class="setting-boolean-div {% if setting.type != 'bool' %}hidden{% endif %}">
                         <div class="btn-group">
                             <label class="setting-type-boolean btn btn-default
                                 {% if setting.type == 'bool' and setting.data.value == true %}btn-primary{% endif %}" rel="true">On</label>
                             <label class="setting-type-boolean btn btn-default
                                 {% if setting.type == 'bool' and setting.data.value == false %}btn-primary{% endif %}" rel="false">Off</label>
-                            <input id="editSettingBoolean" type="checkbox" name="setting-boolean" class="hidden"
-                                   {% if setting.type == 'bool' and setting.data.value == true %}checked="true"{% endif %}>
+                            <input id="addSettingBoolean" name="setting-boolean" class="hidden"
+                                   {% if setting.type == 'bool' and setting.data.value == false %}
+                                        value="false"
+                                   {% else%}
+                                        value="true"
+                                    {% endif %}>
                         </div>
                     </div>
 
                     <div class="setting-array-div {% if setting.type != 'array' %}hidden{% endif %}">
-                        <ul id="editSettingArray" class="list-unstyled" rel="0">
+                        <ul id="addSettingArray" class="list-unstyled" rel="0">
                             {% for value in setting.data.value %}
                                 <li>
                                     <div class="input-group">
@@ -73,25 +78,28 @@
                     </div>
 
                     <div  class="setting-object-div {% if setting.type != 'object' %}hidden{% endif %}">
-                        <textarea id="editSettingObject" class="form-control ng-isolate-scope" rows="12" cols="30"></textarea>
+                        <textarea id="editSettingObject" name="setting-object" class="form-control ng-isolate-scope" rows="12" cols="30">{% if setting.type == 'object' %}{{ setting.data.value }}{% endif %}</textarea>
                     </div>
 
-                    <div class="setting-default-div  {% if setting.type != 'string' %}hidden{% endif %}">
+                    <div class="setting-string-div  {% if setting.type != 'string' %}hidden{% endif %}">
                         <input id="editSettingDefault" name="setting-default" type="text" class="form-control" {% if setting.type == 'string' %}value="{{ setting.data.value }}"{% endif %}/>
                     </div>
                 </div>
             </div>
 
-            <div class="form-group no-margin-bottom" id="editSettingMessages">
+            <div class="form-group no-margin-bottom" id="addSettingMessages">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <p class="alert alert-success no-margin-bottom hidden">Setting created successfully.</p>
-                    <p class="alert alert-danger no-margin-bottom hidden"><strong>Creation failed</strong>. <span class="error-message"></span></p>
+                    <p class="alert alert-success no-margin-bottom
+                        {% if success is not defined %}hidden{% endif %}">Setting updated successfully.</p>
+                    <p class="alert alert-danger no-margin-bottom
+                        {% if errors is not defined %}hidden{% endif %}">
+                        <strong>Creation failed</strong>. <span class="error-message">{% if errors is defined %}{{ errors }} {% endif %}</span></p>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-6">
-                    <button class="btn btn-primary" id="submitSettingForEditing" onclick="addSetting(event, 'edit');">Save</button>
+                    <input class="btn btn-primary" id="submitSettingForEditing" type="submit" value="Save">
                     <a class="btn btn-danger" href="{{ path('ongr_settings_settings_list', { 'profile': setting.profile }) }}">Close</a>
                 </div>
             </div>

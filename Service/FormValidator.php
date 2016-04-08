@@ -29,9 +29,12 @@ class FormValidator
         $return = [];
         $return['error'] = '';
         $return['name'] = $request->request->get('settingName');
-        $return['profiles'] = $request->request->get('settingProfiles');
         $return['type'] = $request->request->get('settingType');
         $return['description'] = $request->request->get('settingDescription');
+        $profiles = $request->request->get('settingProfiles');
+
+        is_string($profiles) ? $return['profiles'] = [$profiles] : $return['profiles'] = $profiles;
+
         if ($return['name'] == '') {
             $return['error'] = 'You must set a name to the setting. ';
         }

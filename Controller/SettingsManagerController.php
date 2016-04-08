@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Yaml\Dumper;
 
 /**
  * SettingsManager controller responsible for CRUD actions from frontend for settings.
@@ -74,51 +75,83 @@ class SettingsManagerController extends Controller
     public function editAction(Request $request, $name, $profile)
     {
         $setting = $this->getSettingsManager()->get($name, $profile, false, $request->query->get('type', 'string'));
-
+        $params = [];
+        $params['setting'] = $setting;
+        $cache = $this->get('es.cache_engine');
+        if ($setting->getType() == 'object') {
+            $dumper = new Dumper();
+            $setting->setData(
+                [
+                    'value' => $dumper->dump(json_decode($setting->getData()['value'], true), 2)
+                ]
+            );
+        }
+        if ($cache->contains('settings_errors')) {
+            $params['errors'] = $cache->fetch('settings_errors');
+            $cache->delete('settings_errors');
+        } elseif ($cache->contains('settings_success')) {
+            $params['success'] = $cache->fetch('settings_success');
+            $cache->delete('settings_success');
+        }
         return $this->render(
             'ONGRSettingsBundle:Settings:edit.html.twig',
-            [
-                'setting' => $setting,
-            ]
+            $params
         );
     }
 
     /**
-     * Action for Angularjs to edit settings.
+     * Action updating a setting.
      *
      * @param Request $request
-     * @param string  $name
-     * @param string  $profile
      *
      * @return Response
-     * @throws NotFoundHttpException
      */
-    public function ngEditAction(Request $request, $name, $profile)
+    public function updateAction(Request $request)
     {
-        $content = $request->getContent();
-        if (empty($content)) {
-            return new Response(Response::$statusTexts[400], 400);
-        }
-
-        $content = json_decode($content, true);
-        if ($content === null || empty($content['setting'])) {
-            return new Response(Response::$statusTexts[400], 400);
-        }
-
-        $type = isset($content['setting']['type']) ? $content['setting']['type'] : 'string';
-
+        $data = $this->get('ongr_settings.form_validator')->validateSettingForm($request);
         $manager = $this->getSettingsManager();
-        $model = $manager->get($name, $profile, false, $type);
+        $cache = $this->get('es.cache_engine');
 
-        $model->setData($content['setting']['data']);
-
-        if (isset($content['setting']['description'])) {
-            $model->setDescription($content['setting']['description']);
+        if ($data['error'] != '') {
+            $cache->save('settings_errors', $data['error']);
+            return new RedirectResponse(
+                $this->generateUrl(
+                    'ongr_settings_setting_edit',
+                    ['name' => $data['name'], 'profile' => $data['profiles'][0]]
+                )
+            );
         }
 
-        $manager->save($model);
+        $model = $manager->get(
+            $data['name'],
+            $data['profiles'][0],
+            false,
+            $data['type']
+        );
 
-        return new Response();
+        $model->setData((object)['value' => $data['value']]);
+        $model->setType($data['type']);
+        $model->setDescription($data['description']);
+
+        try {
+            $manager->save($model);
+        } catch (\Exception $e) {
+            $cache->save('settings_errors', $e->getMessage());
+            return new RedirectResponse(
+                $this->generateUrl(
+                    'ongr_settings_setting_edit',
+                    ['name' => $data['name'], 'profile' => $data['profiles'][0]]
+                )
+            );
+        }
+
+        $cache->save('settings_success', true);
+        return new RedirectResponse(
+            $this->generateUrl(
+                'ongr_settings_setting_edit',
+                ['name' => $data['name'], 'profile' => $data['profiles'][0]]
+            )
+        );
     }
 
     /**

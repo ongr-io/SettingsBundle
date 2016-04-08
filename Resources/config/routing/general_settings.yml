@@ -21,18 +21,18 @@ ongr_settings_setting_set:
 
 ongr_settings_setting_edit:
     path:  /setting/{name}/edit/{profile}
-    methods: [GET, POST]
+    methods: [GET]
     defaults:
         _controller: ONGRSettingsBundle:SettingsManager:edit
         profile: 'default'
     options:
         expose: true
 
-ongr_settings_setting_ng_edit:
-    path:  /setting/ng/{name}/edit/{profile}
+ongr_settings_setting_update:
+    path:  /setting/update/
     methods: [POST]
     defaults:
-        _controller: ONGRSettingsBundle:SettingsManager:ngEdit
+        _controller: ONGRSettingsBundle:SettingsManager:update
         profile: 'default'
     options:
         expose: true
