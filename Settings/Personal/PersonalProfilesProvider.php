@@ -11,7 +11,7 @@
 
 namespace ONGR\SettingsBundle\Settings\Personal;
 
-use ONGR\SettingsBundle\Settings\Personal\ProfilesManager;
+use ONGR\SettingsBundle\Service\ProfileManager;
 use ONGR\SettingsBundle\Settings\Personal\UnderscoreEscaper;
 use ONGR\SettingsBundle\Settings\Personal\SettingsStructure;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -22,14 +22,14 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 class PersonalProfilesProvider
 {
     /**
-     * @var ProfilesManager
+     * @var ProfileManager
      */
-    protected $profileManager;
+    private $profileManager;
 
     /**
      * @var SettingsStructure
      */
-    protected $settingsStructure;
+    private $settingsStructure;
 
     /**
      * On kernel request.
@@ -53,13 +53,13 @@ class PersonalProfilesProvider
      */
     public function getSettings()
     {
-        $profiles = $this->profileManager->getProfiles();
+        $profiles = $this->profileManager->getAllProfiles();
 
         $settings = [];
         foreach ($profiles as $profile) {
-            $profileId = 'ongr_settings_profile_' . UnderscoreEscaper::escape($profile['profile']);
+            $profileId = 'ongr_settings_profile_' . UnderscoreEscaper::escape($profile['name']);
             $settings[$profileId] = [
-                'name' => $profile['profile'],
+                'name' => $profile['name'],
                 'category' => 'ongr_settings_profiles',
             ];
         }
@@ -68,7 +68,7 @@ class PersonalProfilesProvider
     }
 
     /**
-     * @param ProfilesManager $profileSettingsProvider
+     * @param ProfileManager $profileSettingsProvider
      */
     public function setProfileManager($profileSettingsProvider)
     {

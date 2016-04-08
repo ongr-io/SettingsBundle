@@ -12,7 +12,7 @@ services:
             - "@stash"
             - %ongr_settings.settings_container.profiles%
         tags:
-            - { name: kernel.event_listener, event: ongr_settings.setting_change, method: onSettingChange }
+#            - { name: kernel.event_listener, event: ongr_settings.setting_change, method: onSettingChange }
 
     ongr_settings.setting_aware_service_factory:
         class: ONGR\SettingsBundle\Settings\General\SettingAwareServiceFactory
@@ -23,14 +23,14 @@ services:
         tags:
             - { name: monolog.logger, channel: admin }
 
-    ongr_settings.listener.cookie_profile:
-        class: ONGR\SettingsBundle\EventListener\ProfileRequestListener
-        calls:
-            - [ setSettingsContainer, [ "@ongr_settings.settings_container" ] ]
-            - [ setPersonalSettingsManager, [ "@ongr_settings.settings.personal_settings_manager" ] ]
-            - [ setManager, [ "@es.manager.settings" ] ]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+#    ongr_settings.listener.cookie_profile:
+#        class: ONGR\SettingsBundle\EventListener\ProfileRequestListener
+#        calls:
+#            - [ setSettingsContainer, [ "@ongr_settings.settings_container" ] ]
+#            - [ setPersonalSettingsManager, [ "@ongr_settings.settings.personal_settings_manager" ] ]
+#            - [ setManager, [ "@es.manager.settings" ] ]
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     ongr_settings.profiles_manager:
         class: ONGR\SettingsBundle\Service\ProfileManager

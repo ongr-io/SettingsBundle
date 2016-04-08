@@ -5,7 +5,7 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <div class="nav navbar-nav navbar-right">
-                <button class="btn btn-default navbar-btn" id="userIcon"><span class="glyphicon glyphicon-user"></span></button>
+                <a href="{{ path('ongr_settings_personal_settings')}}" class="btn btn-default navbar-btn" id="userIcon"><span class="glyphicon glyphicon-user"></span></a>
             </div>
             {% block search %}
                 {% if filters.search is defined %}

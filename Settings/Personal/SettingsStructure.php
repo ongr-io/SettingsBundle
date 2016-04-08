@@ -21,17 +21,17 @@ class SettingsStructure
     /**
      * @var array
      */
-    protected $settingsParameter;
+    private $settingsParameter;
 
     /**
      * @var array
      */
-    protected $categoriesParameter;
+    private $categoriesParameter;
 
     /**
      * @var array
      */
-    protected $structure = [];
+    private $structure = [];
 
     /**
      * @param array $settingsParameter
