@@ -5,7 +5,7 @@
 {% endblock %}
 {% block main %}
     {% include 'ONGRSettingsBundle:Settings:inc/deleteModal.html.twig' %}
-    <div class="container-fluid">
+    <div class="container-fluid" id="settingsListContainer" edit-url="{{ path('ongr_settings_setting_update') }}">
         <div class="row">
             <div class="col-lg-12">
                 <table class="table table-hover">
@@ -21,8 +21,8 @@
                     {% for data in data %}
                         <tbody>
                         <tr>
-                            <td class=".col-xs-8 .col-md-6">{{ data.name }}</td>
-                            <td class=".col-xs-18 .col-md-8">{{ data.description }}</td>
+                            <td class=".col-xs-8 .col-md-6 list-name" profile="{{ data.profile }}">{{ data.name }}</td>
+                            <td class=".col-xs-18 .col-md-8 list-description">{{ data.description }}</td>
                             <td class=".col-xs-6 .col-md-4">{{ data.type }}</td>
                             <td class=".col-xs-12 .col-md-8">
                                 <div class="settings-container">

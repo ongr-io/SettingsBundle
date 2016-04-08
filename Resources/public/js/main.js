@@ -13,11 +13,34 @@ $(document).ready(function(){
     $('#duplicateSettingProfiles').multiselect();
 
     $('.boolean').on('click', function(){
-        // ----- implement ajax request to change the setting
-        if(!$(this).hasClass('btn-primary')) {
+        if (!$(this).hasClass('btn-primary')) {
             $(this).toggleClass('btn-primary');
             $(this).siblings().toggleClass('btn-primary');
         }
+        var value = '';
+        var type = 'bool';
+        if ($(this).text() == 'On') {
+            value = 'true';
+        } else {
+            value = 'false';
+        }
+        var url = $('#settingsListContainer').attr('edit-url');
+        var nameElement = $(this).closest('td').siblings('.list-name');
+        var description = $(this).closest('td').siblings('.list-description').text();
+        var name = nameElement.text();
+        var profile = nameElement.attr('profile');
+        var data = {
+            'settingName': name,
+            'settingProfiles': profile,
+            'settingDescription': description,
+            'settingType': type,
+            'setting-boolean': value
+        };
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: data
+        });
     });
 
     $('.setting-remove').on('click', function(){
@@ -36,7 +59,7 @@ $(document).ready(function(){
     });
 
     $('.setting-type').on('click', function(){
-        if(!$(this).hasClass('btn-primary')) {
+        if (!$(this).hasClass('btn-primary')) {
             $(this).toggleClass('btn-primary');
             $(this).siblings().removeClass('btn-primary');
             var $relElement = $('.setting-'+$(this).attr('rel')+'-div');
@@ -47,7 +70,7 @@ $(document).ready(function(){
     });
 
     $('.setting-type-boolean').on('click', function(){
-        if(!$(this).hasClass('btn-primary')) {
+        if (!$(this).hasClass('btn-primary')) {
             $(this).toggleClass('btn-primary');
             $(this).siblings('label').removeClass('btn-primary');
             $(this).siblings('input').val($(this).attr('rel'));
@@ -79,14 +102,14 @@ function arrayHandleList(el, event, data){
     var $el = jQuery(el);
     var render = '';
     var settings = jQuery.parseJSON(data);
-    if($el.html() == 'more'){
+    if ($el.html() == 'more'){
         settings.forEach(function(val){
             render = render + '<li>' + val + '</li>';
         });
         data = data.replace(/(["])/g, '&#34 ');
         render = render + '<li><a href="#" onclick="arrayHandleList(this, event, \''+data+'\')">less</a></li>';
         $el.parent().parent().html(render);
-    }else if($el.html() == 'less'){
+    } else if ($el.html() == 'less'){
         render = render + '<li>' + settings[0] + '</li>';
         render = render + '<li>' + settings[1] + '</li>';
         render = render + '<li>' + settings[2] + '</li>';
