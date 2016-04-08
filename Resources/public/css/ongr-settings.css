@@ -24,3 +24,6 @@
 .modal-content {
     text-align: center;
 }
+.filter-sort {
+    cursor: pointer;
+}

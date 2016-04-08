@@ -4,6 +4,9 @@
             <a class="navbar-brand" href="{{ path('ongr_settings_homepage') }}">General Settings</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="nav navbar-nav navbar-right">
+                <button class="btn btn-default navbar-btn" id="userIcon"><span class="glyphicon glyphicon-user"></span></button>
+            </div>
             {% block search %}
                 {% if filters.search is defined %}
                     {% set search = filters.search %}
@@ -12,10 +15,10 @@
                             <input type="text" class="form-control" name="q" value="{% if search is defined %}{{ search.state.value }}{% endif %}" placeholder="{% if search is defined %}{{ search.name | capitalize | trans }}{% else %}Search{% endif %}" autocomplete="off">
                         </div>
                         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                        <button class="btn btn-default"><span class="glyphicon glyphicon-user"></span></button>
                     </form>
                 {% endif %}
             {% endblock %}
+
             {#{% block sort %}#}
                 {#{% if filters.sort is defined %}#}
                     {#{% set sort = filters.sort %}#}
@@ -62,18 +65,11 @@
                 {% endif %}
             {% endblock %}
             {% block buttons %}
-                {% if app.request.attributes.get('_route') != "ongr_settings_setting_edit" %}
-                    <div class="nav navbar-nav">
-                        <a href="{{ path('ongr_settings_settings_add') }}" class="btn btn-default navbar-btn">Add setting</a>
-                        <a class="btn btn-default navbar-btn" href="{{ path('ongr_settings_profile_add') }}">Add profile</a>
-                    </div>
-                {% endif %}
-            {% endblock %}
-            {% if not filters is defined %}
-                <div class="nav navbar-nav navbar-right">
-                    <a class="btn btn-default navbar-btn" href="{{ path('ongr_settings_settings_list') }}">{{ 'Settings List'|trans }}</a>
+                <div class="nav navbar-nav">
+                    <a href="{{ path('ongr_settings_settings_add') }}" class="btn btn-default navbar-btn">Add setting</a>
+                    <a class="btn btn-default navbar-btn" href="{{ path('ongr_settings_profile_add') }}">Add profile</a>
                 </div>
-            {% endif %}
+            {% endblock %}
         </div>
     </div>
 </nav>
