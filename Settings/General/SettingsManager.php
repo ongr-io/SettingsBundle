@@ -92,11 +92,13 @@ class SettingsManager
     /**
      * Saves setting.
      *
-     * @param Setting $setting
+     * @param array $settings
      */
-    public function save(Setting $setting)
+    public function save(array $settings)
     {
-        $this->manager->persist($setting);
+        foreach ($settings as $setting) {
+            $this->manager->persist($setting);
+        }
         $this->manager->commit();
 
         $this->eventDispatcher->dispatch('ongr_settings.setting_change', new SettingChangeEvent('save'));
@@ -120,16 +122,20 @@ class SettingsManager
      * Copy a setting to the new profile.
      *
      * @param Setting $setting
-     * @param string  $newProfile
+     * @param array  $newProfiles
      */
-    public function duplicate(Setting $setting, $newProfile)
+    public function duplicate(Setting $setting, $newProfiles)
     {
-        $newSetting = clone $setting;
+        $newSettings = [];
+        foreach ($newProfiles as $profile) {
+            $newSetting = clone $setting;
 
-        $newSetting->setId($newProfile . '_' . $setting->getName());
-        $newSetting->setProfile($newProfile);
+            $newSetting->setId($profile . '_' . $setting->getName());
+            $newSetting->setProfile($profile);
+            $newSettings[] = $newSetting;
+        }
 
-        $this->save($newSetting);
+        $this->save($newSettings);
     }
 
     /**

@@ -47,8 +47,8 @@ ongr_settings_setting_remove:
         expose: true
 
 ongr_settings_setting_copy:
-    path:  /setting/{name}/copy/{from}/{to}
-    methods: [GET]
+    path:  /setting/{name}/copy/{from}
+    methods: [POST]
     defaults:
         _controller: ONGRSettingsBundle:SettingsManager:copy
         from: 'default'

@@ -134,7 +134,7 @@ class SettingsManagerController extends Controller
         $model->setDescription($data['description']);
 
         try {
-            $manager->save($model);
+            $manager->save([$model]);
         } catch (\Exception $e) {
             $cache->save('settings_errors', $e->getMessage());
             return new RedirectResponse(
@@ -180,22 +180,40 @@ class SettingsManagerController extends Controller
     /**
      * Copies a setting to a new profile.
      *
+     * @param Request $request
      * @param string $name
      * @param string $from
-     * @param string $to
      *
      * @return Response
      * @throws NotFoundHttpException
      */
-    public function copyAction($name, $from, $to)
+    public function copyAction(Request $request, $name, $from)
     {
+        $cache = $this->get('es.cache_engine');
+        $profiles = $request->request->get('settingProfiles');
+
+        if (!is_array($profiles)) {
+            $cache->save('settings_errors', 'You must select at least one profile');
+            return new RedirectResponse(
+                $this->generateUrl(
+                    'ongr_settings_settings_duplicate',
+                    ['profile' => $from, 'name' => $name]
+                )
+            );
+        }
         $settingsManager = $this->getSettingsManager();
 
         $setting = $settingsManager->get($name, $from);
 
-        $this->getSettingsManager()->duplicate($setting, $to);
+        $this->getSettingsManager()->duplicate($setting, $profiles);
 
-        return new Response();
+        $cache->save('settings_success', true);
+        return new RedirectResponse(
+            $this->generateUrl(
+                'ongr_settings_settings_duplicate',
+                ['profile' => $from, 'name' => $name]
+            )
+        );
     }
 
     /**
