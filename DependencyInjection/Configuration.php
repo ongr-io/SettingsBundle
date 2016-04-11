@@ -60,7 +60,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                 ->end()
-                ->arrayNode('admin_user')
+                ->arrayNode('user_settings')
                     ->children()
                         ->arrayNode('categories')
                             ->isRequired()

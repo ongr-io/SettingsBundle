@@ -47,8 +47,8 @@ class ONGRSettingsExtension extends Extension
 
         $loader->load('filter_container.yml');
 
-        if (isset($config['admin_user'])) {
-            $this->loadPersonalSettings($config['admin_user'], $container);
+        if (isset($config['user_settings'])) {
+            $this->loadPersonalSettings($config['user_settings'], $container);
         }
 
         $this->injectPersonalSettings($container);
