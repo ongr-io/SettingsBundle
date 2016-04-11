@@ -48,19 +48,19 @@ class PersonalSettingsManager
     }
 
     /**
-     * @param array $cookie
+     * @param array $stash
      */
-    public function setSettingsFromCookie(array $cookie)
+    public function setSettingsFromStash(array $stash)
     {
-        $this->userSettings = $cookie;
+        $this->userSettings = $stash;
     }
 
     /**
-     * @param array $cookie
+     * @param array $stash
      */
-    public function addSettingsFromCookie(array $cookie)
+    public function addSettingsFromStash(array $stash)
     {
-        $this->userSettings = array_merge($this->userSettings, $cookie);
+        $this->userSettings = array_merge($this->userSettings, $stash);
     }
 
     /**

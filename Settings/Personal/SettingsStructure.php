@@ -80,20 +80,20 @@ class SettingsStructure
      */
     public function addSetting($id, array $setting)
     {
-        $this->structure[$id] = $this->ensureSettingCookie($setting);
+        $this->structure[$id] = $this->ensureSettingStash($setting);
     }
 
     /**
-     * Ensure 'cookie' key is set. If not, default value is set.
+     * Ensure 'stash' key is set. If not, default value is set.
      *
      * @param array $setting
      *
      * @return array
      */
-    public function ensureSettingCookie(array $setting)
+    public function ensureSettingStash(array $setting)
     {
-        if (!isset($setting['cookie'])) {
-            $setting['cookie'] = 'ongr_settings.settings.settings_cookie';
+        if (!isset($setting['stash'])) {
+            $setting['stash'] = 'ongr_settings.settings.';//.$setting['id'];
         }
 
         return $setting;

@@ -36,7 +36,7 @@ class PersonalSettingsController extends Controller
         $manager = $this->getPersonalSettingsManager();
 
         // Handle form.
-        $settingsData = $manager->getSettings();
+        $settingsData = $this->get('stash')->getItem('ongr_settings')->get();
         $settingsMap = $manager->getSettingsMap();
         $options = [
             'settingsStructure' => $settingsMap,
@@ -48,8 +48,7 @@ class PersonalSettingsController extends Controller
             $manager->setSettingsFromForm($form->getData());
             $redirectResponse = $this->redirect($request->getUri());
             $settings = $manager->getSettings();
-            $this->attachCookies($settings, $settingsMap);
-
+            $this->saveStash($settings);
             return $redirectResponse;
         }
 
@@ -97,15 +96,15 @@ class PersonalSettingsController extends Controller
 
         $settingsStructure = $manager->getSettingsMap();
         if (array_key_exists($name, $settingsStructure)) {
-            $settings = $manager->getSettings();
+            $settings = $this->get('stash')->getItem('ongr_settings')->get();
             if (array_key_exists($name, $settings)) {
                 $settings[$name] = !$settings[$name];
             } else {
                 $settings[$name] = true;
             }
 
-            $manager->setSettingsFromCookie($settings);
-            $this->attachCookies($manager->getSettings(), $manager->getSettingsMap());
+            $manager->setSettingsFromStash($settings);
+            $this->saveStash($manager->getSettings());
 
             return new JsonResponse();
         } else {
@@ -125,23 +124,12 @@ class PersonalSettingsController extends Controller
      * Sets cookie values from settings based on settings map.
      *
      * @param array $settings
-     * @param array $settingsMap
      */
-    protected function attachCookies(array $settings, array $settingsMap)
+    protected function saveStash(array $settings)
     {
-        $cookies = [];
-        foreach ($settings as $settingId => $setting) {
-            // If array key is not existing because change in settings avoid exception.
-            if (array_key_exists($settingId, $settingsMap)) {
-                $cookieServiceName = $settingsMap[$settingId]['cookie'];
-                $cookies[$cookieServiceName][$settingId] = $setting;
-            }
-        }
-
-        foreach ($cookies as $cookieServiceName => $cookieSettings) {
-            /** @var CookieInterface $cookie */
-            $cookie = $this->get($cookieServiceName);
-            $cookie->setValue($cookieSettings);
-        }
+        $pool = $this->get('stash');
+        $stashSettings = $pool->getItem('ongr_settings');
+        $stashSettings->set($settings);
+        $pool->save($stashSettings);
     }
 }
