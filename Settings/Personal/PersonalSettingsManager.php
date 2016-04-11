@@ -25,26 +25,43 @@ class PersonalSettingsManager
     const ROLE_GRANTED = 'ROLE_ADMIN';
 
     /**
+     * @var string
+     */
+    const STASH_NAME = 'ongr_settings';
+
+    /**
      * @var SecurityContextInterface
      */
-    protected $securityContext;
+    private $securityContext;
 
     /**
      * @var SettingsStructure
      */
-    protected $settingsStructure;
+    private $settingsStructure;
 
     /**
      * @var array;
      */
-    protected $userSettings = [];
+    private $userSettings = [];
+
+    /**
+     * Stash for storing personal settings
+     *
+     * @var \Pool
+     */
+    private $pool;
 
     /**
      * @param SettingsStructure        $settingsStructure
+     * @param                          $security
+     * @param \Pool                    $pool
      */
-    public function __construct($settingsStructure)
+    public function __construct($settingsStructure, $security, $pool)
     {
         $this->settingsStructure = $settingsStructure;
+        $this->securityContext = $security;
+        $this->pool = $pool;
+        $this->userSettings = $pool->getItem(self::STASH_NAME)->get();
     }
 
     /**
@@ -90,6 +107,16 @@ class PersonalSettingsManager
         }
 
         return false;
+    }
+
+    /**
+     * Saves the current settings to stash
+     */
+    public function save()
+    {
+        $stashedSettings = $this->pool->getItem(self::STASH_NAME);
+        $stashedSettings->set($this->userSettings);
+        $this->pool->save($stashedSettings);
     }
 
     /**

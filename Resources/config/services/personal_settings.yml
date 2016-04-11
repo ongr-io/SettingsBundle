@@ -20,6 +20,8 @@ services:
             class: ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager
             arguments:
                 - "@ongr_settings.settings.settings_structure"
+                - "@security.authorization_checker"
+                - "@stash"
 
     # Personal profiles provider
     ongr_settings.personal_profiles_provider:

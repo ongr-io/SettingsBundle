@@ -34,9 +34,8 @@ class PersonalSettingsController extends Controller
     public function settingsAction(Request $request)
     {
         $manager = $this->getPersonalSettingsManager();
-
         // Handle form.
-        $settingsData = $this->get('stash')->getItem('ongr_settings')->get();
+        $settingsData = $manager->getSettings();//$this->get('stash')->getItem('ongr_settings')->get();
         $settingsMap = $manager->getSettingsMap();
         $options = [
             'settingsStructure' => $settingsMap,
@@ -47,8 +46,7 @@ class PersonalSettingsController extends Controller
         if ($form->isValid()) {
             $manager->setSettingsFromForm($form->getData());
             $redirectResponse = $this->redirect($request->getUri());
-            $settings = $manager->getSettings();
-            $this->saveStash($settings);
+            $manager->save();
             return $redirectResponse;
         }
 
@@ -96,7 +94,7 @@ class PersonalSettingsController extends Controller
 
         $settingsStructure = $manager->getSettingsMap();
         if (array_key_exists($name, $settingsStructure)) {
-            $settings = $this->get('stash')->getItem('ongr_settings')->get();
+            $settings = $manager->getSettings();
             if (array_key_exists($name, $settings)) {
                 $settings[$name] = !$settings[$name];
             } else {
@@ -104,7 +102,7 @@ class PersonalSettingsController extends Controller
             }
 
             $manager->setSettingsFromStash($settings);
-            $this->saveStash($manager->getSettings());
+            $manager->save();
 
             return new JsonResponse();
         } else {
@@ -118,18 +116,5 @@ class PersonalSettingsController extends Controller
     protected function getPersonalSettingsManager()
     {
         return $this->get('ongr_settings.settings.personal_settings_manager');
-    }
-
-    /**
-     * Sets cookie values from settings based on settings map.
-     *
-     * @param array $settings
-     */
-    protected function saveStash(array $settings)
-    {
-        $pool = $this->get('stash');
-        $stashSettings = $pool->getItem('ongr_settings');
-        $stashSettings->set($settings);
-        $pool->save($stashSettings);
     }
 }
