@@ -11,9 +11,34 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th>Name <a href=""><span class="filter-sort glyphicon glyphicon-chevron-down"></span></a></th>
-                        <th>Description <a href=""><span class="filter-sort glyphicon glyphicon-chevron-down"></span></a></th>
-                        <th>Type <a href=""><span class="filter-sort glyphicon glyphicon-chevron-down"></span></a></th>
+                        {% set sort = filters.sort %}
+                        {% for option in sort.choices %}
+                            {% if option.label == 'Name Asc' %}
+                                <th>Name <a href="
+                                {% if option.active == true%}
+                                    {{ path('ongr_settings_settings_list', sort.choices[1].urlParameters) }}"><span class="filter-sort glyphicon glyphicon-chevron-up
+                                {% else %}
+                                    {{ path('ongr_settings_settings_list', option.urlParameters) }}"><span class="filter-sort glyphicon glyphicon-chevron-down
+                                {% endif %}
+                                "></span></a></th>
+                            {% elseif option.label == 'Description Asc' %}
+                                <th>Description <a href="
+                                {% if option.active == true%}
+                                    {{ path('ongr_settings_settings_list', sort.choices[3].urlParameters) }}"><span class="filter-sort glyphicon glyphicon-chevron-up
+                                {% else %}
+                                     {{ path('ongr_settings_settings_list', option.urlParameters) }}"><span class="filter-sort glyphicon glyphicon-chevron-down
+                                {% endif %}
+                                "></span></a></th>
+                            {% elseif option.label == 'Type Asc' %}
+                                <th>Type <a href="
+                                {% if option.active == true%}
+                                {{ path('ongr_settings_settings_list', sort.choices[5].urlParameters) }}"><span class="filter-sort glyphicon glyphicon-chevron-up
+                                {% else %}
+                                {{ path('ongr_settings_settings_list', option.urlParameters) }}"><span class="filter-sort glyphicon glyphicon-chevron-down
+                                {% endif %}
+                                "></span></a></th>
+                            {% endif %}
+                        {% endfor %}
                         <th>Settings</th>
                         <th>Actions</th>
                     </tr>

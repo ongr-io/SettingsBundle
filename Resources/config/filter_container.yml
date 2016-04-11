@@ -15,6 +15,26 @@ parameters:
             field: "name"
             order: "desc"
             default: false
+        descAsc:
+            label: "Description Asc"
+            field: "description"
+            order: "asc"
+            default: true
+        descDesc:
+            label: "Description Desc"
+            field: "description"
+            order: "desc"
+            default: false
+        typeAsc:
+            label: "Type Asc"
+            field: "type"
+            order: "asc"
+            default: true
+        typeDesc:
+            label: "Type Desc"
+            field: "type"
+            order: "desc"
+            default: false
 
     ongr_settings.filter.match_search.request_field: q
     ongr_settings.filter.match_search.field: "name"
