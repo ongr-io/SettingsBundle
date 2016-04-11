@@ -3,64 +3,105 @@
 {% block title %}User settings{% endblock %}
 
 {% block main %}
-    <div class="container">
-        {% block head_content %}{% endblock %}
+    <div class="container-fluid">
+        {% block head_content %}
+            <div class="header">
+                <h2>Personal settings</h2>
+            </div>
+        {% endblock %}
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
+            <div class="col-lg-12">
                 {% block settings_form %}
                     {{ form_start(form) }}
                     {{ form_errors(form, {'attr': {'class': 'alert alert-danger'} }) }}
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th class="col-md-1">Enabled </th>
+                            <th>Name</th>
+                            <th>Category </th>
+                            <th>Description</th>
+                            <th class="col-md-4">Toggle API</th>
+                        </tr>
+                        </thead>
                     {% for category_id, category in categories %}
-                        <div class="category" id="category-{{ category_id }}">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="panel-title">
-                                        {% if category.name is defined %}
-                                            {{ category.name }}
-                                        {% endif %}
-                                    </div>
-                                    {% if category.description is defined %}
-                                        <span class="help-block">{{ category.description }}</span>
-                                    {% endif %}
-                                </div>
-                                <div class="panel-body">
-                                    {% if category.settings is defined %}
-                                        {% for setting_id, setting in category.settings %}
+                        {% if category.settings is defined and category.name != 'ONGR Settings profiles' %}
+                            {% for setting_id, setting in category.settings %}
+                                <tbody>
+                                    <tr class="category" id="category-{{ category_id }}">
+                                        <td class="col-md-1 enabled" >
                                             <div class="form-group">
                                                 {% set form_field_type = form[setting_id].vars.block_prefixes.1 %}
                                                 {% if form_field_type == 'checkbox' %}
                                                     <div class="checkbox">
-                                                        {{ form_errors(form[setting_id]) }}
                                                         <label>
-                                                            {{ form_widget(form[setting_id]) }}
-                                                            {{ setting.name }}
-                                                            {% if setting.description is defined %}
-                                                                <span class="help-block">{{ setting.description }}</span>
-                                                            {% endif %}
+                                                        {{ form_widget(form[setting_id]) }}
                                                         </label>
-                                                        <span class="help-block text-small"><small>Toggle API: {{ setting.link }}</small></span>
                                                     </div>
                                                 {% else %}
                                                     {{ form_errors(form[setting_id]) }}
-                                                    <label>
-                                                        {{ setting.name }}
-                                                    </label>
                                                     {{ form_widget(form[setting_id], { 'attr': {'class' : 'form-control'} }) }}
-                                                    {% if setting.description is defined %}
-                                                        <span class="help-block">{{ setting.description }}</span>
-                                                    {% endif %}
                                                 {% endif %}
                                             </div>
-                                        {% endfor %}
-                                    {% else %}
-                                        <div class="alert alert-warning" role="alert">Does not have settings.</div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-
+                                        </td>
+                                        <td class=".col-xs-18 .col-md-8 list-description">{{ setting.name }}</td>
+                                        <td class=".col-xs-6 .col-md-4">
+                                            {% if category.name is defined %}
+                                                {{ category.name }}
+                                            {% endif %}
+                                        </td>
+                                        <td class=".col-xs-12 .col-md-8">
+                                            {% if setting.description is defined %}
+                                                {{ setting.description }}
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ setting.link }}</td>
+                                    </tr>
+                                </tbody>
+                            {% endfor %}
+                        {% endif %}
                     {% endfor %}
+                    </table>
 
+                    <h2>Profiles</h2>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th class="col-md-1">Enabled </th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th class="col-md-4">Toggle API</th>
+                        </tr>
+                        </thead>
+                        {% for setting_id, setting in categories['ongr_settings_profiles'].settings %}
+                            <tbody>
+                            <tr class="category" id="category-ongr_settings_profiles">
+                                <td class="col-md-1 enabled" >
+                                    <div class="form-group">
+                                        {% set form_field_type = form[setting_id].vars.block_prefixes.1 %}
+                                        {% if form_field_type == 'checkbox' %}
+                                            <div class="checkbox">
+                                                <label>
+                                                    {{ form_widget(form[setting_id]) }}
+                                                </label>
+                                            </div>
+                                        {% else %}
+                                            {{ form_errors(form[setting_id]) }}
+                                            {{ form_widget(form[setting_id], { 'attr': {'class' : 'form-control'} }) }}
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td class=".col-xs-18 .col-md-8 list-description">{{ setting.name }}</td>
+                                <td class=".col-xs-12 .col-md-8">
+                                    {% if setting.description is defined %}
+                                        {{ setting.description }}
+                                    {% endif %}
+                                </td>
+                                <td class="col-md-4">{{ setting.link }}</td>
+                            </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
                     <div class="form-group">
                         {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'} }) }}
                     </div>
