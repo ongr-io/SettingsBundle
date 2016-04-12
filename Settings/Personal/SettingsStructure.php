@@ -93,7 +93,7 @@ class SettingsStructure
     public function ensureSettingStash(array $setting)
     {
         if (!isset($setting['stash'])) {
-            $setting['stash'] = 'ongr_settings.settings.';//.$setting['id'];
+            $setting['stash'] = 'ongr_settings';
         }
 
         return $setting;

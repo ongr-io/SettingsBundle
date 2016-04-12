@@ -61,7 +61,10 @@ class PersonalSettingsManager
         $this->settingsStructure = $settingsStructure;
         $this->securityContext = $security;
         $this->pool = $pool;
-        $this->userSettings = $pool->getItem(self::STASH_NAME)->get();
+        $stashedSettings = $pool->getItem(self::STASH_NAME)->get();
+        if (is_array($stashedSettings)) {
+            $this->userSettings = $stashedSettings;
+        }
     }
 
     /**

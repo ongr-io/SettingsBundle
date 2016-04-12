@@ -62,29 +62,6 @@ ongr_elasticsearch:
               - ONGRSettingsBundle
 
 services:
-    project.cookie_bar:
-        class: ONGR\CookiesBundle\Cookie\Model\JsonCookie
-        arguments: [ cookie_bar ]
-        calls:
-            - [setDefaults, [{http_only: false}]]
-        tags:
-            - { name: ongr_cookie.cookieNew }
-
-    project.controller.cookie:
-        class: ONGR\CookiesBundle\Tests\Fixtures\Cookie\CookieController
-        calls:
-            - [setContainer, [@service_container]]
-
-    project.controller.flash_bag:
-        class: ONGR\SettingsBundle\Tests\Fixtures\FlashBag\FlashBagController
-        calls:
-            - [setContainer, [@service_container]]
-
-    project.cookie.ab_settings:
-        class: ONGR\CookiesBundle\Cookie\Model\JsonCookie
-        arguments: [ ongr_ab_settings ]
-        tags:
-            - { name: ongr_cookie.cookie }
 
     ongr_settings.dummy_service:
         class: ONGR\SettingsBundle\Tests\Functional\DependencyInjection\DummyService
@@ -114,7 +91,7 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     ongr_settings.profiles_manager:
-        class: ONGR\SettingsBundle\Settings\Personal\ProfilesManager
+        class: ONGR\SettingsBundle\Service\ProfileManager
         arguments:
             - @es.manager
 
@@ -127,7 +104,7 @@ ongr_settings:
     profiles: [ test1, test2, default, meh ]
     connection:
         repository: es.manager.default.setting
-    admin_user:
+    user_settings:
         categories:
             category_1:
                 name: Category 1

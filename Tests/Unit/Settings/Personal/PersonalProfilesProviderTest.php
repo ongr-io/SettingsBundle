@@ -51,27 +51,24 @@ class PersonalProfilesProviderTest extends AbstractElasticsearchTestCase
     /**
      * Returns mock of Profiles Manager.
      *
-     * @return ProfilesManager
+     * @return ProfileManager
      */
     protected function getProfilesManagerMock()
     {
-        $profileSettingsProvider = $this->getMock(
-            'ONGR\SettingsBundle\Settings\Personal\ProfilesManager',
-            ['getProfiles'],
-            [],
-            '',
-            false
-        );
+        $profileSettingsProvider = $this
+            ->getMockBuilder('ONGR\SettingsBundle\Service\ProfileManager')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $profileSettingsProvider->expects(
             $this->once()
-        )->method('getProfiles')
+        )->method('getAllProfiles')
             ->willReturn(
                 [
-                    ['profile' => 'profile'],
-                    ['profile' => 'profile2'],
-                    ['profile' => 'profile3'],
-                    ['profile' => 'profile4'],
+                    ['name' => 'profile'],
+                    ['name' => 'profile2'],
+                    ['name' => 'profile3'],
+                    ['name' => 'profile4'],
                 ]
             );
 

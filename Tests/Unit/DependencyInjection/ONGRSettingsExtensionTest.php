@@ -25,7 +25,7 @@ class ONGRSettingsExtensionTest extends \PHPUnit_Framework_TestCase
     public function testPersonalUser()
     {
         $config = [
-            'admin_user' => [
+            'user_settings' => [
                 'categories' => [
                     'test_category1' => [
                         'name' => 'test_name1',

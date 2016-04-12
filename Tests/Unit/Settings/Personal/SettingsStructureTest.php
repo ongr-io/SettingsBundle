@@ -23,7 +23,7 @@ class SettingsStructureTest extends \PHPUnit_Framework_TestCase
         $service = new SettingsStructure([], []);
         $service->setStructure(['foo' => []]);
         $this->assertEquals(
-            ['foo' => ['cookie' => 'ongr_settings.settings.settings_cookie']],
+            ['foo' => ['stash' => 'ongr_settings']],
             $service->getStructure()
         );
     }

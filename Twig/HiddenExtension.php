@@ -36,7 +36,11 @@ class HiddenExtension extends \Twig_Extension
     {
         $this->container = $container;
         if ($container->has('request')) {
-            $this->request = $container->get('request');
+            try {
+                $this->request = $container->get('request');
+            } catch (\Exception $e) {
+
+            }
         }
     }
 

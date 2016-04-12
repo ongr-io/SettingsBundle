@@ -106,21 +106,21 @@ services:
             - @event_dispatcher
             - @es.manager
 
-    ongr_settings.listener.cookie_profile:
-        class: ONGR\SettingsBundle\EventListener\ProfileRequestListener
-        calls:
-            - [ setSettingsContainer, [ @ongr_settings.settings_container ] ]
-            - [ setPersonalSettingsManager, [ @ongr_settings.settings.personal_settings_manager ] ]
-            - [ setManager, [ @es.manager ] ]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+#    ongr_settings.listener.cookie_profile:
+#        class: ONGR\SettingsBundle\EventListener\ProfileRequestListener
+#        calls:
+#            - [ setSettingsContainer, [ @ongr_settings.settings_container ] ]
+#            - [ setPersonalSettingsManager, [ @ongr_settings.settings.personal_settings_manager ] ]
+#            - [ setManager, [ @es.manager ] ]
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     ongr_settings.profiles_manager:
         class: ONGR\SettingsBundle\Settings\Personal\ProfilesManager
         arguments:
-            - @es.manager
+            - "@es.manager"
 
     ongr_settings.settings_provider:
         class: ONGR\SettingsBundle\Settings\Personal\ProfilesManager
         arguments:
-            - @es.manager
+            - "@es.manager"

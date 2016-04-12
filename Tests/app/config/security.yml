@@ -1,39 +1,27 @@
 security:
-    firewalls:
-        sessionless_authentication_secured:
-            pattern:   .*
-            anonymous: ~
-            ongr_sessionless_authentication: true
-
-            form_login:
-                login_path: ongr_settings_sessionless_login #path where login form resides
-
-            logout:
-                path:   /settings/logout
-                target: /
-                delete_cookies:
-                    ongr_settings_user_auth: { path: null, domain: null } #will delete authentication cookie
-
-    access_control:
-        - { path: ^/settings/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/settings/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/settings/.* , roles: ROLE_ADMIN }
-
-
     providers:
-        foo_chain_provider:
-            chain:
-                providers: [in_memory, test_provider]
-
         in_memory:
             memory:
                 users:
-                    foo_user: { password: foo_password, roles: 'ROLE_ADMIN' }
-
-        test_provider:
-            memory:
-                users:
-                    test: { password: test, roles: 'ROLE_ADMIN' }
+                    admin:
+                        password: admin
+                        roles: 'ROLE_ADMIN'
+                    user:
+                        password: user
+                        roles: 'ROLE_user'
 
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        default:
+            anonymous: ~
+            http_basic: ~
+
+#    access_control:
+#            # require ROLE_ADMIN for /admin*
+#            - { path: ^/settings, roles: ROLE_ADMIN }

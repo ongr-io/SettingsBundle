@@ -1,8 +1,3 @@
-project_flash_bag:
-    pattern: flash_bag
-    defaults:
-        _controller: project.controller.flash_bag:indexAction
-
 twig_test_personal_settings:
     pattern: test/twig/{setting_name}/{need_auth}
     defaults:
