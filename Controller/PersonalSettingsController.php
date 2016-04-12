@@ -35,20 +35,8 @@ class PersonalSettingsController extends Controller
     {
         $manager = $this->getPersonalSettingsManager();
         // Handle form.
-        $settingsData = $manager->getSettings();//$this->get('stash')->getItem('ongr_settings')->get();
+        $settingsData = $manager->getSettings();
         $settingsMap = $manager->getSettingsMap();
-        $options = [
-            'settingsStructure' => $settingsMap,
-        ];
-
-        $form = $this->createForm(SettingsType::class, $settingsData, $options);
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $manager->setSettingsFromForm($form->getData());
-            $redirectResponse = $this->redirect($request->getUri());
-            $manager->save();
-            return $redirectResponse;
-        }
 
         // Build settings layout within categories.
         $categoryMap = $manager->getCategoryMap();
@@ -72,7 +60,7 @@ class PersonalSettingsController extends Controller
         return $this->render(
             'ONGRSettingsBundle:Settings:settings.html.twig',
             [
-                'form' => $form->createView(),
+                'settings' => $settingsData,
                 'categories' => $categoryMap,
             ]
         );

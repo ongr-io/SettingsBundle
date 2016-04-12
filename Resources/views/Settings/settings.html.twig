@@ -11,9 +11,6 @@
         {% endblock %}
         <div class="row">
             <div class="col-lg-12">
-                {% block settings_form %}
-                    {{ form_start(form) }}
-                    {{ form_errors(form, {'attr': {'class': 'alert alert-danger'} }) }}
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -31,17 +28,16 @@
                                     <tr class="category" id="category-{{ category_id }}">
                                         <td class="col-md-1 enabled" >
                                             <div class="form-group">
-                                                {% set form_field_type = form[setting_id].vars.block_prefixes.1 %}
-                                                {% if form_field_type == 'checkbox' %}
-                                                    <div class="checkbox">
-                                                        <label>
-                                                        {{ form_widget(form[setting_id]) }}
-                                                        </label>
-                                                    </div>
-                                                {% else %}
-                                                    {{ form_errors(form[setting_id]) }}
-                                                    {{ form_widget(form[setting_id], { 'attr': {'class' : 'form-control'} }) }}
-                                                {% endif %}
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" class="personalSettingToggle" url="{{ setting.link }}"
+                                                            {% if settings[setting_id] == true%}
+                                                                checked="true">
+                                                            {% else %}
+                                                                >
+                                                            {% endif %}
+                                                    </label>
+                                                </div>
                                             </div>
                                         </td>
                                         <td class=".col-xs-18 .col-md-8 list-description">{{ setting.name }}</td>
@@ -78,17 +74,15 @@
                             <tr class="category" id="category-ongr_settings_profiles">
                                 <td class="col-md-1 enabled" >
                                     <div class="form-group">
-                                        {% set form_field_type = form[setting_id].vars.block_prefixes.1 %}
-                                        {% if form_field_type == 'checkbox' %}
-                                            <div class="checkbox">
-                                                <label>
-                                                    {{ form_widget(form[setting_id]) }}
-                                                </label>
-                                            </div>
-                                        {% else %}
-                                            {{ form_errors(form[setting_id]) }}
-                                            {{ form_widget(form[setting_id], { 'attr': {'class' : 'form-control'} }) }}
-                                        {% endif %}
+                                        <div class="checkbox">
+                                            <label>
+                                                {% if settings[setting_id] == true%}
+                                                    <input type="checkbox" checked="true">
+                                                {% else %}
+                                                    <input type="checkbox">
+                                                {% endif %}
+                                            </label>
+                                        </div>
                                     </div>
                                 </td>
                                 <td class=".col-xs-18 .col-md-8 list-description">{{ setting.name }}</td>
@@ -102,12 +96,7 @@
                             </tbody>
                         {% endfor %}
                     </table>
-                    <div class="form-group">
-                        {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'} }) }}
-                    </div>
 
-                    {{ form_end(form) }}
-                {% endblock %}
             </div>
         </div>
         {% block footer_content %}{% endblock %}

@@ -11,6 +11,17 @@ $(document).ready(function(){
 
     $('#addSettingProfiles').multiselect();
     $('#duplicateSettingProfiles').multiselect();
+    $('.personalSettingToggle').on('click', function(){
+        $.ajax({
+            url: $(this).attr('url'),
+            type: 'GET'
+        });
+        if($(this).hasAttr('checked')) {
+            $(this).removeAttribute('checked');
+        } else {
+            $(this).attr('checked', true);
+        }
+    });
 
     $('.boolean').on('click', function(){
         if (!$(this).hasClass('btn-primary')) {
