@@ -12,7 +12,7 @@ services:
             - "@stash"
             - %ongr_settings.settings_container.profiles%
         tags:
-#            - { name: kernel.event_listener, event: ongr_settings.setting_change, method: onSettingChange }
+            - { name: kernel.event_listener, event: ongr_settings.setting_change, method: onSettingChange }
 
     ongr_settings.setting_aware_service_factory:
         class: ONGR\SettingsBundle\Settings\General\SettingAwareServiceFactory

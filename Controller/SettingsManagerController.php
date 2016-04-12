@@ -201,6 +201,20 @@ class SettingsManagerController extends Controller
                 )
             );
         }
+        $existingProfiles = $this->get('ongr_settings.profiles_manager')
+            ->getAllProfiles();
+        foreach ($profiles as $profile) {
+            if (!in_array($profile, array_column($existingProfiles, 'name'))) {
+                $cache->save('settings_errors', 'Profile `'.$profile.'` does not match any existing profiles.`');
+                return new RedirectResponse(
+                    $this->generateUrl(
+                        'ongr_settings_settings_duplicate',
+                        ['profile' => $from, 'name' => $name]
+                    )
+                );
+            }
+        }
+
         $settingsManager = $this->getSettingsManager();
 
         $setting = $settingsManager->get($name, $from);

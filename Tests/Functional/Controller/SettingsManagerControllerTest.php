@@ -12,8 +12,9 @@
 namespace ONGR\SettingsBundle\Tests\Functional\Controller;
 
 use ONGR\ElasticsearchBundle\Test\AbstractElasticsearchTestCase;
-use ONGR\SettingsBundle\Settings\Common\Provider\ManagerAwareSettingProvider;
-use ONGR\SettingsBundle\Settings\Common\SettingsContainer;
+use ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider;
+use ONGR\SettingsBundle\Settings\General\SettingsContainer;
+use ONGR\SettingsBundle\Document\Profile;
 use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
 use Symfony\Bundle\FrameworkBundle\Client;
 
@@ -37,6 +38,11 @@ class SettingsManagerControllerTest extends AbstractElasticsearchTestCase
      */
     private $container;
 
+    public function getDataArray()
+    {
+        return ['default' => []];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -44,8 +50,7 @@ class SettingsManagerControllerTest extends AbstractElasticsearchTestCase
     {
         parent::setUp();
 
-        $this->loginHelper = new LoginTestHelper(static::createClient());
-        $this->client = $this->loginHelper->loginAction();
+        $this->client = static::createClient();
 
         $this->container = $this->client->getContainer();
     }
@@ -58,27 +63,48 @@ class SettingsManagerControllerTest extends AbstractElasticsearchTestCase
     public function copyActionData()
     {
         // Case #0 non existing profile, existing item passed.
-        $out[] = [500, '/settings/setting/name0/copy/foo/newProfile'];
+        $out[] = [302, '/settings/setting/test_setting/copy/test', 'non_existant_profile', false];
 
         // Case #1 existing profile set, existing item passed.
-        $out[] = [200, '/settings/setting/name0/copy/default/newProfile'];
+        $out[] = [302, '/settings/setting/test_setting/copy/test', 'new_profile', true];
 
-        // Case #2 non-existent profile and item passed.
-        $out[] = [500, '/settings/setting/foo/copy/foo/newProfile'];
+        // Case #2 non-existent item passed.
+        $out[] = [500, '/settings/setting/non_existant_setting/copy/test', 'new_profile', false];
 
-        // Case #3 existent profile, non-existing item passed.
-        $out[] = [500, '/settings/setting/foo/copy/default/newProfile'];
+        // Case #3 existent item, non-existing old profile passed.
+        $out[] = [500, '/settings/setting/test_setting/copy/non_existant_profile', 'new_profile', false];
 
         return $out;
     }
 
     /**
-     * Create setting.
+     * Creates a profile
+     * @param string $profile
      */
-    public function createSetting()
+    private function createProfile($profile)
     {
-        $requestContent = json_encode(['setting' => ['data' => ['value' => 'name0']]]);
-        $this->client->request('POST', '/settings/setting/ng/name0/edit/default', [], [], [], $requestContent);
+        $requestParameters = [
+            'profileName' => $profile,
+            'profileDescription' => 'test profile'
+        ];
+        $this->client->request('POST', '/settings/create/profile', $requestParameters);
+    }
+
+    /**
+     * Create setting.
+     * @param string $name
+     * @param string $profile
+     */
+    private function createSetting($name, $profile)
+    {
+        $requestParameters = [
+            'settingName' => $name,
+            'settingProfiles' => [$profile],
+            'settingDescription' => 'description0',
+            'settingType' => 'string',
+            'setting-default' => 'test value'
+        ];
+        $this->client->request('POST', '/settings/setting/set/', $requestParameters);
     }
 
     /**
@@ -89,29 +115,113 @@ class SettingsManagerControllerTest extends AbstractElasticsearchTestCase
     public function createActionData()
     {
         // case #0 create setting with valid request content
-        $out[] = [json_encode(['setting' => ['data' => ['value' => 'foo'], 'description' => 'description0']]), 200];
+        $out[] = [
+            [
+                'settingName' => 'data',
+                'settingProfiles' => ['test'],
+                'settingDescription' => 'description0',
+                'settingType' => 'string',
+                'setting-default' => 'test value'
+            ],
+            302,
+            true
+        ];
 
-        // case #1 create setting with blank request content
-        $out[] = [json_encode([]), 400];
+        // case #1 create setting with blank request parameters
+        $out[] = [[], 302, false];
 
-        // case #2 create setting with no request content
-        $out[] = [null, 400];
+        // case #3 create setting with no profile
+        $out[] = [
+            [
+                'settingName' => 'data',
+                'settingDescription' => 'description0',
+                'settingType' => 'string',
+                'setting-default' => 'test value'
+            ],
+            302,
+            false
+        ];
+
+        // case #3 create array setting
+        $out[] = [
+            [
+                'settingName' => 'data',
+                'settingProfiles' => ['test'],
+                'settingDescription' => 'description0',
+                'settingType' => 'array',
+                'setting-array_0' => 1,
+                'setting-array_1' => 2,
+            ],
+            302,
+            true
+        ];
+
+        // case #4 create bool setting
+        $out[] = [
+            [
+                'settingName' => 'data',
+                'settingProfiles' => ['test'],
+                'settingDescription' => 'description0',
+                'settingType' => 'bool',
+                'setting-boolean' => 'true'
+            ],
+            302,
+            true
+        ];
+
+        // case #5 create setting with no value
+        $out[] = [
+            [
+                'settingName' => 'data',
+                'settingProfiles' => ['test'],
+                'settingDescription' => 'description0',
+                'settingType' => 'string',
+            ],
+            302,
+            false
+        ];
 
         return $out;
     }
 
     /**
+     * Tests profile creation
+     */
+    public function testCreateProfile()
+    {
+        $requestParameters = [
+            'profileName' => 'test',
+            'profileDescription' => 'test'
+        ];
+        $this->client->request('POST', '/settings/create/profile', $requestParameters);
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+    }
+
+    /**
      * Test for createAction().
      *
-     * @param string $requestContent
-     * @param int    $statusCode
+     * @param array   $requestParameters
+     * @param int     $statusCode
+     * @param bool    $created
      *
      * @dataProvider createActionData()
      */
-    public function testCreateAction($requestContent, $statusCode)
+    public function testCreateAction($requestParameters, $statusCode, $created)
     {
-        $this->client->request('POST', '/settings/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
+        $manager = $this->getManager();
+        $profile = new Profile();
+        $profile->setName('test');
+        $manager->persist($profile);
+        $manager->commit();
+
+        $this->client->request('POST', '/settings/setting/set/', $requestParameters);
         $this->assertEquals($statusCode, $this->client->getResponse()->getStatusCode());
+        $settings = $manager->find('ONGRSettingsBundle:Setting', 'test_data');
+        if ($created) {
+            $this->assertNotNull($settings);
+        } else {
+            $this->assertNull($settings);
+        }
     }
 
     /**
@@ -119,30 +229,25 @@ class SettingsManagerControllerTest extends AbstractElasticsearchTestCase
      *
      * @param int    $status
      * @param string $url
+     * @param string $new_profile
+     * @param bool   $created
      *
      * @dataProvider copyActionData()
      */
-    public function testCopyActionLogedIn($status, $url)
+    public function testCopyAction($status, $url, $new_profile, $created)
     {
-        $this->createSetting();
-        $this->client->request('GET', $url);
+        $this->createProfile('test');
+        $this->createProfile('new_profile');
+        $this->createSetting('test_setting', 'test');
+        $this->client->request('POST', $url, ['settingProfiles' => [$new_profile]]);
         $this->assertEquals($status, $this->client->getResponse()->getStatusCode());
-    }
 
-    /**
-     * Test for copyAction after logged Out.
-     *
-     * @param int    $status
-     * @param string $url
-     *
-     * @dataProvider copyActionData()
-     */
-    public function testCopyActionLogedOut($status, $url)
-    {
-        $this->createSetting();
-        $this->client = $this->loginHelper->logoutAction($this->client);
-        $this->client->request('GET', $url);
-        $this->assertSame('/settings/login', $this->client->getRequest()->getRequestUri());
+        $settings = $this->getManager()->find('ONGRSettingsBundle:Setting', $new_profile.'_test_setting');
+        if ($created) {
+            $this->assertNotNull($settings);
+        } else {
+            $this->assertNull($settings);
+        }
     }
 
     /**
@@ -150,8 +255,9 @@ class SettingsManagerControllerTest extends AbstractElasticsearchTestCase
      */
     public function testEditAction()
     {
-        $this->createSetting();
-        $this->client->request('GET', '/settings/setting/name0/edit');
+        $this->createProfile('test');
+        $this->createSetting('test_setting', 'test');
+        $this->client->request('GET', '/settings/setting/test_setting/edit/test');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
@@ -162,13 +268,10 @@ class SettingsManagerControllerTest extends AbstractElasticsearchTestCase
      */
     public function removeActionData()
     {
-        // Case #0 remove existing settings, check if default domain is set.
-        $out[] = ['/settings/setting/name0/remove', 200];
+        // Case #0 remove existing setting with domain set.
+        $out[] = ['/settings/setting/test_setting/remove/test', 302];
 
-        // Case #1 remove existing setting with domain set.
-        $out[] = ['/settings/setting/name0/remove/default', 200];
-
-        // Case #2 remove non-existing setting.
+        // Case #1 remove non-existing setting.
         $out[] = ['/settings/setting/non-existent/remove', 500];
 
         return $out;
@@ -184,33 +287,35 @@ class SettingsManagerControllerTest extends AbstractElasticsearchTestCase
      */
     public function testRemoveAction($url, $expectedStatusCode)
     {
-        $this->createSetting();
+        $this->createProfile('test');
+        $this->createSetting('test_setting', 'test');
         $this->client->request('DELETE', $url);
         $this->assertEquals($expectedStatusCode, $this->client->getResponse()->getStatusCode());
     }
 
     /**
-     * Test ngEditAction and ensure cached value is cleared.
+     * Test EditAction and ensure cached value is cleared.
      */
     public function testCacheClearAfterModify()
     {
         $client = $this->client;
-
+        $this->createProfile('domain_foo');
         // Create setting.
-        $requestContent = json_encode(['setting' => ['data' => ['value' => 'foo']]]);
-        $client->request('POST', '/settings/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
-        $response = $client->getResponse();
-        $this->assertTrue($response->isOk());
+        $requestContent = [
+            'settingName' => 'setting_foo',
+            'settingType' => 'string',
+            'settingProfiles' => ['domain_foo'],
+            'setting-default' => 'foo'
+        ];
+        $client->request('POST', '/settings/setting/update/', $requestContent);
 
         // Assert value.
         $this->enableDomain($client);
         $this->assertSettingValue($client, 'foo');
 
         // Modify.
-        $requestContent = json_encode(['setting' => ['data' => ['value' => 'bar']]]);
-        $client->request('POST', '/settings/setting/ng/setting_foo/edit/domain_foo', [], [], [], $requestContent);
-        $response = $client->getResponse();
-        $this->assertTrue($response->isOk());
+        $requestContent['setting-default'] = 'bar';
+        $client->request('POST', '/settings/setting/update/', $requestContent);
 
         // Assert modified value.
         $this->enableDomain($client);
