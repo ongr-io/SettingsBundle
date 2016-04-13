@@ -16,8 +16,9 @@ $(document).ready(function(){
             url: $(this).attr('url'),
             type: 'GET'
         });
-        if($(this).hasAttr('checked')) {
-            $(this).removeAttribute('checked');
+        var checked = $(this).attr('checked');
+        if(typeof checked !== typeof undefined && checked !== false) {
+            $(this).removeAttr('checked');
         } else {
             $(this).attr('checked', true);
         }
