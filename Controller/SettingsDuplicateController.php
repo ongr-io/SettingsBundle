@@ -42,7 +42,8 @@ class SettingsDuplicateController extends Controller
             $cache->delete('settings_success');
         }
         return $this->render(
-            'ONGRSettingsBundle:Settings:duplicate.html.twig', $params
+            'ONGRSettingsBundle:Settings:duplicate.html.twig',
+            $params
         );
     }
 }

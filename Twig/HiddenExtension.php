@@ -39,7 +39,6 @@ class HiddenExtension extends \Twig_Extension
             try {
                 $this->request = $container->get('request');
             } catch (\Exception $e) {
-
             }
         }
     }

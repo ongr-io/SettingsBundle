@@ -104,7 +104,8 @@ class PersonalSettingsTest extends WebTestCase
      */
     public function testSettingsSelected()
     {
-        $this->client->request('GET',
+        $this->client->request(
+            'GET',
             $this->client->getContainer()->get('router')->generate(
                 'ongr_settings_personal_settings_change',
                 [

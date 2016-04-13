@@ -108,6 +108,3 @@ class FormValidator
         return $return;
     }
 }
-
-
-

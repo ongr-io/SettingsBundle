@@ -39,7 +39,8 @@ class ProfileController extends Controller
             $cache->delete('settings_success');
         }
         return $this->render(
-            'ONGRSettingsBundle:Settings:addProfile.html.twig', $params
+            'ONGRSettingsBundle:Settings:addProfile.html.twig',
+            $params
         );
     }
 
@@ -63,7 +64,7 @@ class ProfileController extends Controller
         }
         try {
             $profileManager->createProfile($data['name'], $data['description']);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             $cache->save('settings_errors', $e->getMessage());
             return new RedirectResponse($this->generateUrl('ongr_settings_profile_add'));
         }

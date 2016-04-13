@@ -39,7 +39,8 @@ class SettingsAddController extends Controller
             $cache->delete('settings_success');
         }
         return $this->render(
-            'ONGRSettingsBundle:Settings:add.html.twig', $params
+            'ONGRSettingsBundle:Settings:add.html.twig',
+            $params
         );
     }
 }

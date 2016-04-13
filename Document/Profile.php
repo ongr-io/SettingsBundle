@@ -90,7 +90,7 @@ class Profile implements JsonSerializable
         $this->description = $description;
     }
 
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return [
             'id' => $this->id,
@@ -98,5 +98,4 @@ class Profile implements JsonSerializable
             'description' => $this->description,
         ];
     }
-
 }

@@ -105,7 +105,6 @@ class SettingsContainer implements SettingsContainerInterface
      * @param SettingChangeEvent $event
      */
     public function onSettingChange(
-        /** @noinspection PhpUnusedParameterInspection */
         SettingChangeEvent $event
     ) {
         $this->pool->getItem('ongr_settings.settings_cache')->clear();
