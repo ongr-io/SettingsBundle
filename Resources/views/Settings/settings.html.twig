@@ -25,7 +25,7 @@
                         {% if category.settings is defined and category.name != 'ONGR Settings profiles' %}
                             {% for setting_id, setting in category.settings %}
                                 <tbody>
-                                    <tr class="category" id="category-{{ category_id }}">
+                                    <tr class="category category-{{ category_id }}">
                                         <td class="col-md-1 enabled" >
                                             <div class="form-group">
                                                 <div class="checkbox">
@@ -71,16 +71,17 @@
                         </thead>
                         {% for setting_id, setting in categories['ongr_settings_profiles'].settings %}
                             <tbody>
-                            <tr class="category" id="category-ongr_settings_profiles">
+                            <tr class="profile-ongr_settings_profiles">
                                 <td class="col-md-1 enabled" >
                                     <div class="form-group">
                                         <div class="checkbox">
                                             <label>
-                                                {% if settings[setting_id] == true%}
-                                                    <input type="checkbox" checked="true">
-                                                {% else %}
-                                                    <input type="checkbox">
-                                                {% endif %}
+                                                <input type="checkbox" class="personalSettingToggle" url="{{ setting.link }}"
+                                                    {% if settings[setting_id] == true%}
+                                                         checked="true">
+                                                    {% else %}
+                                                        >
+                                                    {% endif %}
                                             </label>
                                         </div>
                                     </div>

@@ -9,10 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\UtilsBundle\Tests\Functional\Twig;
+namespace ONGR\UtilsBundle\Tests\Unit\Twig;
 
 use ONGR\SettingsBundle\Twig\HiddenExtension;
-use Symfony\Component\DependencyInjection\Scope;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -28,8 +27,6 @@ class HiddenExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $container = new Container();
         if ($request !== null) {
-            $container->addScope(new Scope('request'));
-            $container->enterScope('request');
             $container->set('request', $request);
         }
 

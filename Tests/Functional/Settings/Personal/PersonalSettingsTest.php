@@ -12,8 +12,8 @@
 namespace ONGR\SettingsBundle\Tests\Functional\Settings\Personal;
 
 use ONGR\SettingsBundle\Document\Setting;
+use ONGR\SettingsBundle\Document\Profile;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use ONGR\SettingsBundle\Tests\Functional\CookieTestHelper;
 use ONGR\ElasticsearchBundle\Service\Manager;
 use Symfony\Bundle\FrameworkBundle\Client;
 
@@ -37,12 +37,22 @@ class PersonalSettingsTest extends WebTestCase
         static::bootKernel(['environment' => 'test_container_creation']);
 
         /** @var Client $client */
-        $this->client = static::$kernel->getContainer()->get('test.client');
+        $this->client = static::createClient();
         /** @var Manager $manager */
         $manager = static::$kernel->getContainer()->get('es.manager');
 
         // There is something wrong with ElasticsearchTestCase method getDataArray,
         // if we don't create in here all test data, it's not existing when test is run.
+        $content = new Profile();
+        $content->setId('default_profile');
+        $content->setName('default');
+        $manager->persist($content);
+
+        $content = new Profile();
+        $content->setName('profile_foo.com_profile');
+        $content->setName('profile_foo.com');
+        $manager->persist($content);
+
         $content = new Setting();
         $content->setId('foo_default');
         $content->setName('test');
@@ -78,24 +88,15 @@ class PersonalSettingsTest extends WebTestCase
      */
     public function testSettingsDisplayed()
     {
-        // Set authentication cookie.
-        CookieTestHelper::setAuthenticationCookie($this->client);
-
         // Retrieve content.
         $crawler = $this->client->request('GET', '/settings/settings');
 
         // Asserts.
-        $settingsDescription = $crawler->filter('#settings_ongr_settings_live_settings');
+        $settingsDescription = $crawler->filter('.category-ongr_settings_settings');
         $this->assertCount(1, $settingsDescription, 'Live settings setting must exist');
 
-        $profile = $crawler->filter('#settings_ongr_settings_profile_default');
-        $this->assertCount(1, $profile, 'Profile default checkbox must exist');
-
-        $profile = $crawler->filter('#settings_ongr_settings_profile_profile_foo-2e-com');
-        $this->assertCount(1, $profile, 'Profile foo checkbox must exist');
-
-        $categories = $crawler->filter('.category');
-        $this->assertCount(2, $categories);
+        $profile = $crawler->filter('.profile-ongr_settings_profiles');
+        $this->assertCount(2, $profile, 'Profile default checkbox must exist');
     }
 
     /**
@@ -103,24 +104,20 @@ class PersonalSettingsTest extends WebTestCase
      */
     public function testSettingsSelected()
     {
-        // Set authentication cookie.
-        CookieTestHelper::setAuthenticationCookie($this->client);
-
-        // Retrieve content.
-        $crawler = $this->client->request('GET', '/settings/settings');
-
-        // Submit domain selection.
-        $buttonNode = $crawler->selectButton('settings_submit');
-        $form = $buttonNode->form();
-        /** @noinspection PhpUndefinedMethodInspection */
-        $form['settings[ongr_settings_profile_profile_foo-2e-com]']->tick();
-        $this->client->submit($form);
-
+        $this->client->request('GET',
+            $this->client->getContainer()->get('router')->generate(
+                'ongr_settings_personal_settings_change',
+                [
+                    'encodedName' => base64_encode('ongr_settings_profile_default'),
+                ]
+            )
+        );
+        $this->assertTrue($this->client->getResponse()->isOk());
         // Load any url and check that user selected domains are loaded.
-        $this->client->request('GET', '/settings/setting/name0/edit');
+        $this->client->request('GET', '/settings/setting/test/edit');
         $settingsContainer = $this->client->getContainer()->get('ongr_settings.settings_container');
 
         $selectedDomains = $settingsContainer->getProfiles();
-        $this->assertEquals(['default', 'profile_foo.com'], $selectedDomains);
+        $this->assertTrue(in_array('default', $selectedDomains));
     }
 }

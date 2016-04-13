@@ -12,7 +12,6 @@
 namespace ONGR\SettingsBundle\Tests\Functional\Twig;
 
 use ONGR\ElasticsearchBundle\Test\AbstractElasticsearchTestCase;
-use ONGR\SettingsBundle\Tests\Functional\CookieTestHelper;
 use ONGR\SettingsBundle\Tests\Fixtures\Security\LoginTestHelper;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -94,15 +93,9 @@ class PersonalSettingWidgetExtensionTest extends AbstractElasticsearchTestCase
         $expectedResult,
         $authorizedCommand = true
     ) {
-        if ($shouldAuthorize) {
-            $this->client = $this->loginHelper->loginAction('test', 'test');
-        }
-
-        CookieTestHelper::setSettingsCookie($this->client, $cookieSettings);
-
         // Call controller with params to generate twig.
         $authorizedCommandStr = ($authorizedCommand) ? 'true' : 'false';
-        $this->client->request('GET', "/test/twigGeneral/$testSettingName/$authorizedCommandStr");
+        $this->client->request('GET', "/test/twig/$testSettingName/$authorizedCommandStr");
 
         $this->assertContains($expectedResult ? 'foo_true' : 'foo_false', $this->client->getResponse()->getContent());
     }

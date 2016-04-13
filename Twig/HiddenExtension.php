@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class for outputing hidden information.
+ * Class for outputting hidden information.
  */
 class HiddenExtension extends \Twig_Extension
 {

@@ -59,24 +59,12 @@ class GeneralSettingsWidgetExtensionTest extends AbstractElasticsearchTestCase
     public function showSettingData()
     {
         // Case #0 not authenticated.
-        $expectedOutput = '';
-        $out[] = [$expectedOutput, 'test', false];
+        $expectedOutput = '<div></div>';
+        $out[] = [$expectedOutput, 'test_count_per_page', false];
 
         // Case #1 default type (string).
-        $expectedOutput = <<<'NOWDOC'
-<a href="http://localhost/admin/setting/test/edit?type=string" class="btn btn-default pull-right" title="Edit test">
-    <span class="glyphicon glyphicon-wrench"></span>
-</a>
-NOWDOC;
-        $out[] = [$expectedOutput, 'test', true];
-
-        // Case #2 custom type (array).
-        $expectedOutput = <<<'NOWDOC'
-<a href="http://localhost/admin/setting/test/edit?type=array" class="btn btn-default pull-right" title="Edit test">
-    <span class="glyphicon glyphicon-wrench"></span>
-</a>
-NOWDOC;
-        $out[] = [$expectedOutput, 'test', true, 'array'];
+        $expectedOutput = '<a href="http://localhost/settings/setting/count_per_page/edit/test" ';
+        $out[] = [$expectedOutput, 'test_count_per_page', true];
 
         return $out;
     }
@@ -85,37 +73,34 @@ NOWDOC;
      * Test getPriceList().
      *
      * @param string $expectedOutput
-     * @param string $settingName
+     * @param string $settingId
      * @param bool   $isAuthenticated
-     * @param string $type
      *
      * @dataProvider showSettingData
      */
-    public function testShowSetting($expectedOutput, $settingName, $isAuthenticated, $type = null)
+    public function testShowSetting($expectedOutput, $settingId, $isAuthenticated)
     {
-        $container = static::createClient()->getContainer();
-        $securityContext = $container->get('security.token_storage');
-        $securityContext->setToken($this->getTokenMock());
+        if ($isAuthenticated) {
+            $client = static::createClient(
+                [],
+                [
+                    'PHP_AUTH_USER' => 'admin',
+                    'PHP_AUTH_PW'   => 'admin',
+                ]
+            );
+        } else {
+            $client = static::createClient();
+        }
 
-        $settingsManager = $container->get('ongr_settings.settings.personal_settings_manager');
-        $settingsManager->setSettingsFromForm(['ongr_settings_live_settings' => true]);
-
-        // Login.
-        $client = $this->client->loginAction('test', 'test');
-
-        // Visit settings page.
-        $crawler = $client->request('GET', '/settings/settings');
-
-        // Select and submit settings form.
-        $buttonNode = $crawler->selectButton('settings_submit');
-        $form = $buttonNode->form();
-        $form['settings[ongr_settings_live_settings]']->tick();
-        $client->submit($form);
+        $settingTicUrl = 'settings/setting/change/'.base64_encode('ongr_settings_live_settings');
+        // Tic the setting
+        $client->request('GET', $settingTicUrl);
+        $this->assertTrue($client->getResponse()->isOk());
 
         // Call controller with params to generate twig.
         $client->request('GET', '/test/twiggeneral');
 
-        $this->assertContains('count_per_page', $client->getResponse()->getContent());
+        $this->assertContains($expectedOutput, $client->getResponse()->getContent());
     }
 
     /**
@@ -150,17 +135,5 @@ NOWDOC;
         $extension->setSettingsContainer($settingContainer);
 
         $this->assertNull($extension->getPersonalSetting('test'));
-    }
-
-    /**
-     * Returns mock of sessionless token.
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function getTokenMock()
-    {
-        return $this->getMockBuilder('ONGR\\SettingsBundle\\Security\\Authentication\\Token\\SessionlessToken')
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 }

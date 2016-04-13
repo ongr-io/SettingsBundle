@@ -11,7 +11,6 @@
 
 namespace ONGR\SettingsBundle\Controller;
 
-use ONGR\SettingsBundle\Form\Type\SettingsType;
 use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;

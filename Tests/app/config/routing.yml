@@ -1,10 +1,10 @@
 twig_test_personal_settings:
-    pattern: test/twig/{setting_name}/{need_auth}
+    path: test/twig/{setting_name}/{need_auth}
     defaults:
         _controller: AcmeTestBundle:Test:testPersonalSettings
 
 twig_test_general_settings:
-    pattern: test/twiggeneral
+    path: test/twiggeneral
     defaults:
         _controller: AcmeTestBundle:Test:testgeneralsettings
 

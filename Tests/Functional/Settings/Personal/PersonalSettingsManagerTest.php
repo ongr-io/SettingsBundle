@@ -12,6 +12,7 @@
 namespace ONGR\SettingsBundle\Tests\Unit\Settings;
 
 use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
+use Stash\Pool;
 
 class PersonalSettingsManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,8 +21,8 @@ class PersonalSettingsManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetSettingsFromCookie()
     {
-        $manager = new PersonalSettingsManager(null, null);
-        $manager->setSettingsFromCookie(['foo']);
+        $manager = new PersonalSettingsManager(null, null, new Pool());
+        $manager->setSettingsFromStash(['foo']);
         $this->assertEquals(['foo'], $manager->getSettings());
     }
 }

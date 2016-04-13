@@ -107,12 +107,15 @@ class GeneralSettingsWidgetExtension extends \Twig_Extension
         if (!$this->personalSettingsManager->isAuthenticated()) {
             return '';
         }
+        $pos = strpos($settingName, '_');
+        $profile = substr($settingName, 0, $pos);
+        $name = substr($settingName, $pos+1);
 
         return $environment->render(
             $this->template,
             [
-                'setting' => $settingName,
-                'type' => $type,
+                'setting' => $name,
+                'profile' => $profile,
             ]
         );
     }

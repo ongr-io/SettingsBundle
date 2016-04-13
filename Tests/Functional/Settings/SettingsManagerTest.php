@@ -75,8 +75,20 @@ class SettingsManagerTest extends WebTestCase
             $this->manager
         );
 
-        $manager->set('name0', 'test1', 'default');
-        $manager->set('name1', 'test13', 'not-default');
+        $manager->set(
+            'name0',
+            'string',
+            'description',
+            'test1',
+            ['default']
+        );
+        $manager->set(
+            'name1',
+            'string',
+            'description',
+            'test13',
+            ['not-default']
+        );
         $setting1 = $this->getSetting('name0', Setting::TYPE_STRING, 'test1', 'default');
         $setting2 = $this->getSetting('name1', Setting::TYPE_STRING, 'test13', 'not-default');
 
@@ -112,7 +124,7 @@ class SettingsManagerTest extends WebTestCase
         $settingToCopy = $manager->get('name0', 'default');
         $settingToCopy->setName('SettingModel');
 
-        $manager->duplicate($settingToCopy, 'newDomain');
+        $manager->duplicate($settingToCopy, ['newDomain']);
 
         $repo = $this->manager->getRepository('ONGRSettingsBundle:Setting');
 

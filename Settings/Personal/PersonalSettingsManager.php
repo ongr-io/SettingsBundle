@@ -123,6 +123,14 @@ class PersonalSettingsManager
     }
 
     /**
+     * Clears the stash
+     */
+    public function stashClear()
+    {
+        $this->pool->deleteItem(self::STASH_NAME);
+    }
+
+    /**
      * @return bool
      */
     public function isAuthenticated()

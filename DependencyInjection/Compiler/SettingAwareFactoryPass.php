@@ -44,8 +44,8 @@ class SettingAwareFactoryPass implements CompilerPassInterface
                 $definition->getClass(),
                 [$callMap, new Reference("{$serviceId}_base")]
             );
-            $proxy->setFactoryService('ongr_settings.setting_aware_service_factory');
-            $proxy->setFactoryMethod('get');
+            $factory = new Reference('ongr_settings.setting_aware_service_factory');
+            $proxy->setFactory([$factory, 'Get']);
 
             unset($initialTags['ongr_settings.setting_aware']);
             $proxy->setTags($initialTags);

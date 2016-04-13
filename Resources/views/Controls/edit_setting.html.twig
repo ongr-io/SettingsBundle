@@ -1,5 +1,5 @@
 {% if ongr_setting_enabled('ongr_settings_live_settings') %}
-<a href="{{ url('ongr_settings_setting_edit', {'name': setting, 'type': type}) }}" class="btn btn-default pull-right" title="Edit {{ setting }}">
+<a href="{{ url('ongr_settings_setting_edit', {'name': setting, 'profile': profile}) }}" class="btn btn-default pull-right" title="Edit {{ setting }}">
     <span class="glyphicon glyphicon-wrench"></span>
 </a>
 {% endif %}
