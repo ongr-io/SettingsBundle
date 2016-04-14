@@ -98,7 +98,9 @@ class SettingsContainer implements SettingsContainerInterface
         $this->profiles = $this->manager->getActiveProfiles();
 
         foreach ($this->profiles as $profile) {
-            $this->addProvider($this->buildProvider($profile));
+            if ($profile != 'default') {
+                $this->addProvider($this->buildProvider($profile));
+            }
         }
 
         $cachedSetting = $this->getCache();
