@@ -15,6 +15,8 @@ use Stash\Pool;
 use ONGR\SettingsBundle\Settings\Personal\SettingsStructure;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use ONGR\SettingsBundle\Event\SettingChangeEvent;
 
 /**
  * Service responsible as a gateway to user settings.
@@ -30,6 +32,11 @@ class PersonalSettingsManager
      * @var string
      */
     const STASH_NAME = 'ongr_settings';
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
 
     /**
      * @var string
@@ -71,15 +78,17 @@ class PersonalSettingsManager
     private $pool;
 
     /**
+     * @param String                   $userParam
      * @param SettingsStructure        $settingsStructure
+     * @param EventDispatcherInterface $eventDispatcher
      * @param AuthorizationChecker     $authorization
      * @param TokenStorage             $token
-     * @param String                   $userParam
      * @param Pool                     $pool
      */
-    public function __construct($settingsStructure, $authorization, $token, $userParam, $pool)
+    public function __construct($userParam, $settingsStructure, $eventDispatcher, $authorization, $token, $pool)
     {
         $this->settingsStructure = $settingsStructure;
+        $this->eventDispatcher = $eventDispatcher;
         $this->securityContext = $authorization;
         $this->token = $token;
         $this->pool = $pool;
@@ -137,6 +146,8 @@ class PersonalSettingsManager
         $stashedSettings = $this->pool->getItem($this->stash);
         $stashedSettings->set($this->userSettings);
         $this->pool->save($stashedSettings);
+
+        $this->eventDispatcher->dispatch('ongr_settings.setting_change', new SettingChangeEvent('save'));
     }
 
     /**
@@ -161,6 +172,24 @@ class PersonalSettingsManager
     public function getSettings()
     {
         return $this->userSettings;
+    }
+
+    /**
+     * Gets active profiles
+     *
+     * @return array
+     */
+    public function getActiveProfiles()
+    {
+        $profiles = [];
+        $this->setSettingsFromStash();
+        foreach ($this->userSettings as $name => $userSetting) {
+            if (preg_match('/^ongr_settings_profile_.*/', $name) && $userSetting) {
+                $escapedProfile = mb_substr($name, 22, null, 'UTF-8');
+                $profiles[] = UnderscoreEscaper::unescape($escapedProfile);
+            }
+        }
+        return $profiles;
     }
 
     /**

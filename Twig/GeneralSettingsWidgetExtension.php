@@ -98,23 +98,20 @@ class GeneralSettingsWidgetExtension extends \Twig_Extension
      *
      * @param \Twig_Environment $environment
      * @param string            $settingName
-     * @param string            $type
+     * @param string            $profile
      *
      * @return string
      */
-    public function showSetting($environment, $settingName, $type = 'string')
+    public function showSetting($environment, $settingName, $profile)
     {
         if (!$this->personalSettingsManager->isAuthenticated()) {
             return '';
         }
-        $pos = strpos($settingName, '_');
-        $profile = substr($settingName, 0, $pos);
-        $name = substr($settingName, $pos+1);
 
         return $environment->render(
             $this->template,
             [
-                'setting' => $name,
+                'setting' => $settingName,
                 'profile' => $profile,
             ]
         );

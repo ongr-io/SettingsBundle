@@ -37,6 +37,13 @@ class PersonalSettingsController extends Controller
         $settingsData = $manager->getSettings();
         $settingsMap = $manager->getSettingsMap();
 
+        if (empty($settingsData)) {
+            foreach ($settingsMap as $name => $setting) {
+                $settingsData[$name] = false;
+            }
+            $manager->setSettings($settingsData);
+            $manager->save();
+        }
         // Build settings layout within categories.
         $categoryMap = $manager->getCategoryMap();
         foreach ($settingsMap as $settingId => $setting) {

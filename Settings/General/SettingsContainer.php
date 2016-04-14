@@ -13,9 +13,12 @@ namespace ONGR\SettingsBundle\Settings\General;
 
 use ONGR\SettingsBundle\Event\SettingChangeEvent;
 use ONGR\SettingsBundle\Exception\SettingNotFoundException;
+use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
+use ONGR\SettingsBundle\Settings\General\Provider\SettingsProviderInterface;
+use ONGR\SettingsBundle\Settings\General\Provider\ManagerAwareSettingProvider;
 use Stash\Interfaces\ItemInterface;
 use Stash\Interfaces\PoolInterface;
-use ONGR\SettingsBundle\Settings\General\Provider\SettingsProviderInterface;
+use ONGR\ElasticsearchBundle\Service\Manager;
 
 /**
  * This class provides access to application settings.
@@ -25,37 +28,53 @@ class SettingsContainer implements SettingsContainerInterface
     /**
      * @var PoolInterface
      */
-    protected $pool;
+    private $pool;
 
     /**
-     * Array of profiles.
+     * Personal settings manager for handling
+     * selected profiles
      *
-     * Array of selected profiles / profiles to apply.
-     *
+     * @var PersonalSettingsManager
+     */
+    private $manager;
+
+    /**
+     * Elasticsearch manager for building profiders
+     * @var Manager
+     */
+    private $esManager;
+
+    /**
      * @var array
      */
-    protected $profiles;
+    private $profiles = [];
 
     /**
      * @var SettingsProviderInterface[]
      */
-    protected $providers = [];
+    private $providers = [];
 
     /**
      * @var array
      */
-    protected $settings = [];
+    private $settings = [];
 
     /**
      * Constructor.
      *
-     * @param PoolInterface $pool
-     * @param array         $profiles
+     * @param PoolInterface              $pool
+     * @param PersonalSettingsManager    $manager
+     * @param Manager    $esManager
      */
-    public function __construct(PoolInterface $pool, $profiles = ['default'])
+    public function __construct(
+        PoolInterface $pool,
+        PersonalSettingsManager $manager,
+        Manager $esManager
+    )
     {
         $this->pool = $pool;
-        $this->profiles = $profiles;
+        $this->manager = $manager;
+        $this->esManager = $esManager;
     }
 
     /**
@@ -76,6 +95,11 @@ class SettingsContainer implements SettingsContainerInterface
         if ($result !== null) {
             return $result;
         }
+        $this->profiles = $this->manager->getActiveProfiles();
+
+        foreach ($this->profiles as $profile) {
+            $this->addProvider($this->buildProvider($profile));
+        }
 
         $cachedSetting = $this->getCache();
 
@@ -94,6 +118,7 @@ class SettingsContainer implements SettingsContainerInterface
         }
 
         $cachedSetting->set(json_encode($settings));
+        $this->pool->save($cachedSetting);
         $this->settings = array_merge($this->settings, $settings);
 
         return $this->getSetting($setting);
@@ -141,7 +166,7 @@ class SettingsContainer implements SettingsContainerInterface
      */
     protected function getCache()
     {
-        return $this->pool->getItem('ongr_settings.settings_cache', join($this->profiles, ','));
+        return $this->pool->getItem('ongr_settings.settings_cache');
     }
 
     /**
@@ -163,5 +188,20 @@ class SettingsContainer implements SettingsContainerInterface
         }
 
         return null;
+    }
+
+    /**
+     * BuildProvider.
+     *
+     * @param string $profile
+     *
+     * @return ManagerAwareSettingProvider
+     */
+    private function buildProvider($profile)
+    {
+        $provider = new ManagerAwareSettingProvider($profile);
+        $provider->setManager($this->esManager);
+
+        return $provider;
     }
 }

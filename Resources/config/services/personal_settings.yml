@@ -19,10 +19,11 @@ services:
     ongr_settings.settings.personal_settings_manager:
             class: ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager
             arguments:
+                - %ongr_settings.user_property%
                 - "@ongr_settings.settings.settings_structure"
+                - "@event_dispatcher"
                 - "@security.authorization_checker"
                 - "@security.token_storage"
-                - %ongr_settings.user_property%
                 - "@stash"
 
     # Personal profiles provider
