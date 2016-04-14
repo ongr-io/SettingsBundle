@@ -11,8 +11,10 @@
 
 namespace ONGR\SettingsBundle\Settings\Personal;
 
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Stash\Pool;
 use ONGR\SettingsBundle\Settings\Personal\SettingsStructure;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * Service responsible as a gateway to user settings.
@@ -30,9 +32,26 @@ class PersonalSettingsManager
     const STASH_NAME = 'ongr_settings';
 
     /**
-     * @var SecurityContextInterface
+     * @var string
+     */
+    private $userParam;
+
+    /**
+     * Stash name for the current user
+     *
+     * @var string
+     */
+    private $stash;
+
+    /**
+     * @var AuthorizationChecker
      */
     private $securityContext;
+
+    /**
+     * @var TokenStorage
+     */
+    private $token;
 
     /**
      * @var SettingsStructure
@@ -53,40 +72,36 @@ class PersonalSettingsManager
 
     /**
      * @param SettingsStructure        $settingsStructure
-     * @param                          $security
-     * @param \Pool                    $pool
+     * @param AuthorizationChecker     $authorization
+     * @param TokenStorage             $token
+     * @param String                   $userParam
+     * @param Pool                     $pool
      */
-    public function __construct($settingsStructure, $security, $pool)
+    public function __construct($settingsStructure, $authorization, $token, $userParam, $pool)
     {
         $this->settingsStructure = $settingsStructure;
-        $this->securityContext = $security;
+        $this->securityContext = $authorization;
+        $this->token = $token;
         $this->pool = $pool;
-        $stashedSettings = $pool->getItem(self::STASH_NAME)->get();
+        $this->userParam = $userParam;
+    }
+
+    /**
+     * Sets settings for the current user from stash
+     */
+    public function setSettingsFromStash()
+    {
+        $this->stash = $this->getStashName($this->token->getToken()->getUser());
+        $stashedSettings = $this->pool->getItem($this->stash)->get();
         if (is_array($stashedSettings)) {
             $this->userSettings = $stashedSettings;
         }
     }
 
     /**
-     * @param array $stash
-     */
-    public function setSettingsFromStash(array $stash)
-    {
-        $this->userSettings = $stash;
-    }
-
-    /**
-     * @param array $stash
-     */
-    public function addSettingsFromStash(array $stash)
-    {
-        $this->userSettings = array_merge($this->userSettings, $stash);
-    }
-
-    /**
      * @param array $settings
      */
-    public function setSettingsFromForm(array $settings)
+    public function setSettings(array $settings)
     {
         $this->userSettings = $settings;
     }
@@ -104,7 +119,7 @@ class PersonalSettingsManager
         if ($mustAuthorize && !$this->isAuthenticated()) {
             return false;
         }
-
+        $this->setSettingsFromStash();
         if (isset($this->userSettings[$settingName])) {
             return $this->userSettings[$settingName];
         }
@@ -114,10 +129,12 @@ class PersonalSettingsManager
 
     /**
      * Saves the current settings to stash
+     *
+     * @throws \BadMethodCallException
      */
     public function save()
     {
-        $stashedSettings = $this->pool->getItem(self::STASH_NAME);
+        $stashedSettings = $this->pool->getItem($this->stash);
         $stashedSettings->set($this->userSettings);
         $this->pool->save($stashedSettings);
     }
@@ -127,7 +144,7 @@ class PersonalSettingsManager
      */
     public function stashClear()
     {
-        $this->pool->deleteItem(self::STASH_NAME);
+        $this->pool->deleteItem($this->stash);
     }
 
     /**
@@ -160,5 +177,69 @@ class PersonalSettingsManager
     public function getCategoryMap()
     {
         return $this->settingsStructure->getCategoriesStructure();
+    }
+
+    /**
+     * Returns the full name of the stash for the current
+     * User. If the unique user property value cant be determined
+     * returns false.
+     *
+     * @param $user
+     *
+     * @return string
+     * @throws \BadMethodCallException
+     */
+    private function getStashName($user)
+    {
+        $property = $this->guessPropertyOrMethodName($user);
+        $stashName =  self::STASH_NAME.'_';
+        try {
+            if ($property[0] == 'public') {
+                $stashName = $stashName . $user->$property[1];
+            } else {
+                $method = $property[1];
+                $stashName = $stashName . $user->$method();
+            }
+            $this->stash = $stashName;
+            return $stashName;
+        } catch (\Exception $e) {
+            throw new \BadMethodCallException(
+                'Ongr could not guess the getter method for your defined user property.'
+            );
+        }
+    }
+
+    /**
+     * Returns the property visibility and if its
+     * private, guesses the name of the getter
+     *
+     * @param $user
+     *
+     * @return array
+     */
+    private function guessPropertyOrMethodName($user)
+    {
+        $property = $this->userParam;
+        if (isset($user->$property)) {
+            return ['public', $this->userParam];
+        } else {
+            return ['private', $this->toCamelCase($this->userParam)];
+        }
+    }
+
+    /**
+     * Converts a string to camel case
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    private function toCamelCase($name)
+    {
+        $return = explode('_', $name);
+        foreach ($return as $key => $item) {
+            $return[$key] = ucfirst($item);
+        }
+        return 'get'.implode('', $return);
     }
 }

@@ -88,9 +88,12 @@ class PersonalSettingsController extends Controller
                 $settings[$name] = true;
             }
 
-            $manager->setSettingsFromStash($settings);
-            $manager->save();
-
+            $manager->setSettings($settings);
+            try {
+                $manager->save();
+            } catch (\BadMethodCallException $e) {
+                return new JsonResponse($e->getMessage(), 400);
+            }
             return new JsonResponse();
         } else {
             return new JsonResponse(Response::$statusTexts[403], 403);
@@ -102,6 +105,8 @@ class PersonalSettingsController extends Controller
      */
     protected function getPersonalSettingsManager()
     {
-        return $this->get('ongr_settings.settings.personal_settings_manager');
+        $manager = $this->get('ongr_settings.settings.personal_settings_manager');
+        $manager->setSettingsFromStash();
+        return $manager;
     }
 }

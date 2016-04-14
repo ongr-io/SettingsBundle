@@ -21,6 +21,8 @@ services:
             arguments:
                 - "@ongr_settings.settings.settings_structure"
                 - "@security.authorization_checker"
+                - "@security.token_storage"
+                - %ongr_settings.user_property%
                 - "@stash"
 
     # Personal profiles provider

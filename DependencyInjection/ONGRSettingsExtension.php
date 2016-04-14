@@ -49,6 +49,7 @@ class ONGRSettingsExtension extends Extension
 
         if (isset($config['user_settings'])) {
             $this->loadPersonalSettings($config['user_settings'], $container);
+            $container->setParameter('ongr_settings.user_property', $config['user_settings']['user_property']);
         }
 
         $this->injectPersonalSettings($container);
