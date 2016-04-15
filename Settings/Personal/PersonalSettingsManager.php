@@ -100,7 +100,7 @@ class PersonalSettingsManager
      */
     public function setSettingsFromStash()
     {
-        $this->stash = $this->getStashName($this->token->getToken()->getUser());
+        $this->stash = $this->getStashName();
         $stashedSettings = $this->pool->getItem($this->stash)->get();
         if (is_array($stashedSettings)) {
             $this->userSettings = $stashedSettings;
@@ -119,15 +119,11 @@ class PersonalSettingsManager
      * If user logged in, returns setting value from cookie. Else, returns false.
      *
      * @param string $settingName
-     * @param bool   $mustAuthorize
      *
      * @return bool
      */
-    public function getSettingEnabled($settingName, $mustAuthorize = true)
+    public function getSettingEnabled($settingName)
     {
-        if ($mustAuthorize && !$this->isAuthenticated()) {
-            return false;
-        }
         $this->setSettingsFromStash();
         if (isset($this->userSettings[$settingName])) {
             return $this->userSettings[$settingName];
@@ -213,24 +209,34 @@ class PersonalSettingsManager
      * User. If the unique user property value cant be determined
      * returns false.
      *
-     * @param $user
+     * @return string
+     */
+    private function getStashName()
+    {
+        return self::STASH_NAME.'_'.$this->getUsername();
+    }
+
+    /**
+     * Gets the defined unique user setting value
      *
      * @return string
      * @throws \BadMethodCallException
      */
-    private function getStashName($user)
+    public function getUsername()
     {
-        $property = $this->guessPropertyOrMethodName($user);
-        $stashName =  self::STASH_NAME.'_';
+        $user = $this->token->getToken()->getUser();
+        $call = $this->guessPropertyOrMethodName($user);
         try {
-            if ($property[0] == 'public') {
-                $stashName = $stashName . $user->$property[1];
+            if ($call[0] == 'public') {
+                return $user->$call[1];
             } else {
-                $method = $property[1];
-                $stashName = $stashName . $user->$method();
+                $method = $call[1];
+                if ($user == 'anon.') {
+                    return $user;
+                } else {
+                    return $user->$method();
+                }
             }
-            $this->stash = $stashName;
-            return $stashName;
         } catch (\Exception $e) {
             throw new \BadMethodCallException(
                 'Ongr could not guess the getter method for your defined user property.'

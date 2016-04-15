@@ -102,11 +102,14 @@ class SettingsContainer implements SettingsContainerInterface
                 $this->addProvider($this->buildProvider($profile));
             }
         }
-
-        $cachedSetting = $this->getCache();
+        $user = $this->manager->getUsername();
+        $cachedSetting = $this->getCache($user);
 
         if (!$cachedSetting->isMiss()) {
-            $this->settings = json_decode($cachedSetting->get(), true);
+            $cacheSettings = $cachedSetting->get();
+            if (key($cacheSettings) == $user) {
+                $this->settings = json_decode($cacheSettings[$user], true);
+            }
 
             return $this->getSetting($setting);
         }
@@ -119,7 +122,7 @@ class SettingsContainer implements SettingsContainerInterface
             }
         }
 
-        $cachedSetting->set(json_encode($settings));
+        $cachedSetting->set([$user => json_encode($settings)]);
         $this->pool->save($cachedSetting);
         $this->settings = array_merge($this->settings, $settings);
 
@@ -134,7 +137,8 @@ class SettingsContainer implements SettingsContainerInterface
     public function onSettingChange(
         SettingChangeEvent $event
     ) {
-        $this->pool->getItem('ongr_settings.settings_cache')->clear();
+        $user = $this->manager->getUsername();
+        $this->pool->getItem('ongr_settings.settings_cache_'.$user)->clear();
     }
 
     /**
@@ -164,11 +168,13 @@ class SettingsContainer implements SettingsContainerInterface
     /**
      * Returns settings cache item.
      *
+     * @param string $user
+     *
      * @return ItemInterface
      */
-    protected function getCache()
+    protected function getCache($user)
     {
-        return $this->pool->getItem('ongr_settings.settings_cache');
+        return $this->pool->getItem('ongr_settings.settings_cache_'.$user);
     }
 
     /**

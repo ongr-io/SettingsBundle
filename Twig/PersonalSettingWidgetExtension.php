@@ -58,12 +58,11 @@ class PersonalSettingWidgetExtension extends \Twig_Extension
      * Return setting value for the current user.
      *
      * @param string $settingName
-     * @param bool   $mustAuthorize
      *
      * @return mixed
      */
-    public function getSettingEnabled($settingName, $mustAuthorize = true)
+    public function getSettingEnabled($settingName)
     {
-        return $this->porsonallSettingsManager->getSettingEnabled($settingName, $mustAuthorize);
+        return $this->porsonallSettingsManager->getSettingEnabled($settingName);
     }
 }
