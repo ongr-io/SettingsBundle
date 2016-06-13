@@ -51,37 +51,44 @@ class Setting implements JsonSerializable
     /**
      * @var string
      *
-     * @ES\Property(name="name", type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="string", options={"analyzer"="standard"})
      */
-    protected $name;
+    private $name;
 
     /**
      * @var string
      *
-     * @ES\Property(name="description", type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="string", options={"analyzer"="standard"})
      */
-    protected $description;
+    private $description;
 
     /**
      * @var string
      *
-     * @ES\Property(name="profile", type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="string", options={"analyzer"="standard"})
      */
-    protected $profile;
+    private $profile;
 
     /**
      * @var string
      *
-     * @ES\Property(name="type", type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="string", options={"analyzer"="standard"})
      */
-    protected $type;
+    private $type;
 
     /**
      * @var string
      *
-     * @ES\Property(name="data", type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="string", options={"index"="not_analyzed"})
      */
-    protected $data;
+    private $data;
+
+    /**
+     * @var string
+     *
+     * @ES\Property(type="string", options={"index"="not_analyzed"})
+     */
+    private $salt;
 
     /**
      * @return string
@@ -200,6 +207,22 @@ class Setting implements JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @param string $salt
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    }
+
+    /**
      * Specify data which should be serialized to JSON.
      *
      * @return mixed Data which can be serialized by json_encode.
@@ -207,12 +230,12 @@ class Setting implements JsonSerializable
     public function jsonSerialize()
     {
         return [
+            'id' => $this->getId(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
             'profile' => $this->getProfile(),
             'type' => $this->getType(),
             'data' => $this->getData(),
-            'id' => $this->getId(),
         ];
     }
 }

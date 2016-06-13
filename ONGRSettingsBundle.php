@@ -24,18 +24,4 @@ use ONGR\SettingsBundle\DependencyInjection\Security\SessionlessAuthenticationFa
  */
 class ONGRSettingsBundle extends Bundle
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function build(ContainerBuilder $container)
-    {
-        parent::build($container);
-
-        $container->addCompilerPass(new EnvironmentVariablesPass());
-        $container->addCompilerPass(new ProviderPass());
-        $container->addCompilerPass(new SettingsModifierPass());
-        $container->addCompilerPass(new SettingAwareFactoryPass());
-
-        $extension = $container->getExtension('security');
-    }
 }

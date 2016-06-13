@@ -13,10 +13,11 @@
     "require": {
         "php": ">=5.5",
         "symfony/symfony": "~2.7|~3.0",
-        "tedivm/stash-bundle": "~0.4",
+        "doctrine/cache": "~1.4",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
         "ongr/elasticsearch-bundle": "~1.0",
-        "ongr/filter-manager-bundle": "~1.0"
+        "ongr/filter-manager-bundle": "~1.0",
+        "ongr/cookies-bundle": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.4",

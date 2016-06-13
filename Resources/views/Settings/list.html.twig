@@ -1,94 +1,28 @@
 {% extends 'ONGRSettingsBundle::layout.html.twig' %}
 
-{% block stilesheets %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" type="text/css"/>
-{% endblock %}
 {% block main %}
-    {% include 'ONGRSettingsBundle:Settings:inc/deleteModal.html.twig' %}
-    <div class="container-fluid" id="settingsListContainer" edit-url="{{ path('ongr_settings_setting_update') }}">
+    <div class="container-fluid" id="settingsListContainer">
         <div class="row">
             <div class="col-lg-12">
                 <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        {% set sort = filters.sort %}
-                        {% for option in sort.choices %}
-                            {% if option.label == 'Name Asc' %}
-                                <th>Name <a href="
-                                {% if option.active == true%}
-                                    {{ path('ongr_settings_settings_list', sort.choices[1].urlParameters) }}"><span class="filter-sort glyphicon glyphicon-chevron-up
-                                {% else %}
-                                    {{ path('ongr_settings_settings_list', option.urlParameters) }}"><span class="filter-sort glyphicon glyphicon-chevron-down
-                                {% endif %}
-                                "></span></a></th>
-                            {% elseif option.label == 'Description Asc' %}
-                                <th>Description <a href="
-                                {% if option.active == true%}
-                                    {{ path('ongr_settings_settings_list', sort.choices[3].urlParameters) }}"><span class="filter-sort glyphicon glyphicon-chevron-up
-                                {% else %}
-                                     {{ path('ongr_settings_settings_list', option.urlParameters) }}"><span class="filter-sort glyphicon glyphicon-chevron-down
-                                {% endif %}
-                                "></span></a></th>
-                            {% elseif option.label == 'Type Asc' %}
-                                <th>Type <a href="
-                                {% if option.active == true%}
-                                {{ path('ongr_settings_settings_list', sort.choices[5].urlParameters) }}"><span class="filter-sort glyphicon glyphicon-chevron-up
-                                {% else %}
-                                {{ path('ongr_settings_settings_list', option.urlParameters) }}"><span class="filter-sort glyphicon glyphicon-chevron-down
-                                {% endif %}
-                                "></span></a></th>
-                            {% endif %}
-                        {% endfor %}
-                        <th>Settings</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
                     {% for data in data %}
                         <tbody>
                         <tr>
-                            <td class=".col-xs-8 .col-md-6 list-name" profile="{{ data.profile }}">{{ data.name }}</td>
+                            <td class=".col-xs-8 .col-md-6 list-name">{{ data.name }}</td>
                             <td class=".col-xs-18 .col-md-8 list-description">{{ data.description }}</td>
                             <td class=".col-xs-6 .col-md-4">{{ data.type }}</td>
                             <td class=".col-xs-12 .col-md-8">
-                                <div class="settings-container">
-                                    <div>
-                                        {% if data.type == 'bool' %}
-                                            <div class="btn-group btn-group-sm">
-                                                <label class="boolean btn btn-default {% if data.data.value == true %}btn-primary{% endif %}" >On</label>
-                                                <label class="boolean btn btn-default {% if data.data.value == false %}btn-primary{% endif %}" >Off</label>
-                                            </div>
-                                        {% elseif data.type == 'string' %}
-                                            {{ data.data.value|slice(0, 50) }}
-                                        {% elseif data.type == 'array' %}
-                                            <div class="array-setting-group">
-                                                <ul class="list-unstyled">
-                                                    {% for element in data.data.value|slice(0,3) %}
-                                                        <li>{{ element }}</li>
-                                                    {% endfor %}
-                                                    {% if data.data.value|length >3 %}
-                                                        <li><a href="#" onclick="arrayHandleList(this, event, '{{ data.data.value|json_encode }}')">more</a></li>
-                                                    {% endif %}
-                                                </ul>
-                                            </div>
-                                        {% elseif data.type == 'object'%}
-                                            <p>{{ data.data.value|slice(0,50) }}</p>
-                                        {% endif %}
-                                    </div>
-                                </div>
+                                kk
                             </td>
 
                             <td class="col-xs-3">
-                                <a href="{{
-                                path('ongr_settings_setting_edit', {'name': data.name, 'profile': data.profile})
-                                }}" class="btn btn-primary btn-xs">
+                                <a href="#" class="btn btn-primary btn-xs">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </a>
-                                <a href="{{ path('ongr_settings_settings_duplicate', {'name': data.name, 'profile': data.profile}) }}" class="btn btn-primary btn-xs">
+                                <a href="#" class="btn btn-primary btn-xs">
                                     <span class="glyphicon glyphicon-transfer"></span>
                                 </a>
-                                <button href="#" url="{{
-                                path('ongr_settings_setting_remove', {'name': data.name, 'profile': data.profile})
-                                }}" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-xs setting-remove">
+                                <button href="#" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-xs setting-remove">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
                             </td>
@@ -98,11 +32,5 @@
                 </table>
             </div>
         </div>
-        {% block pager %}
-            {% if filters.pager is defined %}
-                <div class="pull-right">{{ ongr_paginate(filters.pager.pager, 'ongr_settings_settings_list', filters.pager.urlParameters) }}</div>
-                <div class="clearfix"></div>
-            {% endif %}
-        {% endblock %}
     </div>
 {% endblock %}

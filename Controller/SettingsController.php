@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class SettingsListController. Is used for managing settings in General env.
  */
-class SettingsListController extends Controller
+class SettingsController extends Controller
 {
     /**
      * Renders list page.
@@ -27,31 +27,27 @@ class SettingsListController extends Controller
      *
      * @return Response
      */
-    public function listAction(Request $request)
+    public function homeAction(Request $request)
     {
         return $this->render(
-            'ONGRSettingsBundle:Settings:list.html.twig',
-            array_merge(
-                $this->getListData($request)
-            )
+            'ONGRSettingsBundle:Settings:home.html.twig',
+            []
         );
     }
 
     /**
-     * Gets list data.
+     * Renders list page.
      *
      * @param Request $request
      *
-     * @return array
+     * @return Response
      */
-    protected function getListData(Request $request)
+    public function allSettingsListAction(Request $request)
     {
-        $filterManager = $this->get('ongr_settings.filter_manager')->handleRequest($request);
-
-        return [
-            'data' => iterator_to_array($filterManager->getResult()),
-            'filters' => $filterManager->getFilters(),
-            'routeParams' => $filterManager->getUrlParameters(),
-        ];
+//        $fm = $this->get('ongr')
+        return $this->render(
+            'ONGRSettingsBundle:Settings:list.html.twig',
+            []
+        );
     }
 }

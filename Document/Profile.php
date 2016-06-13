@@ -17,7 +17,7 @@ use ONGR\ElasticsearchBundle\Annotation as ES;
 /**
  * Stores admin settings.
  *
- * @ES\Document(type="profiles")
+ * @ES\Document(type="profile")
  */
 class Profile implements JsonSerializable
 {
@@ -31,14 +31,14 @@ class Profile implements JsonSerializable
     /**
      * @var string
      *
-     * @ES\Property(name="name", type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="string", options={"analyzer"="standard"})
      */
-    private $name;
+    private $key;
 
     /**
      * @var string
      *
-     * @ES\Property(name="description", type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="string", options={"analyzer"="standard"})
      */
     private $description;
 
@@ -61,17 +61,17 @@ class Profile implements JsonSerializable
     /**
      * @return string
      */
-    public function getName()
+    public function getKey()
     {
-        return $this->name;
+        return $this->key;
     }
 
     /**
-     * @param string $name
+     * @param string $key
      */
-    public function setName($name)
+    public function setKey($key)
     {
-        $this->name = $name;
+        $this->key = $key;
     }
 
     /**
@@ -94,7 +94,7 @@ class Profile implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'key' => $this->key,
             'description' => $this->description,
         ];
     }

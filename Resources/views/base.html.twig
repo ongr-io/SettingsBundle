@@ -11,12 +11,7 @@
         {% endblock %}
     </head>
     <body>
-        {% block content %}
-            <div class="wrapper" {% block wrapper_attributes %}{% endblock %}>
-                {% block navigation %}{% include 'ONGRSettingsBundle:Settings:inc/navigation.html.twig' %}{% endblock %}
-                {% block main %}{% endblock %}
-            </div>
-        {% endblock %}
+        {% block body %}{% endblock %}
         {% block javascripts %}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
             <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>

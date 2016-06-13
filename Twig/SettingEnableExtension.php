@@ -10,8 +10,7 @@
  */
 
 namespace ONGR\SettingsBundle\Twig;
-
-use ONGR\SettingsBundle\Settings\Personal\PersonalSettingsManager;
+use ONGR\SettingsBundle\Settings\General\SettingsManager;
 
 /**
  * Class SettingExtension to show settings value on twig.
@@ -21,19 +20,19 @@ class PersonalSettingWidgetExtension extends \Twig_Extension
     /**
      * Extension name
      */
-    const NAME = 'personal_settings_extension';
+    const NAME = 'setting_enable_extension';
 
     /**
-     * @var PersonalSettingsManager
+     * @var SettingsManager
      */
-    private $porsonallSettingsManager;
+    private $manager;
 
     /**
-     * @param PersonalSettingsManager $personalSettingsManager
+     * @param SettingsManager $manager
      */
-    public function __construct($personalSettingsManager)
+    public function __construct($manager)
     {
-        $this->porsonallSettingsManager = $personalSettingsManager;
+        $this->manager = $manager;
     }
 
     /**
@@ -50,19 +49,19 @@ class PersonalSettingWidgetExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('ongr_setting_enabled', [$this, 'getSettingEnabled']),
+            new \Twig_SimpleFunction('ongr_setting_enabled', [$this, 'isSettingEnabled']),
         ];
     }
 
     /**
      * Return setting value for the current user.
      *
-     * @param string $settingName
+     * @param string $name
      *
      * @return mixed
      */
-    public function getSettingEnabled($settingName)
+    public function getSettingEnabled($name)
     {
-        return $this->porsonallSettingsManager->getSettingEnabled($settingName);
+//        return $this->manager->getSettingEnabled($name);
     }
 }

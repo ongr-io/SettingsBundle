@@ -1,7 +1,7 @@
 parameters:
     ongr_settings.filter.pager.request_field: page
-    ongr_settings.filter.pager.count_per_page: 15
-    ongr_settings.filter.pager.max_pages: 99
+    ongr_settings.filter.pager.count_per_page: 20
+    ongr_settings.filter.pager.max_pages: 1000
 
     ongr_settings.filter.sort.request_field: sort
     ongr_settings.filter.sort.choices:
@@ -9,7 +9,7 @@ parameters:
             label: "Name Asc"
             field: "name"
             order: "asc"
-            default: true
+            default: false
         nameDesc:
             label: "Name Desc"
             field: "name"
@@ -19,7 +19,7 @@ parameters:
             label: "Description Asc"
             field: "description"
             order: "asc"
-            default: true
+            default: false
         descDesc:
             label: "Description Desc"
             field: "description"
@@ -29,18 +29,25 @@ parameters:
             label: "Type Asc"
             field: "type"
             order: "asc"
-            default: true
+            default: false
         typeDesc:
             label: "Type Desc"
             field: "type"
             order: "desc"
             default: false
+        createdAsc:
+            label: "Created Asc"
+            field: "created_at"
+            order: "asc"
+            default: false
+        createdDesc:
+            label: "Created Desc"
+            field: "created_at"
+            order: "desc"
+            default: true
 
     ongr_settings.filter.match_search.request_field: q
-    ongr_settings.filter.match_search.field: "name"
-
-    ongr_settings.filter.single_term.profile.request_field: profile
-    ongr_settings.filter.single_term.profile.field: profile
+    ongr_settings.filter.match_search.field: "key"
 
 services:
     ongr_settings.filter.pager:
@@ -62,16 +69,13 @@ services:
             - ["setRequestField", ["%ongr_settings.filter.match_search.request_field%"]]
             - ["setField", ["%ongr_settings.filter.match_search.field%"]]
 
-    ongr_settings.filter.single_term.profile:
-        class: ONGR\FilterManagerBundle\Filter\Widget\Choice\SingleTermChoice
-        calls:
-            - ["setRequestField", ["%ongr_settings.filter.single_term.profile.request_field%"]]
-            - ["setField", ["%ongr_settings.filter.single_term.profile.field%"]]
-
     ongr_settings.filter_container:
         class: ONGR\FilterManagerBundle\Search\FilterContainer
         calls:
             - ["set", ["pager", "@ongr_settings.filter.pager"]]
             - ["set", ["sort", "@ongr_settings.filter.sort"]]
             - ["set", ["search", "@ongr_settings.filter.match_search"]]
-            - ["set", ["profile", "@ongr_settings.filter.single_term.profile"]]
+
+    ongr_settings.filter_manager:
+        class: ONGR\FilterManagerBundle\Search\FilterManager
+        arguments: ["@ongr_settings.filter_container", %ongr_settings.repos.setting%]
