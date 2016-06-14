@@ -1,13 +1,5 @@
-ongr_settings_homepage:
-    path:  /
-    methods: [GET]
-    defaults:
-        _controller: ONGRSettingsBundle:Settings:home
-        profile: 'default'
-
-ongr_settings_all:
-    path:  /all
-    methods: [GET]
-    defaults:
-        _controller: ONGRSettingsBundle:Settings:allSettingsList
-        profile: 'default'
+ongr_settings_fallback:
+    path: /{url}
+    defaults: { _controller: ONGRSettingsBundle:Settings:home, url: null }
+    requirements:
+        url: .*
