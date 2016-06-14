@@ -6,3 +6,4 @@
 /Tests/app/build/
 /cache.properties
 /composer.lock
+/node_modules
