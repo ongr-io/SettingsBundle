@@ -16,7 +16,31 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/
             },
-            {test: /\.scss$/, loader: ExtractTextPlugin.extract('css!sass')}
+            {
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract('css!sass')
+            },
+
+            // {
+            //     test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            //     loader: "url?limit=10000"
+            // },
+            // {
+            //     test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+            //     loader: 'file'
+            // },
+
+            // Use one of these to serve jQuery for Bootstrap scripts:
+
+            // // Bootstrap 4
+            // { test: /bootstrap\/dist\/js\/umd\//, loader: 'imports?jQuery=jquery' },
+
+            // Bootstrap 3
+            // { test: /bootstrap-sass\/assets\/javascripts\//, loader: 'imports?jQuery=jquery' },
+            // {
+            //     test: /\.woff2?$|\.ttf$|\.eot$|\.svg$/,
+            //     loader: 'file-loader'
+            // }
         ]
     },
     plugins: [

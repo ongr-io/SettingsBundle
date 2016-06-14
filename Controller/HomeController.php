@@ -12,26 +12,20 @@
 namespace ONGR\SettingsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class SettingsListController. Is used for managing settings in General env.
+ * Class HomeController.
  */
-class SettingsController extends Controller
+class HomeController extends Controller
 {
     /**
-     * Renders settings list page.
-     *
-     * @param Request $request
+     * Home page.
      *
      * @return Response
      */
-    public function listAction(Request $request)
+    public function indexAction()
     {
-        return $this->render(
-            'ONGRSettingsBundle:Settings:list.html.twig',
-            []
-        );
+        return $this->redirectToRoute('ongr_settings_settings');
     }
 }

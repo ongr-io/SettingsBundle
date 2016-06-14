@@ -16,12 +16,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class SettingsListController. Is used for managing settings in General env.
+ * Class ProfileController. Placeholder for settings bundle profiles page.
  */
-class SettingsController extends Controller
+class ProfilesController extends Controller
 {
     /**
-     * Renders settings list page.
+     * Renders profiles page.
      *
      * @param Request $request
      *
@@ -30,7 +30,7 @@ class SettingsController extends Controller
     public function listAction(Request $request)
     {
         return $this->render(
-            'ONGRSettingsBundle:Settings:list.html.twig',
+            'ONGRSettingsBundle:Profiles:list.html.twig',
             []
         );
     }

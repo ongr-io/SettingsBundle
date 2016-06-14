@@ -1,5 +1,23 @@
+ongr_settings_home:
+    path: /
+    defaults: { _controller: ONGRSettingsBundle:Home:index }
+
+ongr_settings_profiles:
+    path: /profiles
+    defaults: { _controller: ONGRSettingsBundle:Profiles:list }
+
+ongr_settings_profiles_fallback:
+    path: /profiles/{url}
+    defaults: { _controller: ONGRSettingsBundle:Profiles:list, url: null }
+    requirements:
+        url: .*
+
+ongr_settings_settings:
+    path: /settings
+    defaults: { _controller: ONGRSettingsBundle:Settings:list }
+
 ongr_settings_fallback:
-    path: /{url}
-    defaults: { _controller: ONGRSettingsBundle:Settings:home, url: null }
+    path: /settings/{url}
+    defaults: { _controller: ONGRSettingsBundle:Settings:list, url: null }
     requirements:
         url: .*
