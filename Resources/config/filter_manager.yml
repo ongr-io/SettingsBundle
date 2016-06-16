@@ -1,6 +1,6 @@
 parameters:
     ongr_settings.filter.pager.request_field: page
-    ongr_settings.filter.pager.count_per_page: 20
+    ongr_settings.filter.pager.count_per_page: 10
     ongr_settings.filter.pager.max_pages: 1000
 
     ongr_settings.filter.sort.request_field: sort
@@ -35,16 +35,16 @@ parameters:
             field: "type"
             order: "desc"
             default: false
-        createdAsc:
-            label: "Created Asc"
-            field: "created_at"
-            order: "asc"
-            default: false
-        createdDesc:
-            label: "Created Desc"
-            field: "created_at"
-            order: "desc"
-            default: true
+#        createdAsc:
+#            label: "Created Asc"
+#            field: "created_at"
+#            order: "asc"
+#            default: false
+#        createdDesc:
+#            label: "Created Desc"
+#            field: "created_at"
+#            order: "desc"
+#            default: true
 
     ongr_settings.filter.match_search.request_field: q
     ongr_settings.filter.match_search.field: "key"
@@ -76,6 +76,6 @@ services:
             - ["set", ["sort", "@ongr_settings.filter.sort"]]
             - ["set", ["search", "@ongr_settings.filter.match_search"]]
 
-    ongr_settings.filter_manager:
+    ongr_filter_manager.ongr.settings:
         class: ONGR\FilterManagerBundle\Search\FilterManager
-        arguments: ["@ongr_settings.filter_container", %ongr_settings.repos.setting%]
+        arguments: ["@ongr_settings.filter_container", "@es.manager.settings.setting"]

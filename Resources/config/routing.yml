@@ -6,18 +6,26 @@ ongr_settings_profiles:
     path: /profiles
     defaults: { _controller: ONGRSettingsBundle:Profiles:list }
 
-ongr_settings_profiles_fallback:
-    path: /profiles/{url}
-    defaults: { _controller: ONGRSettingsBundle:Profiles:list, url: null }
-    requirements:
-        url: .*
-
 ongr_settings_settings:
     path: /settings
     defaults: { _controller: ONGRSettingsBundle:Settings:list }
 
-ongr_settings_fallback:
-    path: /settings/{url}
-    defaults: { _controller: ONGRSettingsBundle:Settings:list, url: null }
-    requirements:
-        url: .*
+#ongr_settings_profiles_fallback:
+#    path: /profiles/{url}
+#    defaults: { _controller: ONGRSettingsBundle:Profiles:list, url: null }
+#    requirements:
+#        url: .*
+
+#ongr_settings_fallback:
+#    path: /settings/{url}
+#    defaults: { _controller: ONGRSettingsBundle:Settings:list, url: null }
+#    requirements:
+#        url: .*
+
+
+ongr_search_page:
+    path: /settings/search
+    methods:  [GET]
+    defaults:
+        _controller: ONGRFilterManagerBundle:Manager:json
+        managerName: "ongr.settings"
