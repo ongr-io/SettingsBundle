@@ -11,15 +11,15 @@
 
 namespace ONGR\SettingsBundle\Document;
 
-use JsonSerializable;
 use ONGR\ElasticsearchBundle\Annotation as ES;
+use ONGR\FilterManagerBundle\SerializableInterface;
 
 /**
  * Stores admin settings.
  *
  * @ES\Document(type="setting")
  */
-class Setting implements JsonSerializable
+class Setting implements SerializableInterface
 {
     /**
      * @var string
@@ -227,7 +227,7 @@ class Setting implements JsonSerializable
      *
      * @return mixed Data which can be serialized by json_encode.
      */
-    public function jsonSerialize()
+    public function getSerializableData()
     {
         return [
             'id' => $this->getId(),
@@ -235,7 +235,7 @@ class Setting implements JsonSerializable
             'description' => $this->getDescription(),
             'profile' => $this->getProfile(),
             'type' => $this->getType(),
-            'data' => $this->getData(),
+            'value' => $this->getData(),
         ];
     }
 }
