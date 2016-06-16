@@ -1,27 +1,39 @@
 import React, { Component } from 'react'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'; 
+import { Button } from 'react-bootstrap';
+
+
+var actionButtons = (<Button bsStyle="primary" onClick={onClickEdit}>Edit</Button>)
+
+function onClickEdit(){
+  console.log("click")
+}
 
 const settings = [
   {
       setting_name: "Setting 1",
       setting_desc: "Desc 1",
       setting_type: "bool",
-      setting_value: "true"
+      setting_value: "true",
+      setting_actions: actionButtons 
   },{
       setting_name: "Setting 2",
       setting_desc: "Desc 2",
       setting_type: "object",
-      setting_value: "object"
+      setting_value: "object",
+      setting_actions: actionButtons 
   },{
       setting_name: "Setting 3",
       setting_desc: "Desc 3",
       setting_type: "string",
-      setting_value: "string"
+      setting_value: "string",
+      setting_actions: actionButtons 
   },{
       setting_name: "Setting 4",
       setting_desc: "Desc 4",
       setting_type: "array",
-      setting_value: "[1, 3, 5]"
+      setting_value: "[1, 3, 5]",
+      setting_actions: actionButtons 
   }
 ];
 
@@ -98,16 +110,20 @@ const cellEditProp = {
   afterSaveCell: onAfterSaveCell
 }
 
+
 class SettingsTable extends Component {
 
   render(){
       return (
-          <BootstrapTable data={settings} striped={true} hover={true} search={true} insertRow={true} deleteRow={true} selectRow={selectRowProp} cellEdit={cellEditProp}>
+          <div>
+          <BootstrapTable data={settings} striped={true} hover={true} search={true}>
               <TableHeaderColumn isKey={true} dataField="setting_name" dataSort={true}>Name</TableHeaderColumn>
               <TableHeaderColumn dataField="setting_desc" dataSort={true}>Description</TableHeaderColumn>
               <TableHeaderColumn dataField="setting_type" dataSort={true} editable={edit_type}>Type</TableHeaderColumn>
-              <TableHeaderColumn dataField="setting_value" dataSort={true} dataFormat={valueFormatter} editable={edit_value}>Value</TableHeaderColumn>
+              <TableHeaderColumn dataField="setting_value" dataSort={false} dataFormat={valueFormatter} editable={edit_value}>Value</TableHeaderColumn>
+              <TableHeaderColumn dataField="setting_actions">Actions</TableHeaderColumn>
           </BootstrapTable>
+          </div>
       )
   }
 }

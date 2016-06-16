@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ongr-io/SettingsBundle#readme",
   "dependencies": {
     "react": "^15.1.0",
+    "react-bootstrap": "^0.29.4",
     "react-bootstrap-table": "^2.3.5",
     "react-dom": "^15.1.0"
   },
