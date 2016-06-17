@@ -29,20 +29,11 @@ class Configuration implements ConfigurationInterface
         $root = $treeBuilder->root('ongr_settings');
 
         $root->children()
-                ->arrayNode('repos')
-                    ->addDefaultsIfNotSet()
-                        ->children()
-                            ->scalarNode('profile')
-                                ->defaultValue('es.manager.setting.profile')
-                                ->info('Repository service name for profile type')
-                            ->end()
-                            ->scalarNode('setting')
-                                ->defaultValue('es.manager.setting.setting')
-                                ->info('Repository service name for settings type')
-                            ->end()
-                        ->end()
-                ->end()
-            ->end();
+            ->scalarNode('repo')
+                ->defaultValue('es.manager.setting.setting')
+                ->info('Repository service name for settings type')
+            ->end()
+        ->end();
 
         return $treeBuilder;
     }

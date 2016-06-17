@@ -12,6 +12,7 @@
 namespace ONGR\SettingsBundle;
 
 use ONGR\SettingsBundle\DependencyInjection\Compiler\EnvironmentVariablesPass;
+use ONGR\SettingsBundle\DependencyInjection\Compiler\FilterManagerPass;
 use ONGR\SettingsBundle\DependencyInjection\Compiler\ProviderPass;
 use ONGR\SettingsBundle\DependencyInjection\Compiler\SettingsModifierPass;
 use ONGR\SettingsBundle\DependencyInjection\Compiler\SettingAwareFactoryPass;
@@ -24,4 +25,13 @@ use ONGR\SettingsBundle\DependencyInjection\Security\SessionlessAuthenticationFa
  */
 class ONGRSettingsBundle extends Bundle
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(new FilterManagerPass());
+    }
 }

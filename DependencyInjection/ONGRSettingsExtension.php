@@ -32,9 +32,7 @@ class ONGRSettingsExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         // Set connection settings.
-        $container->setParameter('ongr_settings.repos', $config['repos']);
-        $container->setParameter('ongr_settings.repos.setting', $config['repos']['setting']);
-        $container->setParameter('ongr_settings.repos.profile', $config['repos']['profile']);
+        $container->setParameter('ongr_settings.repo', $config['repo']);
 
         // Set profiles.
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));

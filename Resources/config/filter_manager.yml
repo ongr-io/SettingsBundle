@@ -76,6 +76,11 @@ services:
             - ["set", ["sort", "@ongr_settings.filter.sort"]]
             - ["set", ["search", "@ongr_settings.filter.match_search"]]
 
-    ongr_filter_manager.ongr.settings:
-        class: ONGR\FilterManagerBundle\Search\FilterManager
-        arguments: ["@ongr_settings.filter_container", "@es.manager.settings.setting"]
+#    ongr_filter_manager.ongr.settings:
+#        class: ONGR\FilterManagerBundle\Search\FilterManager
+#        arguments: ["@ongr_settings.filter_container", "@"~"%ongr_settings.repo%"]
+#        factory: [ongr_filter_manager.ongr.settings_factory, createNewsletterManager]
+#
+#    ongr_filter_manager.ongr.settings_factory:
+#        class: ONGR\SettingsBundle\Service\FilterManagerFactory
+#        arguments: ["@ongr_settings.filter_container", "%ongr_settings.repo%"]

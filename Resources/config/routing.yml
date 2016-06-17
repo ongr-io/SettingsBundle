@@ -1,6 +1,9 @@
 ongr_settings_home:
     path: /
-    defaults: { _controller: ONGRSettingsBundle:Home:index }
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: ongr_settings_settings
+        permanent: true
 
 ongr_settings_profiles:
     path: /profiles
@@ -28,4 +31,4 @@ ongr_search_page:
     methods:  [GET]
     defaults:
         _controller: ONGRFilterManagerBundle:Manager:json
-        managerName: "ongr.settings"
+        managerName: "settings"
