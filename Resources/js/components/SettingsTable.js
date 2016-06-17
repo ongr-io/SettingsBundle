@@ -1,6 +1,6 @@
 import React from 'react'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'; 
-import { Button, ButtonGroup, Modal } from 'react-bootstrap';
+import { Button, ButtonGroup, Modal, Form, FormGroup, Col, ControlLabel, FormControl } from 'react-bootstrap';
 import $ from 'jquery';
 
 //const setting_types = ['bool', 'string', 'array', 'object']
@@ -9,7 +9,8 @@ var SettingsTable = React.createClass({
 
   getInitialState () {
     return {
-      showModal: false
+      showModal: false,
+      editSetting: {}
     };
   },
 
@@ -24,7 +25,7 @@ var SettingsTable = React.createClass({
     var dataWithButtons = data.documents.map(function(el){
       el.actions = (
         <ButtonGroup>
-          <Button bsStyle="primary"  onClick={() => this.openModal(el.id)}>Edit</Button>
+          <Button bsStyle="primary"  onClick={() => this.openModal(el)}>Edit</Button>
           <Button bsStyle="primary" onClick={() => this.onClickDelete(el.id)}>Delete</Button>
         </ButtonGroup>
       )
@@ -35,13 +36,17 @@ var SettingsTable = React.createClass({
   },
 
   closeModal() {
-    console.log('close')
-    this.setState({ showModal: false });
+    this.setState({ 
+      showModal: false ,
+      editSetting: {}
+    });
   },
 
   openModal(id) {
-    console.log('open', id)
-    this.setState({ showModal: true });
+    this.setState({ 
+      showModal: true,
+      editSetting: id 
+    });
   },
 
   onClickDelete(id){
@@ -78,9 +83,10 @@ var SettingsTable = React.createClass({
 
   render(){
       if(this.state.data){
-        
+
         return (
             <div>
+
             <BootstrapTable data={this.state.data} striped={true} hover={true} search={true}>
                 <TableHeaderColumn isKey={true} hidden={true} dataField="id">ID</TableHeaderColumn>
                 <TableHeaderColumn dataField="name" dataSort={true}>Name</TableHeaderColumn>
@@ -89,23 +95,41 @@ var SettingsTable = React.createClass({
                 <TableHeaderColumn dataField="value" dataSort={false} dataFormat={this.valueFormatter}>Value</TableHeaderColumn>
                 <TableHeaderColumn dataField="actions">Actions</TableHeaderColumn>
             </BootstrapTable>
+
             <Modal show={this.state.showModal} onHide={this.closeModal}>
               <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Edit setting</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <h4>Text in a modal</h4>
-                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
 
-                <hr />
+                <Form horizontal>
+                  <FormGroup controlId="formName">
+                    <Col componentClass={ControlLabel} sm={2}>
+                      Name
+                    </Col>
+                    <Col sm={10}>
+                      <FormControl type="text" placeholder="Edit name" defaultValue={this.state.editSetting.name} />
+                    </Col>
+                  </FormGroup>
 
-                <h4>Overflowing text to show scroll behavior</h4>
-                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-               </Modal.Body>
+                  <FormGroup controlId="formDesc">
+                    <Col componentClass={ControlLabel} sm={2}>
+                      Description
+                    </Col>
+                    <Col sm={10}>
+                      <FormControl type="text" placeholder="Edit descr" defaultValue={this.state.editSetting.description} />
+                    </Col>
+                  </FormGroup>
+
+                </Form>
+
+              </Modal.Body>
               <Modal.Footer>
-                <Button onClick={this.closeModal}>Close</Button>
+                <Button bsStyle="primary">Save</Button>
+                <Button bsStyle="danger" onClick={this.closeModal}>Close</Button>
               </Modal.Footer>
             </Modal>
+
             </div>
         )
         
