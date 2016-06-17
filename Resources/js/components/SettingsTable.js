@@ -4,13 +4,8 @@ import { Button } from 'react-bootstrap';
 import $ from 'jquery';
 
 
-var actionButtons = (<Button bsStyle="primary" onClick={onClickEdit}>Edit</Button>)
 
-function onClickEdit(){
-  console.log("click")
-}
-
-const setting_types = ['bool', 'string', 'array', 'object']
+//const setting_types = ['bool', 'string', 'array', 'object']
 
 function boolFormatter(value, row){
   return 'boolHandling ' + value; 
@@ -39,6 +34,13 @@ function valueFormatter(value, row){
   }
 }   
 
+function onClickEdit(id){
+  console.log("edit", id)
+}
+
+function onClickDelete(id){
+  console.log("delete", id)
+}
 
 class SettingsTable extends Component {
   constructor(props){
@@ -53,11 +55,22 @@ class SettingsTable extends Component {
   };
 
   filterInput(data){
+    var dataWithButtons = data.documents.map(function(el){
+      el.actions = (
+        <div>
+          <Button bsStyle="primary" onClick={() => onClickEdit(el.id)}>Edit</Button>
+          <Button bsStyle="primary" onClick={() => onClickDelete(el.id)}>Delete</Button>
+        </div>
+      )
+      return el
+    });
+
     return data.documents
   };
 
   render(){
       if(this.state.data){
+        
         return (
             <BootstrapTable data={this.state.data} striped={true} hover={true} search={true}>
                 <TableHeaderColumn isKey={true} hidden={true} dataField="id">ID</TableHeaderColumn>
@@ -65,11 +78,14 @@ class SettingsTable extends Component {
                 <TableHeaderColumn dataField="description" dataSort={true}>Description</TableHeaderColumn>
                 <TableHeaderColumn dataField="type" dataSort={true}>Type</TableHeaderColumn>
                 <TableHeaderColumn dataField="value" dataSort={false} dataFormat={valueFormatter}>Value</TableHeaderColumn>
+                <TableHeaderColumn dataField="actions">Actions</TableHeaderColumn>
             </BootstrapTable>
         )
         
       }else{
+
         return (<p>Loading</p>)
+
       }
   }
 }
