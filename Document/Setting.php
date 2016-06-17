@@ -81,7 +81,7 @@ class Setting implements SerializableInterface
      *
      * @ES\Property(type="string", options={"index"="not_analyzed"})
      */
-    private $data;
+    private $value;
 
     /**
      * @var string
@@ -107,23 +107,19 @@ class Setting implements SerializableInterface
     }
 
     /**
-     * Get data.
-     *
      * @return string
      */
-    public function getData()
+    public function getValue()
     {
-        return $this->data;
+        return $this->value;
     }
 
     /**
-     * Set data.
-     *
-     * @param string $data
+     * @param string $value
      */
-    public function setData($data)
+    public function setValue($value)
     {
-        $this->data = $data;
+        $this->value = $value;
     }
 
     /**
@@ -149,7 +145,7 @@ class Setting implements SerializableInterface
     /**
      * Get profile.
      *
-     * @return string
+     * @return string|array
      */
     public function getProfile()
     {
@@ -159,7 +155,7 @@ class Setting implements SerializableInterface
     /**
      * Set profile.
      *
-     * @param string $profile
+     * @param string|array $profile
      */
     public function setProfile($profile)
     {
@@ -235,7 +231,7 @@ class Setting implements SerializableInterface
             'description' => $this->getDescription(),
             'profile' => $this->getProfile(),
             'type' => $this->getType(),
-            'value' => $this->getData(),
+            'value' => $this->getValue(),
         ];
     }
 }
