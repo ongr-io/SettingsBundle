@@ -1,7 +1,7 @@
 parameters:
     ongr_settings.filter.pager.request_field: page
-    ongr_settings.filter.pager.count_per_page: 10
-    ongr_settings.filter.pager.max_pages: 1000
+    ongr_settings.filter.pager.count_per_page: 10000
+    ongr_settings.filter.pager.max_pages: 10000
 
     ongr_settings.filter.sort.request_field: sort
     ongr_settings.filter.sort.choices:
