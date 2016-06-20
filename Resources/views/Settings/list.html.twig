@@ -41,11 +41,20 @@
                     "targets": 1,
                     "render": function ( data, type, row ) {
                         if (row['type'] == 'bool') {
-                            var cell = $('<div/>').addClass('btn-group btn-group-sm').append($('<label/>').addClass('boolean btn btn-default btn-primary').)
-                            return '<div class="btn-group btn-group-sm">' +
-                                    '<label class="boolean btn btn-default btn-primary">On</label>' +
-                                    '<label class="boolean btn btn-default btn-primary" >Off</label>' +
-                                    '</div>';
+                            var label = $('<label/>').addClass('boolean-property btn btn-default ' + 'boolean-property-' + row['id']);
+                            var on = label.clone().html('ON').attr('data-element', 'boolean-property-' + row['id']);
+                            var off = label.clone().html('OFF').attr('data-element', 'boolean-property-' + row['id']);
+
+                            if (row['value'] == true) {
+                                on.addClass('btn-primary');
+                            } else {
+                                off.addClass('btn-primary');
+                            }
+
+                            var cell = $('<div/>').addClass('btn-group btn-group-sm').append(on, off)
+
+                            return cell.prop('outerHTML');
+
                         } else {
                             return data;
                         }
@@ -66,6 +75,11 @@
             $('#settings tbody').on( 'click', 'a.edit', function () {
                 var data = table.row( $(this).parents('tr') ).data();
                 alert( data['id'] );
+            } );
+
+            $('#settings tbody').on( 'click', 'label.boolean-property', function () {
+                var element = $(this).data('element');
+                $("." + element).toggleClass('btn-primary')
             } );
         })
     </script>
