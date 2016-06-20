@@ -30,7 +30,7 @@ class Configuration implements ConfigurationInterface
 
         $root->children()
             ->scalarNode('repo')
-                ->defaultValue('es.manager.setting.setting')
+                ->defaultValue('es.manager.settings.setting')
                 ->info('Repository service name for settings type')
             ->end()
         ->end();

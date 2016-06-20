@@ -14,7 +14,7 @@ namespace ONGR\SettingsBundle\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\Validator\Tests\Fixtures\Reference;
+use Symfony\Component\DependencyInjection\Reference;
 
 class FilterManagerPass implements CompilerPassInterface
 {
@@ -23,12 +23,13 @@ class FilterManagerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+        $repo = $container->getParameter('ongr_settings.repo');
         $filterManager = new Definition('ONGR\FilterManagerBundle\Search\FilterManager', [
             new Reference('ongr_settings.filter_container'),
-            new Reference($container->getParameter('ongr_settings.repo'))
+//            $container->getDefinition('es.manager.setting.setting')
+            new Reference($repo)
         ]);
 
         $container->setDefinition('ongr_filter_manager.settings', $filterManager);
     }
-    
 }
