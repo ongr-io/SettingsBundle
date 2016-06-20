@@ -11,6 +11,7 @@ var dir = {
     fonts: './Resources/fonts/',
     sass: './Resources/sass/',
     dist: './Resources/public/',
+    npm: './node_modules/',
 };
 
 var assets = {
@@ -18,7 +19,10 @@ var assets = {
 };
 
 gulp.task('app-sass', function() {
-    return gulp.src(dir.sass + 'style.scss')
+    return gulp.src([
+        dir.sass + 'style.scss',
+        dir.npm + 'datatables.net-bs/css/dataTables.bootstrap.css',
+        ])
         .pipe(sourcemaps.init())
         .pipe(sass(
             // {outputStyle: 'compressed'}
@@ -28,8 +32,27 @@ gulp.task('app-sass', function() {
         .pipe(gulp.dest(dir.dist));
 });
 
+gulp.task('app-js', function() {
+    return gulp.src([
+        dir.npm + 'jquery/dist/jquery.min.js',
+        dir.npm + 'datatables.net/js/jquery.dataTables.js',
+        dir.npm + 'datatables.net-bs/js/dataTables.bootstrap.js',
+        ])
+        .pipe(concat('script.js'))
+        .pipe(gulp.dest(dir.dist));
+});
+
+gulp.task('app-copy-dist', function () {
+    gulp.src([
+        dir.npm + 'jquery/dist/jquery.min.map'
+        ])
+        .pipe(gulp.dest(dir.dist));
+});
+
 gulp.task('app-copy-fonts', function () {
-    gulp.src(dir.fonts + '*')
+    gulp.src([
+        dir.fonts + '*',
+        ])
         .pipe(gulp.dest(dir.dist + 'fonts'));
 });
 
@@ -41,5 +64,7 @@ gulp.task('watch', function () {
 gulp.task('default',
 [
     'app-sass',
-    'app-copy-fonts'
+    'app-copy-fonts',
+    'app-js',
+    'app-copy-dist',
 ]);

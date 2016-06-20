@@ -1,7 +1,17 @@
 {% extends 'ONGRSettingsBundle::base.html.twig' %}
 
 {% block body %}
-    <div id="app"></div>
+    <table id="settings" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Description</th>
+            <th>Profile</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+    </table>
 {% endblock %}
 
 {% block stylesheets %}
@@ -11,5 +21,52 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/ongrsettings/bundle.js') }}"></script>
+    <script src="{{ asset('bundles/ongrsettings/script.js') }}"></script>
+    <script type="application/javascript">
+        $(document).ready(function () {
+            var table = $('#settings').DataTable( {
+                ajax: {
+                    url: './settings/search',
+                    dataSrc: 'documents'
+                },
+                columns: [
+                    { data: 'name' },
+                    { data: 'value' },
+                    { data: 'description' },
+                    { data: 'profile' },
+                    {}
+                ],
+                columnDefs: [
+                {
+                    "targets": 1,
+                    "render": function ( data, type, row ) {
+                        if (row['type'] == 'bool') {
+                            var cell = $('<div/>').addClass('btn-group btn-group-sm').append($('<label/>').addClass('boolean btn btn-default btn-primary').)
+                            return '<div class="btn-group btn-group-sm">' +
+                                    '<label class="boolean btn btn-default btn-primary">On</label>' +
+                                    '<label class="boolean btn btn-default btn-primary" >Off</label>' +
+                                    '</div>';
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                {
+                    "targets": 3,
+                    "orderable": false,
+                },
+                {
+                    "targets": 4,
+                    "data": null,
+                    "orderable": false,
+                    "defaultContent": "<a class='edit btn btn-primary btn-xs'>Edit</a>&nbsp;<a class='delete btn btn-danger btn-xs'>Delete</a>"
+                } ]
+            } );
+
+            $('#settings tbody').on( 'click', 'a.edit', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                alert( data['id'] );
+            } );
+        })
+    </script>
 {% endblock %}
