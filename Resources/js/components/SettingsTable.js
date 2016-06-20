@@ -176,8 +176,11 @@ var SettingsTable = React.createClass({
     },
 
     valueFormatter(value, row){
-        // return value.toString();
-        return 'kk';
+        if (value) {
+            return value.toString();
+        } else {
+            return '&nbsp;'
+        }
     },
 
     renderTable(data){
@@ -185,7 +188,7 @@ var SettingsTable = React.createClass({
             <BootstrapTable
                 data={data}
                 striped={true}
-                remote={ true }
+                // remote={ true }
                 hover={true}
                 search={true}
                 pagination={true}>
