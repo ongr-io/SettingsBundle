@@ -1,0 +1,4 @@
+parameters:
+    ongr_settings.type.setting.class: ONGR\SettingsBundle\Form\SettingType
+
+services:

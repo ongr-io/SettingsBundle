@@ -32,9 +32,12 @@ class SettingsController extends Controller
      */
     public function listAction(Request $request)
     {
+        $form = $this->createForm($this->getParameter('ongr_settings.type.setting.class'), new Setting());
         return $this->render(
             'ONGRSettingsBundle:Settings:list.html.twig',
-            []
+            [
+                'form' => $form->createView(),
+            ]
         );
     }
 

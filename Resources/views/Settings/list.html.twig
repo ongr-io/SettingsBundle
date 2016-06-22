@@ -21,7 +21,10 @@
                     <h4 class="modal-title">Setting edit</h4>
                 </div>
                 <div class="modal-body">
-                    <p>One fine body&hellip;</p>
+                    {{ form_row(form.name) }}
+                    {{ form_row(form.description) }}
+                    {{ form_row(form.value) }}
+                    {{ form_row(form.profile) }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -74,7 +77,7 @@
                                 off.addClass('btn-primary');
                             }
 
-                            var cell = $('<div/>').addClass('btn-group btn-group-sm').append(on, off)
+                            var cell = $('<div/>').addClass('btn-group btn-group-sm').append(on, off);
 
                             return cell.prop('outerHTML');
 
