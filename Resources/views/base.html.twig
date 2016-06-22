@@ -14,13 +14,13 @@
 
 
         <div class="container">
-            <div class="header clearfix">
+            <div class="row header clearfix">
                 <nav>
                     <ul class="nav nav-pills pull-right">
-                        <li role="presentation" {% if app.request.attributes.get('_route') == 'ongr_settings_settings' %}class="active"{% endif %}>
+                        <li {% if app.request.attributes.get('_route') == 'ongr_settings_settings' %}class="active"{% endif %}>
                             <a href="{{ path('ongr_settings_settings') }}">Settings</a>
                         </li>
-                        <li role="presentation" {% if app.request.attributes.get('_route') == 'ongr_settings_profiles' %}class="active"{% endif %}>
+                        <li {% if app.request.attributes.get('_route') == 'ongr_settings_profiles' %}class="active"{% endif %}>
                             <a href="{{ path('ongr_settings_profiles') }}">Profiles</a>
                         </li>
                     </ul>

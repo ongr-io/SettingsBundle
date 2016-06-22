@@ -1,6 +1,14 @@
 #new-setting {
   margin-left: 10px; }
 
+.header {
+  border-bottom: 1px solid #dee0df;
+  margin-bottom: 10px; }
+
+body {
+  padding-top: 20px;
+  padding-bottom: 20px; }
+
 table.dataTable {
   clear: both;
   margin-top: 6px !important;
