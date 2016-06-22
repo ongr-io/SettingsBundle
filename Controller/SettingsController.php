@@ -32,7 +32,11 @@ class SettingsController extends Controller
      */
     public function listAction(Request $request)
     {
-        $form = $this->createForm($this->getParameter('ongr_settings.type.setting.class'), new Setting());
+        /** @var Repository $repo */
+        $repo = $this->get($this->getParameter('ongr_settings.repo'));
+        $className = $repo->getClassName();
+        $form = $this->createForm($this->getParameter('ongr_settings.type.setting.class'), new $className);
+
         return $this->render(
             'ONGRSettingsBundle:Settings:list.html.twig',
             [
@@ -57,20 +61,28 @@ class SettingsController extends Controller
 
             /** @var Setting $setting */
             $setting = $repo->find($id);
-            $setting->setValue($request->get('value'));
 
-            $em = $repo->getManager();
-            $em->persist($setting);
-            $em->commit();
+            $form = $this->createForm($this->getParameter('ongr_settings.type.setting.class'), $setting);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $repo->getManager();
+                $em->persist($setting);
+                $em->commit();
+            }
 
-            return new JsonResponse(['error' => false]);
+            return new JsonResponse(
+                [
+                    'error' => false
+                ]
+            );
 
         } catch (\Exception $e) {
             return new JsonResponse(
                 [
                     'error' => true,
                     'message' => 'Error occurred please try to update setting again.'
-                ]
+                ],
+                Response::HTTP_BAD_REQUEST
             );
         }
     }

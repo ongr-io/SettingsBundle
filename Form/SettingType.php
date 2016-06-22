@@ -37,10 +37,7 @@ class SettingType extends AbstractType
                 ]
             ])
             ->add('description', TextareaType::class, [
-                'required' => false,
-                'constraints' => [
-                    new NotBlank()
-                ]
+                'required' => false
             ])
             ->add('value', TextType::class, [
                 'required' => false,
