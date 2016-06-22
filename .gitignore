@@ -7,5 +7,4 @@
 /cache.properties
 /composer.lock
 /node_modules
-/Resources/public/bundle*
-/Resources/public/style*
+/Resources/public/*
