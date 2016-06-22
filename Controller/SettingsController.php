@@ -11,7 +11,10 @@
 
 namespace ONGR\SettingsBundle\Controller;
 
+use ONGR\ElasticsearchBundle\Service\Repository;
+use ONGR\SettingsBundle\Document\Setting;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,5 +36,39 @@ class SettingsController extends Controller
             'ONGRSettingsBundle:Settings:list.html.twig',
             []
         );
+    }
+
+    /**
+     * Setting update action.
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function updateAction(Request $request, $id)
+    {
+        try {
+            /** @var Repository $repo */
+            $repo = $this->get($this->getParameter('ongr_settings.repo'));
+
+            /** @var Setting $setting */
+            $setting = $repo->find($id);
+            $setting->setValue($request->get('value'));
+
+            $em = $repo->getManager();
+            $em->persist($setting);
+            $em->commit();
+
+            return new JsonResponse(['error' => false]);
+
+        } catch (\Exception $e) {
+            return new JsonResponse(
+                [
+                    'error' => true,
+                    'message' => 'Error occurred please try to update setting again.'
+                ]
+            );
+        }
     }
 }

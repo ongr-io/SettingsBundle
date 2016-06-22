@@ -41,9 +41,12 @@
                     "targets": 1,
                     "render": function ( data, type, row ) {
                         if (row['type'] == 'bool') {
-                            var label = $('<label/>').addClass('boolean-property btn btn-default ' + 'boolean-property-' + row['id']);
-                            var on = label.clone().html('ON').attr('data-element', 'boolean-property-' + row['id']);
-                            var off = label.clone().html('OFF').attr('data-element', 'boolean-property-' + row['id']);
+                            var label = $('<label/>').addClass('boolean-property btn btn-default')
+                                    .addClass('boolean-property-' + row['id']).attr('data-id', row['id']);
+                            var on = label.clone().html('ON').attr('data-element', 'boolean-property-' + row['id'])
+                                    .attr('data-value', 1);
+                            var off = label.clone().html('OFF').attr('data-element', 'boolean-property-' + row['id'])
+                                    .attr('data-value', 0);
 
                             if (row['value'] == true) {
                                 on.addClass('btn-primary');
@@ -78,8 +81,11 @@
             } );
 
             $('#settings tbody').on( 'click', 'label.boolean-property', function () {
-                var element = $(this).data('element');
-                $("." + element).toggleClass('btn-primary')
+                var self = $(this);
+                $.post('./settings/update/' + self.data('id'), {value:self.data('value')}, function(){
+                    var element = self.data('element');
+                    $("." + element).toggleClass('btn-primary');
+                })
             } );
         })
     </script>
