@@ -12,6 +12,24 @@
         </tr>
         </thead>
     </table>
+
+    <div id="setting-edit" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Setting edit</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 {% endblock %}
 
 {% block stylesheets %}
@@ -24,11 +42,13 @@
     <script src="{{ asset('bundles/ongrsettings/script.js') }}"></script>
     <script type="application/javascript">
         $(document).ready(function () {
+
             var table = $('#settings').DataTable( {
                 ajax: {
                     url: './settings/search',
                     dataSrc: 'documents'
                 },
+                stateSave: true,
                 columns: [
                     { data: 'name' },
                     { data: 'value' },
@@ -71,13 +91,22 @@
                     "targets": 4,
                     "data": null,
                     "orderable": false,
-                    "defaultContent": "<a class='edit btn btn-primary btn-xs'>Edit</a>&nbsp;<a class='delete btn btn-danger btn-xs'>Delete</a>"
+                    "defaultContent": '<a class="edit btn btn-primary btn-xs" data-toggle="modal" data-target="#setting-edit">Edit</a>&nbsp;<a class="delete btn btn-danger btn-xs">Delete</a>'
                 } ]
             } );
 
+            $('#setting-edit').on('shown.bs.modal', function () {
+                $('#setting-edit').focus()
+            });
+
             $('#settings tbody').on( 'click', 'a.edit', function () {
                 var data = table.row( $(this).parents('tr') ).data();
-                alert( data['id'] );
+                //load data to the edit form
+            } );
+
+            $('#settings tbody').on( 'click', 'a.delete', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                //load data to the edit form
             } );
 
             $('#settings tbody').on( 'click', 'label.boolean-property', function () {

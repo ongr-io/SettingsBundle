@@ -35,6 +35,7 @@ gulp.task('app-sass', function() {
 gulp.task('app-js', function() {
     return gulp.src([
         dir.npm + 'jquery/dist/jquery.min.js',
+        dir.npm + 'bootstrap-sass/assets/javascripts/bootstrap/modal.js',
         dir.npm + 'datatables.net/js/jquery.dataTables.js',
         dir.npm + 'datatables.net-bs/js/dataTables.bootstrap.js',
         ])
