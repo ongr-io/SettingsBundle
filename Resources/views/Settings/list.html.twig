@@ -115,6 +115,9 @@
                 } ]
             } );
 
+            var newSettingButton = $('<button/>').html('Add new setting').addClass('btn btn-success btn-sm').attr('id', 'new-setting');
+            $('#settings_filter').append(newSettingButton.prop('outerHTML'));
+
             $('#setting-edit').on('shown.bs.modal', function () {
                 $('#setting-edit').focus()
             });
@@ -151,7 +154,7 @@
 
             $('#settings tbody').on( 'click', 'label.boolean-property', function () {
                 var self = $(this);
-                $.post('./settings/update/' + self.data('id'), {value:self.data('value')}, function(){
+                $.post('./settings/update-value/' + self.data('id'), {value:self.data('value')}, function(){
                     var element = self.data('element');
                     $("." + element).toggleClass('btn-primary');
                 })

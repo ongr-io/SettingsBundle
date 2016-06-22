@@ -22,6 +22,7 @@ gulp.task('app-sass', function() {
     return gulp.src([
         dir.sass + 'style.scss',
         dir.npm + 'datatables.net-bs/css/dataTables.bootstrap.css',
+        dir.npm + 'datatables.net-buttons-bs/css/buttons.bootstrap.css',
         ])
         .pipe(sourcemaps.init())
         .pipe(sass(
@@ -38,6 +39,8 @@ gulp.task('app-js', function() {
         dir.npm + 'bootstrap-sass/assets/javascripts/bootstrap/modal.js',
         dir.npm + 'datatables.net/js/jquery.dataTables.js',
         dir.npm + 'datatables.net-bs/js/dataTables.bootstrap.js',
+        dir.npm + 'datatables.net-buttons/js/dataTables.buttons.js',
+        dir.npm + 'datatables.net-buttons-bs/js/buttons.bootstrap.js',
         ])
         .pipe(concat('script.js'))
         .pipe(gulp.dest(dir.dist));

@@ -11,7 +11,9 @@
 
 namespace ONGR\SettingsBundle\Controller;
 
+use ONGR\ElasticsearchBundle\Result\Aggregation\AggregationValue;
 use ONGR\ElasticsearchBundle\Service\Repository;
+use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
 use ONGR\SettingsBundle\Document\Setting;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -68,7 +70,54 @@ class SettingsController extends Controller
                 $em = $repo->getManager();
                 $em->persist($setting);
                 $em->commit();
+            } else {
+                return new JsonResponse(
+                    [
+                        'error' => true,
+                        'message' => 'Not valid posted data.'
+                    ],
+                    Response::HTTP_BAD_REQUEST
+                );
             }
+
+            return new JsonResponse(
+                [
+                    'error' => false
+                ]
+            );
+
+        } catch (\Exception $e) {
+            return new JsonResponse(
+                [
+                    'error' => true,
+                    'message' => 'Error occurred please try to update setting again.'
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+    /**
+     * Setting update action.
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function updateValueAction(Request $request, $id)
+    {
+        try {
+            /** @var Repository $repo */
+            $repo = $this->get($this->getParameter('ongr_settings.repo'));
+
+            /** @var Setting $setting */
+            $setting = $repo->find($id);
+            $setting->setValue($request->get('value'));
+
+            $em = $repo->getManager();
+            $em->persist($setting);
+            $em->commit();
 
             return new JsonResponse(
                 [
