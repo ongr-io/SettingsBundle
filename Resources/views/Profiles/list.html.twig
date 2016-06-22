@@ -1,35 +1,73 @@
 {% extends 'ONGRSettingsBundle::base.html.twig' %}
 
+
 {% block body %}
-        <div class="col-lg-6">
-            <h4>Subheading</h4>
-            <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-            <h4>Subheading</h4>
-            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-            <h4>Subheading</h4>
-            <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-
-        <div class="col-lg-6">
-            <h4>Subheading</h4>
-            <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-            <h4>Subheading</h4>
-            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-            <h4>Subheading</h4>
-            <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('bundles/ongrsettings/dist/style.css') }}" type="text/css" rel="stylesheet">
+    <table id="profiles" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>Profile</th>
+            <th>Settings list</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+    </table>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/ongrsettings/dist/bundle.js') }}"></script>
+    <script type="application/javascript">
+        $(document).ready(function () {
+
+            var table = $('#profiles').DataTable( {
+                ajax: {
+                    url: './settings/search',
+                    dataSrc: 'documents'
+                },
+                stateSave: true,
+                columns: [
+                    { data: 'name' },
+                    { data: 'name' },
+                    {}
+                ],
+                columnDefs: [
+                    {
+                        "targets": 0,
+                        "orderable": false,
+                        "render": function ( data, type, row ) {
+                            var label = $('<label/>').addClass('boolean-property btn btn-default')
+                                    .addClass('boolean-property-' + row['id']).attr('data-id', row['id']);
+                            var on = label.clone().html('ON').attr('data-element', 'boolean-property-' + row['id'])
+                                    .attr('data-value', 1);
+                            var off = label.clone().html('OFF').attr('data-element', 'boolean-property-' + row['id'])
+                                    .attr('data-value', 0);
+
+                            if (row['value'] == true) {
+                                on.addClass('btn-primary');
+                            } else {
+                                off.addClass('btn-primary');
+                            }
+
+                            var cell = $('<div/>').addClass('btn-group btn-group-sm').append(on, off);
+
+                            return cell.prop('outerHTML');
+                        }
+                    },
+                    {
+                        "targets": 2,
+                        "data": null,
+                        "orderable": false,
+                        "defaultContent": '<a class="edit btn btn-primary btn-xs" data-toggle="modal" data-target="#setting-edit">Copy link</a>&nbsp;' +
+                        ''
+                    } ]
+            } );
+
+            $('#profiles tbody').on( 'click', 'label.boolean-property', function () {
+                var self = $(this);
+                $.post('./settings/update-value/' + self.data('id'), {value:self.data('value')}, function(){
+                    var element = self.data('element');
+                    $("." + element).toggleClass('btn-primary');
+                })
+            } );
+        })
+    </script>
 {% endblock %}

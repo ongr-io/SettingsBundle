@@ -52,14 +52,8 @@
     </div><!-- /.modal -->
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('bundles/ongrsettings/style.css') }}" type="text/css" rel="stylesheet">
-{% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/ongrsettings/script.js') }}"></script>
     <script type="application/javascript">
         $(document).ready(function () {
 
