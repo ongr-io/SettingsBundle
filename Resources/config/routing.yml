@@ -23,7 +23,7 @@ ongr_settings_settings_update:
 
 ongr_settings_settings_delete:
     path: /settings/delete/{id}
-    defaults: { _controller: ONGRSettingsBundle:Settings:list }
+    defaults: { _controller: ONGRSettingsBundle:Settings:delete }
 
 #ongr_settings_profiles_fallback:
 #    path: /profiles/{url}

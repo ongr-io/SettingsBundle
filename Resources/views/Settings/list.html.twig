@@ -35,6 +35,21 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <div id="setting-delete" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Are you sure you want to delete the setting?</h4>
+                </div>
+                <div class="modal-body text-right">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" id="setting_delete_submit">Yes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 {% endblock %}
 
 {% block stylesheets %}
@@ -96,12 +111,31 @@
                     "targets": 4,
                     "data": null,
                     "orderable": false,
-                    "defaultContent": '<a class="edit btn btn-primary btn-xs" data-toggle="modal" data-target="#setting-edit">Edit</a>&nbsp;<a class="delete btn btn-danger btn-xs">Delete</a>'
+                    "defaultContent": '<a class="edit btn btn-primary btn-xs" data-toggle="modal" data-target="#setting-edit">Edit</a>&nbsp;<a class="delete btn btn-danger btn-xs" data-toggle="modal" data-target="#setting-delete">Delete</a>'
                 } ]
             } );
 
             $('#setting-edit').on('shown.bs.modal', function () {
                 $('#setting-edit').focus()
+            });
+
+            $('#setting-delete').on('shown.bs.modal', function () {
+                $('#setting-delete').focus()
+            });
+
+            $('#setting_delete_submit').on('click', function () {
+                var id = $(this).attr('rel');
+                $.ajax({
+                    url: "./settings/delete/"+id,
+                    success: function (data) {
+                        if (data.error) {
+                            alert(data.message);
+                        } else {
+                            table.ajax.reload();
+                            $('.modal').modal('hide');
+                        }
+                    }
+                });
             });
 
             $('#settings tbody').on( 'click', 'a.edit', function () {
@@ -111,6 +145,7 @@
 
             $('#settings tbody').on( 'click', 'a.delete', function () {
                 var data = table.row( $(this).parents('tr') ).data();
+                $('#setting_delete_submit').attr('rel', data.id);
                 //load data to the edit form
             } );
 
