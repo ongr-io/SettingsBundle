@@ -5,6 +5,7 @@
     <table id="profiles" class="display table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
         <tr>
+            <th width="10%">Enable?</th>
             <th>Profile</th>
             <th>Settings list</th>
             <th>Actions</th>
@@ -20,13 +21,15 @@
 
             var table = $('#profiles').DataTable( {
                 ajax: {
-                    url: './settings/search',
+                    url: './profiles/get_all_detailed',
                     dataSrc: 'documents'
                 },
                 stateSave: true,
+                order: [[ 1, "asc" ]],
                 columns: [
                     { data: 'name' },
                     { data: 'name' },
+                    { data: 'settings' },
                     {}
                 ],
                 columnDefs: [
@@ -54,6 +57,10 @@
                     },
                     {
                         "targets": 2,
+                        "orderable": false,
+                    },
+                    {
+                        "targets": 3,
                         "data": null,
                         "orderable": false,
                         "defaultContent": '<a class="edit btn btn-primary btn-xs" data-toggle="modal" data-target="#setting-edit">Copy link</a>&nbsp;' +
