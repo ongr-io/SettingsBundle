@@ -14,6 +14,7 @@ namespace ONGR\SettingsBundle\Form;
 use ONGR\SettingsBundle\Document\Setting;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -41,23 +42,17 @@ class SettingType extends AbstractType
             ->add('description', TextareaType::class, [
                 'required' => false
             ])
-            ->add('value', TextType::class, [
-                'required' => false,
+            ->add('value', HiddenType::class, [
+                'required' => true,
                 'constraints' => [
                     new NotBlank()
                 ]
             ])
             ->add('profile', ChoiceType::class, [
-                'required' => false,
+                'required' => true,
             ])
-            ->add('type', ChoiceType::class, [
-                'required' => false,
-                'choices' => [
-                    Setting::TYPE_ARRAY => Setting::TYPE_ARRAY,
-                    Setting::TYPE_BOOLEAN => Setting::TYPE_BOOLEAN,
-                    Setting::TYPE_OBJECT => Setting::TYPE_OBJECT,
-                    Setting::TYPE_STRING => Setting::TYPE_STRING,
-                ]
+            ->add('type', HiddenType::class, [
+                'required' => true,
             ])
         ;
     }

@@ -19,13 +19,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Setting edit</h4>
+                    <h4 class="modal-title" id="setting-action-title">Setting edit</h4>
                 </div>
                 <div class="modal-body">
+                    {{ form_start(form) }}
                     {{ form_row(form.name) }}
                     {{ form_row(form.description) }}
-                    {{ form_row(form.value) }}
                     {{ form_row(form.profile) }}
+                    {{ form_row(form.type) }}
+                    {{ form_row(form.value) }}
+                    {% include 'ONGRSettingsBundle:inc:Form.html.twig' %}
+                    {{ form_end(form) }}
+
                     <div class="clearfix"></div>
                 </div>
                 <div class="modal-footer">
@@ -109,11 +114,19 @@
                 } ]
             } );
 
-            var newSettingButton = $('<button/>').html('Add new setting').addClass('btn btn-success btn-sm').attr('id', 'new-setting');
+            var newSettingButton = $('<button/>').html('Add new setting').addClass('btn btn-success btn-sm').attr(
+                {
+                    'data-toggle': 'modal',
+                    'data-target': '#setting-edit',
+                    'id': 'new-setting',
+                    'onclick': 'onNewSetting()'
+                }
+            );
+
             $('#settings_filter').append(newSettingButton.prop('outerHTML'));
 
             $('#setting-edit').on('shown.bs.modal', function () {
-                $('#setting-edit').focus()
+                $('#setting-edit').focus();
             });
 
             $('#setting-delete').on('shown.bs.modal', function () {
@@ -137,6 +150,8 @@
 
             $('#settings tbody').on( 'click', 'a.edit', function () {
                 var data = table.row( $(this).parents('tr') ).data();
+                $('#setting-action-title').text('Setting edit');
+                $('form').attr('action', './settings/update/'+data.id);
                 //load data to the edit form
             } );
 
@@ -153,6 +168,12 @@
                     $("." + element).toggleClass('btn-primary');
                 })
             } );
-        })
+        });
+
+        function onNewSetting () {
+            $('#setting-create').focus();
+            $('#setting-action-title').text('New setting');
+            $('form').attr('action', './settings/create');
+        }
     </script>
 {% endblock %}

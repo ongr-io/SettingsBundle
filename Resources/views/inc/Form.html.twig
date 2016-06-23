@@ -1,0 +1,48 @@
+<div class="form-group">
+    <label for="type" class="col-sm-2 control-label" for="setting_type">Type</label>
+    <div class="btn-group col-sm-8" id="editSettingType">
+        <label class="setting-type btn btn-default"
+               rel="string">Default</label>
+        <label class="setting-type btn btn-default"
+               rel="boolean">Boolean</label>
+        <label class="setting-type btn btn-default"
+               rel="array">Array</label>
+        <label class="setting-type btn btn-default"
+               rel="object">Object</label>
+    </div>
+</div>
+<div class="form-group">
+    <label for="value" class="col-sm-2 control-label">Settings</label>
+    <div class="col-sm-6">
+        <div class="setting-boolean-div}">
+            <div class="btn-group">
+                <label class="setting-type-boolean btn btn-default" rel="true">On</label>
+                <label class="setting-type-boolean btn btn-default" rel="false">Off</label>
+                <input id="addSettingBoolean" class="hidden" value="">
+            </div>
+        </div>
+
+        <div class="setting-array-div ">
+            <ul id="addSettingArray" class="list-unstyled" rel="0">
+                <li>
+                    <div class="input-group">
+                        <input type="text" class="form-control" value="">
+                            <span class="input-group-btn">
+                                <button class="btn btn-danger" type="button" onclick="addArrayRemoveInput(this)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
+                    </div>
+                </li>
+            </ul>
+
+            <button class="settings-array-add pull-right btn btn-success"><i class="glyphicon glyphicon-plus"></i></button>
+        </div>
+
+        <div  class="setting-object-div">
+            <textarea id="editSettingObject" class="form-control ng-isolate-scope" rows="12" cols="30"></textarea>
+        </div>
+
+        <div class="setting-string-div">
+            <input id="editSettingDefault" type="text" class="form-control" />
+        </div>
+    </div>
+</div>
