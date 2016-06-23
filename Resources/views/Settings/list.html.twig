@@ -184,9 +184,24 @@
         });
 
         function onNewSetting () {
+            var profiles;
+            $.ajax({
+                url: "./profiles/get_all",
+                success: function (data) {
+                    profiles = data;
+                },
+                async: false
+            });
             $('#setting-create').focus();
             $('#setting-action-title').text('New setting');
             $('form').attr('action', './settings/create');
+            var $profiles = $('#setting_profile');
+            $profiles.attr('multiple', 'multiple');
+            profiles.forEach(function (profile) {
+                $profiles.append('<option value="'+profile+'">'+profile+'</option>');
+            });
+            $profiles.multiselect();
+            $profiles.addClass('hidden');
         }
     </script>
 {% endblock %}
