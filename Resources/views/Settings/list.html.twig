@@ -35,7 +35,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" id="setting-form-submit">Save changes</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -131,6 +131,19 @@
 
             $('#setting-delete').on('shown.bs.modal', function () {
                 $('#setting-delete').focus()
+            });
+
+            $('#setting-form-submit').on('click', function () {
+                var $form = $('form');
+                $.ajax({
+                    url: $form.attr('action'),
+                    data: $form.serializeArray(),
+                    success: function (data) {
+                        if (!data.error) {
+                            alert('success!');
+                        }
+                    }
+                });
             });
 
             $('#setting_delete_submit').on('click', function () {

@@ -177,9 +177,13 @@ class SettingsController extends Controller
             /** @var Repository $repo */
             $repo = $this->get($this->getParameter('ongr_settings.repo'));
             $manager = $repo->getManager();
+            $data = $request->get('setting');
 
             $setting = new Setting();
-            $setting->setName($request->get('setting_name'));
+            $setting->setName($data['name']);
+            $setting->setDescription($data['description']);
+            $setting->setType($data['type']);
+            $setting->setValue($data['value']);
 
             $manager->persist($setting);
             $manager->commit();
