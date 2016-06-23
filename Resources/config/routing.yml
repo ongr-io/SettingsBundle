@@ -11,7 +11,7 @@ ongr_settings_profiles:
 
 ongr_settings_profiles_get_all:
     path: /profiles/get_all
-    defaults: { _controller: ONGRSettingsBundle:Profiles:getProfiles }
+    defaults: { _controller: ONGRSettingsBundle:Profiles:getAllProfiles }
 
 ongr_settings_settings:
     path: /settings
@@ -19,7 +19,7 @@ ongr_settings_settings:
 
 ongr_settings_settings_create:
     path: /settings/create
-    defaults: { _controller: ONGRSettingsBundle:Settings:list }
+    defaults: { _controller: ONGRSettingsBundle:Settings:create }
 
 ongr_settings_settings_update:
     path: /settings/update/{id}

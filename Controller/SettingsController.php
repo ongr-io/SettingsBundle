@@ -163,4 +163,36 @@ class SettingsController extends Controller
             );
         }
     }
+
+    /**
+     * Setting delete action
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function createAction(Request $request)
+    {
+        try {
+            /** @var Repository $repo */
+            $repo = $this->get($this->getParameter('ongr_settings.repo'));
+            $manager = $repo->getManager();
+
+            $setting = new Setting();
+            $setting->setName($request->get('setting_name'));
+
+            $manager->persist($setting);
+            $manager->commit();
+
+            return new JsonResponse(['error' => false]);
+
+        } catch (\Exception $e) {
+            return new JsonResponse(
+                [
+                    'error' => true,
+                    'message' => 'Error occurred please try to delete setting again.'
+                ]
+            );
+        }
+    }
 }
