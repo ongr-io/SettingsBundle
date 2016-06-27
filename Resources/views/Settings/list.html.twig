@@ -181,6 +181,13 @@
                     $("." + element).toggleClass('btn-primary');
                 })
             } );
+
+            $('.setting-type').on('click', function () {
+                $(this).siblings().removeClass('btn-primary');
+                $(this).addClass('btn-primary');
+                $('.setting-input-div').addClass('hidden');
+                $('.setting-'+$(this).attr('rel')+'-div').removeClass('hidden');
+            } );
         });
 
         function onNewSetting () {
@@ -202,6 +209,9 @@
             });
             $profiles.multiselect();
             $profiles.addClass('hidden');
+
+            $('.setting-type').first().addClass('btn-primary');
+            $('.setting-string-div').removeClass('hidden');
         }
     </script>
 {% endblock %}
