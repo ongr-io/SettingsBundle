@@ -195,6 +195,20 @@
                 $('.setting-'+$(this).attr('rel')+'-div').removeClass('hidden');
                 $('#setting_type').val($(this).attr('rel'));
             } );
+
+            $('.settings-array-add').on('click', function () {
+                var li = '<li>' +
+                            '<div class="input-group">' +
+                                '<input class="form-control" type="text">' +
+                                '<span class="input-group-btn">' +
+                                    '<label class="btn btn-danger" onclick="removeArrayInput(this)" rel="a">' +
+                                        '<i class="glyphicon glyphicon-remove"></i>' +
+                                    '</label>' +
+                                '</span>' +
+                            '</div>' +
+                        '</li>';
+                $('#add-setting-array').append(li);
+            } );
         });
 
         function onNewSetting () {
@@ -220,6 +234,10 @@
             $('.setting-type').first().addClass('btn-primary');
             $('.setting-string-div').removeClass('hidden');
             $('#setting_type').val('string');
+        }
+
+        function removeArrayInput (el) {
+            $(el).closest('li').remove();
         }
     </script>
 {% endblock %}
