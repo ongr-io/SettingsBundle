@@ -182,11 +182,18 @@
                 })
             } );
 
+            $('.setting-type-bool').on('click', function () {
+                $(this).addClass('btn-primary');
+                $(this).siblings().removeClass('btn-primary');
+                $('#setting_value').val($(this).attr('rel'));
+            } );
+
             $('.setting-type').on('click', function () {
                 $(this).siblings().removeClass('btn-primary');
                 $(this).addClass('btn-primary');
                 $('.setting-input-div').addClass('hidden');
                 $('.setting-'+$(this).attr('rel')+'-div').removeClass('hidden');
+                $('#setting_type').val($(this).attr('rel'));
             } );
         });
 
@@ -212,6 +219,7 @@
 
             $('.setting-type').first().addClass('btn-primary');
             $('.setting-string-div').removeClass('hidden');
+            $('#setting_type').val('string');
         }
     </script>
 {% endblock %}
