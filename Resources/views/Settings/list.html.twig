@@ -157,6 +157,11 @@
                     success: function (data) {
                         if (!data.error) {
                             alert('success!');
+                            $('.form-horizontal').find('input').val('');
+                            $('.form-horizontal').find('textarea').val('');
+                            $('#add-setting-array').find('li').first().siblings('li').remove();
+                            $('#edit-setting-type').find('label').removeClass('btn-primary');
+                            $('.setting-bool-div').find('label').removeClass('btn-primary');
                         }
                     }
                 });
