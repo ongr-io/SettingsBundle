@@ -231,6 +231,18 @@
             $profiles.multiselect();
             $profiles.addClass('hidden');
 
+            if (!$('#add-profile-div').length) {
+                $profiles.closest('.col-sm-10').append(
+                        '<div id="add-profile-div" style="display: inline-block; padding-left: 10px;">' +
+                        '<label  style="padding-right: 10px">New profile: </label>' +
+                        '<input type="text" class="add-profile-input">' +
+                        '<label class="settings-array-add pull-right btn btn-success" onclick="addProfile(this)">' +
+                        '<i class="glyphicon glyphicon-plus"></i>' +
+                        '</label>' +
+                        '</div>'
+                );
+            }
+
             $('.setting-type').first().addClass('btn-primary');
             $('.setting-string-div').removeClass('hidden');
             $('#setting_type').val('string');
@@ -238,6 +250,15 @@
 
         function removeArrayInput (el) {
             $(el).closest('li').remove();
+        }
+
+        function addProfile (button) {
+            var $input = $(button).siblings('.add-profile-input');
+            var profile = $input.val();
+            $input.val('');
+            var $settings = $('#setting_profile');
+            $settings.append('<option value="'+profile+'">'+profile+'</option>');
+            $settings.multiselect('rebuild');
         }
     </script>
 {% endblock %}
