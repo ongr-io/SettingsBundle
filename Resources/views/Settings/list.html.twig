@@ -184,7 +184,18 @@
                 var data = table.row( $(this).parents('tr') ).data();
                 $('#setting-action-title').text('Setting edit');
                 $('form').attr('action', './settings/update/'+data.id);
-                //load data to the edit form
+
+                if (!$('.multiselect-container').length) {
+                    profileMultiselect();
+                } else {
+                    refreshForm();
+                }
+                $('#setting_profile').multiselect('select', data.profile);
+                $('#setting_name').val(data.name);
+                $('#setting_description').val(data.description);
+                $('.setting-'+data.type).click();
+
+                populateValues(data);
             } );
 
             $('#settings tbody').on( 'click', 'a.delete', function () {
@@ -303,6 +314,39 @@
             $('.setting-bool-div').find('label').removeClass('btn-primary');
             $profileSelect.multiselect('deselectAll', false);
             $profileSelect.multiselect('updateButtonText');
+        }
+
+        function populateValues(data) {
+            switch (data.type) {
+                case 'string':
+                    $('#setting_value').val(data.value);
+                    $('#add-setting-default').val(data.value);
+                    break;
+                case 'array':
+                    var array = data.value;
+                    $('#setting_value').val(JSON.stringify(array));
+                    $('#add-setting-array').html('');
+                    for (var i = 0; i < array.length; i++) {
+                        addArrayElement(array[i]);
+                    }
+                    break;
+                case 'object':
+                    $('#setting_value').val(data.value);
+                    $('#add-setting-object').val(data.value);
+                    break;
+                case 'bool':
+                    $('#setting_value').val(data.value);
+                    var value = parseInt(data.value) ? 'true' : 'false';
+                    if (0) {
+                        alert(data.value);
+                    }
+                    $('.setting-bool-div').find('label').each(function () {
+                        if ($(this).attr('rel') == value) {
+                            $(this).addClass('btn-primary');
+                        }
+                    });
+                    break;
+            }
         }
     </script>
 {% endblock %}
