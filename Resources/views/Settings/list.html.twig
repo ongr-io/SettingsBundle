@@ -135,6 +135,22 @@
 
             $('#setting-form-submit').on('click', function () {
                 var $form = $('form');
+                var type = $('#edit-setting-type').find('.btn-primary').attr('rel');
+                switch (type) {
+                    case 'string':
+                        $('#setting_value').val($('#add-setting-default').val());
+                        break;
+                    case 'array':
+                        var array = [];
+                        $('#add-setting-array').children().each(function () {
+                            array.push($(this).find('input').val());
+                        });
+                        $('#setting_value').val(JSON.stringify(array));
+                        break;
+                    case 'object':
+                        $('#setting_value').val($('#add-setting-object').val());
+                        break;
+                }
                 $.ajax({
                     url: $form.attr('action'),
                     data: $form.serializeArray(),

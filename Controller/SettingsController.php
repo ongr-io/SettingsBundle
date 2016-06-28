@@ -184,7 +184,13 @@ class SettingsController extends Controller
                 $setting->setName($data['name']);
                 $setting->setDescription($data['description']);
                 $setting->setType($data['type']);
-                $setting->setValue($data['value']);
+                if ($data['type'] == 'bool' && $data['value'] == 'true') {
+                    $setting->setValue(true);
+                } elseif ($data['type'] == 'bool' && $data['value'] == 'false') {
+                    $setting->setValue(false);
+                } else {
+                    $setting->setValue($data['value']);
+                }
                 $setting->setProfile($profile);
 
                 $manager->persist($setting);
