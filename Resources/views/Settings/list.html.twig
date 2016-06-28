@@ -60,6 +60,8 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="application/javascript">
+        var profiles;
+        formProfiles();
         $(document).ready(function () {
 
             var table = $('#settings').DataTable( {
@@ -157,11 +159,7 @@
                     success: function (data) {
                         if (!data.error) {
                             alert('success!');
-                            $('.form-horizontal').find('input').val('');
-                            $('.form-horizontal').find('textarea').val('');
-                            $('#add-setting-array').find('li').first().siblings('li').remove();
-                            $('#edit-setting-type').find('label').removeClass('btn-primary');
-                            $('.setting-bool-div').find('label').removeClass('btn-primary');
+                            refreshForm();
                         }
                     }
                 });
@@ -192,7 +190,6 @@
             $('#settings tbody').on( 'click', 'a.delete', function () {
                 var data = table.row( $(this).parents('tr') ).data();
                 $('#setting_delete_submit').attr('rel', data.id);
-                //load data to the edit form
             } );
 
             $('#settings tbody').on( 'click', 'label.boolean-property', function () {
@@ -218,41 +215,23 @@
             } );
 
             $('.settings-array-add').on('click', function () {
-                var li = '<li>' +
-                            '<div class="input-group">' +
-                                '<input class="form-control" type="text">' +
-                                '<span class="input-group-btn">' +
-                                    '<label class="btn btn-danger" onclick="removeArrayInput(this)" rel="a">' +
-                                        '<i class="glyphicon glyphicon-remove"></i>' +
-                                    '</label>' +
-                                '</span>' +
-                            '</div>' +
-                        '</li>';
-                $('#add-setting-array').append(li);
+                addArrayElement();
             } );
         });
 
         function onNewSetting () {
-            var profiles;
-            $.ajax({
-                url: "./profiles/get_all",
-                success: function (data) {
-                    profiles = data;
-                },
-                async: false
-            });
             $('#setting-create').focus();
             $('#setting-action-title').text('New setting');
             $('form').attr('action', './settings/create');
-            var $profiles = $('#setting_profile');
-            $profiles.attr('multiple', 'multiple');
-            profiles.forEach(function (profile) {
-                $profiles.append('<option value="'+profile+'">'+profile+'</option>');
-            });
-            $profiles.multiselect();
-            $profiles.addClass('hidden');
+
+            if (!$('.multiselect-container').length) {
+                profileMultiselect();
+            } else {
+                refreshForm();
+            }
 
             if (!$('#add-profile-div').length) {
+                var $profiles = $('#setting_profile');
                 $profiles.closest('.col-sm-10').append(
                         '<div id="add-profile-div" style="display: inline-block; padding-left: 10px;">' +
                         '<label  style="padding-right: 10px">New profile: </label>' +
@@ -263,10 +242,6 @@
                         '</div>'
                 );
             }
-
-            $('.setting-type').first().addClass('btn-primary');
-            $('.setting-string-div').removeClass('hidden');
-            $('#setting_type').val('string');
         }
 
         function removeArrayInput (el) {
@@ -280,6 +255,54 @@
             var $settings = $('#setting_profile');
             $settings.append('<option value="'+profile+'">'+profile+'</option>');
             $settings.multiselect('rebuild');
+        }
+
+        function addArrayElement(value) {
+            value = (typeof value === 'undefined') ? '' : value;
+            var li = '<li>' +
+                    '<div class="input-group">' +
+                    '<input class="form-control" type="text" value="'+value+'">' +
+                    '<span class="input-group-btn">' +
+                    '<label class="btn btn-danger" onclick="removeArrayInput(this)" rel="a">' +
+                    '<i class="glyphicon glyphicon-remove"></i>' +
+                    '</label>' +
+                    '</span>' +
+                    '</div>' +
+                    '</li>';
+            $('#add-setting-array').append(li);
+        }
+
+        function profileMultiselect() {
+            var $profiles = $('#setting_profile');
+            $profiles.attr('multiple', 'multiple');
+            profiles.forEach(function (profile) {
+                $profiles.append('<option value="'+profile+'">'+profile+'</option>');
+            });
+            $profiles.multiselect({
+                includeSelectAllOption: true
+            });
+            $profiles.addClass('hidden');
+        }
+
+        function formProfiles () {
+            $.ajax({
+                url: "./profiles/get_all",
+                success: function (data) {
+                    profiles = data;
+                },
+                async: false
+            });
+        }
+
+        function refreshForm () {
+            var $form = $('.form-horizontal');
+            var $profileSelect = $('#setting_profile');
+            $form.find('.form-control').val('');
+            $('#add-setting-array').find('li').first().siblings('li').remove();
+            $('#edit-setting-type').find('label').removeClass('btn-primary');
+            $('.setting-bool-div').find('label').removeClass('btn-primary');
+            $profileSelect.multiselect('deselectAll', false);
+            $profileSelect.multiselect('updateButtonText');
         }
     </script>
 {% endblock %}
