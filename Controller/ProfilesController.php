@@ -49,7 +49,7 @@ class ProfilesController extends Controller
      *
      * @return Response
      */
-    public function getProfilesAction(Request $request)
+    public function getAllProfilesAction(Request $request)
     {
         $profiles = [];
         $repo = $this->get($this->getParameter('ongr_settings.repo'));

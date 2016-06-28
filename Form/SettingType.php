@@ -50,6 +50,7 @@ class SettingType extends AbstractType
             ])
             ->add('profile', ChoiceType::class, [
                 'required' => true,
+                'multiple' => true,
             ])
             ->add('type', HiddenType::class, [
                 'required' => true,

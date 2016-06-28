@@ -179,13 +179,17 @@ class SettingsController extends Controller
             $manager = $repo->getManager();
             $data = $request->get('setting');
 
-            $setting = new Setting();
-            $setting->setName($data['name']);
-            $setting->setDescription($data['description']);
-            $setting->setType($data['type']);
-            $setting->setValue($data['value']);
+            foreach ($data['profile'] as $profile) {
+                $setting = new Setting();
+                $setting->setName($data['name']);
+                $setting->setDescription($data['description']);
+                $setting->setType($data['type']);
+                $setting->setValue($data['value']);
+                $setting->setProfile($profile);
 
-            $manager->persist($setting);
+                $manager->persist($setting);
+            }
+
             $manager->commit();
 
             return new JsonResponse(['error' => false]);
