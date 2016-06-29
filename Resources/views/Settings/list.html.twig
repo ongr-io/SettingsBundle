@@ -247,7 +247,7 @@
                 var $settings = $('#profile-select');
                 var odd = $settings.children('.column-1').find('.profile-checkbox').length;
                 var even = $settings.children('.column-2').find('.profile-checkbox').length;
-                var newCheckbox = getProfileItem(profile);
+                var newCheckbox = getProfileItem(profile, true);
 
                 if (odd > even) {
                     $settings.children('.column-2').append(newCheckbox);
@@ -335,7 +335,7 @@
             profileInputs =
                 '<div class="pre-scrollable" id="profile-select" style="max-height: 100px">' +
                     '<div class="col-sm-6 column-1">' +
-                        getProfileItem('Select All', true) +
+                        getProfileItem('Select All', false, true) +
                         checkboxes.filter(function(v, i){return i%2 != 0}).join('') +
                     '</div>' +
                     '<div class="col-sm-6 column-2">' +
@@ -345,13 +345,14 @@
             $('#setting_profile').parent().html(profileInputs);
         }
 
-        function getProfileItem(profile, selectAll) {
+        function getProfileItem(profile, selected, selectAll) {
             var output;
             output = '<div class="row">';
             if (selectAll) {
                 output += '<input type="checkbox" onclick="toggleProfiles(this)" class="profile-checkbox profile-select-pointer">';
             } else {
-                output += '<input type="checkbox" name="profile[]" value="'+profile+'" class="profile-checkbox profile-select-pointer">'
+                output += '<input type="checkbox" name="profile[]" value="'+profile+'" class="profile-checkbox profile-select-pointer"';
+                output += selected ? 'checked>' : '>';
             }
             output += '<label  style="padding-left: 10px;" class="profile-select-pointer" onclick="$(this).siblings().click()">' +
                         profile +
