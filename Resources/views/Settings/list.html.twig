@@ -362,7 +362,7 @@
             if (selectAll) {
                 output += '<input type="checkbox" onclick="toggleProfiles(this)" class="profile-checkbox profile-select-pointer">';
             } else {
-                output += '<input type="checkbox" name="profile[]" value="'+profile+'" class="profile-checkbox profile-select-pointer"';
+                output += '<input type="checkbox" name="setting[profile][]" value="'+profile+'" class="profile-checkbox profile-select-pointer"';
                 output += selected ? 'checked>' : '>';
             }
             output += '<label  style="padding-left: 10px;" class="profile-select-pointer" onclick="$(this).siblings().click()">' +
