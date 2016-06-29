@@ -149,8 +149,8 @@
                         });
                         $('#setting_value').val(JSON.stringify(array));
                         break;
-                    case 'object':
-                        $('#setting_value').val($('#add-setting-object').val());
+                    case 'yaml':
+                        $('#setting_value').val($('#add-setting-yaml').val());
                         break;
                 }
                 $.ajax({
@@ -316,9 +316,9 @@
                         addArrayElement(array[i]);
                     }
                     break;
-                case 'object':
+                case 'yaml':
                     $('#setting_value').val(data.value);
-                    $('#add-setting-object').val(data.value);
+                    $('#add-setting-yaml').val(data.value);
                     break;
                 case 'bool':
                     $('#setting_value').val(data.value);

@@ -46,7 +46,7 @@ class Setting implements SerializableInterface
     /**
      * @const TYPE_OBJECT setting model of object type
      */
-    const TYPE_OBJECT = 'object';
+    const TYPE_OBJECT = 'yaml';
 
     /**
      * @var string
