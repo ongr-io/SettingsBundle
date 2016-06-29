@@ -63,7 +63,7 @@
         var profiles;
         formProfiles();
         $(document).ready(function () {
-
+            updateProfileInputs();
             var table = $('#settings').DataTable( {
                 ajax: {
                     url: './settings/search',
@@ -185,12 +185,8 @@
                 $('#setting-action-title').text('Setting edit');
                 $('form').attr('action', './settings/update/'+data.id);
 
-                if (!$('.multiselect-container').length) {
-                    profileMultiselect();
-                } else {
-                    refreshForm();
-                }
-                $('#setting_profile').multiselect('select', data.profile);
+                refreshForm();
+                selectProfiles(data.profile);
                 $('#setting_name').val(data.name);
                 $('#setting_description').val(data.description);
                 $('.setting-'+data.type).click();
@@ -235,24 +231,7 @@
             $('#setting-action-title').text('New setting');
             $('form').attr('action', './settings/create');
 
-            if (!$('.multiselect-container').length) {
-                profileMultiselect();
-            } else {
-                refreshForm();
-            }
-
-            if (!$('#add-profile-div').length) {
-                var $profiles = $('#setting_profile');
-                $profiles.closest('.col-sm-10').append(
-                        '<div id="add-profile-div" style="display: inline-block; padding-left: 10px;">' +
-                        '<label  style="padding-right: 10px">New profile: </label>' +
-                        '<input type="text" class="add-profile-input">' +
-                        '<label class="settings-array-add pull-right btn btn-success" onclick="addProfile(this)">' +
-                        '<i class="glyphicon glyphicon-plus"></i>' +
-                        '</label>' +
-                        '</div>'
-                );
-            }
+            refreshForm();
         }
 
         function removeArrayInput (el) {
@@ -260,12 +239,22 @@
         }
 
         function addProfile (button) {
-            var $input = $(button).siblings('.add-profile-input');
+            var $input = $(button).parent().siblings('input');
             var profile = $input.val();
             $input.val('');
-            var $settings = $('#setting_profile');
-            $settings.append('<option value="'+profile+'">'+profile+'</option>');
-            $settings.multiselect('rebuild');
+            if (profile != '') {
+
+                var $settings = $('#profile-select');
+                var odd = $settings.children('.column-1').find('.profile-checkbox').length;
+                var even = $settings.children('.column-2').find('.profile-checkbox').length;
+                var newCheckbox = getProfileItem(profile);
+
+                if (odd > even) {
+                    $settings.children('.column-2').append(newCheckbox);
+                } else {
+                    $settings.children('.column-1').append(newCheckbox);
+                }
+            }
         }
 
         function addArrayElement(value) {
@@ -283,18 +272,6 @@
             $('#add-setting-array').append(li);
         }
 
-        function profileMultiselect() {
-            var $profiles = $('#setting_profile');
-            $profiles.attr('multiple', 'multiple');
-            profiles.forEach(function (profile) {
-                $profiles.append('<option value="'+profile+'">'+profile+'</option>');
-            });
-            $profiles.multiselect({
-                includeSelectAllOption: true
-            });
-            $profiles.addClass('hidden');
-        }
-
         function formProfiles () {
             $.ajax({
                 url: "./profiles/get_all",
@@ -307,13 +284,11 @@
 
         function refreshForm () {
             var $form = $('.form-horizontal');
-            var $profileSelect = $('#setting_profile');
+            $('.profile-checkbox').prop('checked', false);
             $form.find('.form-control').val('');
             $('#add-setting-array').find('li').first().siblings('li').remove();
             $('#edit-setting-type').find('label').removeClass('btn-primary');
             $('.setting-bool-div').find('label').removeClass('btn-primary');
-            $profileSelect.multiselect('deselectAll', false);
-            $profileSelect.multiselect('updateButtonText');
         }
 
         function populateValues(data) {
@@ -346,6 +321,57 @@
                         }
                     });
                     break;
+            }
+        }
+
+        function updateProfileInputs() {
+            var profileInputs;
+            var checkboxes = [];
+            profiles.forEach(function (value) {
+                checkboxes.push(
+                    getProfileItem(value)
+                );
+            });
+            profileInputs =
+                '<div class="pre-scrollable" id="profile-select" style="max-height: 100px">' +
+                    '<div class="col-sm-6 column-1">' +
+                        getProfileItem('Select All', true) +
+                        checkboxes.filter(function(v, i){return i%2 != 0}).join('') +
+                    '</div>' +
+                    '<div class="col-sm-6 column-2">' +
+                        checkboxes.filter(function(v, i){return i%2 == 0}).join('') +
+                    '</div>' +
+                '</div>';
+            $('#setting_profile').parent().html(profileInputs);
+        }
+
+        function getProfileItem(profile, selectAll) {
+            var output;
+            output = '<div class="row">';
+            if (selectAll) {
+                output += '<input type="checkbox" onclick="toggleProfiles(this)" class="profile-checkbox profile-select-pointer">';
+            } else {
+                output += '<input type="checkbox" name="profile[]" value="'+profile+'" class="profile-checkbox profile-select-pointer">'
+            }
+            output += '<label  style="padding-left: 10px;" class="profile-select-pointer" onclick="$(this).siblings().click()">' +
+                        profile +
+                    '</label>' +
+                '</div>';
+            return output;
+        }
+
+        function selectProfiles(profiles) {
+            $('.profile-checkbox').each(function () {
+                if (profiles.indexOf($(this).val()) >= 0)
+                $(this).prop('checked', true);
+            });
+        }
+
+        function toggleProfiles(select) {
+            if ($(select).is(':checked')) {
+                $('.profile-checkbox').prop('checked', true);
+            } else {
+                $('.profile-checkbox').prop('checked', false);
             }
         }
     </script>
