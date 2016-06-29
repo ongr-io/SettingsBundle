@@ -226,6 +226,17 @@
             } );
         });
 
+        $('#profile-input').bind('enterKey', function() {
+            $(this).siblings().find('label').click();
+        } );
+
+        $('#profile-input').keyup(function(e){
+            if(e.keyCode == 13)
+            {
+                $(this).trigger("enterKey");
+            }
+        });
+
         function onNewSetting () {
             $('#setting-create').focus();
             $('#setting-action-title').text('New setting');
