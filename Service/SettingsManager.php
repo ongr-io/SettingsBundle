@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\SettingsBundle\Settings\General;
+namespace ONGR\SettingsBundle\Service;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use ONGR\ElasticsearchBundle\Service\Repository;
@@ -53,59 +53,74 @@ class SettingsManager
      * Overwrites setting with given name.
      *
      * @param string       $name
-     * @param string       $type
-     * @param string       $description
-     * @param string|array $value
-     * @param array        $profiles
+     * @param array        $data
+     * @param bool         $force
      *
-     * @throws \LogicException
+     * @return Setting
      */
-    public function create($name, $type, $description, $value, $profiles)
+    public function create($name, array $data = [], $force = false)
     {
+        $existingSetting = $this->get($name);
+        if ($existingSetting && !$force) {
+            return false;
+        }
 
+        if ($existingSetting && $force) {
+            /** @var Setting $setting */
+            $setting = $existingSetting;
+        } else {
+            $settingClass = $this->repo->getClassName();
+            /** @var Setting $setting */
+            $setting = new $settingClass();
+        }
+
+        $setting->setName($name);
+        
+        foreach ($data as $key => $value) {
+            $setting->{'set'.ucfirst($key)}($value);
+        }
+
+        $this->manager->persist($setting);
         $this->manager->commit();
+
+        return $setting;
     }
 
     /**
      * Overwrites setting with given name.
      *
-     * @param string       $id
-     * @param string       $data
+     * @param string      $name
+     * @param array       $data
      *
-     * @throws \LogicException
+     * @return Setting
      */
-    public function update($id, $data)
+    public function update($name, $data)
     {
-
-        $this->manager->commit();
+        return $this->create($name, $data, true);
     }
 
     /**
-     * Removes a setting.
+     * Deletes a setting.
      *
-     * @param Setting $setting
+     * @param string    $name
      */
-    public function remove(Setting $setting)
+    public function delete($name)
     {
+        $setting = $this->repo->findOneBy(['name' => $name]);
         $this->repo->remove($setting->getId());
     }
 
     /**
-     * Returns setting model by name and profile or creates new if $mustExist is set to FALSE.
+     * Returns setting value and caches it.
      *
-     * @param string $key
-     *
-     * @throws \UnexpectedValueException
+     * @param string $name
      *
      * @return Setting
      */
-    public function get($key, $default = null)
+    public function get($name)
     {
-        $setting = $this->repo->findOneBy(['key' => $key]);
-        if ($setting === null) {
-            return $setting;
-        } else {
-            return $default;
-        }
+        $setting = $this->repo->findOneBy(['name' => $name]);
+
+        return $setting;
     }
 }
