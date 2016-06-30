@@ -111,16 +111,21 @@ class SettingsManager
     }
 
     /**
-     * Returns setting value and caches it.
+     * Returns setting value.
      *
      * @param string $name
+     * @param mixed  $default
      *
      * @return Setting
      */
-    public function get($name)
+    public function get($name, $default = null)
     {
         $setting = $this->repo->findOneBy(['name' => $name]);
 
-        return $setting;
+        if ($setting) {
+            return $setting;
+        } else {
+            return $default;
+        }
     }
 }

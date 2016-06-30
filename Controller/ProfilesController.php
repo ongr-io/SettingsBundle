@@ -17,6 +17,8 @@ use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\TopHitsAggregation;
 use ONGR\ElasticsearchDSL\Search;
 use ONGR\ElasticsearchBundle\Result\Aggregation\AggregationValue;
+use ONGR\SettingsBundle\Document\Setting;
+use ONGR\SettingsBundle\Service\SettingsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -76,6 +78,7 @@ class ProfilesController extends Controller
     public function getFullProfilesAction(Request $request)
     {
         $profiles = [];
+
         /** @var Repository $repo */
         $repo = $this->get($this->getParameter('ongr_settings.repo'));
 
@@ -86,9 +89,10 @@ class ProfilesController extends Controller
         $search->addAggregation($termAgg);
 
         $result = $repo->execute($search);
-        
+
+        /** @var Setting $activeProfiles */
         $activeProfiles = $this->get('ongr_settings.settings_manager')
-            ->get($this->getParameter('ongr_settings.active_profiles'));
+            ->get($this->getParameter('ongr_settings.active_profiles'), []);
 
         /** @var AggregationValue $agg */
         foreach ($result->getAggregation('profiles') as $agg) {
@@ -99,7 +103,7 @@ class ProfilesController extends Controller
             }
 
             $profiles[] = [
-                'active' => $activeProfiles ? in_array($agg->getValue('key'), $activeProfiles) : false,
+                'active' => $activeProfiles ? in_array($agg->getValue('key'), $activeProfiles->getValue()) : false,
                 'name' => $agg->getValue('key'),
                 'settings' => implode(', ', $settings),
             ];
@@ -130,7 +134,7 @@ class ProfilesController extends Controller
             unset($activeProfiles[$key]);
         }
 
-        $this->get('ongr_settings.settings_manager')->create($this->getParameter('ongr_settings.active_profiles'), [
+        $this->get('ongr_settings.settings_manager')->update($this->getParameter('ongr_settings.active_profiles'), [
             'value' => $activeProfiles
         ]);
 
