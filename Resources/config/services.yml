@@ -1,4 +1,33 @@
 parameters:
     ongr_settings.type.setting.class: ONGR\SettingsBundle\Form\SettingType
 
+    ongr_settings.cookie.active_profiles.name: ongr_settings_ap
+    ongr_settings.cookie.active_profiles.defaults: # Defaults section is optional
+        http_only: false
+
+    ongr_settings.active_profiles: ongr_active_profiles
+
 services:
+    ongr_settings.cookie.active_profiles:
+        class: "%ongr_cookie.json.class%"
+        arguments: [ "%ongr_settings.cookie.active_profiles.name%" ]
+        calls:
+            - [setDefaults, ["%ongr_settings.cookie.active_profiles.defaults%"]] # Optional
+        tags:
+            - { name: ongr_cookie.cookie }
+
+    ongr_settings.setting_extension:
+        class: ONGR\SettingsBundle\Twig\SettingExtension
+        arguments: ["@ongr_settings.settings_manager"]
+        tags:
+            - { name: twig.extension }
+
+    ong_settings.cache_provider:
+        class: Doctrine\Common\Cache\PhpFileCache
+        arguments: ["%kernel.cache_dir%/ongr/settings", ".ongr.settings_cache.php"]
+
+    ongr_settings.request_listener:
+        class: ONGR\SettingsBundle\EventListener\RequestListener
+        arguments: ["@ong_settings.cache_provider"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }

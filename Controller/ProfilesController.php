@@ -80,12 +80,15 @@ class ProfilesController extends Controller
         $repo = $this->get($this->getParameter('ongr_settings.repo'));
 
         $search = $repo->createSearch();
-        $topHitsAgg = new TopHitsAggregation('documents', 100);
+        $topHitsAgg = new TopHitsAggregation('documents', 10000);
         $termAgg = new TermsAggregation('profiles', 'profile');
         $termAgg->addAggregation($topHitsAgg);
         $search->addAggregation($termAgg);
 
         $result = $repo->execute($search);
+        
+        $activeProfiles = $this->get('ongr_settings.settings_manager')
+            ->get($this->getParameter('ongr_settings.active_profiles'));
 
         /** @var AggregationValue $agg */
         foreach ($result->getAggregation('profiles') as $agg) {
@@ -96,6 +99,7 @@ class ProfilesController extends Controller
             }
 
             $profiles[] = [
+                'active' => $activeProfiles ? in_array($agg->getValue('key'), $activeProfiles) : false,
                 'name' => $agg->getValue('key'),
                 'settings' => implode(', ', $settings),
             ];
@@ -104,5 +108,32 @@ class ProfilesController extends Controller
         return new JsonResponse(
             ['count' => count($profiles), 'documents' => $profiles]
         );
+    }
+
+    public function toggleProfileAction(Request $request)
+    {
+        $setting = $this->get('ongr_settings.settings_manager')
+            ->get($this->getParameter('ongr_settings.active_profiles'));
+
+        $name = $request->get('name');
+
+        if ($setting) {
+            $activeProfiles = $setting->getValue();
+        } else {
+            $activeProfiles = [];
+        }
+
+        $key = array_search($name, $activeProfiles);
+        if ($key === false) {
+            $activeProfiles[] = $name;
+        } else {
+            unset($activeProfiles[$key]);
+        }
+
+        $this->get('ongr_settings.settings_manager')->create($this->getParameter('ongr_settings.active_profiles'), [
+            'value' => $activeProfiles
+        ]);
+
+        return new JsonResponse(['error' => false]);
     }
 }

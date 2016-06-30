@@ -13,6 +13,10 @@ ongr_settings_profiles_get_all:
     path: /profiles/get_all
     defaults: { _controller: ONGRSettingsBundle:Profiles:getAllProfiles }
 
+ongr_settings_profiles_toggle:
+    path: /profiles/toggle
+    defaults: { _controller: ONGRSettingsBundle:Profiles:toggleProfile }
+
 ongr_settings_profiles_get_all_detailed:
     path: /profiles/get_all_detailed
     defaults: { _controller: ONGRSettingsBundle:Profiles:getFullProfiles }
