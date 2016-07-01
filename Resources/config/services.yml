@@ -18,7 +18,7 @@ services:
 
     ongr_settings.setting_extension:
         class: ONGR\SettingsBundle\Twig\SettingExtension
-        arguments: ["@ongr_settings.settings_manager"]
+        arguments: ["@ongr_settings.settings_manager", "@ong_settings.cache_provider"]
         tags:
             - { name: twig.extension }
 

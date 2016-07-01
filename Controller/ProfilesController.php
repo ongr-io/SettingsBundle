@@ -75,39 +75,9 @@ class ProfilesController extends Controller
      *
      * @return Response
      */
-    public function getFullProfilesAction(Request $request)
+    public function getFullProfilesAction()
     {
-        $profiles = [];
-
-        /** @var Repository $repo */
-        $repo = $this->get($this->getParameter('ongr_settings.repo'));
-
-        $search = $repo->createSearch();
-        $topHitsAgg = new TopHitsAggregation('documents', 10000);
-        $termAgg = new TermsAggregation('profiles', 'profile');
-        $termAgg->addAggregation($topHitsAgg);
-        $search->addAggregation($termAgg);
-
-        $result = $repo->execute($search);
-
-        /** @var Setting $activeProfiles */
-        $activeProfiles = $this->get('ongr_settings.settings_manager')
-            ->get($this->getParameter('ongr_settings.active_profiles'), []);
-
-        /** @var AggregationValue $agg */
-        foreach ($result->getAggregation('profiles') as $agg) {
-            $settings = [];
-            $docs = $agg->getAggregation('documents');
-            foreach ($docs['hits']['hits'] as $doc) {
-                $settings[] = $doc['_source']['name'];
-            }
-
-            $profiles[] = [
-                'active' => $activeProfiles ? in_array($agg->getValue('key'), $activeProfiles->getValue()) : false,
-                'name' => $agg->getValue('key'),
-                'settings' => implode(', ', $settings),
-            ];
-        }
+        $profiles = $this->get('ongr_settings.settings_manager')->getAllProfiles();
 
         return new JsonResponse(
             ['count' => count($profiles), 'documents' => $profiles]
@@ -137,6 +107,8 @@ class ProfilesController extends Controller
         $this->get('ongr_settings.settings_manager')->update($this->getParameter('ongr_settings.active_profiles'), [
             'value' => $activeProfiles
         ]);
+
+        $this->get('ong_settings.cache_provider')->deleteAll();
 
         return new JsonResponse(['error' => false]);
     }
