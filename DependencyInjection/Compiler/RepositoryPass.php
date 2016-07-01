@@ -35,6 +35,7 @@ class RepositoryPass implements CompilerPassInterface
             new Reference($repo),
             new Reference('event_dispatcher')
         ]);
+        $settingsManager->addMethodCall('setActiveProfilesSetting', ['%ongr_settings.active_profiles%']);
         
         $container->setDefinition('ongr_settings.settings_manager', $settingsManager);
     }

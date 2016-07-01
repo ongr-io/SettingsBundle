@@ -11,6 +11,9 @@
 
 namespace ONGR\SettingsBundle\Service;
 
+use ONGR\ElasticsearchBundle\Result\Aggregation\AggregationValue;
+use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\TopHitsAggregation;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use ONGR\ElasticsearchBundle\Service\Repository;
 use ONGR\ElasticsearchBundle\Service\Manager;
@@ -22,19 +25,32 @@ use ONGR\SettingsBundle\Document\Setting;
 class SettingsManager
 {
     /**
+     * Symfony event dispatcher.
+     *
      * @var EventDispatcherInterface
      */
-    protected $eventDispatcher;
+    private $eventDispatcher;
 
     /**
+     * Elasticsearch manager which handles setting repository.
+     *
      * @var Manager
      */
-    protected $manager;
+    private $manager;
 
     /**
+     * Settings repository.
+     *
      * @var Repository
      */
-    protected $repo;
+    private $repo;
+
+    /**
+     * Active profiles setting name.
+     *
+     * @var string
+     */
+    private $activeProfilesSetting;
 
     /**
      * @param Repository               $repo
@@ -47,6 +63,22 @@ class SettingsManager
         $this->repo = $repo;
         $this->manager = $repo->getManager();
         $this->eventDispatcher = $eventDispatcher;
+    }
+
+    /**
+     * @return string
+     */
+    public function getActiveProfilesSetting()
+    {
+        return $this->activeProfilesSetting;
+    }
+
+    /**
+     * @param string $activeProfilesSetting
+     */
+    public function setActiveProfilesSetting($activeProfilesSetting)
+    {
+        $this->activeProfilesSetting = $activeProfilesSetting;
     }
 
     /**
@@ -127,5 +159,54 @@ class SettingsManager
         } else {
             return $default;
         }
+    }
+
+    public function getAllProfiles()
+    {
+        $profiles = [];
+
+        $search = $this->repo->createSearch();
+        $topHitsAgg = new TopHitsAggregation('documents', 10000);
+        $termAgg = new TermsAggregation('profiles', 'profile');
+        $termAgg->addAggregation($topHitsAgg);
+        $search->addAggregation($termAgg);
+
+        $result = $this->repo->execute($search);
+
+        /** @var Setting $activeProfiles */
+        $activeProfiles = $this->get($this->activeProfilesSetting, []);
+
+        /** @var AggregationValue $agg */
+        foreach ($result->getAggregation('profiles') as $agg) {
+            $settings = [];
+            $docs = $agg->getAggregation('documents');
+            foreach ($docs['hits']['hits'] as $doc) {
+                $settings[] = $doc['_source']['name'];
+            }
+            $name = $agg->getValue('key');
+            $profiles[] = [
+                'active' => $activeProfiles ? in_array($agg->getValue('key'), $activeProfiles->getValue()) : false,
+                'name' => $name,
+                'settings' => implode(', ', $settings),
+            ];
+        }
+
+        return $profiles;
+    }
+
+    public function getAllProfilesNameList($onlyActive = false)
+    {
+        $profiles = [];
+        $allProfiles = $this->getAllProfiles();
+
+        foreach ($allProfiles as $profile) {
+            if ($onlyActive and !$profile['active']) {
+                continue;
+            }
+
+            $profiles[] = $profile['name'];
+        }
+
+        return $profiles;
     }
 }
