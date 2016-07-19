@@ -11,7 +11,7 @@
 
 namespace ONGR\SettingsBundle;
 
-use ONGR\SettingsBundle\DependencyInjection\Compiler\RepositoryPass;
+use ONGR\SettingsBundle\DependencyInjection\Compiler\SettingsManagerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -27,6 +27,6 @@ class ONGRSettingsBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new RepositoryPass());
+        $container->addCompilerPass(new SettingsManagerPass());
     }
 }

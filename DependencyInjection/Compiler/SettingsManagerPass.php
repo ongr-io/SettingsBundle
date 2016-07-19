@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-class RepositoryPass implements CompilerPassInterface
+class SettingsManagerPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
@@ -35,7 +35,7 @@ class RepositoryPass implements CompilerPassInterface
             new Reference($repo),
             new Reference('event_dispatcher')
         ]);
-        $settingsManager->addMethodCall('setActiveProfilesSetting', ['%ongr_settings.active_profiles%']);
+        $settingsManager->addMethodCall('setActiveProfilesSettingName', ['%ongr_settings.active_profiles%']);
         
         $container->setDefinition('ongr_settings.settings_manager', $settingsManager);
     }
