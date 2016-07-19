@@ -29,26 +29,6 @@ class Setting implements SerializableInterface
     private $id;
 
     /**
-     * @const TYPE_STRING setting model of string type
-     */
-    const TYPE_STRING = 'string';
-
-    /**
-     * @const TYPE_ARRAY setting model of array type
-     */
-    const TYPE_ARRAY = 'array';
-
-    /**
-     * @const TYPE_BOOLEAN setting model of boolean type
-     */
-    const TYPE_BOOLEAN = 'bool';
-
-    /**
-     * @const TYPE_OBJECT setting model of object type
-     */
-    const TYPE_OBJECT = 'yaml';
-
-    /**
      * @var string
      *
      * @ES\Property(type="string", options={"analyzer"="standard"})
@@ -67,7 +47,7 @@ class Setting implements SerializableInterface
      *
      * @ES\Property(type="string", options={"analyzer"="standard"})
      */
-    private $profile;
+    private $profile = [];
 
     /**
      * @var string
@@ -89,6 +69,21 @@ class Setting implements SerializableInterface
      * @ES\Property(type="string", options={"index"="not_analyzed"})
      */
     private $salt;
+
+    /**
+     * @var string
+     *
+     * @ES\Property(type="date")
+     */
+    private $createdAt;
+
+    /**
+     * Setting constructor.
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * @return string
@@ -216,6 +211,22 @@ class Setting implements SerializableInterface
     public function setSalt($salt)
     {
         $this->salt = $salt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param string $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
     }
 
     /**
