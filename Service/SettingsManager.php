@@ -11,9 +11,12 @@
 
 namespace ONGR\SettingsBundle\Service;
 
+use Doctrine\Common\Cache\CacheProvider;
+use ONGR\CookiesBundle\Cookie\Model\GenericCookie;
 use ONGR\ElasticsearchBundle\Result\Aggregation\AggregationValue;
 use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\TopHitsAggregation;
+use ONGR\SettingsBundle\Exception\SettingNotFoundException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use ONGR\ElasticsearchBundle\Service\Repository;
 use ONGR\ElasticsearchBundle\Service\Manager;
@@ -46,11 +49,25 @@ class SettingsManager
     private $repo;
 
     /**
+     * Cache pool container.
+     *
+     * @var CacheProvider
+     */
+    private $cache;
+
+    /**
+     * Cookie storage for active cookies.
+     *
+     * @var GenericCookie
+     */
+    private $activeProfilesCookie;
+
+    /**
      * Active profiles setting name.
      *
      * @var string
      */
-    private $activeProfilesSetting;
+    private $activeProfilesSettingName;
 
     /**
      * @param Repository               $repo
@@ -66,45 +83,72 @@ class SettingsManager
     }
 
     /**
+     * @return CacheProvider
+     */
+    public function getCache()
+    {
+        return $this->cache;
+    }
+
+    /**
+     * @param CacheProvider $cache
+     */
+    public function setCache($cache)
+    {
+        $this->cache = $cache;
+    }
+
+    /**
+     * @return GenericCookie
+     */
+    public function getActiveProfilesCookie()
+    {
+        return $this->activeProfilesCookie;
+    }
+
+    /**
+     * @param GenericCookie $activeProfilesCookie
+     */
+    public function setActiveProfilesCookie($activeProfilesCookie)
+    {
+        $this->activeProfilesCookie = $activeProfilesCookie;
+    }
+
+    /**
      * @return string
      */
-    public function getActiveProfilesSetting()
+    public function getActiveProfilesSettingName()
     {
-        return $this->activeProfilesSetting;
+        return $this->activeProfilesSettingName;
     }
 
     /**
-     * @param string $activeProfilesSetting
+     * @param string $activeProfilesSettingName
      */
-    public function setActiveProfilesSetting($activeProfilesSetting)
+    public function setActiveProfilesSettingName($activeProfilesSettingName)
     {
-        $this->activeProfilesSetting = $activeProfilesSetting;
+        $this->activeProfilesSettingName = $activeProfilesSettingName;
     }
 
     /**
-     * Overwrites setting with given name.
+     * Creates setting.
      *
      * @param string       $name
      * @param array        $data
-     * @param bool         $force
      *
      * @return Setting
      */
-    public function create($name, array $data = [], $force = false)
+    public function create($name, array $data = [])
     {
         $existingSetting = $this->get($name);
-        if ($existingSetting && !$force) {
-            return false;
+
+        if ($existingSetting) {
+            throw new \LogicException(sprintf('Setting %s already exists.', $name));
         }
 
-        if ($existingSetting && $force) {
-            /** @var Setting $setting */
-            $setting = $existingSetting;
-        } else {
-            $settingClass = $this->repo->getClassName();
-            /** @var Setting $setting */
-            $setting = new $settingClass();
-        }
+        $settingClass = $this->repo->getClassName();
+        /** @var Setting $setting */
+        $setting = new $settingClass();
 
         $setting->setName($name);
         
@@ -119,54 +163,91 @@ class SettingsManager
     }
 
     /**
-     * Overwrites setting with given name.
+     * Overwrites setting parameters with given name.
      *
      * @param string      $name
      * @param array       $data
      *
      * @return Setting
      */
-    public function update($name, $data)
+    public function update($name, $data = [])
     {
-        return $this->create($name, $data, true);
+        $setting = $this->get($name);
+
+        if (!$setting) {
+            throw new \LogicException(sprintf('Setting %s not exist.', $name));
+        }
+
+        foreach ($data as $key => $value) {
+            $setting->{'set'.ucfirst($key)}($value);
+        }
+
+        $this->manager->persist($setting);
+        $this->manager->commit();
+
+        return $setting;
     }
 
     /**
      * Deletes a setting.
      *
      * @param string    $name
+     *
+     * @return array
      */
     public function delete($name)
     {
         $setting = $this->repo->findOneBy(['name' => $name]);
-        $this->repo->remove($setting->getId());
+        return $this->repo->remove($setting->getId());
     }
 
     /**
-     * Returns setting value.
+     * Returns setting object.
      *
      * @param string $name
-     * @param mixed  $default
      *
      * @return Setting
      */
-    public function get($name, $default = null)
+    public function get($name)
     {
+        /** @var Setting $setting */
         $setting = $this->repo->findOneBy(['name' => $name]);
 
-        if ($setting) {
-            return $setting;
-        } else {
-            return $default;
+        if (!$setting) {
+            throw new SettingNotFoundException(sprintf('Setting %s not exist.', $name));
         }
+
+        return $setting;
     }
 
-    public function getAllProfiles()
+    /**
+     * Get setting value by current active profiles setting.
+     *
+     * @param string $name
+     * @param bool $default
+     *
+     * @return mixed
+     */
+    public function getValue($name, $default = false)
+    {
+
+
+        return null;
+    }
+
+    /**
+     * Get all full profile information.
+     *
+     * @param string $search Optional search term to search across all profile data.
+     *
+     * @return array
+     */
+    public function getAllProfiles($search = null)
     {
         $profiles = [];
 
         $search = $this->repo->createSearch();
-        $topHitsAgg = new TopHitsAggregation('documents', 10000);
+        $topHitsAgg = new TopHitsAggregation('documents', 20);
         $termAgg = new TermsAggregation('profiles', 'profile');
         $termAgg->addAggregation($topHitsAgg);
         $search->addAggregation($termAgg);
@@ -194,6 +275,13 @@ class SettingsManager
         return $profiles;
     }
 
+    /**
+     * Get only profile names.
+     *
+     * @param bool $onlyActive
+     *
+     * @return array
+     */
     public function getAllProfilesNameList($onlyActive = false)
     {
         $profiles = [];

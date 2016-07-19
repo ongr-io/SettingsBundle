@@ -30,18 +30,11 @@ class SettingExtension extends \Twig_Extension
     private $manager;
 
     /**
-     * @var PhpFileCache
-     */
-    private $cache;
-
-    /**
      * @param SettingsManager $manager
-     * @param PhpFileCache    $cache
      */
-    public function __construct($manager, $cache)
+    public function __construct($manager)
     {
         $this->manager = $manager;
-        $this->cache = $cache;
     }
 
     /**
@@ -70,30 +63,6 @@ class SettingExtension extends \Twig_Extension
      */
     public function getSettingValue($name, $default = false)
     {
-        $settingName = 'ongr_setting.'.$name;
-
-        if ($this->cache->contains($settingName)) {
-            return $this->cache->fetch($settingName);
-        }
-
-        $allProfiles = $this->cache->fetch('active_profiles');
-
-        if ($allProfiles === false) {
-            $allProfiles = $this->manager->getAllProfilesNameList(true);
-            $this->cache->save('active_profiles', $allProfiles);
-        }
-
-        /** @var Setting $setting */
-        $setting = $this->manager->get($name);
-        $settingProfile = is_array($setting->getProfile())?$setting->getProfile():[$setting->getProfile()];
-        if ($setting && array_intersect($settingProfile, $allProfiles)) {
-            $settingValue = $setting->getValue();
-        } else {
-            $settingValue = $default;
-        }
-
-        $this->cache->save($settingName, $settingValue);
-
-        return $settingValue;
+        return $this->manager->getValue($name, $default);
     }
 }
