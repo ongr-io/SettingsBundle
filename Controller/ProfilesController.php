@@ -65,13 +65,13 @@ class ProfilesController extends Controller
             $profiles[] = $agg->getValue('key');
         }
 
+        if (empty($profiles)) $profiles[] = 'default';
+
         return new JsonResponse($profiles);
     }
 
     /**
      * Returns a json list of profiles
-     *
-     * @param Request $request
      *
      * @return Response
      */
