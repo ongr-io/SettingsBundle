@@ -10,6 +10,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var dir = {
     fonts: './Resources/fonts/',
     sass: './Resources/sass/',
+    js: './Resources/js/',
     dist: './Resources/public/',
     npm: './node_modules/',
 };
@@ -21,7 +22,6 @@ var assets = {
 gulp.task('app-sass', function() {
     return gulp.src([
         dir.sass + 'style.scss',
-        dir.npm + 'datatables.net-bs/css/dataTables.bootstrap.css',
         dir.npm + 'datatables.net-buttons-bs/css/buttons.bootstrap.css',
         ])
         .pipe(sourcemaps.init())
@@ -35,41 +35,20 @@ gulp.task('app-sass', function() {
 
 gulp.task('app-js', function() {
     return gulp.src([
-        dir.npm + 'jquery/dist/jquery.min.js',
-        dir.npm + 'bootstrap-sass/assets/javascripts/bootstrap/modal.js',
-        dir.npm + 'bootstrap-sass/assets/javascripts/bootstrap/tab.js',
-        // dir.npm + 'bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
-        dir.npm + 'datatables.net/js/jquery.dataTables.js',
-        dir.npm + 'datatables.net-bs/js/dataTables.bootstrap.js'
+            dir.js + 'script.js',
         ])
         .pipe(concat('script.js'))
         .pipe(gulp.dest(dir.dist));
 });
 
-gulp.task('app-copy-dist', function () {
-    gulp.src([
-        dir.npm + 'jquery/dist/jquery.min.map'
-        ])
-        .pipe(gulp.dest(dir.dist));
-});
-
-gulp.task('app-copy-fonts', function () {
-    gulp.src([
-        dir.fonts + '*',
-        dir.npm + 'font-awesome/fonts/*',
-        // dir.npm + 'bootstrap-sass/assets/fonts/**/*',
-    ]).pipe(gulp.dest(dir.dist + 'fonts'));
-});
-
 // Rerun the task when a file changes
 gulp.task('watch', function () {
-    gulp.watch(assets.styles, ['app-sass']);
+    gulp.watch(assets.styles, ['app-sass', 'app-js']);
 });
 
 gulp.task('default',
-[
-    'app-sass',
-    'app-copy-fonts',
-    'app-js',
-    'app-copy-dist',
-]);
+    [
+        'app-sass',
+        'app-js',
+    ]
+);
