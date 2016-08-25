@@ -63,7 +63,7 @@ class SettingsManager
     private $activeProfilesCookie;
 
     /**
-     * Active profiles setting name.
+     * Active profiles setting name to store in the cache engine.
      *
      * @var string
      */
@@ -133,13 +133,22 @@ class SettingsManager
     /**
      * Creates setting.
      *
-     * @param string       $name
      * @param array        $data
      *
      * @return Setting
      */
-    public function create($name, array $data = [])
+    public function create(array $data = [])
     {
+        $data = array_filter($data);
+        if (!isset($data['name']) || !isset($data['type'])) {
+            throw new \LogicException('Missing one of the mandatory field!');
+        }
+
+        if (!isset($data['value'])) {
+            $data['value'] = 0;
+        }
+
+        $name = $data['name'];
         $existingSetting = $this->get($name);
 
         if ($existingSetting) {
@@ -150,8 +159,7 @@ class SettingsManager
         /** @var Setting $setting */
         $setting = new $settingClass();
 
-        $setting->setName($name);
-        
+        #TODO Introduce array populate function in Setting document instead of this foreach.
         foreach ($data as $key => $value) {
             $setting->{'set'.ucfirst($key)}($value);
         }
@@ -178,6 +186,7 @@ class SettingsManager
             throw new \LogicException(sprintf('Setting %s not exist.', $name));
         }
 
+        #TODO Add populate function to document class
         foreach ($data as $key => $value) {
             $setting->{'set'.ucfirst($key)}($value);
         }
@@ -213,10 +222,6 @@ class SettingsManager
         /** @var Setting $setting */
         $setting = $this->repo->findOneBy(['name' => $name]);
 
-        if (!$setting) {
-            throw new SettingNotFoundException(sprintf('Setting %s not exist.', $name));
-        }
-
         return $setting;
     }
 
@@ -228,21 +233,23 @@ class SettingsManager
      *
      * @return mixed
      */
-    public function getValue($name, $default = false)
+    public function getValue($name, $default = null)
     {
+        $setting = $this->get($name);
 
+        if ($setting) {
+            return $setting->getValue();
+        }
 
-        return null;
+        return $default;
     }
 
     /**
      * Get all full profile information.
      *
-     * @param string $search Optional search term to search across all profile data.
-     *
      * @return array
      */
-    public function getAllProfiles($search = null)
+    public function getAllProfiles()
     {
         $profiles = [];
 
@@ -255,7 +262,7 @@ class SettingsManager
         $result = $this->repo->execute($search);
 
         /** @var Setting $activeProfiles */
-        $activeProfiles = $this->get($this->activeProfilesSetting, []);
+        $activeProfiles = $this->getValue($this->activeProfilesSetting, []);
 
         /** @var AggregationValue $agg */
         foreach ($result->getAggregation('profiles') as $agg) {

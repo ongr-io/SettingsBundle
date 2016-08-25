@@ -51,89 +51,18 @@ class SettingsController extends Controller
      * Setting update action.
      *
      * @param Request $request
-     * @param $id
      *
      * @return JsonResponse
      */
-    public function updateAction(Request $request, $id)
+    public function updateValueAction(Request $request)
     {
-        try {
-            /** @var Repository $repo */
-            $repo = $this->get($this->getParameter('ongr_settings.repo'));
+        $name = $request->get('name');
+        $value = $request->get('value');
 
-            /** @var Setting $setting */
-            $setting = $repo->find($id);
+        $manager = $this->get('ongr_settings.settings_manager');
+        $manager->update($name, ['value' => $value]);
 
-            $form = $this->createForm($this->getParameter('ongr_settings.type.setting.class'), $setting);
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $em = $repo->getManager();
-                $em->persist($setting);
-                $em->commit();
-            } else {
-                return new JsonResponse(
-                    [
-                        'error' => true,
-                        'message' => 'Not valid posted data.'
-                    ],
-                    Response::HTTP_BAD_REQUEST
-                );
-            }
-
-            return new JsonResponse(
-                [
-                    'error' => false
-                ]
-            );
-
-        } catch (\Exception $e) {
-            return new JsonResponse(
-                [
-                    'error' => true,
-                    'message' => 'Error occurred please try to update setting again.'
-                ],
-                Response::HTTP_BAD_REQUEST
-            );
-        }
-    }
-
-    /**
-     * Setting update action.
-     *
-     * @param Request $request
-     * @param $id
-     *
-     * @return JsonResponse
-     */
-    public function updateValueAction(Request $request, $id)
-    {
-        try {
-            /** @var Repository $repo */
-            $repo = $this->get($this->getParameter('ongr_settings.repo'));
-
-            /** @var Setting $setting */
-            $setting = $repo->find($id);
-            $setting->setValue($request->get('value'));
-
-            $em = $repo->getManager();
-            $em->persist($setting);
-            $em->commit();
-
-            return new JsonResponse(
-                [
-                    'error' => false
-                ]
-            );
-
-        } catch (\Exception $e) {
-            return new JsonResponse(
-                [
-                    'error' => true,
-                    'message' => 'Error occurred please try to update setting again.'
-                ],
-                Response::HTTP_BAD_REQUEST
-            );
-        }
+        return new JsonResponse(['error' => false]);
     }
 
     /**
@@ -165,31 +94,24 @@ class SettingsController extends Controller
     }
 
     /**
-     * Setting delete action
+     * Submit action to create or edit setting if not exists.
      *
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function createAction(Request $request)
+    public function submitAction(Request $request)
     {
         try {
-            /** @var Repository $repo */
-            $repo = $this->get($this->getParameter('ongr_settings.repo'));
-            $manager = $repo->getManager();
+            $manager = $this->get('ongr_settings.settings_manager');
             $data = $request->get('setting');
 
-            $setting = new Setting();
-            $setting->setName($data['name']);
-            $setting->setDescription($data['description']);
-            $setting->setType($data['type']);
-            $setting->setValue($data['value']);
-
-            $setting->setProfile($data['profile']);
-
-            $manager->persist($setting);
-
-            $manager->commit();
+            if ($request->get('force')) {
+                $name = $request->get('name');
+                $manager->update($name, $data);
+            } else {
+                $manager->create($data);
+            }
 
             return new JsonResponse(['error' => false]);
 
@@ -197,7 +119,7 @@ class SettingsController extends Controller
             return new JsonResponse(
                 [
                     'error' => true,
-                    'message' => 'Error occurred please try to delete setting again.'
+                    'message' => 'Error occurred! Something is wrong with provided data. Please try to submit form again.'
                 ]
             );
         }

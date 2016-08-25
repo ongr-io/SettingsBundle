@@ -25,16 +25,12 @@ ongr_settings_settings:
     path: /settings
     defaults: { _controller: ONGRSettingsBundle:Settings:list }
 
-ongr_settings_settings_create:
-    path: /settings/create
-    defaults: { _controller: ONGRSettingsBundle:Settings:create }
-
-ongr_settings_settings_update:
-    path: /settings/update/{id}
-    defaults: { _controller: ONGRSettingsBundle:Settings:update }
+ongr_settings_setting_submit:
+    path: /settings/submit
+    defaults: { _controller: ONGRSettingsBundle:Settings:submit }
 
 ongr_settings_settings_update_value:
-    path: /settings/update-value/{id}
+    path: /settings/update-value
     defaults: { _controller: ONGRSettingsBundle:Settings:updateValue }
 
 ongr_settings_settings_delete:
