@@ -5,6 +5,7 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var path = require('path');
 var watch = require('gulp-watch');
+var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 
 var dir = {
@@ -26,7 +27,7 @@ gulp.task('app-sass', function() {
         ])
         .pipe(sourcemaps.init())
         .pipe(sass(
-            // {outputStyle: 'compressed'}
+            {outputStyle: 'compressed'}
         ).on('error', sass.logError))
         .pipe(concat('style.css'))
         .pipe(sourcemaps.write('./'))
@@ -37,6 +38,7 @@ gulp.task('app-js', function() {
     return gulp.src([
             dir.js + 'script.js',
         ])
+        .pipe(uglify())
         .pipe(concat('script.js'))
         .pipe(gulp.dest(dir.dist));
 });
