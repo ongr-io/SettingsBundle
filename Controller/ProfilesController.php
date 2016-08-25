@@ -54,11 +54,12 @@ class ProfilesController extends Controller
     public function getAllProfilesAction(Request $request)
     {
         $profiles = [];
+        /** @var Repository $repo */
         $repo = $this->get($this->getParameter('ongr_settings.repo'));
 
         /** @var DocumentIterator $result */
         $result = $repo->execute(
-            (new Search())->addAggregation(new TermsAggregation('profiles', 'profile'))
+            ($repo->createSearch())->addAggregation(new TermsAggregation('profiles', 'profile'))
         );
         /** @var AggregationValue $agg */
         foreach ($result->getAggregation('profiles') as $agg) {

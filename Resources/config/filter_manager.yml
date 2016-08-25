@@ -35,16 +35,6 @@ parameters:
             field: "type"
             order: "desc"
             default: false
-#        createdAsc:
-#            label: "Created Asc"
-#            field: "created_at"
-#            order: "asc"
-#            default: false
-#        createdDesc:
-#            label: "Created Desc"
-#            field: "created_at"
-#            order: "desc"
-#            default: true
 
     ongr_settings.filter.match_search.request_field: q
     ongr_settings.filter.match_search.field: "key"

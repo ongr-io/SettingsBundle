@@ -262,7 +262,7 @@ class SettingsManager
         $result = $this->repo->execute($search);
 
         /** @var Setting $activeProfiles */
-        $activeProfiles = $this->getValue($this->activeProfilesSetting, []);
+        $activeProfiles = $this->getValue($this->activeProfilesSettingName, []);
 
         /** @var AggregationValue $agg */
         foreach ($result->getAggregation('profiles') as $agg) {
