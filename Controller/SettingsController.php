@@ -32,19 +32,9 @@ class SettingsController extends Controller
      *
      * @return Response
      */
-    public function listAction(Request $request)
+    public function listAction()
     {
-        /** @var Repository $repo */
-        $repo = $this->get($this->getParameter('ongr_settings.repo'));
-        $className = $repo->getClassName();
-        $form = $this->createForm($this->getParameter('ongr_settings.type.setting.class'), new $className);
-
-        return $this->render(
-            'ONGRSettingsBundle:Settings:list.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->render('ONGRSettingsBundle:Settings:list.html.twig');
     }
 
     /**

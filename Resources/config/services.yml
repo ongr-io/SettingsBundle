@@ -1,6 +1,4 @@
 parameters:
-    ongr_settings.type.setting.class: ONGR\SettingsBundle\Form\SettingType
-
     ongr_settings.cookie.active_profiles.name: ongr_settings_ap
     ongr_settings.cookie.active_profiles_invalidation.name: ongr_settings_iv
     ongr_settings.cookie.active_profiles.defaults: # Defaults section is optional
