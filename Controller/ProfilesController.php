@@ -87,28 +87,33 @@ class ProfilesController extends Controller
 
     public function toggleProfileAction(Request $request)
     {
-        $setting = $this->get('ongr_settings.settings_manager')
-            ->get($this->getParameter('ongr_settings.active_profiles'));
+        $settingName = $this->getParameter('ongr_settings.active_profiles');
+        $manager = $this->get('ongr_settings.settings_manager');
 
-        $name = $request->get('name');
-
-        if ($setting) {
-            $activeProfiles = $setting->getValue();
-        } else {
-            $activeProfiles = [];
+        #TODO Not sure where is the right place to put active profiles setting initiating
+        if (!$manager->has($settingName)) {
+            $manager->create(
+                [
+                    'name' => $settingName,
+                    'value' => [],
+                    'type' => 'hidden',
+                ]
+            );
         }
 
-        $key = array_search($name, $activeProfiles);
+        $profileName = $request->get('name');
+        $activeProfiles = (array)$manager->getValue($settingName, []);
+
+        $key = array_search($profileName, $activeProfiles);
         if ($key === false) {
-            $activeProfiles[] = $name;
+            $activeProfiles[] = $profileName;
         } else {
             unset($activeProfiles[$key]);
         }
 
-        $this->get('ongr_settings.settings_manager')->update($this->getParameter('ongr_settings.active_profiles'), [
+        $manager->update($settingName, [
             'value' => $activeProfiles
         ]);
-
         $this->get('ong_settings.cache_provider')->deleteAll();
 
         return new JsonResponse(['error' => false]);

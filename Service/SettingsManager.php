@@ -226,6 +226,25 @@ class SettingsManager
     }
 
     /**
+     * Returns setting object.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function has($name)
+    {
+        /** @var Setting $setting */
+        $setting = $this->repo->findOneBy(['name' => $name]);
+
+        if ($setting) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Get setting value by current active profiles setting.
      *
      * @param string $name
@@ -273,7 +292,7 @@ class SettingsManager
             }
             $name = $agg->getValue('key');
             $profiles[] = [
-                'active' => $activeProfiles ? in_array($agg->getValue('key'), $activeProfiles->getValue()) : false,
+                'active' => $activeProfiles ? in_array($agg->getValue('key'), $activeProfiles) : false,
                 'name' => $name,
                 'settings' => implode(', ', $settings),
             ];

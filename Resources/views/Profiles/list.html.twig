@@ -39,7 +39,7 @@
                         "render": function ( data, type, row ) {
                             var className = 'toggle-profile';
                             var label = $('<label/>').addClass('btn btn-default').addClass(className)
-                                    .addClass(className + '-' + row['name']).attr('data-id', row['name']);
+                                    .addClass(className + '-' + row['name']).attr('data-name', row['name']);
                             var on = label.clone().html('ON').attr('data-element', className + '-' + row['name']);
                             var off = label.clone().html('OFF').attr('data-element', className + '-' + row['name']);
 
@@ -69,9 +69,8 @@
 
             $('#profiles tbody').on( 'click', 'label.toggle-profile', function () {
                 var self = $(this);
-                $.post('./profiles/toggle', {name:self.data('id')}, function(){
-                    var element = self.data('element');
-                    $("." + element).toggleClass('btn-primary');
+                $.post('./profiles/toggle', {name:self.data('name')}, function(){
+                    $(".toggle-profile-" + self.data('name')).toggleClass('btn-primary');
                 })
             } );
         })
