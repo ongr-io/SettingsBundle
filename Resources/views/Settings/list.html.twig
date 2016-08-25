@@ -159,7 +159,6 @@
                     url: '/settings/settings/submit',
                     data: data,
                     success: function (response) {
-                        console.log(response);
                         if (response.error == false) {
                             table.ajax.reload();
                             $('#setting-form-modal').modal('hide')
@@ -173,7 +172,6 @@
 
             $('#settings tbody').on( 'click', 'a.edit', function () {
                 var data = table.row( $(this).parents('tr') ).data();
-                console.log(data);
                 reloadProfiles(data.profile);
                 $('#setting-action-title').text('Setting edit');
                 $('#force-update').val('1');
@@ -201,7 +199,6 @@
 
             $('#settings tbody').on( 'click', 'label.boolean-property', function () {
                 var self = $(this);
-                console.log(self.data());
                 $.post('./settings/update-value', {name:self.data('name'), value:self.data('value')}, function(){
                     var element = self.data('element');
                     $("." + element).toggleClass('btn-primary');
