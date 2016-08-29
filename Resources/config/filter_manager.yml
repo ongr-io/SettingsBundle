@@ -59,9 +59,16 @@ services:
             - ["setRequestField", ["%ongr_settings.filter.match_search.request_field%"]]
             - ["setField", ["%ongr_settings.filter.match_search.field%"]]
 
+    ongr_settings.filter.skip_hidden:
+        class: ONGR\SettingsBundle\Filter\SkipHiddenSettingsFilter
+#        calls:
+#            - ["setRequestField", ["%ongr_settings.filter.match_search.request_field%"]]
+#            - ["setField", ["%ongr_settings.filter.match_search.field%"]]
+
     ongr_settings.filter_container:
         class: ONGR\FilterManagerBundle\Search\FilterContainer
         calls:
             - ["set", ["pager", "@ongr_settings.filter.pager"]]
             - ["set", ["sort", "@ongr_settings.filter.sort"]]
             - ["set", ["search", "@ongr_settings.filter.match_search"]]
+            - ["set", ["hidden", "@ongr_settings.filter.skip_hidden"]]
