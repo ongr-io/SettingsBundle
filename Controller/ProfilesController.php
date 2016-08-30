@@ -114,6 +114,7 @@ class ProfilesController extends Controller
         $manager->update($settingName, [
             'value' => $activeProfiles
         ]);
+
         $this->get('ong_settings.cache_provider')->deleteAll();
 
         return new JsonResponse(['error' => false]);

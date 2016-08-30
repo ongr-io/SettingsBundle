@@ -10,8 +10,7 @@
  */
 
 namespace ONGR\SettingsBundle\Twig;
-use Doctrine\Common\Cache\PhpFileCache;
-use ONGR\SettingsBundle\Document\Setting;
+
 use ONGR\SettingsBundle\Service\SettingsManager;
 
 /**
@@ -63,6 +62,12 @@ class SettingExtension extends \Twig_Extension
      */
     public function getSettingValue($name, $default = false)
     {
-        return $this->manager->getValue($name, $default);
+        $settingValue = $this->manager->getCachedValue($name);
+
+        if ($settingValue) {
+            return $settingValue;
+        }
+
+        return $default;
     }
 }

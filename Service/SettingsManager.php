@@ -16,7 +16,6 @@ use ONGR\CookiesBundle\Cookie\Model\GenericCookie;
 use ONGR\ElasticsearchBundle\Result\Aggregation\AggregationValue;
 use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\TopHitsAggregation;
-use ONGR\SettingsBundle\Exception\SettingNotFoundException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use ONGR\ElasticsearchBundle\Service\Repository;
 use ONGR\ElasticsearchBundle\Service\Manager;
@@ -264,6 +263,45 @@ class SettingsManager
     }
 
     /**
+     * Get setting value by checking also from cache engine.
+     *
+     * @param string $name
+     * @param bool   $checkWithActiveProfiles Checks if setting is in active profile.
+     *
+     * @return mixed
+     */
+    public function getCachedValue($name, $checkWithActiveProfiles = true)
+    {
+        if ($this->cache->contains($name)) {
+            $setting = $this->cache->fetch($name);
+        } else {
+            $settingDocument = $this->get($name);
+            $setting = [
+                'value' => $settingDocument->getValue(),
+                'profiles' => $settingDocument->getProfile(),
+            ];
+            $this->cache->save($name, $setting);
+        }
+
+        if (!$setting) {
+            return null;
+        }
+
+        if ($checkWithActiveProfiles) {
+            $profilesFromEs = $this->getActiveProfiles();
+            $profilesFromCookie = (array)$this->activeProfilesCookie->getValue();
+
+            $profiles = array_merge($profilesFromEs, $profilesFromCookie);
+            $settingProfiles = $setting['profiles'];
+            if (count(array_intersect($profiles, $settingProfiles))) {
+                return $setting['value'];
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Get all full profile information.
      *
      * @return array
@@ -302,7 +340,7 @@ class SettingsManager
     }
 
     /**
-     * Get only profile names.
+     * Get profile names, optionally can return only active ones.
      *
      * @param bool $onlyActive
      *
@@ -320,6 +358,24 @@ class SettingsManager
 
             $profiles[] = $profile['name'];
         }
+
+        return $profiles;
+    }
+
+    /**
+     * Returns cached active profiles names list.
+     *
+     * @return array
+     */
+    public function getActiveProfiles()
+    {
+        if ($this->cache->contains($this->activeProfilesSettingName)) {
+            return $this->cache->fetch($this->activeProfilesSettingName);
+        }
+
+        $profiles = $this->getAllProfilesNameList(true);
+
+        $this->cache->save($this->activeProfilesSettingName, $profiles);
 
         return $profiles;
     }
