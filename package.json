@@ -1,0 +1,55 @@
+{
+  "name": "settings-bundle",
+  "version": "1.0.0",
+  "description": "Settings Bundle provides settings API and simple user interface for setting management.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ongr-io/SettingsBundle.git"
+  },
+  "author": "ONGR Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ongr-io/SettingsBundle/issues"
+  },
+  "homepage": "https://github.com/ongr-io/SettingsBundle#readme",
+  "dependencies": {
+    "lodash.clone": "^4.3.2",
+    "lodash.findindex": "^4.4.0",
+    "lodash.remove": "^4.5.0",
+    "react": "^15.1.0",
+    "react-bootstrap": "^0.29.4",
+    "react-bootstrap-table": "^2.3.5",
+    "react-dom": "^15.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "bootstrap-loader": "^1.0.10",
+    "bootstrap-sass": "^3.3.6",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-sass": "^2.3.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-watch": "^4.3.6",
+    "jquery": "^3.0.0",
+    "node-sass": "^3.7.0",
+    "path": "^0.12.7",
+    "resolve-url-loader": "^1.4.3",
+    "sass-loader": "^3.2.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
+}

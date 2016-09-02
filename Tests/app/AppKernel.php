@@ -26,17 +26,10 @@ class AppKernel extends Kernel
     {
         return [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
-            new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
-
-            new \FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new ONGR\ElasticsearchBundle\ONGRElasticsearchBundle(),
-            new Tedivm\StashBundle\TedivmStashBundle(),
 
-            new ONGR\CookiesBundle\ONGRCookiesBundle(),
-            new ONGR\SettingsBundle\Tests\Fixtures\Acme\TestBundle\AcmeTestBundle(),
             new ONGR\SettingsBundle\ONGRSettingsBundle(),
         ];
     }
@@ -49,6 +42,5 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
-        $loader->load(__DIR__ . '/config/sessionless_authentication.yml');
     }
 }

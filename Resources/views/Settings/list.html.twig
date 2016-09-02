@@ -1,83 +1,16 @@
-{% extends 'ONGRSettingsBundle::layout.html.twig' %}
+{% extends 'ONGRSettingsBundle::base.html.twig' %}
+{% block body %}
+    <table id="settings" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Description</th>
+            <th>Profile</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+    </table>
 
-{% block body_attributes %}ng-app="ongr.settings"{% endblock %}
-{% block wrapper_attributes %}ng-controller="settings"{% endblock %}
-
-{% block main %}
-    <div class="container-fluid">
-        {% verbatim %}
-        <div class="row">
-            <div class="col-lg-12">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Type</th>
-                            <th>Settings</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="(settingId, row) in settings">
-                            <td class=".col-xs-8 .col-md-6">{{ row.name }}</td>
-                            <td class=".col-xs-18 .col-md-8">{{ row.description }}</td>
-                            <td class=".col-xs-6 .col-md-4">{{ row.type }}</td>
-                            <td class=".col-xs-12 .col-md-8">
-                                <div ng-switch="row.type" class="word-break-all">
-                                    <div ng-switch-when="boolean">
-                                        <div class="btn-group btn-group-sm">
-                                            <label class="btn btn-default" ng-class="{ 'btn-primary' : row.data.value }" ng-model="row.data.value" btn-radio="true" ng-click="saveStatus($event, row)" uncheckable>On</label>
-                                            <label class="btn btn-default" ng-class="{ 'btn-primary' : !row.data.value }" ng-model="row.data.value" btn-radio="false" ng-click="saveStatus($event, row)" uncheckable>Off</label>
-                                        </div>
-                                    </div>
-                                    <div ng-switch-when="array" collapse collapse-data="row.data.value"></div>
-                                    <div ng-switch-when="object" collapse collapse-data="row.data.value"></div>
-                                    <div ng-switch-default inline setting="row"></div>
-                                </div>
-                            </td>
-
-                            <td class="col-xs-3">
-                                <a href="{{ editLink(row) }}" class="btn btn-primary btn-xs">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                </a>
-                                <a href="#" class="btn btn-primary btn-xs" ng-click="duplicate(settingId)">
-                                    <span class="glyphicon glyphicon-transfer"></span>
-                                </a>
-                                <a href="#" class="btn btn-danger btn-xs" really-message="Are you sure?" really-click="remove(settingId, row)">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        {% endverbatim %}
-        {% block pager %}
-            {% if filters.pager is defined %}
-                <div class="pull-right">{{ ongr_paginate(filters.pager.pager, 'ongr_settings_settings_list', filters.pager.urlParameters) }}</div>
-                <div class="clearfix"></div>
-            {% endif %}
-        {% endblock %}
-    </div>
-{% endblock %}
-
-{% block admin_javascripts %}
-    {% set profile = filters.profile.state.value %}
-    <script type="text/javascript">
-        var setting = {{ data|json_encode|raw }},
-            profiles = {{ filters.profile.choices|json_encode|raw }},
-            currentProfile = '{{ filters.profile.state.value|raw }}';
-    </script>
-    <script src="{{ asset('bundles/ongrsettings/js/controller/SettingsController.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/controller/modal/DuplicateModalController.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/controller/modal/AddSettingModalController.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/filter/ObjectLimitToFilter.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/directive/InlineDirective.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/directive/ReallyClickDirective.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/directive/CollapseDirective.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/utils/Asset.js') }}"></script>
-    <script src="{{ asset('bundles/ongrsettings/js/app-settings.js') }}"></script>
-    {{ parent() }}
+    {% include 'ONGRSettingsBundle:Settings:_setting-form.html.twig' %}
 {% endblock %}

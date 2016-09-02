@@ -11,13 +11,9 @@
 
 namespace ONGR\SettingsBundle;
 
-use ONGR\SettingsBundle\DependencyInjection\Compiler\EnvironmentVariablesPass;
-use ONGR\SettingsBundle\DependencyInjection\Compiler\ProviderPass;
-use ONGR\SettingsBundle\DependencyInjection\Compiler\SettingsModifierPass;
-use ONGR\SettingsBundle\DependencyInjection\Compiler\SettingAwareFactoryPass;
+use ONGR\SettingsBundle\DependencyInjection\Compiler\SettingsManagerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use ONGR\SettingsBundle\DependencyInjection\Security\SessionlessAuthenticationFactory;
 
 /**
  * This class is used to register component into Symfony app kernel.
@@ -31,12 +27,6 @@ class ONGRSettingsBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new EnvironmentVariablesPass());
-        $container->addCompilerPass(new ProviderPass());
-        $container->addCompilerPass(new SettingsModifierPass());
-        $container->addCompilerPass(new SettingAwareFactoryPass());
-
-        $extension = $container->getExtension('security');
-        $extension->addSecurityListenerFactory(new SessionlessAuthenticationFactory());
+        $container->addCompilerPass(new SettingsManagerPass());
     }
 }

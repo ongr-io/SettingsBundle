@@ -1,8 +1,58 @@
-ongr_routing_authentication:
-    resource: "@ONGRSettingsBundle/Resources/config/routing/sessionless_authentication.yml"
+ongr_settings_home:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: ongr_settings_settings
+        permanent: true
 
-ongr_settings_routing_settings:
-    resource: "@ONGRSettingsBundle/Resources/config/routing/personal_settings.yml"
+ongr_settings_profiles:
+    path: /profiles
+    defaults: { _controller: ONGRSettingsBundle:Profiles:list }
 
-ongr_routing_settings:
-    resource: "@ONGRSettingsBundle/Resources/config/routing/general_settings.yml"
+ongr_settings_profiles_get_all:
+    path: /profiles/get_all
+    defaults: { _controller: ONGRSettingsBundle:Profiles:getAllProfiles }
+
+ongr_settings_profiles_toggle:
+    path: /profiles/toggle
+    defaults: { _controller: ONGRSettingsBundle:Profiles:toggleProfile }
+
+ongr_settings_profiles_get_all_detailed:
+    path: /profiles/get_all_detailed
+    defaults: { _controller: ONGRSettingsBundle:Profiles:getFullProfiles }
+
+ongr_settings_settings:
+    path: /settings
+    defaults: { _controller: ONGRSettingsBundle:Settings:list }
+
+ongr_settings_setting_submit:
+    path: /settings/submit
+    defaults: { _controller: ONGRSettingsBundle:Settings:submit }
+
+ongr_settings_settings_update_value:
+    path: /settings/update-value
+    defaults: { _controller: ONGRSettingsBundle:Settings:updateValue }
+
+ongr_settings_settings_delete:
+    path: /settings/delete/{id}
+    defaults: { _controller: ONGRSettingsBundle:Settings:delete }
+
+#ongr_settings_profiles_fallback:
+#    path: /profiles/{url}
+#    defaults: { _controller: ONGRSettingsBundle:Profiles:list, url: null }
+#    requirements:
+#        url: .*
+
+#ongr_settings_fallback:
+#    path: /settings/{url}
+#    defaults: { _controller: ONGRSettingsBundle:Settings:list, url: null }
+#    requirements:
+#        url: .*
+
+
+ongr_search_page:
+    path: /settings/search
+    methods:  [GET]
+    defaults:
+        _controller: ONGRFilterManagerBundle:Manager:json
+        managerName: "settings"

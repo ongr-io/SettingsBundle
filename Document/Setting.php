@@ -11,15 +11,15 @@
 
 namespace ONGR\SettingsBundle\Document;
 
-use JsonSerializable;
 use ONGR\ElasticsearchBundle\Annotation as ES;
+use ONGR\FilterManagerBundle\SerializableInterface;
 
 /**
  * Stores admin settings.
  *
  * @ES\Document(type="setting")
  */
-class Setting implements JsonSerializable
+class Setting implements SerializableInterface
 {
     /**
      * @var string
@@ -29,59 +29,61 @@ class Setting implements JsonSerializable
     private $id;
 
     /**
-     * @const TYPE_STRING setting model of string type
+     * @var string
+     *
+     * @ES\Property(type="string", options={"analyzer"="standard"})
      */
-    const TYPE_STRING = 'string';
-
-    /**
-     * @const TYPE_ARRAY setting model of array type
-     */
-    const TYPE_ARRAY = 'array';
-
-    /**
-     * @const TYPE_BOOLEAN setting model of boolean type
-     */
-    const TYPE_BOOLEAN = 'bool';
-
-    /**
-     * @const TYPE_OBJECT setting model of object type
-     */
-    const TYPE_OBJECT = 'object';
+    private $name;
 
     /**
      * @var string
      *
-     * @ES\Property(name="name", type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="string", options={"analyzer"="standard"})
      */
-    protected $name;
+    private $description;
 
     /**
      * @var string
      *
-     * @ES\Property(name="description", type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="string", options={"analyzer"="standard"})
      */
-    protected $description;
+    private $profile = [];
 
     /**
      * @var string
      *
-     * @ES\Property(name="profile", type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="string", options={"analyzer"="standard"})
      */
-    protected $profile;
+    private $type;
 
     /**
      * @var string
      *
-     * @ES\Property(name="type", type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="string", options={"index"="not_analyzed"})
      */
-    protected $type;
+    private $value;
 
     /**
      * @var string
      *
-     * @ES\Property(name="data", type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="string", options={"index"="not_analyzed"})
      */
-    protected $data;
+    private $salt;
+
+    /**
+     * @var string
+     *
+     * @ES\Property(type="date")
+     */
+    private $createdAt;
+
+    /**
+     * Setting constructor.
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * @return string
@@ -100,23 +102,19 @@ class Setting implements JsonSerializable
     }
 
     /**
-     * Get data.
-     *
      * @return string
      */
-    public function getData()
+    public function getValue()
     {
-        return $this->data;
+        return $this->value;
     }
 
     /**
-     * Set data.
-     *
-     * @param string $data
+     * @param string $value
      */
-    public function setData($data)
+    public function setValue($value)
     {
-        $this->data = $data;
+        $this->value = $value;
     }
 
     /**
@@ -142,7 +140,7 @@ class Setting implements JsonSerializable
     /**
      * Get profile.
      *
-     * @return string
+     * @return string|array
      */
     public function getProfile()
     {
@@ -152,7 +150,7 @@ class Setting implements JsonSerializable
     /**
      * Set profile.
      *
-     * @param string $profile
+     * @param string|array $profile
      */
     public function setProfile($profile)
     {
@@ -200,19 +198,51 @@ class Setting implements JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @param string $salt
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param string $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
      * Specify data which should be serialized to JSON.
      *
      * @return mixed Data which can be serialized by json_encode.
      */
-    public function jsonSerialize()
+    public function getSerializableData()
     {
         return [
+            'id' => $this->getId(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
             'profile' => $this->getProfile(),
             'type' => $this->getType(),
-            'data' => $this->getData(),
-            'id' => $this->getId(),
+            'value' => $this->getValue(),
         ];
     }
 }

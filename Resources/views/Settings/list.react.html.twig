@@ -1,0 +1,15 @@
+{% extends 'ONGRSettingsBundle::base.html.twig' %}
+
+{% block body %}
+    <div id="app"></div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/ongrsettings/style.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/ongrsettings/bundle.js') }}"></script>
+{% endblock %}
