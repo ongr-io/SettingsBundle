@@ -72,7 +72,6 @@ class SettingsController extends Controller
             $repo->remove($id);
 
             return new JsonResponse(['error' => false]);
-
         } catch (\Exception $e) {
             return new JsonResponse(
                 [
@@ -104,12 +103,12 @@ class SettingsController extends Controller
             }
 
             return new JsonResponse(['error' => false]);
-
         } catch (\Exception $e) {
             return new JsonResponse(
                 [
                     'error' => true,
-                    'message' => 'Error occurred! Something is wrong with provided data. Please try to submit form again.'
+                    'message' => 'Error occurred! Something is wrong with provided data. '.
+                        'Please try to submit form again.'
                 ]
             );
         }

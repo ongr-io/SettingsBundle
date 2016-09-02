@@ -66,7 +66,9 @@ class ProfilesController extends Controller
             $profiles[] = $agg->getValue('key');
         }
 
-        if (empty($profiles) || !in_array('default', $profiles)) array_unshift($profiles, 'default');
+        if (empty($profiles) || !in_array('default', $profiles)) {
+            array_unshift($profiles, 'default');
+        }
 
         return new JsonResponse($profiles);
     }

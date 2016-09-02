@@ -59,7 +59,11 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $this->repository = $this->getMockBuilder('ONGR\ElasticsearchBundle\Service\Repository')
             ->disableOriginalConstructor()
-            ->setMethods(['findOneBy', 'remove', 'createSearch', 'execute', 'getClassName', 'getManager', 'getAggregation'])
+            ->setMethods(
+                [
+                    'findOneBy', 'remove', 'createSearch', 'execute', 'getClassName', 'getManager', 'getAggregation'
+                ]
+            )
             ->getMock();
 
         $this->repository->expects($this->any())->method('getClassName')->willReturn(Setting::class);
@@ -72,7 +76,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetCache()
     {
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
         $manager->setCache($this->cache);
 
         $this->assertInstanceOf('Doctrine\Common\Cache\PhpFileCache', $manager->getCache());
@@ -83,7 +90,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetActiveProfilesCookie()
     {
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
         $manager->setActiveProfilesCookie($this->cookie);
 
         $this->assertInstanceOf('ONGR\CookiesBundle\Cookie\Model\GenericCookie', $manager->getActiveProfilesCookie());
@@ -94,7 +104,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetActiveProfilesSettingName()
     {
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
         $manager->setActiveProfilesSettingName('ongr');
 
         $this->assertEquals('ongr', $manager->getActiveProfilesSettingName());
@@ -111,14 +124,19 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
             'value' => 'foo',
         ];
 
-        $this->manager->expects($this->once())->method('persist')->with($this->callback(function ($obj) {return $obj instanceof Setting;}))->willReturn(null);
+        $this->manager->expects($this->once())->method('persist')->with($this->callback(function ($obj) {
+            return $obj instanceof Setting;
+        }))->willReturn(null);
         $this->manager->expects($this->once())->method('persist')->willReturn(null);
 
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
         $document = $manager->create($data);
 
         foreach ($data as $key => $value) {
-            $this->assertEquals($value, $document->{'get'.ucfirst($key)}());
+            $this->assertEquals($value, $document->{'get' . ucfirst($key)}());
         }
     }
 
@@ -130,7 +148,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
     {
         $data = ['bar' => 'foo'];
 
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
         $manager->create($data);
     }
 
@@ -148,7 +169,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->repository->expects($this->once())->method('findOneBy')->willReturn(new Setting());
 
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
         $manager->create($data);
     }
 
@@ -162,7 +186,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
             'type' => 'string',
         ];
 
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
         $document = $manager->create($data);
 
         $this->assertEquals(0, $document->getValue());
@@ -178,7 +205,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $setting->setValue('foo');
 
         $this->repository->expects($this->once())->method('findOneBy')->willReturn($setting);
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
 
         $document = $manager->update('acme', ['value' => 'bar']);
         $this->assertEquals('acme', $document->getName());
@@ -193,7 +223,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
     {
         $this->repository->expects($this->once())->method('findOneBy')->willReturn(null);
 
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
         $manager->update('acme', ['value' => 'foo']);
     }
 
@@ -206,8 +239,12 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $setting->setId('acme');
         $setting->setName('acme');
 
-        $this->repository->expects($this->once())->method('findOneBy')->with($this->equalTo(['name' => 'acme']))->willReturn($setting);
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $this->repository->expects($this->once())
+            ->method('findOneBy')->with($this->equalTo(['name' => 'acme']))->willReturn($setting);
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
 
         $manager->delete('acme');
     }
@@ -218,8 +255,12 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $setting->setName('acme');
         $setting->setValue('foo');
 
-        $this->repository->expects($this->once())->method('findOneBy')->with($this->equalTo(['name' => 'acme']))->willReturn($setting);
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $this->repository->expects($this->once())
+            ->method('findOneBy')->with($this->equalTo(['name' => 'acme']))->willReturn($setting);
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
 
         $result = $manager->has('acme');
 
@@ -231,8 +272,12 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHasWhenThereIsNoSetting()
     {
-        $this->repository->expects($this->once())->method('findOneBy')->with($this->equalTo(['name' => 'acme']))->willReturn(null);
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $this->repository->expects($this->once())
+            ->method('findOneBy')->with($this->equalTo(['name' => 'acme']))->willReturn(null);
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
 
         $result = $manager->has('acme');
 
@@ -249,7 +294,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $setting->setValue('foo');
 
         $this->repository->expects($this->once())->method('findOneBy')->willReturn($setting);
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
 
         $result = $manager->getValue('acme');
         $this->assertEquals('foo', $result);
@@ -261,7 +309,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
     public function testGetValueWhenThereIsNoSetting()
     {
         $this->repository->expects($this->once())->method('findOneBy')->willReturn(null);
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
 
         $result = $manager->getValue('acme', 'bar');
         $this->assertEquals('bar', $result);
@@ -405,7 +456,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $this->repository->expects($this->any())->method('execute')->willReturn($this->getDocumentIterator());
         $this->cookie->expects($this->any())->method('getValue')->willReturn(['foo']);
 
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
         $manager->setCache($this->cache);
         $manager->setActiveProfilesSettingName($activeProfilesSetting);
         $manager->setActiveProfilesCookie($this->cookie);
@@ -434,7 +488,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
         $manager->setCache($this->cache);
         $manager->setActiveProfilesSettingName($activeProfilesSetting);
         $manager->setActiveProfilesCookie($this->cookie);
@@ -454,7 +511,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $this->cache->expects($this->any())->method('contains')->willReturn(true);
         $this->cache->expects($this->any())->method('fetch')->willReturn(['value' => 'foo', 'profiles' => ['foo']]);
 
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
         $manager->setCache($this->cache);
         $manager->setActiveProfilesSettingName($activeProfilesSetting);
         $manager->setActiveProfilesCookie($this->cookie);
@@ -470,7 +530,10 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
     {
         $activeProfilesSetting = 'active_profiles';
         $this->repository->expects($this->any())->method('execute')->willReturn($this->getDocumentIterator());
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
         $manager->setCache($this->cache);
         $manager->setActiveProfilesSettingName($activeProfilesSetting);
 
@@ -481,11 +544,13 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
     public function testGetAllProfilesNameList()
     {
         $this->repository->expects($this->any())->method('execute')->willReturn($this->getDocumentIterator());
-        $manager = new SettingsManager($this->repository, $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
         $manager->setCache($this->cache);
 
         $value = $manager->getAllProfilesNameList();
         $this->assertEquals(['kk'], $value);
-
     }
 }

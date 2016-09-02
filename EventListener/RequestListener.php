@@ -11,7 +11,6 @@
 
 namespace ONGR\SettingsBundle\EventListener;
 
-
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 class RequestListener

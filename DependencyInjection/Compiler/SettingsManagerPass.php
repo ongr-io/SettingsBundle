@@ -37,7 +37,12 @@ class SettingsManagerPass implements CompilerPassInterface
         ]);
 
         $settingsManager->addMethodCall('setActiveProfilesSettingName', ['%ongr_settings.active_profiles%']);
-        $settingsManager->addMethodCall('setActiveProfilesCookie', [new Reference('ongr_settings.cookie.active_profiles')]);
+        $settingsManager->addMethodCall(
+            'setActiveProfilesCookie',
+            [
+                new Reference('ongr_settings.cookie.active_profiles')
+            ]
+        );
         $settingsManager->addMethodCall('setCache', [new Reference('ong_settings.cache_provider')]);
 
         $container->setDefinition('ongr_settings.settings_manager', $settingsManager);
