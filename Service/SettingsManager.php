@@ -274,16 +274,14 @@ class SettingsManager
     {
         if ($this->cache->contains($name)) {
             $setting = $this->cache->fetch($name);
-        } else {
+        } elseif ($this->has($name)) {
             $settingDocument = $this->get($name);
             $setting = [
                 'value' => $settingDocument->getValue(),
                 'profiles' => $settingDocument->getProfile(),
             ];
             $this->cache->save($name, $setting);
-        }
-
-        if (!$setting) {
+        } else {
             return null;
         }
 
@@ -298,7 +296,7 @@ class SettingsManager
             }
         }
 
-        return null;
+        return $setting['value'];
     }
 
     /**
