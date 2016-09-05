@@ -4,11 +4,11 @@ Settings Bundle provides settings API and simple user interface for setting mana
 
 What's inside:
 
-* [Global settings](Resources/doc/general_settings.md) with restricted access (for features on/off).
-* [Personal settings](Resources/doc/personal_settings.md) for every user, that only he can change (cookie based).
+* Settings features toggle (for features on/off).
+* Personal settings for every user, that only he can change (cookie based).
 * API for every setting control.
 * Simple and minimal web interface.
-* Multi type settings: scalar, boolean, array, object.
+* Multi type settings: yaml, boolean, text.
 * Cache layer for global settings.
 
 This bundle is independent from ONGR platform and can be used in your project on its own with few dependencies.
@@ -32,25 +32,24 @@ The online documentation of the bundle is in [Github](Resources/doc/index.md).
 FilterManager bundle is installed using [Composer](https://getcomposer.org).
 
 ```bash
-$ composer require ongr/settings-bundle "~0.1"
+$ composer require ongr/settings-bundle "~1.0"
 ```
 
 > Please note that settings bundle requires Elasticsearch bundle, guide on how to install and configure it can be found [here](https://github.com/ongr-io/ElasticsearchBundle).
 
 ### Step 2: Enable ONGR bundles
 
-Register Settings bundle and all other dependencies (`FOSJsRoutingBundle`, `TedivmStashBundle`, `ONGRCookiesBundle`, `ONGRElasticsearchBundle`, `ONGRFilterManagerBundle`) in your AppKernel:
+Register Settings bundle and all required dependencies in your AppKernel:
 
 ```php
-<?php
 // app/AppKernel.php
+<?php
 
 public function registerBundles()
 {
     $bundles = array(
         // ...
         new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-        new Tedivm\StashBundle\TedivmStashBundle(),
         new ONGR\CookiesBundle\ONGRCookiesBundle(),
         new ONGR\ElasticsearchBundle\ONGRElasticsearchBundle(),
         new ONGR\FilterManagerBundle\ONGRFilterManagerBundle(),
@@ -70,15 +69,13 @@ Add minimal configuration for Elasticsearch bundle. With these configs all setti
 # app/config/config.yml
 
 ongr_elasticsearch:
-    connections:
-        settings:
-            index_name: settings
-            settings:
-                number_of_shards: 2
-                number_of_replicas: 0
     managers:
         settings:
-            connection: settings
+            index:
+                index_name: settings
+                settings:
+                    number_of_shards: 2
+                    number_of_replicas: 0
             mappings:
                 - ONGRSettingsBundle
 ```
@@ -94,10 +91,10 @@ fos_js_routing:
 
 ongr_settings_routing:
     resource: "@ONGRSettingsBundle/Resources/config/routing.yml"
-    prefix: /settings_prefix
+    prefix: /your_settings_prefix
 ```
 
-`settings_prefix` here will be the part of urls. For example general settings panel will be at `/{settings_prefix}/general_settings_list` and personal settings panel at `{settings_prefix}/settings`.
+`your_settings_prefix` here will be the part of urls. For example general settings panel will be at `/{settings_prefix}/general_settings_list` and personal settings panel at `{settings_prefix}/settings`.
 
 
 ### Step 4: Create index and install assets
@@ -106,7 +103,7 @@ Create an Elasticsearch index by running this command in your terminal:
 
 ```bash
 
-    app/console ongr:es:index:create --manager=settings
+    app/console ongr:es:index:create -m settings
 
 ```
 
@@ -118,20 +115,48 @@ Web interface won't work without assets. Install them by using this command in y
 
 ```bash
 
-    app/console assets:install
+    app/console assets:install --symlink
 
 ```
 
 
 ### Step 5: Check how it works
 
-Yes, you can check how it works, but it is NOT ready for production yet. At this moment all settings management is public. **Check [how to secure access to settings](Resources/doc/ongr_sessionless_authentication.md)**.
+Yes, you can check how it works, but it is NOT ready for production yet. At this moment all settings management is public. Don't forget to setup firewall and protect `your_settings_prefix` endpoint. 
 
-Visit `/{settings_prefix}/general_settings_list`, where `{settings_prefix}` is a prefix you defined at *Step 3*. You should see admin panel of general settings.
+Visit `/{your_settings_prefix}/settings`. You should see admin panel of general settings.
 
-> Screenshot???
 
-Read more about [General settings](Resources/doc/general_settings.md) to find out how to use these settings in your application.
+## Usage
+
+### Global settings.
+
+Visit `/{your_settings_prefix}/settings` and create settings you want to use in your application.
+ There is a selection of profiles when you create a setting. After you create a setting and want to use it in website you have to activate a profile (see profile section).
+ 
+There is a Twig extension to use settings in the templates.
+ 
+ ```
+ {{ ongr_setting('setting_name', 'default value') }}
+ ```
+ 
+ e.g. if you want to have features toggle you can create bool setting and use extension in `if` statement:
+ 
+ ```
+ {% if ongr_setting('setting_name') %}
+    
+    show something cool
+    
+ {% endif %}
+ ```
+ 
+### Profiles
+ 
+ Profiles are like grouped settings where you can enable or disable all of them at once. The setting can be assigned for multiple profiles.
+  You can find profiles management page at `/your_settings_prefix/profiles`.
+  
+  To create a profile simply create your first setting with a new profile and it will appear in the profiles page.
+
 
 ## License
 
