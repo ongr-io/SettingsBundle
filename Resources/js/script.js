@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var table = $('#settings').DataTable( {
+    var settingTable = $('#settings').DataTable( {
         ajax: {
             url: Routing.generate('ongr_settings_search_page'),
             dataSrc: 'documents'
@@ -141,18 +141,18 @@ $(document).ready(function () {
             data: data,
             success: function (response) {
                 if (response.error == false) {
-                    table.ajax.reload();
+                    settingTable.ajax.reload();
                     $('#setting-form-modal').modal('hide')
                 } else {
-                    $('#setting-form-error').show();
                     $('#setting-form-error-message').html(response.message);
+                    $('#setting-form-error').show();
                 }
             }
         });
     });
 
     $('#settings tbody').on( 'click', 'a.edit', function () {
-        var data = table.row( $(this).parents('tr') ).data();
+        var data = settingTable.row( $(this).parents('tr') ).data();
         reloadProfiles(data.profile);
         $('#setting-action-title').text('Setting edit');
         $('#force-update').val('1');
@@ -188,15 +188,14 @@ $(document).ready(function () {
 
     $('#settings tbody').on( 'click', 'a.delete-setting', function (e) {
         e.preventDefault();
-
         var name = $(this).data('name');
         $.confirm({
-            text: "Are you sure you want to delete "+name+" setting?",
+            text: "Are you sure you want to delete setting?",
             title: "Confirmation required",
             confirm: function(button) {
                 $.post(Routing.generate('ongr_settings_settings_delete'), {name: name}, function(data) {
                     if (data.error == false) {
-                        table.ajax.reload();
+                        settingTable.ajax.reload();
                     }
                 });
             },
@@ -206,4 +205,69 @@ $(document).ready(function () {
             dialogClass: "modal-dialog modal-lg"
         });
     });
+
+
+
+    //Profile section
+    var profileTable = $('#profiles').DataTable( {
+        ajax: {
+            url: Routing.generate('ongr_settings_profiles_get_all_detailed'),
+            dataSrc: 'documents'
+        },
+        stateSave: true,
+        order: [[ 1, "asc" ]],
+        columns: [
+            { data: 'name' },
+            { data: 'name' },
+            { data: 'settings' },
+            {}
+        ],
+        columnDefs: [
+            {
+                "targets": 0,
+                "orderable": false,
+                "render": function ( data, type, row ) {
+                    var className = 'toggle-profile';
+                    var label = $('<label/>').addClass('btn btn-default').addClass(className)
+                        .addClass(className + '-' + row['name']).attr('data-name', row['name']);
+                    var on = label.clone().html('ON').attr('data-element', className + '-' + row['name']);
+                    var off = label.clone().html('OFF').attr('data-element', className + '-' + row['name']);
+
+                    if (row['active'] == true) {
+                        on.addClass('btn-primary');
+                    } else {
+                        off.addClass('btn-primary');
+                    }
+
+                    var cell = $('<div/>').addClass('btn-group btn-group-sm').append(on, off);
+
+                    return cell.prop('outerHTML');
+                }
+            },
+            {
+                "targets": 2,
+                "orderable": false,
+            },
+            {
+                "targets": 3,
+                "data": null,
+                "orderable": false,
+                "defaultContent": '<a class="copy-link btn btn-primary btn-xs" data-toggle="modal" data-target="#setting-edit">Copy link</a>&nbsp;' +
+                ''
+            } ]
+    } );
+
+    $('#profiles tbody').on( 'click', 'label.toggle-profile', function () {
+        var self = $(this);
+        $.post(Routing.generate('ongr_settings_profiles_toggle'), {name:self.data('name')}, function(){
+            $(".toggle-profile-" + self.data('name')).toggleClass('btn-primary');
+        })
+    } );
+
+    $('#profiles tbody').on( 'click', 'a.copy-link', function (e) {
+        e.preventDefault();
+        $('#profile-list-error-message').html('Enabling profiles by link is not yet implemented.');
+        $('#profile-list-error').show();
+    } );
+
 });
