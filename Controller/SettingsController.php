@@ -59,17 +59,14 @@ class SettingsController extends Controller
      * Setting delete action
      *
      * @param Request $request
-     * @param $id
      *
      * @return JsonResponse
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request)
     {
         try {
-            /** @var Repository $repo */
-            $repo = $this->get($this->getParameter('ongr_settings.repo'));
-
-            $repo->remove($id);
+            $manager = $this->get('ongr_settings.settings_manager');
+            $manager->delete($request->get('name'));
 
             return new JsonResponse(['error' => false]);
         } catch (\Exception $e) {

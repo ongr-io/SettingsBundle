@@ -46,7 +46,9 @@ $(document).ready(function () {
                 "targets": 4,
                 "data": null,
                 "orderable": false,
-                "defaultContent": '<a class="edit btn btn-primary btn-xs" data-toggle="modal" data-target="#setting-edit">Edit</a>&nbsp;<a class="delete btn btn-danger btn-xs" data-toggle="modal" data-target="#setting-delete">Delete</a>'
+                "render": function ( data, type, row ) {
+                    return '<a class="edit btn btn-primary btn-xs" data-toggle="modal" data-target="#setting-edit">Edit</a>&nbsp;<a class="delete delete-setting btn btn-danger btn-xs" data-name="'+row['name']+'">Delete</a>'
+                }
             } ]
     } );
 
@@ -184,18 +186,24 @@ $(document).ready(function () {
         })
     } );
 
-//            $('#setting_delete_submit').on('click', function () {
-//                var id = $(this).attr('rel');
-//                $.ajax({
-//                    url: "./settings/delete/"+id,
-//                    success: function (data) {
-//                        if (data.error) {
-//                            alert(data.message);
-//                        } else {
-//                            table.ajax.reload();
-//                            $('.modal').modal('hide');
-//                        }
-//                    }
-//                });
-//            });
+    $('#settings tbody').on( 'click', 'a.delete-setting', function (e) {
+        e.preventDefault();
+
+        var name = $(this).data('name');
+        $.confirm({
+            text: "Are you sure you want to delete "+name+" setting?",
+            title: "Confirmation required",
+            confirm: function(button) {
+                $.post(Routing.generate('ongr_settings_settings_delete'), {name: name}, function(data) {
+                    if (data.error == false) {
+                        table.ajax.reload();
+                    }
+                });
+            },
+            confirmButton: "Yes, delete it",
+            cancelButton: "No",
+            confirmButtonClass: "btn-danger",
+            dialogClass: "modal-dialog modal-lg"
+        });
+    });
 });

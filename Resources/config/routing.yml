@@ -55,19 +55,7 @@ ongr_settings_settings_update_value:
         expose: true
 
 ongr_settings_settings_delete:
-    path: /settings/delete/{id}
+    path: /settings/delete
     defaults: { _controller: ONGRSettingsBundle:Settings:delete }
     options:
         expose: true
-
-#ongr_settings_profiles_fallback:
-#    path: /profiles/{url}
-#    defaults: { _controller: ONGRSettingsBundle:Profiles:list, url: null }
-#    requirements:
-#        url: .*
-
-#ongr_settings_fallback:
-#    path: /settings/{url}
-#    defaults: { _controller: ONGRSettingsBundle:Settings:list, url: null }
-#    requirements:
-#        url: .*

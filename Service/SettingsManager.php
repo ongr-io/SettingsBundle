@@ -201,12 +201,17 @@ class SettingsManager
      *
      * @param string    $name
      *
+     * @throws \LogicException
      * @return array
      */
     public function delete($name)
     {
-        $setting = $this->repo->findOneBy(['name' => $name]);
-        return $this->repo->remove($setting->getId());
+        if ($this->has($name)) {
+            $setting = $this->repo->findOneBy(['name' => $name]);
+            return $this->repo->remove($setting->getId());
+        }
+
+        throw new \LogicException(sprintf('Setting with name %s doesn\'t exist.', $name));
     }
 
     /**
