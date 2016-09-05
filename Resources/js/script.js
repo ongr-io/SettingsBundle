@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var table = $('#settings').DataTable( {
         ajax: {
-            url: './settings/search',
+            url: Routing.generate('ongr_settings_search_page'),
             dataSrc: 'documents'
         },
         stateSave: true,
@@ -68,7 +68,7 @@ $(document).ready(function () {
     function reloadProfiles(select) {
         $('#profiles-loader').show();
         $('#profiles-container .checkbox').html('');
-        $.post('./profiles/get_all', function (data) {
+        $.post(Routing.generate('ongr_settings_profiles_get_all'), function (data) {
             $('#profiles-loader').hide();
             data.forEach(function (element) {
                 if ($.inArray(element, select)) {
@@ -134,7 +134,7 @@ $(document).ready(function () {
         $('#setting-value-input').val($('#'+ $('#setting-type-input').val() +'-value-input').val());
         var data = $('#setting-form').serializeArray();
         $.ajax({
-            url: '/settings/settings/submit',
+            url: Routing.generate('ongr_settings_setting_submit'),
             data: data,
             success: function (response) {
                 if (response.error == false) {
@@ -177,7 +177,7 @@ $(document).ready(function () {
 
     $('#settings tbody').on( 'click', 'label.boolean-property', function () {
         var self = $(this);
-        $.post('./settings/update-value', {name:self.data('name'), value:self.data('value')}, function(){
+        $.post(Routing.generate('ongr_settings_settings_update_value'), {name:self.data('name'), value:self.data('value')}, function(){
             var element = self.data('element');
             $("." + element).toggleClass('btn-primary');
         })

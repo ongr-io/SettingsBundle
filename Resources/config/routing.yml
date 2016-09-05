@@ -5,6 +5,15 @@ ongr_settings_home:
         route: ongr_settings_settings
         permanent: true
 
+ongr_settings_search_page:
+    path: /settings/search
+    methods:  [GET]
+    defaults:
+        _controller: ONGRFilterManagerBundle:Manager:json
+        managerName: "settings"
+    options:
+        expose: true
+
 ongr_settings_profiles:
     path: /profiles
     defaults: { _controller: ONGRSettingsBundle:Profiles:list }
@@ -32,6 +41,8 @@ ongr_settings_setting_submit:
 ongr_settings_settings_update_value:
     path: /settings/update-value
     defaults: { _controller: ONGRSettingsBundle:Settings:updateValue }
+    options:
+        expose: true
 
 ongr_settings_settings_delete:
     path: /settings/delete/{id}
@@ -48,11 +59,3 @@ ongr_settings_settings_delete:
 #    defaults: { _controller: ONGRSettingsBundle:Settings:list, url: null }
 #    requirements:
 #        url: .*
-
-
-ongr_search_page:
-    path: /settings/search
-    methods:  [GET]
-    defaults:
-        _controller: ONGRFilterManagerBundle:Manager:json
-        managerName: "settings"
