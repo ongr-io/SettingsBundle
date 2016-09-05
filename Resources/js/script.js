@@ -58,8 +58,9 @@ $(document).ready(function () {
     $('#settings_filter').append(newSettingButton.prop('outerHTML'));
 
     function appendNewProfile(element, check) {
+        var checked = '';
         if (check) {
-            var checked = 'checked="checked';
+            checked = 'checked="checked"';
         }
         var input = '<label class="profile-choice"><input type="checkbox" '+checked+' name="setting[profile][]" value="'+element+'">'+element+'</label>';
         $('#profiles-container .checkbox').append(input);
@@ -71,10 +72,10 @@ $(document).ready(function () {
         $.post(Routing.generate('ongr_settings_profiles_get_all'), function (data) {
             $('#profiles-loader').hide();
             data.forEach(function (element) {
-                if ($.inArray(element, select)) {
-                    appendNewProfile(element);
-                } else {
+                if ($.inArray(element, select) >  -1) {
                     appendNewProfile(element, true);
+                } else {
+                    appendNewProfile(element, false);
                 }
             });
         })

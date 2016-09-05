@@ -17,14 +17,20 @@ ongr_settings_search_page:
 ongr_settings_profiles:
     path: /profiles
     defaults: { _controller: ONGRSettingsBundle:Profiles:list }
+    options:
+        expose: true
 
 ongr_settings_profiles_get_all:
     path: /profiles/get_all
     defaults: { _controller: ONGRSettingsBundle:Profiles:getAllProfiles }
+    options:
+        expose: true
 
 ongr_settings_profiles_toggle:
     path: /profiles/toggle
     defaults: { _controller: ONGRSettingsBundle:Profiles:toggleProfile }
+    options:
+        expose: true
 
 ongr_settings_profiles_get_all_detailed:
     path: /profiles/get_all_detailed
@@ -33,10 +39,14 @@ ongr_settings_profiles_get_all_detailed:
 ongr_settings_settings:
     path: /settings
     defaults: { _controller: ONGRSettingsBundle:Settings:list }
+    options:
+        expose: true
 
 ongr_settings_setting_submit:
     path: /settings/submit
     defaults: { _controller: ONGRSettingsBundle:Settings:submit }
+    options:
+        expose: true
 
 ongr_settings_settings_update_value:
     path: /settings/update-value
@@ -47,6 +57,8 @@ ongr_settings_settings_update_value:
 ongr_settings_settings_delete:
     path: /settings/delete/{id}
     defaults: { _controller: ONGRSettingsBundle:Settings:delete }
+    options:
+        expose: true
 
 #ongr_settings_profiles_fallback:
 #    path: /profiles/{url}
