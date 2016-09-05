@@ -35,6 +35,8 @@ ongr_settings_profiles_toggle:
 ongr_settings_profiles_get_all_detailed:
     path: /profiles/get_all_detailed
     defaults: { _controller: ONGRSettingsBundle:Profiles:getFullProfiles }
+    options:
+        expose: true
 
 ongr_settings_settings:
     path: /settings
