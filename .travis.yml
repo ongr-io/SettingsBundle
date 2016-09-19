@@ -11,8 +11,6 @@ matrix:
 services:
   - elasticsearch
 before_script:
-before_script:
-  - composer self-update
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
   - composer install --no-interaction --prefer-dist
 script:
