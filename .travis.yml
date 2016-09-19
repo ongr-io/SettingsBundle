@@ -11,6 +11,7 @@ matrix:
 services:
   - elasticsearch
 before_script:
+  - if [ $TRAVIS_PHP_VERSION != "7.0" ]; then phpenv config-rm xdebug.ini fi
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
   - composer update --prefer-stable -n
 script:
