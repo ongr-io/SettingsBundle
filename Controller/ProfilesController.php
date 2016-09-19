@@ -14,11 +14,7 @@ namespace ONGR\SettingsBundle\Controller;
 use ONGR\ElasticsearchBundle\Result\DocumentIterator;
 use ONGR\ElasticsearchBundle\Service\Repository;
 use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
-use ONGR\ElasticsearchDSL\Aggregation\TopHitsAggregation;
-use ONGR\ElasticsearchDSL\Search;
 use ONGR\ElasticsearchBundle\Result\Aggregation\AggregationValue;
-use ONGR\SettingsBundle\Document\Setting;
-use ONGR\SettingsBundle\Service\SettingsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,26 +28,19 @@ class ProfilesController extends Controller
     /**
      * Renders profiles page.
      *
-     * @param Request $request
-     *
      * @return Response
      */
-    public function listAction(Request $request)
+    public function listAction()
     {
-        return $this->render(
-            'ONGRSettingsBundle:Profiles:list.html.twig',
-            []
-        );
+        return $this->render('ONGRSettingsBundle:Profiles:list.html.twig');
     }
 
     /**
      * Returns a json list of profiles
      *
-     * @param Request $request
-     *
-     * @return Response
+     * @return JsonResponse
      */
-    public function getAllProfilesAction(Request $request)
+    public function getAllProfilesAction()
     {
         $profiles = [];
         /** @var Repository $repo */
@@ -76,7 +65,7 @@ class ProfilesController extends Controller
     /**
      * Returns a json list of profiles
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function getFullProfilesAction()
     {
@@ -87,6 +76,13 @@ class ProfilesController extends Controller
         );
     }
 
+    /**
+     * Toggle profile activation.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function toggleProfileAction(Request $request)
     {
         $settingName = $this->getParameter('ongr_settings.active_profiles');

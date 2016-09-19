@@ -11,10 +11,6 @@
 
 namespace ONGR\SettingsBundle\Controller;
 
-use ONGR\ElasticsearchBundle\Result\Aggregation\AggregationValue;
-use ONGR\ElasticsearchBundle\Service\Repository;
-use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
-use ONGR\SettingsBundle\Document\Setting;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,8 +23,6 @@ class SettingsController extends Controller
 {
     /**
      * Renders settings list page.
-     *
-     * @param Request $request
      *
      * @return Response
      */
