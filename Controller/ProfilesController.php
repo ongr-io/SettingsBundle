@@ -46,10 +46,12 @@ class ProfilesController extends Controller
         /** @var Repository $repo */
         $repo = $this->get($this->getParameter('ongr_settings.repo'));
 
+        $search = $repo->createSearch();
+        $search->addAggregation(new TermsAggregation('profiles', 'profile'));
+
         /** @var DocumentIterator $result */
-        $result = $repo->execute(
-            ($repo->createSearch())->addAggregation(new TermsAggregation('profiles', 'profile'))
-        );
+        $result = $repo->execute($search);
+
         /** @var AggregationValue $agg */
         foreach ($result->getAggregation('profiles') as $agg) {
             $profiles[] = $agg->getValue('key');
