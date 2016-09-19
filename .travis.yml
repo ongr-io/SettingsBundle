@@ -12,7 +12,7 @@ services:
   - elasticsearch
 before_script:
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
-  - composer install --no-interaction --prefer-dist
+  - composer update --prefer-stable -n
 script:
   - vendor/bin/phpunit --coverage-clover=coveralls.clover
   - vendor/bin/phpcs -p --extensions=php --standard=PSR2 --ignore=vendor/,Tests/app/ ./

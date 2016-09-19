@@ -28,6 +28,7 @@
         "psr-4": { "ONGR\\SettingsBundle\\": "" },
         "exclude-from-classmap": ["/Tests/"]
     },
+    "prefer-stable": true,
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
