@@ -12,9 +12,10 @@ matrix:
 services:
   - elasticsearch
 before_script:
-  - if [[ $TRAVIS_PHP_VERSION != "7.0" ]]; then phpenv config-rm xdebug.ini; fi
+  - if [[ $TRAVIS_PHP_VERSION != "7.0" ]] && [[ $TRAVIS_PHP_VERSION != "hhvm" ]]; then phpenv config-rm xdebug.ini; fi
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
-  - php -dmemory_limit=-1 /home/travis/.phpenv/shims/composer install --prefer-dist -n
+  - echo 'memory_limit = 1G' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - composer install --prefer-dist -n
 script:
   - vendor/bin/phpunit --coverage-clover=coveralls.clover
   - vendor/bin/phpcs -p --extensions=php --standard=PSR2 --ignore=vendor/,Tests/app/ ./
