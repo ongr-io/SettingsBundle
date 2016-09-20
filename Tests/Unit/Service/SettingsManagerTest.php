@@ -239,7 +239,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $setting->setId('acme');
         $setting->setName('acme');
 
-        $this->repository->expects($this->once())
+        $this->repository->expects($this->any())
             ->method('findOneBy')->with($this->equalTo(['name' => 'acme']))->willReturn($setting);
         $manager = new SettingsManager(
             $this->repository,
