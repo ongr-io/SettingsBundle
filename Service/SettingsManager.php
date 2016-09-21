@@ -16,6 +16,7 @@ use ONGR\CookiesBundle\Cookie\Model\GenericCookie;
 use ONGR\ElasticsearchBundle\Result\Aggregation\AggregationValue;
 use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\TopHitsAggregation;
+use ONGR\ElasticsearchDSL\Query\TermQuery;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use ONGR\ElasticsearchBundle\Service\Repository;
 use ONGR\ElasticsearchBundle\Service\Manager;
@@ -67,6 +68,13 @@ class SettingsManager
      * @var string
      */
     private $activeProfilesSettingName;
+
+    /**
+     * Active profiles list collected from es, cache and cookie.
+     *
+     * @var array
+     */
+    private $activeProfilesList = [];
 
     /**
      * @param Repository               $repo
@@ -127,6 +135,30 @@ class SettingsManager
     public function setActiveProfilesSettingName($activeProfilesSettingName)
     {
         $this->activeProfilesSettingName = $activeProfilesSettingName;
+    }
+
+    /**
+     * @return array
+     */
+    public function getActiveProfilesList()
+    {
+        return $this->activeProfilesList;
+    }
+
+    /**
+     * @param array $activeProfilesList
+     */
+    public function setActiveProfilesList(array $activeProfilesList)
+    {
+        $this->activeProfilesList = $activeProfilesList;
+    }
+
+    /**
+     * @param array $activeProfilesList
+     */
+    public function appendActiveProfilesList(array $activeProfilesList)
+    {
+        $this->activeProfilesList = array_merge($this->activeProfilesList, $activeProfilesList);
     }
 
     /**
@@ -254,7 +286,7 @@ class SettingsManager
      * @param string $name
      * @param bool $default
      *
-     * @return mixed
+     * @return string|array|bool
      */
     public function getValue($name, $default = null)
     {
@@ -291,14 +323,11 @@ class SettingsManager
         }
 
         if ($checkWithActiveProfiles) {
-            $profilesFromEs = $this->getActiveProfiles();
-            $profilesFromCookie = (array)$this->activeProfilesCookie->getValue();
-
-            $profiles = array_merge($profilesFromEs, $profilesFromCookie);
-            $settingProfiles = $setting['profiles'];
-            if (count(array_intersect($profiles, $settingProfiles))) {
+            if (count(array_intersect($this->getActiveProfiles(), $setting['profiles']))) {
                 return $setting['value'];
             }
+
+            return null;
         }
 
         return $setting['value'];
@@ -333,7 +362,7 @@ class SettingsManager
             }
             $name = $agg->getValue('key');
             $profiles[] = [
-                'active' => $activeProfiles ? in_array($agg->getValue('key'), $activeProfiles) : false,
+                'active' => $activeProfiles ? in_array($agg->getValue('key'), (array)$activeProfiles) : false,
                 'name' => $name,
                 'settings' => implode(', ', $settings),
             ];
@@ -343,26 +372,22 @@ class SettingsManager
     }
 
     /**
-     * Get profile names, optionally can return only active ones.
+     * Returns profiles settings array
      *
-     * @param bool $onlyActive
+     * @param string $profile
      *
      * @return array
      */
-    public function getAllProfilesNameList($onlyActive = false)
+    public function getProfileSettings($profile)
     {
-        $profiles = [];
-        $allProfiles = $this->getAllProfiles();
+        $search = $this->repo->createSearch();
+        $termQuery = new TermQuery('profile', $profile);
+        $search->addQuery($termQuery);
+        $search->setSize(1000);
 
-        foreach ($allProfiles as $profile) {
-            if ($onlyActive and !$profile['active']) {
-                continue;
-            }
+        $settings = $this->repo->findArray($search);
 
-            $profiles[] = $profile['name'];
-        }
-
-        return $profiles;
+        return $settings;
     }
 
     /**
@@ -373,12 +398,23 @@ class SettingsManager
     public function getActiveProfiles()
     {
         if ($this->cache->contains($this->activeProfilesSettingName)) {
-            return $this->cache->fetch($this->activeProfilesSettingName);
+            $profiles = $this->cache->fetch($this->activeProfilesSettingName);
+        } else {
+            $profiles = [];
+            $allProfiles = $this->getAllProfiles();
+
+            foreach ($allProfiles as $profile) {
+                if (!$profile['active']) {
+                    continue;
+                }
+
+                $profiles[] = $profile['name'];
+            }
+
+            $this->cache->save($this->activeProfilesSettingName, $profiles);
         }
 
-        $profiles = $this->getAllProfilesNameList(true);
-
-        $this->cache->save($this->activeProfilesSettingName, $profiles);
+        $profiles = array_merge($profiles, $this->activeProfilesList);
 
         return $profiles;
     }

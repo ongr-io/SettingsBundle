@@ -35,6 +35,6 @@ services:
 
     ongr_settings.request_listener:
         class: ONGR\SettingsBundle\EventListener\RequestListener
-        arguments: ["@ong_settings.cache_provider"]
+        arguments: ["@ongr_settings.cookie.active_profiles", "@ongr_settings.settings_manager"]
         tags:
             - { name: kernel.event_listener, event: kernel.request }

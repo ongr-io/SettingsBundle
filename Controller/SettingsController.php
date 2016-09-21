@@ -21,6 +21,30 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SettingsController extends Controller
 {
+
+    public function enableProfileAction($key)
+    {
+        $profileName = $key;
+
+        $cookie = $this->get('ongr_settings.cookie.active_profiles');
+        $currentActiveProfiles = $cookie->getValue();
+
+        if (is_array($currentActiveProfiles) && !array_intersect($currentActiveProfiles, [$profileName])) {
+            $currentActiveProfiles[] = $profileName;
+            $cookie->setValue($currentActiveProfiles);
+        } else {
+            $cookie->setValue([$profileName]);
+        }
+
+        $settingsManager = $this->get('ongr_settings.settings_manager');
+        $settings = $settingsManager->getProfileSettings($profileName);
+
+        return $this->render('ONGRSettingsBundle:Settings:enableProfile.html.twig', [
+            'profile' => $profileName,
+            'profiles' => $settings,
+        ]);
+    }
+
     /**
      * Renders settings list page.
      *

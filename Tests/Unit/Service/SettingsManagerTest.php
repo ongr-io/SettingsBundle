@@ -463,6 +463,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $manager->setCache($this->cache);
         $manager->setActiveProfilesSettingName($activeProfilesSetting);
         $manager->setActiveProfilesCookie($this->cookie);
+        $manager->setActiveProfilesList(['default']);
 
         $result = $manager->getCachedValue('acme');
         $this->assertEquals('foo', $result);
@@ -541,8 +542,12 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($value);
     }
 
-    public function testGetAllProfilesNameList()
+    public function testGetAllActiveProfilesNameList()
     {
+        $document = new Setting();
+        $document->setName('active_profiles');
+        $document->setValue(['kk']);
+        $this->repository->expects($this->any())->method('findOneBy')->willReturn($document);
         $this->repository->expects($this->any())->method('execute')->willReturn($this->getDocumentIterator());
         $manager = new SettingsManager(
             $this->repository,
@@ -550,7 +555,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         );
         $manager->setCache($this->cache);
 
-        $value = $manager->getAllProfilesNameList();
+        $value = $manager->getActiveProfiles();
         $this->assertEquals(['kk'], $value);
     }
 }

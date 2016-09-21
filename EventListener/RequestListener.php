@@ -11,15 +11,26 @@
 
 namespace ONGR\SettingsBundle\EventListener;
 
+use ONGR\CookiesBundle\Cookie\Model\GenericCookie;
+use ONGR\SettingsBundle\Service\SettingsManager;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 class RequestListener
 {
-    private $cache;
+    /**
+     * @var GenericCookie
+     */
+    private $cookie;
 
-    public function __construct($cache)
+    /**
+     * @var SettingsManager
+     */
+    private $settingsManager;
+
+    public function __construct($cookie, $settingsManager)
     {
-        $this->cache = $cache;
+        $this->cookie = $cookie;
+        $this->settingsManager = $settingsManager;
     }
 
     public function onKernelRequest(GetResponseEvent $event)
@@ -28,6 +39,10 @@ class RequestListener
             return;
         }
 
-        // ...
+        $profiles = $this->cookie->getValue();
+
+        if (is_array($profiles)) {
+            $this->settingsManager->appendActiveProfilesList($profiles);
+        }
     }
 }
