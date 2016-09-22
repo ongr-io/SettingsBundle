@@ -1,0 +1,5 @@
+ongr_settings_enable_profile:
+    path: /enable/{key}
+    defaults: { _controller: ONGRSettingsBundle:Settings:enableProfile }
+    options:
+        expose: true
