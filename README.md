@@ -84,18 +84,27 @@ ongr_elasticsearch:
 Also add routing configuration for settings API and web interface.
 
 ```yaml
-# app/config/routing.yml
-
+#app/config/routing.yml
+    
+# FOS JS bundle route map, if you have it already skip this one.
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
-
-ongr_settings_routing:
-    resource: "@ONGRSettingsBundle/Resources/config/routing.yml"
-    prefix: /your_settings_prefix
+    
+# ONGR settings management route map. You might want to secure it under some firewall.
+ongr_settings_private_routing:
+    resource: "@ONGRSettingsBundle/Resources/config/routing/management.yml"
+    prefix: /settings
+    
+# Public routes for ONGR settings. Do not add them to the firewall unless you know what you are doing.
+ongr_settings_public_routing:
+    resource: "@ONGRSettingsBundle/Resources/config/routing/public.yml"
+    prefix: /s
 ```
 
-`your_settings_prefix` here will be the part of urls. For example general settings panel will be at `/{settings_prefix}/general_settings_list` and personal settings panel at `{settings_prefix}/settings`.
+Under `/settings` there will be all the parts of urls for settings management. For example general settings panel will be at `/settings/general_settings_list` and personal settings panel at `/settings/settings`.
+You can change map prefix as you like.
 
+Under `/s/` in public route map there will be a route for settings profile enabling by link. This is a landing page to enable or disable profile for the user. It's up to you to secure this prefix or not. You can map both resources under the same prefix, there will never be the same routes in both of them.
 
 ### Step 4: Create index and install assets
 
@@ -131,8 +140,8 @@ Visit `/{your_settings_prefix}/settings`. You should see admin panel of general 
 
 ### Global settings.
 
-Visit `/{your_settings_prefix}/settings` and create settings you want to use in your application.
- There is a selection of profiles when you create a setting. After you create a setting and want to use it in website you have to activate a profile (see profile section).
+Visit `/{your_management_settings_prefix}/settings` and create settings you want to use in your application.
+There is a selection of profiles when you create a setting. After you create a setting and want to use it in website you have to activate a profile (see profile section).
  
 There is a Twig extension to use settings in the templates.
  
@@ -153,10 +162,9 @@ There is a Twig extension to use settings in the templates.
 ### Profiles
  
  Profiles are like grouped settings where you can enable or disable all of them at once. The setting can be assigned for multiple profiles.
-  You can find profiles management page at `/your_settings_prefix/profiles`.
+ You can find profiles management page at `/your_management_settings_prefix/profiles`.
   
-  To create a profile simply create your first setting with a new profile and it will appear in the profiles page.
-
+ To create a profile simply create your first setting with a new profile and it will appear in the profiles page.
 
 ## License
 
