@@ -206,8 +206,6 @@ $(document).ready(function () {
         });
     });
 
-
-
     //Profile section
     var profileTable = $('#profiles').DataTable( {
         ajax: {
@@ -252,8 +250,11 @@ $(document).ready(function () {
                 "targets": 3,
                 "data": null,
                 "orderable": false,
-                "defaultContent": '<a class="copy-link btn btn-primary btn-xs" data-toggle="modal" data-target="#setting-edit">Copy link</a>&nbsp;' +
-                ''
+                // "render": function(data, type, row) {
+                //     return '<a class="copy-link btn btn-primary btn-xs" data-toggle="modal">Copy link</a>&nbsp;';
+                // },
+                "defaultContent":
+                '<a class="copy-link btn btn-primary btn-xs" data-toggle="modal">Copy link</a>&nbsp;'
             } ]
     } );
 
@@ -266,8 +267,48 @@ $(document).ready(function () {
 
     $('#profiles tbody').on( 'click', 'a.copy-link', function (e) {
         e.preventDefault();
-        $('#profile-list-error-message').html('Enabling profiles by link is not yet implemented.');
-        $('#profile-list-error').show();
+        var data = profileTable.row( $(this).parents('tr') ).data();
+        var link = Routing.generate('ongr_settings_enable_profile', {key:data.name},true);
+        $('#copy-placeholder').text(link);
+        var range = document.createRange();
+        var field = document.querySelector('#copy-placeholder');
+        range.selectNode(field);
+        window.getSelection().addRange(range);
+        try {
+            var success = document.execCommand('copy');
+            if (success) {
+                noty({
+                    text: 'Link successfully copied to the clipboard.',
+                    type: 'success',
+                    layout : 'topRight',
+                    theme: 'bootstrapTheme',
+                    timeout: 10,
+                    animation: {
+                        open: 'animated fadeIn',
+                        close: 'animated fadeOut',
+                    }
+                });
+            } else {
+                throw new Error("Cannot copy");
+            }
+        } catch(err) {
+            noty({
+                text: 'Something went wrong..',
+                type: 'error',
+                layout : 'topRight',
+                theme: 'bootstrapTheme',
+                timeout: 10,
+                animation: {
+                    open: 'animated fadeIn',
+                    close: 'animated fadeOut',
+                }
+            });
+            $.alert({
+                title: 'Here\'s the link:',
+                content: '<span>'+link+'</span>',
+                confirmButton: 'Close',
+            });
+        }
     } );
 
 });

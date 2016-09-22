@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% block settings_meta %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock %}
+    <title>{% block settings_title -%}{{ "Settings toggle"|trans }}{%- endblock %}</title>
+    {% block settings_stylesheets %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            body, h1, h2, h3, h4, h5, h6 { font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif; }
+            body {  padding-top: 20px;  padding-bottom: 20px; }
+            .profiles, .footer { padding-right: 15px; padding-left: 15px; }
+            .footer { padding-top: 19px; color: #777; border-top: 1px solid #e5e5e5; }
+            .setting { border-bottom: 1px solid #e5e5e5; }
+            @media (min-width: 768px) { .container { max-width: 730px; } }
+            .jumbotron { text-align: center; border-bottom: 1px solid #e5e5e5; }
+            .profiles { margin: 40px 0; }
+            .profiles p + h4 { margin-top: 28px; }
+            @media screen and (min-width: 768px) { .profiles, .footer { padding-right: 0; padding-left: 0; } .jumbotron { border-bottom: 0; } }
+            {% block settings_style %}{% endblock %}
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block settings_body %}
+    <div class="container">
+        <div class="jumbotron">
+            <h1>{% block settings_header_title %}ONGR settings{% endblock %}</h1>
+            {% block settings_header_body %}
+            <p class="lead">Good job! You just enabled <strong>{{ profile }}</strong> settings profile. See below the list of enabled settings.</p>
+            <p><a class="btn btn-primary btn-lg" href="{{ app.request.getSchemeAndHttpHost() }}" role="button">Go to the website »</a></p>
+            {% endblock %}
+        </div>
+        <div class="row profiles">
+            {% if profiles|length == 0 %}
+            <h4>Profile has no settings!</h4>
+            {% else %}
+                {% for index,profile in profiles %}
+                    <div class="setting col-lg-6">
+                        <h4>{{ profile.name }}</h4>
+                        <p>
+                            <strong>Value:</strong>
+                            {% if profile.type == 'bool' %}
+                                {% if profile.value %}TRUE{% else %}FALSE{% endif %}
+                            {% elseif profile.type == 'yaml' %}
+                                <pre>{{ profile.value|raw }}</pre>
+                            {% else %}
+                                {{ profile.value }}
+                            {% endif %}
+                        </p>
+                        <p><strong>Description:</strong> {{ profile.description|default('') }}</p>
+                    </div>
+                    {% if index % 2 %}<div class="clear">&nbsp;</div>{% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <footer class="footer">
+            <p>&copy; {{ 'now'|date('Y') }} ONGR - NFQ Technologies.</p>
+        </footer>
+    </div>
+{% endblock %}
+{% block settings_javascripts %}
+{% endblock %}
+</body>
+</html>

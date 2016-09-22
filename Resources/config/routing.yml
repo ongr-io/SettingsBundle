@@ -5,6 +5,12 @@ ongr_settings_home:
         route: ongr_settings_settings
         permanent: true
 
+ongr_settings_enable_profile:
+    path: /enable/{key}
+    defaults: { _controller: ONGRSettingsBundle:Settings:enableProfile }
+    options:
+        expose: true
+
 ongr_settings_search_page:
     path: /settings/search
     methods:  [GET]
