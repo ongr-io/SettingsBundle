@@ -7,6 +7,7 @@ var path = require('path');
 var watch = require('gulp-watch');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
+var cleanCSS = require('gulp-clean-css');
 
 var dir = {
     fonts: './Resources/fonts/',
@@ -30,6 +31,7 @@ gulp.task('app-sass', function() {
             {outputStyle: 'compressed'}
         ).on('error', sass.logError))
         .pipe(concat('style.css'))
+        .pipe(cleanCSS())
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(dir.dist));
 });

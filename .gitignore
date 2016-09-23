@@ -1,10 +1,3 @@
 /vendor/
-/phpunit.xml
-/Tests/app/cache/
-/Tests/app/logs/
-/Tests/app/data/
-/Tests/app/build/
-/cache.properties
 /composer.lock
 /node_modules
-/Resources/public/*
