@@ -34,6 +34,8 @@
                 <directory>./Tests</directory>
                 <directory>./vendor</directory>
                 <directory>./Resources</directory>
+                <directory>./Controller</directory>
+                <directory>./Document</directory>
             </exclude>
         </whitelist>
     </filter>
