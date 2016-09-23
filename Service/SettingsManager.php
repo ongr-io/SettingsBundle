@@ -224,6 +224,7 @@ class SettingsManager
 
         $this->manager->persist($setting);
         $this->manager->commit();
+        $this->cache->delete($name);
 
         return $setting;
     }
@@ -240,6 +241,7 @@ class SettingsManager
     {
         if ($this->has($name)) {
             $setting = $this->repo->findOneBy(['name' => $name]);
+            $this->cache->delete($name);
             return $this->repo->remove($setting->getId());
         }
 
