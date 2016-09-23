@@ -51,7 +51,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $this->cache = $this->getMockBuilder('Doctrine\Common\Cache\PhpFileCache')
             ->disableOriginalConstructor()
-            ->setMethods(['contains', 'fetch', 'save'])
+            ->setMethods(['contains', 'fetch', 'save', 'delete'])
             ->getMock();
         $this->cookie = $this->getMockBuilder('ONGR\CookiesBundle\Cookie\Model\GenericCookie')
             ->disableOriginalConstructor()
@@ -209,6 +209,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
             $this->repository,
             $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
         );
+        $manager->setCache($this->cache);
 
         $document = $manager->update('acme', ['value' => 'bar']);
         $this->assertEquals('acme', $document->getName());
@@ -227,6 +228,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
             $this->repository,
             $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
         );
+        $manager->setCache($this->cache);
         $manager->update('acme', ['value' => 'foo']);
     }
 
@@ -245,6 +247,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
             $this->repository,
             $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
         );
+        $manager->setCache($this->cache);
 
         $manager->delete('acme');
     }
