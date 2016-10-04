@@ -14,8 +14,8 @@ namespace ONGR\SettingsBundle\Service;
 use Doctrine\Common\Cache\CacheProvider;
 use ONGR\CookiesBundle\Cookie\Model\GenericCookie;
 use ONGR\ElasticsearchBundle\Result\Aggregation\AggregationValue;
-use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
-use ONGR\ElasticsearchDSL\Aggregation\TopHitsAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\TermsAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\Metric\TopHitsAggregation;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
 use ONGR\SettingsBundle\Event\Events;
 use ONGR\SettingsBundle\Event\SettingActionEvent;
@@ -253,11 +253,11 @@ class SettingsManager
 
             $this->eventDispatcher->dispatch(Events::PRE_UPDATE, new SettingActionEvent($name, [], null));
 
-            $setting = $this->repo->findOneBy(['name' => $name]);
+            $setting = $this->get($name);
             $this->cache->delete($name);
             $response = $this->repo->remove($setting->getId());
 
-            $this->eventDispatcher->dispatch(Events::PRE_UPDATE, new SettingActionEvent($name, [], $setting));
+            $this->eventDispatcher->dispatch(Events::PRE_UPDATE, new SettingActionEvent($name, $response, $setting));
 
             return $response;
         }
@@ -274,8 +274,12 @@ class SettingsManager
      */
     public function get($name)
     {
+        $this->eventDispatcher->dispatch(Events::PRE_GET, new SettingActionEvent($name, [], null));
+
         /** @var Setting $setting */
-        $setting = $this->repo->findOneBy(['name' => $name]);
+        $setting = $this->repo->findOneBy(['name.name' => $name]);
+
+        $this->eventDispatcher->dispatch(Events::PRE_GET, new SettingActionEvent($name, [], $setting));
 
         return $setting;
     }
@@ -290,7 +294,7 @@ class SettingsManager
     public function has($name)
     {
         /** @var Setting $setting */
-        $setting = $this->repo->findOneBy(['name' => $name]);
+        $setting = $this->repo->findOneBy(['name.name' => $name]);
 
         if ($setting) {
             return true;
@@ -363,11 +367,11 @@ class SettingsManager
 
         $search = $this->repo->createSearch();
         $topHitsAgg = new TopHitsAggregation('documents', 20);
-        $termAgg = new TermsAggregation('profiles', 'profile');
+        $termAgg = new TermsAggregation('profiles', 'profile.profile');
         $termAgg->addAggregation($topHitsAgg);
         $search->addAggregation($termAgg);
 
-        $result = $this->repo->execute($search);
+        $result = $this->repo->findDocuments($search);
 
         /** @var Setting $activeProfiles */
         $activeProfiles = $this->getValue($this->activeProfilesSettingName, []);
