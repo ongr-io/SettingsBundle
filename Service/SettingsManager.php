@@ -17,6 +17,8 @@ use ONGR\ElasticsearchBundle\Result\Aggregation\AggregationValue;
 use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\TopHitsAggregation;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
+use ONGR\SettingsBundle\Event\Events;
+use ONGR\SettingsBundle\Event\SettingActionEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use ONGR\ElasticsearchBundle\Service\Repository;
 use ONGR\ElasticsearchBundle\Service\Manager;
@@ -190,6 +192,8 @@ class SettingsManager
         /** @var Setting $setting */
         $setting = new $settingClass();
 
+        $this->eventDispatcher->dispatch(Events::PRE_CREATE, new SettingActionEvent($name, $data, $setting));
+
         #TODO Introduce array populate function in Setting document instead of this foreach.
         foreach ($data as $key => $value) {
             $setting->{'set'.ucfirst($key)}($value);
@@ -197,6 +201,8 @@ class SettingsManager
 
         $this->manager->persist($setting);
         $this->manager->commit();
+
+        $this->eventDispatcher->dispatch(Events::POST_CREATE, new SettingActionEvent($name, $data, $setting));
 
         return $setting;
     }
@@ -217,6 +223,8 @@ class SettingsManager
             throw new \LogicException(sprintf('Setting %s not exist.', $name));
         }
 
+        $this->eventDispatcher->dispatch(Events::PRE_UPDATE, new SettingActionEvent($name, $data, $setting));
+
         #TODO Add populate function to document class
         foreach ($data as $key => $value) {
             $setting->{'set'.ucfirst($key)}($value);
@@ -225,6 +233,8 @@ class SettingsManager
         $this->manager->persist($setting);
         $this->manager->commit();
         $this->cache->delete($name);
+
+        $this->eventDispatcher->dispatch(Events::PRE_UPDATE, new SettingActionEvent($name, $data, $setting));
 
         return $setting;
     }
@@ -240,9 +250,16 @@ class SettingsManager
     public function delete($name)
     {
         if ($this->has($name)) {
+
+            $this->eventDispatcher->dispatch(Events::PRE_UPDATE, new SettingActionEvent($name, [], null));
+
             $setting = $this->repo->findOneBy(['name' => $name]);
             $this->cache->delete($name);
-            return $this->repo->remove($setting->getId());
+            $response = $this->repo->remove($setting->getId());
+
+            $this->eventDispatcher->dispatch(Events::PRE_UPDATE, new SettingActionEvent($name, [], $setting));
+
+            return $response;
         }
 
         throw new \LogicException(sprintf('Setting with name %s doesn\'t exist.', $name));
