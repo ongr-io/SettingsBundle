@@ -61,7 +61,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(
                 [
-                    'findOneBy', 'remove', 'createSearch', 'execute', 'getClassName', 'getManager', 'getAggregation'
+                    'findOneBy', 'remove', 'createSearch', 'findDocuments', 'getClassName', 'getManager', 'getAggregation'
                 ]
             )
             ->getMock();
@@ -242,7 +242,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $setting->setName('acme');
 
         $this->repository->expects($this->any())
-            ->method('findOneBy')->with($this->equalTo(['name' => 'acme']))->willReturn($setting);
+            ->method('findOneBy')->with($this->equalTo(['name.name' => 'acme']))->willReturn($setting);
         $manager = new SettingsManager(
             $this->repository,
             $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
@@ -259,7 +259,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $setting->setValue('foo');
 
         $this->repository->expects($this->once())
-            ->method('findOneBy')->with($this->equalTo(['name' => 'acme']))->willReturn($setting);
+            ->method('findOneBy')->with($this->equalTo(['name.name' => 'acme']))->willReturn($setting);
         $manager = new SettingsManager(
             $this->repository,
             $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
@@ -276,7 +276,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
     public function testHasWhenThereIsNoSetting()
     {
         $this->repository->expects($this->once())
-            ->method('findOneBy')->with($this->equalTo(['name' => 'acme']))->willReturn(null);
+            ->method('findOneBy')->with($this->equalTo(['name.name' => 'acme']))->willReturn(null);
         $manager = new SettingsManager(
             $this->repository,
             $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
@@ -438,7 +438,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->repository->expects($this->any())->method('findOneBy')->willReturnCallback(
             function ($arg) use ($activeProfilesSetting) {
-                $settingName = $arg['name'];
+                $settingName = $arg['name.name'];
                 $setting = new Setting();
                 switch ($settingName) {
                     case 'active_profiles':
@@ -456,7 +456,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $this->repository->expects($this->any())->method('execute')->willReturn($this->getDocumentIterator());
+        $this->repository->expects($this->any())->method('findDocuments')->willReturn($this->getDocumentIterator());
         $this->cookie->expects($this->any())->method('getValue')->willReturn(['foo']);
 
         $manager = new SettingsManager(
@@ -551,7 +551,7 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
         $document->setName('active_profiles');
         $document->setValue(['kk']);
         $this->repository->expects($this->any())->method('findOneBy')->willReturn($document);
-        $this->repository->expects($this->any())->method('execute')->willReturn($this->getDocumentIterator());
+        $this->repository->expects($this->any())->method('findDocuments')->willReturn($this->getDocumentIterator());
         $manager = new SettingsManager(
             $this->repository,
             $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
