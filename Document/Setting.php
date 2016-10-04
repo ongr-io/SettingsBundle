@@ -31,7 +31,15 @@ class Setting implements SerializableInterface
     /**
      * @var string
      *
-     * @ES\Property(type="string", options={"analyzer"="standard"})
+     * @ES\Property(
+     *  type="string",
+     *  options={
+     *    "fields"={
+     *        "raw"={"type"="string", "index"="not_analyzed"},
+     *        "name"={"type"="string"}
+     *    }
+     *  }
+     * )
      */
     private $name;
 
@@ -45,14 +53,22 @@ class Setting implements SerializableInterface
     /**
      * @var string
      *
-     * @ES\Property(type="string", options={"analyzer"="standard"})
+     * @ES\Property(
+     *  type="string",
+     *  options={
+     *    "fields"={
+     *        "raw"={"type"="string", "index"="not_analyzed"},
+     *        "profile"={"type"="string"}
+     *    }
+     *  }
+     * )
      */
     private $profile = [];
 
     /**
      * @var string
      *
-     * @ES\Property(type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="string", options={"index"="not_analyzed"})
      */
     private $type;
 
@@ -241,6 +257,7 @@ class Setting implements SerializableInterface
             'name' => $this->getName(),
             'description' => $this->getDescription(),
             'profile' => $this->getProfile(),
+            'salt' => $this->getSalt(),
             'type' => $this->getType(),
             'value' => $this->getValue(),
         ];
