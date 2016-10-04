@@ -250,7 +250,6 @@ class SettingsManager
     public function delete($name)
     {
         if ($this->has($name)) {
-
             $this->eventDispatcher->dispatch(Events::PRE_UPDATE, new SettingActionEvent($name, [], null));
 
             $setting = $this->get($name);

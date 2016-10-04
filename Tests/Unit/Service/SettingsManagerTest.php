@@ -61,7 +61,13 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->setMethods(
                 [
-                    'findOneBy', 'remove', 'createSearch', 'findDocuments', 'getClassName', 'getManager', 'getAggregation'
+                    'findOneBy',
+                    'remove',
+                    'createSearch',
+                    'findDocuments',
+                    'getClassName',
+                    'getManager',
+                    'getAggregation',
                 ]
             )
             ->getMock();
