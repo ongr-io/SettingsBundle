@@ -28,7 +28,9 @@ class SkipHiddenSettingsFilter extends AbstractSingleValue
      */
     public function modifySearch(Search $search, FilterState $state = null, SearchRequest $request = null)
     {
-        $term = new TermQuery('type', 'hidden');
-        $search->addQuery($term, BoolQuery::MUST_NOT);
+        $hidden = new TermQuery('type', 'hidden');
+        $experiment = new TermQuery('type', 'experiment');
+        $search->addQuery($hidden, BoolQuery::MUST_NOT);
+        $search->addQuery($experiment, BoolQuery::MUST_NOT);
     }
 }

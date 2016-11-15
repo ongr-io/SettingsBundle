@@ -1,0 +1,27 @@
+{% extends 'ONGRSettingsBundle::base.html.twig' %}
+{% block body %}
+    <span id="copy-placeholder"></span>
+    <div id="profile-list-error" class="alert alert-danger alert-dismissible fade in" style="display: none;" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4>You got an error!</h4>
+        <p id="profile-list-error-message"></p>
+    </div>
+    <table id="experiments" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th width="10%">Enable?</th>
+            <th>Experiment</th>
+            <th>Target</th>
+            <th>Profiles list</th>
+            <th width="100">Actions</th>
+        </tr>
+        </thead>
+    </table>
+    {% include 'ONGRSettingsBundle:Experiments:_experiment-form.html.twig' %}
+{% endblock %}
+{% block stilesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" type="text/css"/>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
+{% endblock %}

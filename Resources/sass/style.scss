@@ -2,6 +2,10 @@
   margin-left: 10px;
 }
 
+#new-experiment-button {
+  margin-left: 10px;
+}
+
 .header {
   border-bottom: 1px solid #dee0df;
   margin-bottom: 10px;
@@ -39,6 +43,11 @@ body {
   .tab-content {
     padding: 10px;
   }
+}
+
+.target-attribute {
+  display: inline-block;
+  padding: 5px;
 }
 
 #copy-placeholder {

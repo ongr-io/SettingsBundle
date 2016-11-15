@@ -14,8 +14,11 @@ namespace ONGR\SettingsBundle\Service;
 use Doctrine\Common\Cache\CacheProvider;
 use ONGR\CookiesBundle\Cookie\Model\GenericCookie;
 use ONGR\ElasticsearchBundle\Result\Aggregation\AggregationValue;
+use ONGR\ElasticsearchBundle\Result\DocumentIterator;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\FilterAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\TermsAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\Metric\TopHitsAggregation;
+use ONGR\ElasticsearchDSL\Query\BoolQuery;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
 use ONGR\SettingsBundle\Event\Events;
 use ONGR\SettingsBundle\Event\SettingActionEvent;
@@ -23,6 +26,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use ONGR\ElasticsearchBundle\Service\Repository;
 use ONGR\ElasticsearchBundle\Service\Manager;
 use ONGR\SettingsBundle\Document\Setting;
+use Symfony\Component\Serializer\Exception\LogicException;
 
 /**
  * Class SettingsManager responsible for managing settings actions.
@@ -65,6 +69,13 @@ class SettingsManager
     private $activeProfilesCookie;
 
     /**
+     * Cookie storage for active cookies.
+     *
+     * @var GenericCookie
+     */
+    private $activeExperimentProfilesCookie;
+
+    /**
      * Active profiles setting name to store in the cache engine.
      *
      * @var string
@@ -77,6 +88,13 @@ class SettingsManager
      * @var array
      */
     private $activeProfilesList = [];
+
+    /**
+     * Active experiments setting name to store in the cache engine.
+     *
+     * @var string
+     */
+    private $activeExperimentsSettingName;
 
     /**
      * @param Repository               $repo
@@ -124,6 +142,22 @@ class SettingsManager
     }
 
     /**
+     * @return GenericCookie
+     */
+    public function getActiveExperimentProfilesCookie()
+    {
+        return $this->activeExperimentProfilesCookie;
+    }
+
+    /**
+     * @param GenericCookie $activeExperimentProfilesCookie
+     */
+    public function setActiveExperimentProfilesCookie($activeExperimentProfilesCookie)
+    {
+        $this->activeExperimentProfilesCookie = $activeExperimentProfilesCookie;
+    }
+
+    /**
      * @return string
      */
     public function getActiveProfilesSettingName()
@@ -161,6 +195,22 @@ class SettingsManager
     public function appendActiveProfilesList(array $activeProfilesList)
     {
         $this->activeProfilesList = array_merge($this->activeProfilesList, $activeProfilesList);
+    }
+
+    /**
+     * @return string
+     */
+    public function getActiveExperimentsSettingName()
+    {
+        return $this->activeExperimentsSettingName;
+    }
+
+    /**
+     * @param string $activeExperimentsSettingName
+     */
+    public function setActiveExperimentsSettingName($activeExperimentsSettingName)
+    {
+        $this->activeExperimentsSettingName = $activeExperimentsSettingName;
     }
 
     /**
@@ -234,6 +284,10 @@ class SettingsManager
         $this->manager->commit();
         $this->cache->delete($name);
 
+        if ($setting->getType() == 'experiment') {
+            $this->getActiveExperimentProfilesCookie()->setClear(true);
+        }
+
         $this->eventDispatcher->dispatch(Events::PRE_UPDATE, new SettingActionEvent($name, $data, $setting));
 
         return $setting;
@@ -255,6 +309,11 @@ class SettingsManager
             $setting = $this->get($name);
             $this->cache->delete($name);
             $response = $this->repo->remove($setting->getId());
+
+            if ($setting->getType() == 'experiment') {
+                $this->cache->delete($this->activeExperimentsSettingName);
+                $this->getActiveExperimentProfilesCookie()->setClear(true);
+            }
 
             $this->eventDispatcher->dispatch(Events::PRE_UPDATE, new SettingActionEvent($name, $response, $setting));
 
@@ -365,10 +424,14 @@ class SettingsManager
         $profiles = [];
 
         $search = $this->repo->createSearch();
+        $filter = new BoolQuery();
+        $filter->add(new TermQuery('type', 'experiment'), BoolQuery::MUST_NOT);
         $topHitsAgg = new TopHitsAggregation('documents', 20);
         $termAgg = new TermsAggregation('profiles', 'profile.profile');
+        $filterAgg = new FilterAggregation('filter', $filter);
         $termAgg->addAggregation($topHitsAgg);
-        $search->addAggregation($termAgg);
+        $filterAgg->addAggregation($termAgg);
+        $search->addAggregation($filterAgg);
 
         $result = $this->repo->findDocuments($search);
 
@@ -376,7 +439,7 @@ class SettingsManager
         $activeProfiles = $this->getValue($this->activeProfilesSettingName, []);
 
         /** @var AggregationValue $agg */
-        foreach ($result->getAggregation('profiles') as $agg) {
+        foreach ($result->getAggregation('filter')->getAggregation('profiles') as $agg) {
             $settings = [];
             $docs = $agg->getAggregation('documents');
             foreach ($docs['hits']['hits'] as $doc) {
@@ -439,5 +502,103 @@ class SettingsManager
         $profiles = array_merge($profiles, $this->activeProfilesList);
 
         return $profiles;
+    }
+
+    /**
+     * @return DocumentIterator
+     */
+    public function getAllExperiments()
+    {
+        $experiments = $this->repo->findBy(['type' => 'experiment']);
+
+        return $experiments;
+    }
+
+    /**
+     * Returns an array of active experiments names either from cache or from es.
+     * If none are found, the setting with no active experiments is created.
+     *
+     * @return array
+     */
+    public function getActiveExperiments()
+    {
+        if ($this->cache->contains($this->activeExperimentsSettingName)) {
+            return $this->cache->fetch($this->activeExperimentsSettingName)['value'];
+        }
+
+        if ($this->has($this->activeExperimentsSettingName)) {
+            $experiments = $this->get($this->activeExperimentsSettingName)->getValue();
+        } else {
+            $this->create(
+                [
+                    'name' => $this->activeExperimentsSettingName,
+                    'value' => [],
+                    'type' => 'hidden',
+                ]
+            );
+            $experiments = [];
+        }
+
+        $this->cache->save($this->activeExperimentsSettingName, ['value' => $experiments]);
+
+        return $experiments;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function toggleExperiment($name)
+    {
+        if (!$this->has($this->activeExperimentsSettingName)) {
+            throw new LogicException(
+                sprintf('The setting `%s` is not set', $this->activeExperimentsSettingName)
+            );
+        }
+
+        $setting = $this->get($this->activeExperimentsSettingName);
+        $experiments = $setting->getValue();
+
+        if (is_array($experiments)) {
+            if (($key = array_search($name, $experiments)) !== false) {
+                unset($experiments[$key]);
+                $experiments = array_values($experiments);
+            } else {
+                $experiments[] = $name;
+            }
+        } else {
+            $experiments = [$name];
+        }
+
+        $this->update($setting->getName(), ['value' => $experiments]);
+    }
+
+    /**
+     * Get full experiment by caching.
+     *
+     * @param string $name
+     *
+     * @return array|null
+     *
+     * @throws LogicException
+     */
+    public function getCachedExperiment($name)
+    {
+        if ($this->cache->contains($name)) {
+            $experiment = $this->cache->fetch($name);
+        } elseif ($this->has($name)) {
+            $experiment = $this->get($name)->getSerializableData();
+        } else {
+            return null;
+        }
+
+        if (!isset($experiment['type']) || $experiment['type'] !== 'experiment') {
+            throw new LogicException(
+                sprintf('The setting `%s` was found but it is not an experiment', $name)
+            );
+        }
+
+        $this->cache->save($name, $experiment);
+
+        return $experiment;
     }
 }

@@ -110,6 +110,10 @@ class SettingsController extends Controller
             $manager = $this->get('ongr_settings.settings_manager');
             $data = $request->get('setting');
 
+            if (!empty($data['value']) && !is_string($data['value'])) {
+                $data['value'] = json_encode($data['value']);
+            }
+
             if ($request->get('force')) {
                 $name = $request->get('name');
                 $manager->update($name, $data);

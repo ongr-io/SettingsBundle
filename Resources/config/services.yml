@@ -1,10 +1,12 @@
 parameters:
     ongr_settings.cookie.active_profiles.name: ongr_settings_ap
     ongr_settings.cookie.active_profiles_invalidation.name: ongr_settings_iv
+    ongr_settings.cookie.active_experiments.name: ongr_settings_experiments
     ongr_settings.cookie.active_profiles.defaults: # Defaults section is optional
         http_only: false
 
     ongr_settings.active_profiles: ongr_active_profiles
+    ongr_settings.active_experiments: ongr_active_experiments
 
 services:
     ongr_settings.cookie.active_profiles:
@@ -12,6 +14,12 @@ services:
         arguments: [ "%ongr_settings.cookie.active_profiles.name%" ]
         calls:
             - [setDefaults, ["%ongr_settings.cookie.active_profiles.defaults%"]] # Optional
+        tags:
+            - { name: ongr_cookie.cookie }
+
+    ongr_settings.cookie.active_experiments:
+        class: "%ongr_cookie.json.class%"
+        arguments: [ "%ongr_settings.cookie.active_experiments.name%" ]
         tags:
             - { name: ongr_cookie.cookie }
 
@@ -35,6 +43,18 @@ services:
 
     ongr_settings.request_listener:
         class: ONGR\SettingsBundle\EventListener\RequestListener
-        arguments: ["@ongr_settings.cookie.active_profiles", "@ongr_settings.settings_manager"]
+        arguments:
+            - "@ongr_settings.cookie.active_profiles"
+            - "@ongr_settings.cookie.active_experiments"
+            - "@ongr_settings.settings_manager"
         tags:
-            - { name: kernel.event_listener, event: kernel.request }
+            - { name: kernel.event_listener, event: kernel.request, priority: -200 }
+
+    ongr_settings.experiment_listener:
+        class: ONGR\SettingsBundle\EventListener\ExperimentListener
+        arguments:
+            - "@ongr_settings.cookie.active_experiments"
+            - "@ongr_settings.settings_manager"
+            - "%ongr_settings.active_experiments%"
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: -100 }

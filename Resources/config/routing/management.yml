@@ -61,3 +61,31 @@ ongr_settings_settings_delete:
     defaults: { _controller: ONGRSettingsBundle:Settings:delete }
     options:
         expose: true
+
+ongr_settings_experiments:
+    path: /experiments
+    defaults: { _controller: ONGRSettingsBundle:Experiments:list }
+
+ongr_settings_experiments_get_all_detailed:
+    path: /experiments/get_all_detailed
+    defaults: { _controller: ONGRSettingsBundle:Experiments:getFullExperiments }
+    options:
+        expose: true
+
+ongr_settings_experiments_get_targets:
+    path: /experiments/get_targets
+    defaults: { _controller: ONGRSettingsBundle:Experiments:getTargets }
+    options:
+        expose: true
+
+ongr_settings_experiments_get_targets_attributes:
+    path: /experiments/get_targets_attributes
+    defaults: { _controller: ONGRSettingsBundle:Experiments:getClientsByTypes }
+    options:
+        expose: true
+
+ongr_settings_experiments_toggle:
+    path: /experiments/toggle
+    defaults: { _controller: ONGRSettingsBundle:Experiments:toggle }
+    options:
+        expose: true

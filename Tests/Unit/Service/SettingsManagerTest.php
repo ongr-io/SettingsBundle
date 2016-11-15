@@ -336,90 +336,92 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
     {
         $rawData = [
             'aggregations' => [
-                'profiles' => [
-                    'buckets' => [
-                        [
-                            'key' => 'default',
-                            'doc_count' => 2,
-                            'documents' => [
-                                'hits' => [
-                                    'total' => 2,
-                                    'max_score' => 1,
+                'filter' => [
+                    'profiles' => [
+                        'buckets' => [
+                            [
+                                'key' => 'default',
+                                'doc_count' => 2,
+                                'documents' => [
                                     'hits' => [
-                                        [
-                                            '_index' => 'settings',
-                                            '_type' => 'setting',
-                                            '_id' => 'kk',
-                                            '_score' => 1,
-                                            '_source' => [
-                                                'name' => 'foo',
-                                                'profile' => [
-                                                    'bar'
-                                                ],
-                                                'type' => 'bool',
-                                                'value' => 1
-                                            ]
-                                        ],
-                                        [
-                                            '_index' => 'settings',
-                                            '_type' => 'setting',
-                                            '_id' => 'xx',
-                                            '_score' => 1,
-                                            '_source' => [
-                                                'name' => 'kk',
-                                                'profile' => [
-                                                    'kk'
-                                                ],
-                                                'type' => 'bool',
-                                                'value' => 1
-                                            ]
-                                        ]
-                                    ]
-                                ]
-                            ],
-                            'key' => 'foo',
-                            'doc_count' => 1,
-                            'documents' => [
-                                'hits' => [
-                                    'total' => 1,
-                                    'max_score' => 1,
-                                    'hits' => [
-                                        [
-                                            '_index' => 'settings',
-                                            '_type' => 'setting',
-                                            '_id' => 'kk',
-                                            '_score' => 1,
-                                            '_source' => [
-                                                'name' => 'foo',
-                                                'profile' => [
-                                                    'bar'
-                                                ],
-                                                'type' => 'bool',
-                                                'value' => 1
+                                        'total' => 2,
+                                        'max_score' => 1,
+                                        'hits' => [
+                                            [
+                                                '_index' => 'settings',
+                                                '_type' => 'setting',
+                                                '_id' => 'kk',
+                                                '_score' => 1,
+                                                '_source' => [
+                                                    'name' => 'foo',
+                                                    'profile' => [
+                                                        'bar'
+                                                    ],
+                                                    'type' => 'bool',
+                                                    'value' => 1
+                                                ]
+                                            ],
+                                            [
+                                                '_index' => 'settings',
+                                                '_type' => 'setting',
+                                                '_id' => 'xx',
+                                                '_score' => 1,
+                                                '_source' => [
+                                                    'name' => 'kk',
+                                                    'profile' => [
+                                                        'kk'
+                                                    ],
+                                                    'type' => 'bool',
+                                                    'value' => 1
+                                                ]
                                             ]
                                         ]
                                     ]
-                                ]
-                            ],
-                            'key' => 'kk',
-                            'doc_count' => 1,
-                            'documents' => [
-                                'hits' => [
-                                    'total' => 1,
-                                    'max_score' => 1,
+                                ],
+                                'key' => 'foo',
+                                'doc_count' => 1,
+                                'documents' => [
                                     'hits' => [
-                                        [
-                                            '_index' => 'settings',
-                                            '_type' => 'setting',
-                                            '_id' => 'kk',
-                                            '_score' => 1,
-                                            '_source' => [
-                                                'name' => 'foo',
-                                                'profile' => [
-                                                    'bar'
-                                                ],
-                                                'type' => 'bool',
-                                                'value' => 1
+                                        'total' => 1,
+                                        'max_score' => 1,
+                                        'hits' => [
+                                            [
+                                                '_index' => 'settings',
+                                                '_type' => 'setting',
+                                                '_id' => 'kk',
+                                                '_score' => 1,
+                                                '_source' => [
+                                                    'name' => 'foo',
+                                                    'profile' => [
+                                                        'bar'
+                                                    ],
+                                                    'type' => 'bool',
+                                                    'value' => 1
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ],
+                                'key' => 'kk',
+                                'doc_count' => 1,
+                                'documents' => [
+                                    'hits' => [
+                                        'total' => 1,
+                                        'max_score' => 1,
+                                        'hits' => [
+                                            [
+                                                '_index' => 'settings',
+                                                '_type' => 'setting',
+                                                '_id' => 'kk',
+                                                '_score' => 1,
+                                                '_source' => [
+                                                    'name' => 'foo',
+                                                    'profile' => [
+                                                        'bar'
+                                                    ],
+                                                    'type' => 'bool',
+                                                    'value' => 1
+                                                ]
                                             ]
                                         ]
                                     ]
@@ -566,5 +568,107 @@ class SettingsManagerTest extends \PHPUnit_Framework_TestCase
 
         $value = $manager->getActiveProfiles();
         $this->assertEquals(['kk'], $value);
+    }
+
+    public function testGetActiveExperimentsFromRepository()
+    {
+        $activeExperimentsSettingName = 'foo';
+        $experimentName = 'bar';
+        $cache = $this->cache;
+        $cache->expects($this->any())->method('contains')->willReturn(false);
+        $activeExperiments = new Setting;
+        $activeExperiments->setName($activeExperimentsSettingName);
+        $activeExperiments->setValue([$experimentName]);
+        $repository = $this->repository;
+        $repository->expects($this->any())->method('findOneBy')
+            ->with(['name.name' => $activeExperimentsSettingName])->willReturn($activeExperiments);
+        $manager = new SettingsManager(
+            $repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
+        $manager->setActiveExperimentsSettingName($activeExperimentsSettingName);
+        $manager->setCache($cache);
+
+        $activeExperiments = $manager->getActiveExperiments();
+
+        $this->assertEquals([$experimentName], $activeExperiments);
+    }
+
+    public function testGetActiveExperimentsFromCache()
+    {
+        $activeExperimentsSettingName = 'foo';
+        $experimentName = 'bar';
+        $cache = $this->cache;
+        $cache->expects($this->any())->method('contains')
+            ->with($activeExperimentsSettingName)->willReturn(true);
+        $cache->expects($this->any())->method('fetch')
+            ->with($activeExperimentsSettingName)->willReturn(['value' => [$experimentName]]);
+        $manager = new SettingsManager(
+            $this->repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
+        $manager->setActiveExperimentsSettingName($activeExperimentsSettingName);
+        $manager->setCache($cache);
+
+        $activeExperiments = $manager->getActiveExperiments();
+
+        $this->assertEquals([$experimentName], $activeExperiments);
+    }
+
+    public function testGetActiveExperimentsCreateNew()
+    {
+        $activeExperimentsSettingName = 'foo';
+        $cache = $this->cache;
+        $cache->expects($this->any())->method('contains')
+            ->with($activeExperimentsSettingName)->willReturn(false);
+        $repository = $this->repository;
+        $repository->expects($this->any())->method('findOneBy')
+            ->with(['name.name' => $activeExperimentsSettingName])->willReturn(null);
+        $manager = new SettingsManager(
+            $repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
+        $manager->setActiveExperimentsSettingName($activeExperimentsSettingName);
+        $manager->setCache($cache);
+
+        $activeExperiments = $manager->getActiveExperiments();
+
+        $this->assertEquals([], $activeExperiments);
+    }
+
+    public function testToggleExperiment()
+    {
+        $activeExperimentsSettingName = 'active_profiles';
+        $activeExperimentsSetting = new Setting();
+        $activeExperimentsSetting->setName($activeExperimentsSettingName);
+        $repository = $this->repository;
+        $repository->expects($this->any())->method('findOneBy')
+            ->with(['name.name' => $activeExperimentsSettingName])->willReturn($activeExperimentsSetting);
+        $manager = new SettingsManager(
+            $repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
+        $manager->setCache($this->cache);
+        $manager->setActiveExperimentsSettingName($activeExperimentsSettingName);
+        $manager->toggleExperiment('foo');
+        $this->assertEquals(['foo'], $activeExperimentsSetting->getValue());
+    }
+
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessage The setting `active_profiles` is not set
+     */
+    public function testGetCachedExperimentException()
+    {
+        $activeExperimentsSettingName = 'active_profiles';
+        $repository = $this->repository;
+        $repository->expects($this->any())->method('findOneBy')
+            ->with(['name.name' => $activeExperimentsSettingName])->willReturn(null);
+        $manager = new SettingsManager(
+            $repository,
+            $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+        );
+        $manager->setActiveExperimentsSettingName($activeExperimentsSettingName);
+        $manager->toggleExperiment('foo');
     }
 }

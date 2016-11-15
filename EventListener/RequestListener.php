@@ -20,16 +20,22 @@ class RequestListener
     /**
      * @var GenericCookie
      */
-    private $cookie;
+    private $profileCookie;
+
+    /**
+     * @var GenericCookie
+     */
+    private $experimentCookie;
 
     /**
      * @var SettingsManager
      */
     private $settingsManager;
 
-    public function __construct($cookie, $settingsManager)
+    public function __construct($profileCookie, $experimentCookie, $settingsManager)
     {
-        $this->cookie = $cookie;
+        $this->profileCookie = $profileCookie;
+        $this->experimentCookie = $experimentCookie;
         $this->settingsManager = $settingsManager;
     }
 
@@ -39,7 +45,10 @@ class RequestListener
             return;
         }
 
-        $profiles = $this->cookie->getValue();
+        $profileCookie = $this->profileCookie->getValue() ? $this->profileCookie->getValue() : [];
+        $expCookie = $this->experimentCookie->getValue() ? $this->experimentCookie->getValue() : [];
+
+        $profiles = array_merge($profileCookie, $expCookie);
 
         if (is_array($profiles)) {
             $this->settingsManager->appendActiveProfilesList($profiles);

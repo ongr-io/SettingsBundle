@@ -59,25 +59,28 @@ $(document).ready(function () {
     );
     $('#settings_filter').append(newSettingButton.prop('outerHTML'));
 
-    function appendNewProfile(element, check) {
+    function appendNewProfile(element, type, check) {
         var checked = '';
         if (check) {
             checked = 'checked="checked"';
         }
-        var input = '<label class="profile-choice"><input type="checkbox" '+checked+' name="setting[profile][]" value="'+element+'">'+element+'</label>';
+        var input = '<label class="profile-choice"><input type="checkbox" '+checked+' name="'+type+'[profile][]" value="'+element+'">'+element+'</label>';
         $('#profiles-container .checkbox').append(input);
     }
 
-    function reloadProfiles(select) {
+    function reloadProfiles(select, formType) {
+        if (formType !== 'experiment') {
+            formType = 'setting';
+        }
         $('#profiles-loader').show();
         $('#profiles-container .checkbox').html('');
         $.post(Routing.generate('ongr_settings_profiles_get_all'), function (data) {
             $('#profiles-loader').hide();
             data.forEach(function (element) {
                 if ($.inArray(element, select) >  -1) {
-                    appendNewProfile(element, true);
+                    appendNewProfile(element, formType, true);
                 } else {
-                    appendNewProfile(element, false);
+                    appendNewProfile(element, formType, false);
                 }
             });
         })
@@ -311,4 +314,224 @@ $(document).ready(function () {
         }
     } );
 
+    //Experiment section
+    var experimentTable = $('#experiments').DataTable( {
+        ajax: {
+            url: Routing.generate('ongr_settings_experiments_get_all_detailed'),
+            dataSrc: 'documents'
+        },
+        stateSave: true,
+        order: [[ 1, "asc" ]],
+        columns: [
+            { data: 'name' },
+            { data: 'name' },
+            { data: 'client'},
+            { data: 'profile' },
+            {}
+        ],
+        columnDefs: [
+            {
+                "targets": 0,
+                "orderable": false,
+                "render": function ( data, type, row ) {
+                    var className = 'toggle-experiment';
+                    var label = $('<label/>').addClass('btn btn-default').addClass(className)
+                        .addClass(className + '-' + row['name']).attr('data-name', row['name']);
+                    var on = label.clone().html('ON').attr('data-element', className + '-' + row['name']);
+                    var off = label.clone().html('OFF').attr('data-element', className + '-' + row['name']);
+
+                    if (row['active'] !== false) {
+                        on.addClass('btn-primary');
+                    } else {
+                        off.addClass('btn-primary');
+                    }
+
+                    var cell = $('<div/>').addClass('btn-group btn-group-sm').append(on, off);
+
+                    return cell.prop('outerHTML');
+                }
+            },
+            {
+                "targets": 2,
+                "orderable": false,
+                "render": function (data, type, row) {
+                    var targets = JSON.parse(row['value']);
+                    var result = '';
+
+                    for (var target in targets) {
+                        result += target + ' = ' + JSON.stringify(targets[target]) + '; ';
+                    }
+
+                    return result;
+                }
+            },
+            {
+                "targets": 3,
+                "orderable": false
+            },
+            {
+                "targets": 4,
+                "data": null,
+                "orderable": false,
+                "render": function ( data, type, row ) {
+                    return '<a class="edit btn btn-primary btn-xs" data-toggle="modal" data-target="#experiment-edit">Edit</a>&nbsp;<a class="delete delete-setting btn btn-danger btn-xs" data-name="'+row['name']+'">Delete</a>'
+                }
+            } ]
+    } );
+
+    var newExperimentButton = $('<button/>').html('Add new experiment').addClass('btn btn-success btn-sm').attr(
+        {
+            'id': 'new-experiment-button',
+        }
+    );
+    $('#experiments_filter').append(newExperimentButton.prop('outerHTML'));
+
+    $('#new-experiment-button').on('click', function(){
+        $('#experiment-name-input').val('');
+        $('#experiment-name-input').attr('disabled', false);
+        $('#experiment-action-title').text('New experiment');
+        $('#experiment-form-modal').modal();
+        $('#force-update').val('0');
+        reloadProfiles();
+        reloadTargets();
+    });
+    
+    function reloadTarget($div, data, select, key, attribute) {
+        $div.append('<div class="col-md-2  target-attribute">'+attribute[0].toUpperCase() + attribute.substring(1)+':</span>');
+        var $multiselect = $('<select id="multiselect-'+key+'-'+attribute+'" multiple="multiple" class="hidden" name="setting[value]['+key+']['+attribute+'][]"></select>');
+
+        for (var target in data[key][attribute]) {
+            $multiselect = appendNewTargetOption($multiselect, data[key][attribute][target], select);
+        }
+
+        var $innerDiv = $('<div class="col-md-10 target-attribute"></div>');
+        $innerDiv.append($multiselect);
+        $div.append($innerDiv);
+        $('#multiselect-'+key+'-'+attribute).multiselect({enableFiltering: true});
+
+        if (key == 'Clients' && attribute == 'types') {
+            $div.append('<div class="col-md-2  target-attribute">Clients:</span>');
+            $div.append('<div class="col-md-10  target-attribute">' +
+                    '<select multiple="true" id="multiselect-Clients-clients" name="setting[value][Clients][clients][]" class="hidden"></select>' +
+                '</span>'
+            );
+
+            var $multiselectTypes = $('#multiselect-'+key+'-'+attribute);
+            var $multiselectClients = $('#multiselect-'+key+'-clients');
+
+            for (var target in data[key]['clients']) {
+                // console.log(JSON.stringify(data['Devices']));
+                appendNewTargetOption($multiselectClients, data[key]['clients'][target], select);
+            }
+
+            $multiselectClients.multiselect({enableFiltering: true});
+
+            $multiselectTypes.change(function () {
+                $multiselectClients.html('');
+                $.post(Routing.generate(
+                    'ongr_settings_experiments_get_targets_attributes'),
+                    {'types[]' : $multiselectTypes.val()}
+                ).done(function(data) {
+                    for (var client in data) {
+                        $multiselectClients.append('<option value="'+data[client]+'">'+data[client]+'</option>');
+                    }
+
+                    $multiselectClients.multiselect('destroy');
+                    $multiselectClients.multiselect({enableFiltering: true});
+                });
+            });
+        }
+    }
+
+    function reloadTargets(select) {
+        var $form = $('#experiment-form');
+        $.post(Routing.generate('ongr_settings_experiments_get_targets'), {'selected' : select}).done(function (data) {
+            // 1
+            var $div = $form.find('#Devices-container').find('.checkbox');
+            $div.html('');
+            reloadTarget($div, data, select, 'Devices', 'types');
+            reloadTarget($div, data, select, 'Devices', 'brands');
+            // 2
+            var $div = $form.find('#Clients-container').find('.checkbox');
+            $div.html('');
+            reloadTarget($div, data, select, 'Clients', 'types');
+            // 3
+            var $div = $form.find('#OS-container').find('.checkbox');
+            $div.html('');
+            reloadTarget($div, data, select, 'OS', 'types');
+        });
+    }
+
+    function appendNewTargetOption(element, value, check) {
+        var selected = '';
+
+        if (check != null && check.indexOf('"'+value+'"') !== -1) {
+            selected = 'selected="true"'
+        }
+
+        var $option = $('<option '+selected+' value="'+value+'">'+value+'</option>');
+
+        element.append($option);
+
+        return element;
+    }
+
+    $('#experiment-form-submit').on('click', function (e) {
+        e.preventDefault();
+        var data = $('#experiment-form').serializeArray();
+        $.ajax({
+            url: Routing.generate('ongr_settings_setting_submit'),
+            data: data,
+            success: function (response) {
+                if (response.error == false) {
+                    experimentTable.ajax.reload();
+                    $('#experiment-form-modal').modal('hide')
+                } else {
+                    $('#experiment-form-error-message').html(response.message);
+                    $('#experiment-form-error').show();
+                }
+            }
+        });
+    });
+
+    $('#experiments tbody').on( 'click', 'label.toggle-experiment', function () {
+        var self = $(this);
+        $.post(Routing.generate('ongr_settings_experiments_toggle'), {name:self.data('name')}, function(){
+            $(".toggle-experiment-" + self.data('name')).toggleClass('btn-primary');
+        })
+    } );
+
+    $('#experiments tbody').on( 'click', 'a.edit', function () {
+        var data = experimentTable.row( $(this).parents('tr') ).data();
+        // alert(JSON.stringify(data));
+        reloadProfiles(data.profile);
+        reloadTargets(data.value);
+        $('#experiment-action-title').text('Edit experiment');
+        $('#force-update').val('1');
+        $('#experiment-name-input').val(data.name);
+        $('#experiment-name-input').attr('disabled', true);
+        $('#experiment-name').val(data.name);
+
+        $('#experiment-form-modal').modal();
+    } );
+
+    $('#experiments tbody').on( 'click', 'a.delete-setting', function (e) {
+        e.preventDefault();
+        var name = $(this).data('name');
+        $.confirm({
+            text: "Are you sure you want to delete setting?",
+            title: "Confirmation required",
+            confirm: function(button) {
+                $.post(Routing.generate('ongr_settings_settings_delete'), {name: name}, function(data) {
+                    if (data.error == false) {
+                        experimentTable.ajax.reload();
+                    }
+                });
+            },
+            confirmButton: "Yes, delete it",
+            cancelButton: "No",
+            confirmButtonClass: "btn-danger",
+            dialogClass: "modal-dialog modal-lg"
+        });
+    });
 });

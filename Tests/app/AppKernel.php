@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new ONGR\ElasticsearchBundle\ONGRElasticsearchBundle(),
+            new ONGR\CookiesBundle\ONGRCookiesBundle(),
 
             new ONGR\SettingsBundle\ONGRSettingsBundle(),
         ];
