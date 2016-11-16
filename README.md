@@ -13,16 +13,21 @@ What's inside:
 
 This bundle is independent from ONGR platform and can be used in your project on its own with few dependencies.
 
+If you need any help, [stack overflow](http://stackoverflow.com/questions/tagged/ongr)
+is the preferred and recommended way to ask questions about ONGR bundles and libraries.
 
 [![Build Status](https://travis-ci.org/ongr-io/SettingsBundle.svg?branch=master)](https://travis-ci.org/ongr-io/SettingsBundle)
 [![Coverage Status](https://coveralls.io/repos/ongr-io/SettingsBundle/badge.svg?branch=master&service=github)](https://coveralls.io/github/ongr-io/SettingsBundle?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/ongr/settings-bundle/v/stable)](https://packagist.org/packages/ongr/settings-bundle)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ongr-io/SettingsBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ongr-io/SettingsBundle/?branch=master)
 
-
 ## Documentation
 
-The online documentation of the bundle is in [Github](Resources/doc/index.md).
+The online documentation of the bundle can be found in [http://docs.ongr.io](http://docs.ongr.io/SettingsBundle).
+Docs source is stored within the repo under `Resources/doc/`, so if you see a typo or problem, please submit a PR to fix it!
+
+For contribution to the documentation you can find it in the [contribute](http://docs.ongr.io/common/Contributing) topic.
+
 
 
 ## Installation
