@@ -17,7 +17,7 @@ final class Events
     const POST_CREATE = 'ongr.settings.post_create';
     const PRE_GET = 'ongr.settings.pre_get';
     const POST_GET = 'ongr.settings.post_get';
-    const PRE_UPDATE = 'ongr.settings.post_update';
+    const PRE_UPDATE = 'ongr.settings.pre_update';
     const POST_UPDATE = 'ongr.settings.post_update';
     const PRE_DELETE = 'ongr.settings.pre_delete';
     const POST_DELETE = 'ongr.settings.post_delete';
