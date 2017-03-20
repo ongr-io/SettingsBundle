@@ -13,7 +13,7 @@ namespace ONGR\SettingsBundle\Controller;
 
 use ONGR\ElasticsearchBundle\Result\DocumentIterator;
 use ONGR\ElasticsearchBundle\Service\Repository;
-use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\TermsAggregation;
 use ONGR\ElasticsearchBundle\Result\Aggregation\AggregationValue;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -50,7 +50,7 @@ class ProfilesController extends Controller
         $search->addAggregation(new TermsAggregation('profiles', 'profile'));
 
         /** @var DocumentIterator $result */
-        $result = $repo->execute($search);
+        $result = $repo->findDocuments($search);
 
         /** @var AggregationValue $agg */
         foreach ($result->getAggregation('profiles') as $agg) {

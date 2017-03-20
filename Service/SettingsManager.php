@@ -18,8 +18,8 @@ use ONGR\ElasticsearchBundle\Result\DocumentIterator;
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\FilterAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\TermsAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\Metric\TopHitsAggregation;
-use ONGR\ElasticsearchDSL\Query\BoolQuery;
-use ONGR\ElasticsearchDSL\Query\TermQuery;
+use ONGR\ElasticsearchDSL\Query\Compound\BoolQuery;
+use ONGR\ElasticsearchDSL\Query\TermLevel\TermQuery;
 use ONGR\SettingsBundle\Event\Events;
 use ONGR\SettingsBundle\Event\SettingActionEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -284,7 +284,7 @@ class SettingsManager
         $this->manager->commit();
         $this->cache->delete($name);
 
-        if ($setting->getType() == 'experiment') {
+        if ($setting->getType() == 'experiment' || $setting->getName() == 'ongr_active_experiments') {
             $this->getActiveExperimentProfilesCookie()->setClear(true);
         }
 

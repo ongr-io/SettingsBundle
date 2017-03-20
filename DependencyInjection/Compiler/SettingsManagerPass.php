@@ -11,6 +11,7 @@
 
 namespace ONGR\SettingsBundle\DependencyInjection\Compiler;
 
+use ONGR\FilterManagerBundle\DependencyInjection\ONGRFilterManagerExtension;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -26,10 +27,11 @@ class SettingsManagerPass implements CompilerPassInterface
         $repo = $container->getParameter('ongr_settings.repo');
         $filterManager = new Definition('ONGR\FilterManagerBundle\Search\FilterManager', [
             new Reference('ongr_settings.filter_container'),
-            new Reference($repo)
+            new Reference($repo),
+            new Reference('event_dispatcher')
         ]);
 
-        $container->setDefinition('ongr_filter_manager.settings', $filterManager);
+        $container->setDefinition(ONGRFilterManagerExtension::getFilterManagerId('settings'), $filterManager);
 
         $settingsManager = new Definition('ONGR\SettingsBundle\Service\SettingsManager', [
             new Reference($repo),

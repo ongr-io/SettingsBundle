@@ -32,11 +32,11 @@ class Setting implements SerializableInterface
      * @var string
      *
      * @ES\Property(
-     *  type="string",
+     *  type="keyword",
      *  options={
      *    "fields"={
-     *        "raw"={"type"="string", "index"="not_analyzed"},
-     *        "name"={"type"="string"}
+     *        "raw"={"type"="keyword", "index"="not_analyzed"},
+     *        "name"={"type"="keyword"}
      *    }
      *  }
      * )
@@ -46,7 +46,7 @@ class Setting implements SerializableInterface
     /**
      * @var string
      *
-     * @ES\Property(type="string", options={"analyzer"="standard"})
+     * @ES\Property(type="text", options={"analyzer"="standard"})
      */
     private $description;
 
@@ -54,11 +54,11 @@ class Setting implements SerializableInterface
      * @var string
      *
      * @ES\Property(
-     *  type="string",
+     *  type="keyword",
      *  options={
      *    "fields"={
-     *        "raw"={"type"="string", "index"="not_analyzed"},
-     *        "profile"={"type"="string"}
+     *        "raw"={"type"="keyword", "index"="not_analyzed"},
+     *        "profile"={"type"="keyword"}
      *    }
      *  }
      * )
@@ -68,21 +68,21 @@ class Setting implements SerializableInterface
     /**
      * @var string
      *
-     * @ES\Property(type="string", options={"index"="not_analyzed"})
+     * @ES\Property(type="keyword", options={"index"="not_analyzed"})
      */
     private $type;
 
     /**
      * @var string
      *
-     * @ES\Property(type="string", options={"index"="not_analyzed"})
+     * @ES\Property(type="keyword", options={"index"="not_analyzed"})
      */
     private $value;
 
     /**
      * @var string
      *
-     * @ES\Property(type="string", options={"index"="not_analyzed"})
+     * @ES\Property(type="keyword", options={"index"="not_analyzed"})
      */
     private $salt;
 

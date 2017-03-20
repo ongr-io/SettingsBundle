@@ -1,69 +1,70 @@
 parameters:
     ongr_settings.filter.pager.request_field: page
-    ongr_settings.filter.pager.count_per_page: 10000
-    ongr_settings.filter.pager.max_pages: 10000
+    ongr_settings.filter.pager.options:
+        count_per_page: 10000
+        max_pages: 10000
 
     ongr_settings.filter.sort.request_field: sort
-    ongr_settings.filter.sort.choices:
-        nameAsc:
-            label: "Name Asc"
-            field: "name"
-            order: "asc"
-            default: false
-        nameDesc:
-            label: "Name Desc"
-            field: "name"
-            order: "desc"
-            default: false
-        descAsc:
-            label: "Description Asc"
-            field: "description"
-            order: "asc"
-            default: false
-        descDesc:
-            label: "Description Desc"
-            field: "description"
-            order: "desc"
-            default: false
-        typeAsc:
-            label: "Type Asc"
-            field: "type"
-            order: "asc"
-            default: false
-        typeDesc:
-            label: "Type Desc"
-            field: "type"
-            order: "desc"
-            default: false
+    ongr_settings.filter.sort.options:
+        choices:
+            nameAsc:
+                label: "Name Asc"
+                field: "name"
+                order: "asc"
+                default: false
+            nameDesc:
+                label: "Name Desc"
+                field: "name"
+                order: "desc"
+                default: false
+            descAsc:
+                label: "Description Asc"
+                field: "description"
+                order: "asc"
+                default: false
+            descDesc:
+                label: "Description Desc"
+                field: "description"
+                order: "desc"
+                default: false
+            typeAsc:
+                label: "Type Asc"
+                field: "type"
+                order: "asc"
+                default: false
+            typeDesc:
+                label: "Type Desc"
+                field: "type"
+                order: "desc"
+                default: false
 
     ongr_settings.filter.match_search.request_field: q
-    ongr_settings.filter.match_search.field: "key"
+    ongr_settings.filter.match_search.document_field: "key"
 
 services:
     ongr_settings.filter.pager:
         class: ONGR\FilterManagerBundle\Filter\Widget\Pager\Pager
         calls:
             - ["setRequestField", ["%ongr_settings.filter.pager.request_field%"]]
-            - ["setCountPerPage", ["%ongr_settings.filter.pager.count_per_page%"]]
-            - ["setMaxPages", ["%ongr_settings.filter.pager.max_pages%"]]
+            - ["setOptions", ["%ongr_settings.filter.pager.options%"]]
 
     ongr_settings.filter.sort:
         class: ONGR\FilterManagerBundle\Filter\Widget\Sort\Sort
         calls:
             - ["setRequestField", ["%ongr_settings.filter.sort.request_field%"]]
-            - ["setChoices", ["%ongr_settings.filter.sort.choices%"]]
+            - ["setOptions", ["%ongr_settings.filter.sort.options%"]]
 
     ongr_settings.filter.match_search:
         class: ONGR\FilterManagerBundle\Filter\Widget\Search\MatchSearch
         calls:
             - ["setRequestField", ["%ongr_settings.filter.match_search.request_field%"]]
-            - ["setField", ["%ongr_settings.filter.match_search.field%"]]
+            - ["setDocumentField", ["%ongr_settings.filter.match_search.document_field%"]]
 
     ongr_settings.filter.skip_hidden:
         class: ONGR\SettingsBundle\Filter\SkipHiddenSettingsFilter
-#        calls:
-#            - ["setRequestField", ["%ongr_settings.filter.match_search.request_field%"]]
-#            - ["setField", ["%ongr_settings.filter.match_search.field%"]]
+        calls:
+            - ["setRequestField", ["%ongr_settings.filter.match_search.request_field%"]]
+            - ["setDocumentField", ["%ongr_settings.filter.match_search.document_field%"]]
 
     ongr_settings.filter_container:
         class: ONGR\FilterManagerBundle\Search\FilterContainer
