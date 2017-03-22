@@ -1,6 +1,9 @@
 framework:
     secret: "SUPER-TOP-SECRET"
     test: ~
+    router:
+        resource: "%kernel.root_dir%/config/routing_test.yml"
+        strict_requirements: %kernel.debug%
 
 ongr_elasticsearch:
     managers:

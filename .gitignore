@@ -1,4 +1,5 @@
 /vendor/
+/Tests/app/cache/
 /composer.lock
 /node_modules
 /Tests/app/cache/
