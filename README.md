@@ -55,6 +55,7 @@ public function registerBundles()
     $bundles = array(
         // ...
         new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+        new JMS\SerializerBundle\JMSSerializerBundle(),
         new ONGR\CookiesBundle\ONGRCookiesBundle(),
         new ONGR\ElasticsearchBundle\ONGRElasticsearchBundle(),
         new ONGR\FilterManagerBundle\ONGRFilterManagerBundle(),
@@ -117,7 +118,7 @@ Create an Elasticsearch index by running this command in your terminal:
 
 ```bash
 
-    app/console ongr:es:index:create -m settings
+    bin/console ongr:es:index:create -m settings
 
 ```
 
@@ -129,7 +130,7 @@ Web interface won't work without assets. Install them by using this command in y
 
 ```bash
 
-    app/console assets:install --symlink
+    bin/console assets:install --symlink
 
 ```
 
